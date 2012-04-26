@@ -2,49 +2,63 @@
 # Init
 #
 
-express		= require 'express'
+fs			= require 'fs'
 http 		= require 'http'
-hulk		= require 'hulk-hogan' # templating
-mongoose 	= require 'mongoose'
-schema 		= require './db/schema'
-routes		= require './routes'
+express		= require 'express'
+cons 		= require 'consolidate'
+handlbars 	= require 'handlebars'
+passport 	= require 'passport'
+lesscss 	= require 'less-middleware'
+
+
+#
+# The App
+#
+
+GLOBAL.app = module.exports = express.createServer()
 
 #
 # Mongoose models
 #
 
-mongoose.connect('mongodb://localhost/pine-io-development')
-mongoose.model 'User', 		schema.users(mongoose.Schema)
-mongoose.model 'Database', 	schema.databases(mongoose.Schema)
-mongoose.model 'Field', 	schema.fields(mongoose.Schema)
-mongoose.model 'Record', 	schema.records(mongoose.Schema)
+require('./models/main')
 
 #
 # Middleware
 #
 
-app = module.exports = express()
-
 app.configure () ->
-	app.set('views', __dirname + '/views')
-	app.set('view options', layout:false)
-  	app.set('view engine', 'hulk')
-  	app.register('.hulk', hulk)
-	app.use(express.favicon())
-	app.use(express.logger('dev'))
-	app.use(express.static(__dirname + '/public'))
-	app.use(express.bodyParser())
-	app.use(express.methodOverride())
-	app.use(app.router)
+	pub_dir = __dirname + '/public'
+
+	app.engine('html', cons.handlebars);
+
+	app.set 'views', __dirname + '/views'
+	app.set 'view engine', 'html'
+
+	app.use lesscss(src: pub_dir, compress: true)
+	app.use express.static(pub_dir)
+
+	app.use express.favicon()
+	app.use express.logger('dev')
+	app.use express.bodyParser()
+	app.use express.methodOverride()
+	app.use express.cookieParser('sc2ishard')
+	app.use express.session({ secret: 'sc2ishard' })
+	app.use passport.initialize()
+	app.use passport.session()
+	app.use app.router
 
 app.configure 'development', () ->
 	app.use(express.errorHandler())
 
 #
-# Routes
+# Routes, Controllers, & Views
 #
 
-app.get('/', routes.index)
+fs.readFile './views/header.html', (err, data) -> handlbars.registerPartial 'header', data.toString()
+fs.readFile './views/footer.html', (err, data) -> handlbars.registerPartial 'footer', data.toString()
+
+require('./controllers/main')
 
 #
 # Boot server
