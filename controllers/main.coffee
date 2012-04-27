@@ -37,3 +37,4 @@ app.post('/databases', ensureAuthenticated, DatabasesController.create)
 #
 
 app.get('/', UsersController.root)
+app.get('/docs', (req, res) -> res.render('docs', {title: 'pine.io documentation'}) )
