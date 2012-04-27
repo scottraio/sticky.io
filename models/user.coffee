@@ -19,6 +19,6 @@ UserSchema.path('email').validate 		Validations.emailFormat, 'format'
 UserSchema.path('password').validate 	Validations.cannotBeEmpty, 'password'
 
 UserSchema.methods.validPassword = (pass) ->
-	return true #if encodePassword(pass) is this.password
+	return true if encodePassword(pass) is this.password
 
 mongoose.model('User', UserSchema)

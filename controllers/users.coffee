@@ -1,9 +1,13 @@
+#
+#
+# Users Controller
+#
+#
+
 exports.root = (req, res) ->
-	console.log("yay")
-	res.render('index', {title: 'Welcome to pine.io'})
+	res.render('index', {current_user: req, title: 'Welcome to pine.io'})
 
 exports.index = (req, res) ->
-	console.log("yay")
 	res.render('signup', {title: 'Sign-up to pine.io'})
 
 exports.create = (req, res) ->
@@ -15,23 +19,18 @@ exports.create = (req, res) ->
 
 	user.save (err) ->
 		if err
-			console.log(err)
+			res.redirect('/signup')
 		else
-			console.log('yay')
-			#req.session.user = 
-			#	id: user.get('id'),
-			#	name: user.get('name')
-
-			#req.session.auth = 
-			#	logged_in: true,
-			#	user_id: user.get('id')
-
-	res.render('signup', {title: 'Sign-up to pine.io'})
+			req.logIn user, (err) ->
+				return res.redirect('/login') if err
+				res.redirect('/')
 
 exports.login = (req, res) ->
-	res.render('login', {title: 'Login to pine.io'})
-	#document = {name: "Scott", login: "scottraio@gmail.com"}
-	#res.send JSON.stringify(document)
+	res.render('login', {message: req.flash('error'), title: 'Login to pine.io'})
+
+exports.logout = (req, res) ->
+	req.logout()
+	res.redirect('/login')
 
 exports.signup = (req, res) ->
 	res.render('signup', {title: 'Sign-up to pine.io'})

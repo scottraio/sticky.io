@@ -3,9 +3,9 @@ LocalStrategy 	= require('passport-local').Strategy
 
 passport.use(new LocalStrategy (username, password, done) ->
 	app.models.User.findOne { email: username }, (err, user) ->
-		return done(err) if (err)
-		return done(null, false, { message: 'Unknown user' }) if !user
-		return done(null, false, { message: 'Invalid password' }) if !user.validPassword(password)
+		return done(err) 											if (err)
+		return done(null, false, { message: 'Unknown user' }) 		if !user
+		return done(null, false, { message: 'Invalid password' }) 	if !user.validPassword(password)
 		return done(null, user)
 )
 

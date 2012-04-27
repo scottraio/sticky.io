@@ -10,6 +10,7 @@ mongoose.set('debug', true)
 #mongoose.availablePlugins = require('../lib/mongoose-plugins')
 
 require('./user.coffee')
+require('./database.coffee')
 
 app.models = mongoose.models
 
