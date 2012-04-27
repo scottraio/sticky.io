@@ -5,7 +5,10 @@
 #
 
 exports.root = (req, res) ->
-	res.render('index', {current_user: req, title: 'Welcome to pine.io'})
+	if req.isAuthenticated()
+		res.render('index', {current_user: req, title: 'Welcome to pine.io'})
+	else
+		res.render('public', {current_user: req, title: 'Welcome to pine.io'})
 
 exports.index = (req, res) ->
 	res.render('signup', {title: 'Sign-up to pine.io'})
