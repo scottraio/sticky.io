@@ -20,6 +20,6 @@
     "jshashes"          : "*",
     "passport"          : "*",
     "passport-local"    : "*",
-    "consolidate"       : "*",
+    "consolidate"       : "*"
   }
 }
