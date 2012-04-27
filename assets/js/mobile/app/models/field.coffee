@@ -1,0 +1,1 @@
+class Mob.Models.Field extends Backbone.Model
