@@ -1,0 +1,107 @@
+{{>header}}
+
+	<div class="container-fluid">
+		
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="well sidebar-nav">
+					<ul class="nav nav-list">
+						<li class="nav-header">Newbie</li>
+						<li class="active"><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li class="nav-header">Intermediate</li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li class="nav-header">Advanced</li>
+						<li><a href="#">REST API</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+			</div><!--/.well -->
+		</div><!--/span-->
+
+		<div class="span9">
+			<div class="hero-unit">
+				<h1>REST API</h1>
+				<p>The REST API allows you access endpoints through HTTP. </p>
+
+				<h2>Databases</h2>
+				<table class="table">
+					<tr>
+						<th>Resource URL</th>
+						<th>HTTP Verb</th>
+						<th>Role</th>
+					</tr>
+					<tr>
+						<td>https://pine.io/databases</td>
+						<td>GET</td>
+						<td>Lists all databases</td>
+					</tr>
+					<tr>
+						<td>https://pine.io/databases</td>
+						<td>POST</td>
+						<td>Creates a new database</td>
+					</tr>
+					<tr>
+						<td>https://pine.io/databases/:title</td>
+						<td>GET</td>
+						<td>Find a database by name</td>
+					</tr>
+					<tr>
+						<td>https://pine.io/databases/:title</td>
+						<td>PUT</td>
+						<td>Update database attributes</td>
+					</tr>
+					<tr>
+						<td>https://pine.io/databases/:title</td>
+						<td>DELETE</td>
+						<td>Remove a database</td>
+					</tr>
+				</table>
+
+				<h2>Records</h2>
+				<table class="table">
+					<tr>
+						<th>Resource URL</th>
+						<th>HTTP Verb</th>
+						<th>Role</th>
+					</tr>
+					<tr>
+						<td>https://pine.io/my_awesome_db/records/:title/tables</td>
+						<td>GET</td>
+						<td>Lists all databases</td>
+					</tr>
+					<tr>
+						<td>https://pine.io/databases</td>
+						<td>POST</td>
+						<td>Creates a new database</td>
+					</tr>
+					<tr>
+						<td>https://pine.io/databases/:title</td>
+						<td>GET</td>
+						<td>Find a database by name</td>
+					</tr>
+					<tr>
+						<td>https://pine.io/databases/:title</td>
+						<td>PUT</td>
+						<td>Update database attributes</td>
+					</tr>
+					<tr>
+						<td>https://pine.io/databases/:title</td>
+						<td>DELETE</td>
+						<td>Remove a database</td>
+					</tr>
+				</table>
+			</div>
+		</div><!--/row-->
+
+	</div><!--/.fluid-container-->
+	
+
+{{>footer}}
