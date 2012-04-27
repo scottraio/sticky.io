@@ -1,0 +1,25 @@
+{{>header}}
+	
+	{{message}}
+
+	<div class="container">
+		<div class="content">
+			<div class="row">
+				<div class="login-form">
+					Login or <a href="/signup">Signup</a>
+					<form action="/login" method="post">
+						<div class="clearfix">
+							<input type="email" name="username" placeholder="email"  />
+						</div>
+						<div class="clearfix">
+							<input type="password" name="password" placeholder="password">
+						</div>
+						
+						<button class="btn primary" type="submit">Sign in</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div> 
+
+{{>footer}}
