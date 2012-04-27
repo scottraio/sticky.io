@@ -1,0 +1,1 @@
+class Mob.Models.Record extends Backbone.Model
