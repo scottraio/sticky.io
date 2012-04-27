@@ -11,6 +11,7 @@ mongoose.set('debug', true)
 
 require('./user.coffee')
 require('./database.coffee')
+require('./help.coffee')
 
 app.models = mongoose.models
 

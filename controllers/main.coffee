@@ -3,7 +3,7 @@
 # Controllers Main - Hybrid application_controller/routes
 #
 #
-
+fs 					= require 'fs'
 passport 			= require '../lib/passport'
 UsersController 	= require './users'
 DatabasesController = require './databases'
@@ -36,5 +36,16 @@ app.post('/databases', ensureAuthenticated, DatabasesController.create)
 # Root
 #
 
-app.get('/', UsersController.root)
-app.get('/docs', (req, res) -> res.render('docs', {title: 'pine.io documentation'}) )
+app.get '/', UsersController.root
+
+#
+# Docs
+#
+
+app.get '/docs', (req, res) -> 
+	fs.readFile "./docs/index.html", 'utf-8', (err, data) ->
+		res.render('docs', {doc: data})
+
+app.get '/docs/:title', (req, res) -> 
+	fs.readFile "./docs/#{req.params.title}", 'utf-8', (err, data) ->
+		res.render('docs', {doc: data})

@@ -1,0 +1,104 @@
+<h1>REST API</h1>
+<p>The REST API allows you access endpoints through HTTP. </p>
+
+<h3>Databases</h3>
+<table class="table">
+	<tr>
+		<th>Resource URL</th>
+		<th>HTTP Verb</th>
+		<th>Role</th>
+	</tr>
+	<tr>
+		<td>https://pine.io/databases</td>
+		<td>GET</td>
+		<td>Lists all databases</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/databases</td>
+		<td>POST</td>
+		<td>Creates a new database</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/databases/<b>:title</b></td>
+		<td>GET</td>
+		<td>Find a database by name</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/databases/<b>:title</b></td>
+		<td>PUT</td>
+		<td>Update database attributes</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/databases/<b>:title</b></td>
+		<td>DELETE</td>
+		<td>Remove a database</td>
+	</tr>
+</table>
+
+<h3>Tables</h3>
+<table class="table">
+	<tr>
+		<th>Resource URL</th>
+		<th>HTTP Verb</th>
+		<th>Role</th>
+	</tr>
+	<tr>
+		<td>https://pine.io/<b>:db_title</b>/tables</td>
+		<td>GET</td>
+		<td>Lists all tables for a database</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/<b>:db_title</b>/tables</td>
+		<td>POST</td>
+		<td>Creates a new table for a database</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/<b>:db_title</b>/tables/<b>:title</b></td>
+		<td>GET</td>
+		<td>Returns details of table</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/<b>:db_title</b>/tables/<b>:title</b></td>
+		<td>PUT</td>
+		<td>Updates a table's attributes</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/<b>:db_title</b>/tables/<b>:title</b></td>
+		<td>DELETE</td>
+		<td>Remove a table</td>
+	</tr>
+</table>
+
+<h2>Records</h2>
+<table class="table">
+	<tr>
+		<th>Resource URL</th>
+		<th>HTTP Verb</th>
+		<th>Role</th>
+	</tr>
+	<tr>
+		<td>https://pine.io/<b>:db_title</b>/records/<b>:title</b>/tables</td>
+		<td>GET</td>
+		<td>Lists all databases</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/databases</td>
+		<td>POST</td>
+		<td>Creates a new database</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/databases/:title</td>
+		<td>GET</td>
+		<td>Find a database by name</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/databases/:title</td>
+		<td>PUT</td>
+		<td>Update database attributes</td>
+	</tr>
+	<tr>
+		<td>https://pine.io/databases/:title</td>
+		<td>DELETE</td>
+		<td>Remove a database</td>
+	</tr>
+</table>

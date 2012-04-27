@@ -4,4 +4,4 @@ class App.Routers.DocsRouter extends Backbone.Router
 		"docs" : "index"
 	
 	index: ->
-		$(".docs-nav").collapse()
+		
