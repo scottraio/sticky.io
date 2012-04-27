@@ -26,14 +26,14 @@ app.post('/signup', UsersController.create)
 # Database
 #
 
-app.get('/databases', DatabasesController.root)
-app.get('/databases/new', DatabasesController.root)
-app.get('/databases/:id/edit', DatabasesController.root)
-app.post('/databases', DatabasesController.create)
+app.get('/databases', ensureAuthenticated, DatabasesController.root)
+app.get('/databases/new', ensureAuthenticated, DatabasesController.root)
+app.get('/databases/:id/edit', ensureAuthenticated, DatabasesController.root)
+app.post('/databases', ensureAuthenticated, DatabasesController.create)
 
 
 #
 # Root
 #
 
-app.get('/', ensureAuthenticated, UsersController.root)
+app.get('/', UsersController.root)

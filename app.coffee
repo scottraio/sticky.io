@@ -29,7 +29,7 @@ require('./models/main')
 
 
 app.configure () ->
-	pub_dir = __dirname + '/assets'
+	pub_dir = __dirname + '/public'
 
 	# connect-assets: rails 3.1 asset pipeline for nodejs
 	app.use assets(build: true, buildDir: 'public')
