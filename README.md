@@ -1,9 +1,18 @@
 pine.io
 =======
 
-Resilient database-as-a-service
+A simple, fast, general purpose, realtime, RESTful database-as-a-service.
 
-npm install
+Setup
+-----
 
-npm -g install nodemon
-npm -g install offee-script
+	npm -g install nodemon
+	npm -g install coffee-script
+	npm -g install vows
+
+	npm install
+
+Testing
+-------
+
+	vows test/* --spec 

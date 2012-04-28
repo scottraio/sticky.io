@@ -5,7 +5,7 @@ Validations = require('./validations.coffee')
 
 HelpSchema = new Schema
 					title  	 : { type: String, required: true, trim: true }
-					body	 : { type: String, required: true, trim: true, unique: true, lowercase: true }
+					body	 : { type: String, required: true, trim: true,  }
 
 
 HelpSchema.path('title').validate Validations.cannotBeEmpty, 'title'

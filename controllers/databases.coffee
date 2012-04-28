@@ -17,4 +17,5 @@ exports.create = (req, res) ->
 		if err
 			res.redirect('/databases/new')
 		else
+			db.build_collection_for_user(req.user_id)
 			res.redirect('/databases/')

@@ -21,7 +21,8 @@ GLOBAL.app = module.exports = express.createServer()
 # Mongoose models
 #
 
-require('./models/main')
+mongoose = require('./models/main')
+app.models = mongoose.models
 
 #
 # Middleware
