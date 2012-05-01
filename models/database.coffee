@@ -5,8 +5,8 @@ Validations = require './validations.coffee'
 db 			= mongoose.connection
 
 DatabaseSchema = new Schema {
-	title  	 	: { type: String, required: true, trim: true }
-	user_id	 	: { type: Number, required: true}
+	title  	 	: { type: String, required: true, uniq: true, trim: true }
+	user_id	 	: { type: ObjectId, required: true}
 }
 
 #
@@ -14,7 +14,7 @@ DatabaseSchema = new Schema {
 #
 
 DatabaseSchema.pre 'save', (next) ->
-	collection = new mongoose.Collection('test123', db)
+	collection = new mongoose.Collection(this.title, db)
 	collection.insert {ok: true}, {safe:true}, (err, objects) ->
 		console.log(err) if (err)
 	next()

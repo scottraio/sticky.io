@@ -25,10 +25,10 @@ app.configure () ->
 	pub_dir = __dirname + '/public'
 
 	# connect-assets: rails 3.1 asset pipeline for nodejs
-	app.use assets(build: true, buildDir: 'public')
+	app.use assets(build: false, buildDir: 'public')
 
 	# handlebar templates :-)
-	app.engine('html', cons.handlebars);
+	app.engine('html', cons.handlebars)
 
 	# Defaults
 	app.set 'views', __dirname + '/views'
@@ -66,6 +66,7 @@ app.configure 'development', () ->
 app.configure 'test', () ->
 	app.use(express.errorHandler())
 	app.dbname = 'pine-io-test'
+	
 
 #
 # Mongoose models
@@ -81,7 +82,9 @@ app.models = mongoose.models
 
 fs.readFile './views/header.html', (err, data) -> handlbars.registerPartial 'header', data.toString()
 fs.readFile './views/footer.html', (err, data) -> handlbars.registerPartial 'footer', data.toString()
-handlbars.registerPartial 'javascripts', js('vendor')
+fs.readFile './views/nav.html', (err, data) -> handlbars.registerPartial 'nav', data.toString()
+handlbars.registerPartial 'vendor_js', js('vendor')
+handlbars.registerPartial 'app_js', js('app')
 handlbars.registerPartial 'stylesheets', css('app')
 
 

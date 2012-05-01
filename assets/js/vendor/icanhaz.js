@@ -14,8 +14,8 @@ var Mustache = function() {
   var Renderer = function() {};
 
   Renderer.prototype = {
-    otag: "{{",
-    ctag: "}}",
+    otag: "-{",
+    ctag: "}-",
     pragmas: {},
     buffer: [],
     pragmas_implemented: {

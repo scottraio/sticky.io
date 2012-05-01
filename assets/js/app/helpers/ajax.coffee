@@ -3,6 +3,9 @@
 # with loading, remembering ($.address), and trapping stale sessions
 
 window.navigate = (href) ->
+	# clear twitter bootstrap dropdowns
+	$('html').trigger('click.dropdown.data-api')
+
 	# if the page we are navigating to is the same page from where
 	# we came from. Don't navigate to the href, just reload it
 	if href is window.location.pathname
