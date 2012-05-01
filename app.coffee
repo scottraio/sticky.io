@@ -15,19 +15,11 @@ flash		= require 'connect-flash'
 # The App
 #
 
-GLOBAL.app = module.exports = express.createServer()
-
-#
-# Mongoose models
-#
-
-mongoose = require('./models/main')
-app.models = mongoose.models
+GLOBAL.app 		= module.exports = express.createServer()
 
 #
 # Middleware
 #
-
 
 app.configure () ->
 	pub_dir = __dirname + '/public'
@@ -59,8 +51,28 @@ app.configure () ->
 	# start the router
 	app.use app.router
 
+
+#
+# Environments
+#
+
+app.configure 'production', () ->
+	app.dbname = 'pine-io-production'
+
 app.configure 'development', () ->
 	app.use(express.errorHandler())
+	app.dbname = 'pine-io-development'
+
+app.configure 'test', () ->
+	app.use(express.errorHandler())
+	app.dbname = 'pine-io-test'
+
+#
+# Mongoose models
+#
+
+mongoose = require('./models')
+app.models = mongoose.models
 
 #
 # Routes, Controllers, & Views
@@ -73,7 +85,7 @@ handlbars.registerPartial 'javascripts', js('vendor')
 handlbars.registerPartial 'stylesheets', css('app')
 
 
-require('./controllers/main')
+require('./controllers')
 
 #
 # Boot server

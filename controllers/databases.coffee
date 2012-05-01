@@ -1,15 +1,21 @@
 #
 #
-# Users Controller
+# Database Controller
 #
 #
 
 exports.root = (req, res) ->
-	res.render('index', {title: 'Welcome to pine.io'})
+	switch req.params.format
+		when 'json'
+			app.models.Database.find {}, (err, dbs) ->
+				res.writeHead 200, 'Content-Type': 'application/json'
+				res.end JSON.stringify(dbs)
+
+		else res.render('index')
+			
 
 exports.create = (req, res) ->
 	db = new app.models.Database()
-
 	db.set('title', req.body.title)
 	db.set('user_id', 1)
 
@@ -17,5 +23,4 @@ exports.create = (req, res) ->
 		if err
 			res.redirect('/databases/new')
 		else
-			db.build_collection_for_user(req.user_id)
-			res.redirect('/databases/')
+			res.redirect('/databases')
