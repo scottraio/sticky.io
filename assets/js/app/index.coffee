@@ -23,8 +23,8 @@ window.App =
 			return @user
 	start: (mode) ->
 		window.xhr = mode
-		new App.Routers.DocsRouter();
-		new App.Routers.DatabasesRouter();
-		new App.Routers.RecordsRouter();
-		new App.Routers.UsersRouter();
-		Backbone.history.start({pushState:true});
+		new App.Routers.DocsRouter()
+		new App.Routers.DatabasesRouter()
+		new App.Routers.RecordsRouter()
+		new App.Routers.UsersRouter()
+		Backbone.history.start {pushState:true}

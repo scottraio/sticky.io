@@ -5,12 +5,18 @@
 #
 fs 					= require 'fs'
 passport 			= require '../lib/passport'
+Resource			= require '../lib/express_resource'
 UsersController 	= require './users'
 DatabasesController = require './databases'
+UsersController = require './users'
 
 ensureAuthenticated = (req, res, next) ->
 	return next() if req.isAuthenticated()
-	res.redirect('/login')
+	switch req.params.format 
+		when 'json' 
+			passport.authenticate('basic',{session:false})(req, res, next)
+
+		else res.redirect('/login')
 
 #
 # Authentication
@@ -23,10 +29,17 @@ app.get('/signup', UsersController.signup)
 app.post('/signup', UsersController.create)
 
 #
+# Users
+#
+
+app.get('/profile.:format?', ensureAuthenticated, UsersController.show)
+
+
+#
 # Database
 #
 
-app.get('/databases', ensureAuthenticated, DatabasesController.root)
+app.get('/databases.:format?', ensureAuthenticated, DatabasesController.root)
 app.get('/databases/new', ensureAuthenticated, DatabasesController.root)
 app.get('/databases/:id/edit', ensureAuthenticated, DatabasesController.root)
 app.post('/databases', ensureAuthenticated, DatabasesController.create)
@@ -35,7 +48,6 @@ app.post('/databases', ensureAuthenticated, DatabasesController.create)
 #
 # Root
 #
-
 app.get '/', UsersController.root
 
 #

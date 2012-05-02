@@ -15,28 +15,20 @@ flash		= require 'connect-flash'
 # The App
 #
 
-GLOBAL.app = module.exports = express.createServer()
-
-#
-# Mongoose models
-#
-
-mongoose = require('./models/main')
-app.models = mongoose.models
+GLOBAL.app 		= module.exports = express.createServer()
 
 #
 # Middleware
 #
 
-
 app.configure () ->
 	pub_dir = __dirname + '/public'
 
 	# connect-assets: rails 3.1 asset pipeline for nodejs
-	app.use assets(build: true, buildDir: 'public')
+	app.use assets(build: false, buildDir: 'public')
 
 	# handlebar templates :-)
-	app.engine('html', cons.handlebars);
+	app.engine('html', cons.handlebars)
 
 	# Defaults
 	app.set 'views', __dirname + '/views'
@@ -59,8 +51,29 @@ app.configure () ->
 	# start the router
 	app.use app.router
 
+
+#
+# Environments
+#
+
+app.configure 'production', () ->
+	app.dbname = 'pine-io-production'
+
 app.configure 'development', () ->
 	app.use(express.errorHandler())
+	app.dbname = 'pine-io-development'
+
+app.configure 'test', () ->
+	app.use(express.errorHandler())
+	app.dbname = 'pine-io-test'
+	
+
+#
+# Mongoose models
+#
+
+mongoose = require('./models')
+app.models = mongoose.models
 
 #
 # Routes, Controllers, & Views
@@ -69,11 +82,13 @@ app.configure 'development', () ->
 
 fs.readFile './views/header.html', (err, data) -> handlbars.registerPartial 'header', data.toString()
 fs.readFile './views/footer.html', (err, data) -> handlbars.registerPartial 'footer', data.toString()
-handlbars.registerPartial 'javascripts', js('vendor')
+fs.readFile './views/nav.html', (err, data) -> handlbars.registerPartial 'nav', data.toString()
+handlbars.registerPartial 'vendor_js', js('vendor')
+handlbars.registerPartial 'app_js', js('app')
 handlbars.registerPartial 'stylesheets', css('app')
 
 
-require('./controllers/main')
+require('./controllers')
 
 #
 # Boot server

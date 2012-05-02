@@ -26,17 +26,7 @@ class App.Main extends Backbone.View
 	}
 		
 	initialize: ->
-		if is_touch_device()
-			# only do this if not on a touch device
-			$(document).delegate 'body', 'click', (e) ->
-				$(e.target).trigger('tap')
-				return false
-		else 
-			$("#content").resizable
-				minWidth:$(".page").width()
-				maxWidth:$(window).width() - 10
-				handles:'w'
-
+		$('.dropdown-toggle').dropdown()
 			
 	link_to_fragment: (e) ->
 		navigate $(e.currentTarget).attr("href")

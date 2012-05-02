@@ -8,11 +8,17 @@ Setup
 
 	npm -g install nodemon
 	npm -g install coffee-script
-	npm -g install vows
+	npm -g install mocha
 
 	npm install
+
+Run it!
+-------
+
+nodemon app.coffee
+
 
 Testing
 -------
 
-	vows test/* --spec 
+	make test

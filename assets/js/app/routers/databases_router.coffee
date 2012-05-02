@@ -7,19 +7,17 @@ class App.Routers.DatabasesRouter extends Backbone.Router
 		"databases/:id/edit" 	: "edit"
 	
 	index: ->
-		render_with_facebox () ->
-			# set the settings nav height
-			settings_auto_adjust(@el)
-			return false # nothing here yet
+		list_db = new App.Views.Databases.Index(el: $("#stage"))
+		list_db.render()
 	
 	new: ->
-		render_with_facebox () ->
-			new App.Views.Databases.New(el: $("#facebox .content"))
+		new_db = new App.Views.Databases.New(el: $("#stage"))
+		new_db.render()
 	
 	show: ->
-		render_with_facebox () ->
-			return false
+		show_db = new App.Views.Databases.Show(el: $("#stage"))
+		show_db.render()
 		
 	edit: (book_id) ->
-		render_with_facebox () ->
+		render '#stage', () ->
 			new App.Views.Databases.New(el: $("#facebox .content"))

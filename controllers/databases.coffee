@@ -1,21 +1,25 @@
 #
 #
-# Users Controller
+# Database Controller
 #
 #
 
+helpers = require './helpers'
+
 exports.root = (req, res) ->
-	res.render('index', {title: 'Welcome to pine.io'})
+	helpers.render_json req, res, (done) ->
+		app.models.Database.find {user_id:req.user._id}, done
+	
 
 exports.create = (req, res) ->
 	db = new app.models.Database()
-
 	db.set('title', req.body.title)
-	db.set('user_id', 1)
+	db.set('user_id', req.user._id)
 
 	db.save (err) ->
 		if err
+			console.log err
+			req.flash('error', 'Database could not be saved.')
 			res.redirect('/databases/new')
 		else
-			db.build_collection_for_user(req.user_id)
-			res.redirect('/databases/')
+			res.redirect('/databases')
