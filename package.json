@@ -19,7 +19,10 @@
     "session-mongoose"  : "*",
     "jshashes"          : "*",
     "passport"          : "*",
+    "passport-http"     : "*",
     "passport-local"    : "*",
+    "should"            : "*",
+    "zombie"            : "*",
     "consolidate"       : "*"
   }
 }

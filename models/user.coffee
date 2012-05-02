@@ -13,12 +13,15 @@ UserSchema = new Schema
 				email	 : { type: String, required: true, trim: true, unique: true, lowercase: true }
 				password : { type: String, required: true, set: encodePassword }
 
-UserSchema.path('name').validate 		Validations.uniqueFieldInsensitive('User', 'nick'), 'unique'
+UserSchema.path('name').validate 		Validations.uniqueFieldInsensitive('User', 'name'), 'unique'
 UserSchema.path('email').validate 		Validations.uniqueFieldInsensitive('User', 'email'), 'unique'
 UserSchema.path('email').validate 		Validations.emailFormat, 'format'
 UserSchema.path('password').validate 	Validations.cannotBeEmpty, 'password'
 
 UserSchema.methods.validPassword = (pass) ->
-	return true if encodePassword(pass) is this.password
+	return true if encodePassword(pass) is @password
+
+UserSchema.methods.url_encoded_email = () ->
+	return @email.replace /@/, '%40'
 
 mongoose.model('User', UserSchema)

@@ -83,6 +83,10 @@ app.models = mongoose.models
 fs.readFile './views/header.html', (err, data) -> handlbars.registerPartial 'header', data.toString()
 fs.readFile './views/footer.html', (err, data) -> handlbars.registerPartial 'footer', data.toString()
 fs.readFile './views/nav.html', (err, data) -> handlbars.registerPartial 'nav', data.toString()
+fs.readFile './views/database.html', (err, data) -> handlbars.registerPartial 'database', data.toString()
+fs.readFile './views/table.html', (err, data) -> handlbars.registerPartial 'table', data.toString()
+fs.readFile './views/record.html', (err, data) -> handlbars.registerPartial 'record', data.toString()
+
 handlbars.registerPartial 'vendor_js', js('vendor')
 handlbars.registerPartial 'app_js', js('app')
 handlbars.registerPartial 'stylesheets', css('app')

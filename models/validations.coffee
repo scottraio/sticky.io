@@ -12,12 +12,21 @@ exports.emailFormat = (val) ->
 	return (/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i).test(val)
 
 exports.cannotBeEmpty = (val) ->
-	console.log('pass val is:', val)
-	
 	if typeof val is 'string' 
 		if val.length
 			return true
 		else
 			return false
+	else
+		return false
+
+exports.validJSON = (val) ->
+	if typeof val is 'string' 
+		try 
+			JSON.parse(val)
+		catch e
+			return false
+
+		return true
 	else
 		return false

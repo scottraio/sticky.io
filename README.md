@@ -15,7 +15,7 @@ Setup
 Run it!
 -------
 
-nodemon app.coffee
+NODE_ENV=development nodemon app.coffee
 
 
 Testing

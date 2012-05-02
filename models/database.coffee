@@ -19,5 +19,9 @@ DatabaseSchema.pre 'save', (next) ->
 		console.log(err) if (err)
 	next()
 
+DatabaseSchema.statics.get = (params, cb) ->
+	Database = this
+	Database.findOne {title:title, user_id:user_id}, cb
+
 
 mongoose.model('Database', DatabaseSchema)

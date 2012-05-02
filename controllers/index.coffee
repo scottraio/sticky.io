@@ -6,16 +6,16 @@
 fs 					= require 'fs'
 passport 			= require '../lib/passport'
 Resource			= require '../lib/express_resource'
-UsersController 	= require './users'
+TablesController 	= require './tables'
 DatabasesController = require './databases'
-UsersController = require './users'
+UsersController		= require './users'
+RecordsController	= require './records'
 
 ensureAuthenticated = (req, res, next) ->
 	return next() if req.isAuthenticated()
 	switch req.params.format 
 		when 'json' 
 			passport.authenticate('basic',{session:false})(req, res, next)
-
 		else res.redirect('/login')
 
 #
@@ -40,9 +40,30 @@ app.get('/profile.:format?', ensureAuthenticated, UsersController.show)
 #
 
 app.get('/databases.:format?', ensureAuthenticated, DatabasesController.root)
+app.get('/databases/:id.:format?', ensureAuthenticated, DatabasesController.show)
 app.get('/databases/new', ensureAuthenticated, DatabasesController.root)
 app.get('/databases/:id/edit', ensureAuthenticated, DatabasesController.root)
 app.post('/databases', ensureAuthenticated, DatabasesController.create)
+
+# 
+# Tables
+#
+
+app.get('/:database_id/tables.:format?', ensureAuthenticated, TablesController.root)
+app.get('/:database_id/tables/:id.:format?', ensureAuthenticated, TablesController.show)
+app.get('/:database_id/tables/new', ensureAuthenticated, TablesController.root)
+app.get('/:database_id/tables/:id/edit', ensureAuthenticated, TablesController.root)
+app.post('/:database_id/tables', ensureAuthenticated, TablesController.create)
+
+#
+# Records
+#
+
+app.get('/:database_id/:table_id/records.:format?', ensureAuthenticated, RecordsController.show)
+app.get('/:database_id/:table_id/records/:id.:format?', ensureAuthenticated, RecordsController.show)
+app.get('/:database_id/:table_id/records/new', ensureAuthenticated, RecordsController.root)
+app.get('/:database_id/:table_id/records/:id/edit', ensureAuthenticated, RecordsController.root)
+app.post('/:database_id/:table_id/records', ensureAuthenticated, RecordsController.create)
 
 
 #
