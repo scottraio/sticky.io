@@ -1,0 +1,42 @@
+<!-- Record -->
+
+<script id="record_list" type="text/html">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Title</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			-{#records}-
+			<tr>
+				<td>
+					<a href="/-{database_id}-/-{table_id}-/records/-{_id}-" class="navigate">-{title}-</a>
+				</td>
+			</tr>
+			-{/records}-
+		</tbody>
+	</table>
+
+	<a href="/-{database_id}-/-{table_id}-/records/new" class="btn navigate">Add Record</a>
+</script>
+
+<script id="record_form" type="text/html">
+	<form action="/-{database_id}-/-{table_id}-/records" method="post" class="well form-horizontal">
+		<fieldset>
+			<legend>Create a record</legend>
+			<div class="control-group">
+				<label class="control-label" for="input01">Data</label>
+				<div class="controls">
+					<textarea id="input01" name="data" placeholder="json only"></textarea>
+				</div>
+			</div>
+
+			<div class="form-actions">
+				<button class="btn btn-primary" type="submit">Create Record</button>
+				<a href="/-{database_id}-/-{table_id}-/records" class="btn navigate">Cancel</a>
+			</div>
+		</fieldset>
+	</form>
+</script>
