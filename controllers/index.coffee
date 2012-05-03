@@ -59,7 +59,7 @@ app.post('/:database_id/tables', ensureAuthenticated, TablesController.create)
 # Records
 #
 
-app.get('/:database_id/:table_id/records.:format?', ensureAuthenticated, RecordsController.show)
+app.get('/:database_id/:table_id/records.:format?', ensureAuthenticated, RecordsController.root)
 app.get('/:database_id/:table_id/records/:id.:format?', ensureAuthenticated, RecordsController.show)
 app.get('/:database_id/:table_id/records/new', ensureAuthenticated, RecordsController.root)
 app.get('/:database_id/:table_id/records/:id/edit', ensureAuthenticated, RecordsController.root)
@@ -77,8 +77,8 @@ app.get '/', UsersController.root
 
 app.get '/docs', (req, res) -> 
 	fs.readFile "./docs/index.html", 'utf-8', (err, data) ->
-		res.render('docs', {doc: data})
+		res.render('docs', {loggedIn:req.isAuthenticated(), doc: data})
 
 app.get '/docs/:title', (req, res) -> 
 	fs.readFile "./docs/#{req.params.title}", 'utf-8', (err, data) ->
-		res.render('docs', {doc: data})
+		res.render('docs', {loggedIn:req.isAuthenticated(), doc: data})

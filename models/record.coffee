@@ -5,7 +5,6 @@ Database 	= mongoose.models.Database
 Table 		= mongoose.models.Table
 
 RecordSchema = new Schema(
-	database_id  	: { type: ObjectId, required: true, trim: true }
 	table_id  		: { type: ObjectId, required: true, trim: true }
 	user_id	 		: { type: ObjectId, required: true, trim: true }
 	data	 		: { type: String, required: true }
@@ -17,36 +16,48 @@ RecordSchema.path('data').validate(Validations.validJSON, 'data')
 # Record Methods
 #
 
-RecordSchema.methods.find_with_collection = (name, cb) ->
-	collection = new mongoose.Collection(name, mongoose.connection)
-	collection.find().toArray(cb)
-
 RecordSchema.methods.set_collection = (title) ->
 	this.collection = mongoose.connection.collection(title)
 
-RecordSchema.statics.create = (req, res, cb) ->
-	Record 			= this
-	dbtitle 		= req.params.database_id
-	tabletitle		= req.params.table_id
+RecordSchema.statics.find_with_collection = (options, cb) ->
+	Record = this
 
-	Table.get dbtitle, tabletitle, req.user._id, (err, table) ->
+	Table.get options, (err, table) ->
+		if table
+			query = Record.find {}
+			query.model.collection.name = options.database_id
+			query.model.collection.collection.collectionName = options.database_id
+			
+			query.where('table_id', table._id)
+			query.where('user_id', options.user_id)
+			
+			query.exec(cb)
+		else
+			cb(err)
+
+RecordSchema.statics.create = (options, cb) ->
+	Record = this
+
+	Table.get options, (err, table) ->
 		if table
 			record = new Record
-				data 		: req.body.data
-				user_id 	: req.user._id
-				database_id : table.database_id
+				data 		: options.data
+				user_id 	: options.user_id
 				table_id 	: table._id
 			
-			record.set_collection(dbtitle)
+			# TODO: Risky threat to collection names
+			# My reasoning is that we can trust that if we find a valid table, then the 
+			# database title is also the same. 
+			record.set_collection(options.database_id)
 
 			record.save (err) ->
 				if err
-					cb(err, "/#{dbtitle}/#{table.title}/records/new")
+					cb(err, "/#{options.database_id}/#{table.title}/records/new")
 				else
-					cb(null, "/#{dbtitle}/#{table.title}/records")
+					cb(null, "/#{options.database_id}/#{table.title}/records")
 			
 		else
-			cb(err, "/#{dbtitle}/tables/new")
+			cb(err, "/#{options.database_id}/tables/new")
 		
 
 

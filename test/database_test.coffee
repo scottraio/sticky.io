@@ -12,6 +12,13 @@ describe 'Database', () ->
 			db = new Database(mock.database)
 			db.save(done)
 
+		it 'should not save funky titles', (done) ->
+			db 			= new Database(mock.database)
+			db.title 	= "app-development!@#"
+			db.save (err) ->
+				should.exist(err)
+				done()
+
 		it 'should create a new collection', (done) ->
 			db = new Database(mock.database)
 			db.save()

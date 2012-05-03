@@ -8,6 +8,9 @@ exports.uniqueFieldInsensitive =  ( modelName, field ) ->
 		else
 			cb( false )
 
+exports.titleFormat = (val) ->
+	return (/^[a-zA-Z0-9_.]+$/i).test(val) 
+
 exports.emailFormat = (val) ->
 	return (/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i).test(val)
 

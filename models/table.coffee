@@ -10,6 +10,8 @@ TableSchema = new Schema {
 	database_id	 	: { type: ObjectId, required: true }
 }
 
+TableSchema.path('title').validate Validations.titleFormat, 'title'
+
 #
 # Table Methods
 #
@@ -17,17 +19,23 @@ TableSchema = new Schema {
 TableSchema.pre 'save', (next) ->
 	next()
 
-TableSchema.statics.get = (dbtitle,title,user_id,cb) ->
+TableSchema.statics.get = (options,cb) ->
 	Table 			= this
 	Database 		= mongoose.models.Database
 
-	Database.get dbtitle, user_id, (err, database) ->
+	Database.get options, (err, database) ->
 		if database
-			Table.findOne {title:title,database_id:database._id, user_id:user_id}, (err, table) ->
+			query = {
+				title 		: options.table_id || options.title
+				user_id 	: options.user_id
+				database_id	: database._id
+			}
+
+			Table.findOne query, (err, table) ->
 				if table
 					cb(err, table)
 		else
-			cb(err, database)
+			cb(err)
  
 
 mongoose.model('Table', TableSchema)

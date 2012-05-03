@@ -10,7 +10,8 @@ Database 	= app.models.Database
 
 exports.root = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		Database.get req, (err, database) ->
+		# Get the database 
+		get_database req, (err, database) ->
 			if database
 				Table.find {database_id:database._id, user_id:req.user._id}, done
 			else
@@ -21,7 +22,8 @@ exports.show = (req, res) ->
 		Table.findOne {_id:req.params.id}, done
 	
 exports.create = (req, res) ->
-	Database.get req.params.database_id, req.user._id, (err, database) ->
+	# Get the database
+	get_database req, (err, database) ->
 		table = new Table()
 
 		table.set 'title', 			req.body.title
@@ -35,3 +37,12 @@ exports.create = (req, res) ->
 				res.redirect("/#{req.params.database_id}/tables/new")
 			else
 				res.redirect("/#{req.params.database_id}/tables")
+
+get_database = (req, cb) ->
+	options = {
+		database_id : req.params.database_id
+		user_id		: req.user._id
+	}
+
+	Database.get(options, cb)
+

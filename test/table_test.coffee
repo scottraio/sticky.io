@@ -18,7 +18,7 @@ describe 'Table', () ->
 
 		return
 
-describe 'restful JSON API', () ->
+describe 'Table restful JSON API', () ->
 
 		beforeEach (done) ->
 			self 			= @

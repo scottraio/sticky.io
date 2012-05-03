@@ -9,6 +9,8 @@ DatabaseSchema = new Schema {
 	user_id	 	: { type: ObjectId, required: true}
 }
 
+DatabaseSchema.path('title').validate Validations.titleFormat, 'title'
+
 #
 # Database Methods
 #
@@ -19,9 +21,15 @@ DatabaseSchema.pre 'save', (next) ->
 		console.log(err) if (err)
 	next()
 
-DatabaseSchema.statics.get = (params, cb) ->
+DatabaseSchema.statics.get = (options, cb) ->
 	Database = this
-	Database.findOne {title:title, user_id:user_id}, cb
+
+	query = {
+		title 	: options.database_id || options.title
+		user_id	: options.user_id
+	}
+
+	Database.findOne(query, cb)
 
 
 mongoose.model('Database', DatabaseSchema)
