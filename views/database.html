@@ -24,6 +24,7 @@
 		<thead>
 			<tr>
 				<th>Title</th>
+				<th width="1%"></th>
 			</tr>
 		</thead>
 
@@ -33,10 +34,15 @@
 				<td>
 					<a href="/-{title}-/tables" class="navigate">-{title}-</a>
 				</td>
+				<td>
+					<a href="/databases/-{_id}-" class="delete btn btn-danger">Delete</a>
+				</td>
 			</tr>
 			-{/databases}-
 		</tbody>
 	</table>
+
+	<a href="/databases/new" class="btn navigate">Add Database</a>
 </script>
 
 <script id="database_details" type="text/html">

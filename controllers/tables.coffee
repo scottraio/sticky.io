@@ -38,6 +38,11 @@ exports.create = (req, res) ->
 			else
 				res.redirect("/#{req.params.database_id}/tables")
 
+exports.delete = (req, res) ->
+	get_database req, (err, database) ->
+		Table.remove {_id: req.params.id}, (err) ->
+			res.redirect("/#{req.params.database_id}/tables")			
+
 get_database = (req, cb) ->
 	options = {
 		database_id : req.params.database_id

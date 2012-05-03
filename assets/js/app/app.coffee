@@ -46,9 +46,7 @@ class App.Main extends Backbone.View
 	link_to_delete: (e) ->
 		# easy ajax function to perform a delete action
 		_this 	= $(e.currentTarget);
-		smoke.confirm 'You are about to destroy this. Are you sure?', (e) ->
-			if (e)
-				remote_post(_this.attr("rel"), _this.attr("href"), 'delete')
+		remote_post(_this.attr("rel"), _this.attr("href"), 'delete')
 		return false
 		
 	link_to_submit: (e) ->

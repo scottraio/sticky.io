@@ -26,3 +26,7 @@ exports.create = (req, res) ->
 			res.redirect('/databases/new')
 		else
 			res.redirect('/databases')
+
+exports.delete = (req, res) ->
+	Database.remove {_id: req.params.id}, (err) ->
+		res.redirect("/databases")	

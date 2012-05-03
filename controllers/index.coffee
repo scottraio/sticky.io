@@ -44,6 +44,8 @@ app.get('/databases/:id.:format?', ensureAuthenticated, DatabasesController.show
 app.get('/databases/new', ensureAuthenticated, DatabasesController.root)
 app.get('/databases/:id/edit', ensureAuthenticated, DatabasesController.root)
 app.post('/databases', ensureAuthenticated, DatabasesController.create)
+app.delete('/databases/:id', DatabasesController.delete)
+app.put('/databases/:id', DatabasesController.update)
 
 # 
 # Tables
@@ -54,6 +56,8 @@ app.get('/:database_id/tables/:id.:format?', ensureAuthenticated, TablesControll
 app.get('/:database_id/tables/new', ensureAuthenticated, TablesController.root)
 app.get('/:database_id/tables/:id/edit', ensureAuthenticated, TablesController.root)
 app.post('/:database_id/tables', ensureAuthenticated, TablesController.create)
+app.delete('/:database_id/tables/:id', TablesController.delete)
+app.put('/:database_id/tables/:id', TablesController.update)
 
 #
 # Records
@@ -64,6 +68,8 @@ app.get('/:database_id/:table_id/records/:id.:format?', ensureAuthenticated, Rec
 app.get('/:database_id/:table_id/records/new', ensureAuthenticated, RecordsController.root)
 app.get('/:database_id/:table_id/records/:id/edit', ensureAuthenticated, RecordsController.root)
 app.post('/:database_id/:table_id/records', ensureAuthenticated, RecordsController.create)
+app.delete('/:database_id/:table_id/records/:id', RecordsController.delete)
+app.put('/:database_id/:table_id/records/:id', RecordsController.update)
 
 
 #

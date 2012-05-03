@@ -25,7 +25,7 @@ describe 'Record', () ->
 
 		return
 
-describe 'restful JSON API', () ->
+	describe 'restful JSON API', () ->
 
 		beforeEach (done) ->
 			self 			= @
@@ -51,7 +51,9 @@ describe 'restful JSON API', () ->
 				done()
 
 		afterEach (done) ->
-			@user.remove()
+			User.remove {}
+			Database.remove {}
+			Table.remove {}
 			done()
 
 		return

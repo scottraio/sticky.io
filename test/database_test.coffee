@@ -8,10 +8,6 @@ describe 'Database', () ->
 
 	describe 'basic crud operations', () ->
 
-		it 'should save without error', (done) ->
-			db = new Database(mock.database)
-			db.save(done)
-
 		it 'should not save funky titles', (done) ->
 			db 			= new Database(mock.database)
 			db.title 	= "app-development!@#"
@@ -19,7 +15,7 @@ describe 'Database', () ->
 				should.exist(err)
 				done()
 
-		it 'should create a new collection', (done) ->
+		it 'should create a new collection on save', (done) ->
 			db = new Database(mock.database)
 			db.save()
 
@@ -30,6 +26,9 @@ describe 'Database', () ->
 				should.exist(item)
 				item.should.have.property('ok', true)
 				done()
+
+		it 'should be able to delete a database', (done) ->
+			done()
 
 		afterEach (done) ->
 			Database.remove {}, done
@@ -61,8 +60,7 @@ describe 'Database', () ->
 				done()
 
 		afterEach (done) ->
-			@user.remove()
-			done()
+			User.remove {_id:@user._id}, done
 
 		return
 

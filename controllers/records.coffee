@@ -4,8 +4,10 @@
 #
 #
 
-helpers = require './helpers'
-Record 	= app.models.Record
+helpers 	= require './helpers'
+Database 	= app.models.Database
+Table 		= app.models.Table
+Record 		= app.models.Record
 
 exports.root = (req, res) ->
 	helpers.render_json req, res, (done) ->
@@ -37,6 +39,20 @@ exports.create = (req, res) ->
 		else
 			res.redirect(redirect)
 
+exports.delete = (req, res) ->
+	options = {
+		database_id : req.params.database_id
+		table_id 	: req.params.table_id
+		user_id		: req.user._id
+		_id 		: req.params.id
+	}
+
+	Table.get options, (err, table) ->
+		Record.delete options, (err) ->
+			res.redirect("/#{options.database_id}/#{options.table_id}/records")
+
+	
+		
 
 	
 

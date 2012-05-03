@@ -5,6 +5,7 @@
 		<thead>
 			<tr>
 				<th>Tag</th>
+				<th width="1%"></th>
 			</tr>
 		</thead>
 
@@ -12,7 +13,10 @@
 			-{#records}-
 			<tr>
 				<td>
-					<a href="/-{database_id}-/-{table_id}-/records/-{_id}-" class="navigate">-{_id}-</a>
+					<a href="/-{db_id}-/-{tbl_id}-/records/-{_id}-" class="navigate">-{_id}-</a>
+				</td>
+				<td>
+					<a href="/-{db_id}-/-{tbl_id}-/records/-{_id}-" class="delete btn btn-danger">Delete</a>
 				</td>
 			</tr>
 			-{/records}-

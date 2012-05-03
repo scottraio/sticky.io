@@ -10,23 +10,22 @@ RecordSchema = new Schema(
 	data	 		: { type: String, required: true }
 )
 
+#
+# Validations
+#
+
 RecordSchema.path('data').validate(Validations.validJSON, 'data')
 
 #
 # Record Methods
 #
 
-RecordSchema.methods.set_collection = (title) ->
-	this.collection = mongoose.connection.collection(title)
-
 RecordSchema.statics.find_with_collection = (options, cb) ->
 	Record = this
 
 	Table.get options, (err, table) ->
 		if table
-			query = Record.find {}
-			query.model.collection.name = options.database_id
-			query.model.collection.collection.collectionName = options.database_id
+			query = Record.query(options.database_id)
 			
 			query.where('table_id', table._id)
 			query.where('user_id', options.user_id)
@@ -58,7 +57,31 @@ RecordSchema.statics.create = (options, cb) ->
 			
 		else
 			cb(err, "/#{options.database_id}/tables/new")
+
+RecordSchema.statics.delete = (options, cb) ->
+	Record = this
+	
+	Table.get options, (err, table) ->
+		if table
+			query = Record.query(options.database_id)
 		
+			query.where('table_id', table._id)
+			query.where('user_id', options.user_id)
+			query.where('_id', options._id)
+			
+			query.remove(cb)
+		else
+			cb(err)
+	
+RecordSchema.statics.query = (db_title) ->
+	query = this.find {}
+	query.model.collection.name 						= db_title
+	query.model.collection.collection.collectionName 	= db_title
+	return query
+
+
+RecordSchema.methods.set_collection = (title) ->
+	this.collection = mongoose.connection.collection(title)
 
 
 mongoose.model('Record', RecordSchema)

@@ -43,7 +43,7 @@
 		<th>Role</th>
 	</tr>
 	<tr>
-		<td>https://pine.io/<b>:db_title</b>/tables</td>
+		<td>https://pine.io/<b>:db_title</b>/tables.json</td>
 		<td>GET</td>
 		<td>Lists all tables for a database</td>
 	</tr>
@@ -53,12 +53,12 @@
 		<td>Creates a new table for a database</td>
 	</tr>
 	<tr>
-		<td>https://pine.io/<b>:db_title</b>/tables/<b>:title</b></td>
+		<td>https://pine.io/<b>:db_title</b>/<b>:title</b>.json</td>
 		<td>GET</td>
 		<td>Returns details of table</td>
 	</tr>
 	<tr>
-		<td>https://pine.io/<b>:db_title</b>/tables/<b>:title</b></td>
+		<td>https://pine.io/<b>:db_title</b>/<b>:title</b></td>
 		<td>PUT</td>
 		<td>Updates a table's attributes</td>
 	</tr>
@@ -77,28 +77,28 @@
 		<th>Role</th>
 	</tr>
 	<tr>
-		<td>https://pine.io/<b>:db_title</b>/records/<b>:title</b>/tables</td>
+		<td>https://pine.io/<b>:db_title</b>/<b>:table_title</b>/records.json</td>
 		<td>GET</td>
-		<td>Lists all databases</td>
+		<td>Lists all records</td>
 	</tr>
 	<tr>
-		<td>https://pine.io/databases</td>
+		<td>https://pine.io/<b>:db_title</b>/<b>:table_title</b>/records</td>
 		<td>POST</td>
-		<td>Creates a new database</td>
+		<td>Creates a new record</td>
 	</tr>
 	<tr>
-		<td>https://pine.io/databases/:title</td>
+		<td>https://pine.io/<b>:db_title</b>/<b>:table_title</b>/records/<b>:id</b></td>
 		<td>GET</td>
-		<td>Find a database by name</td>
+		<td>Returns details of record</td>
 	</tr>
 	<tr>
-		<td>https://pine.io/databases/:title</td>
+		<td>https://pine.io/<b>:db_title</b>/<b>:table_title</b>/records/<b>:id</b></td>
 		<td>PUT</td>
-		<td>Update database attributes</td>
+		<td>Update record attributes</td>
 	</tr>
 	<tr>
-		<td>https://pine.io/databases/:title</td>
+		<td>https://pine.io/<b>:db_title</b>/<b>:table_title</b>/records/<b>:id</b></td>
 		<td>DELETE</td>
-		<td>Remove a database</td>
+		<td>Remove a record</td>
 	</tr>
 </table>
