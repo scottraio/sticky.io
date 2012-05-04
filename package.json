@@ -23,6 +23,7 @@
     "passport-local"    : "*",
     "should"            : "*",
     "zombie"            : "*",
+    "lingo"             : "*",
     "consolidate"       : "*"
   }
 }
