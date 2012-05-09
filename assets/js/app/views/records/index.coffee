@@ -23,8 +23,7 @@ class App.Views.Records.Index extends Backbone.View
 		$.getJSON "#{@records_path}.json", (items) ->
 			$(self.el).html ich.record_list
 				records : items
-				db_id	: self.options.database_id
-				tbl_id	: self.options.table_id
+				records_path: self.records_path
 
 	delete: (e) ->
 		self = @

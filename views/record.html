@@ -13,17 +13,17 @@
 			-{#records}-
 			<tr>
 				<td>
-					<a href="/-{db_id}-/-{tbl_id}-/records/-{_id}-" class="navigate">-{_id}-</a>
+					<a href="-{records_path}-/-{_id}-" class="navigate">-{_id}-</a>
 				</td>
 				<td>
-					<a href="/-{db_id}-/-{tbl_id}-/records/-{_id}-" class="delete btn btn-danger">Delete</a>
+					<a href="-{records_path}-/-{_id}-" class="delete btn btn-danger">Delete</a>
 				</td>
 			</tr>
 			-{/records}-
 		</tbody>
 	</table>
 
-	<a href="/-{database_id}-/-{table_id}-/records/new" class="btn navigate">Add Record</a>
+	<a href="-{records_path}-/new" class="btn navigate">Add Record</a>
 </script>
 
 <script id="record_form" type="text/html">

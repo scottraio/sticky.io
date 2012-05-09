@@ -12,11 +12,11 @@ UsersController		= require './users'
 RecordsController	= require './records'
 
 ensureAuthenticated = (req, res, next) ->
-	return next() if req.isAuthenticated()
-	switch req.params.format 
-		when 'json' 
+	if req.isAuthenticated()
+		return next() 
+	else
+		if req.params.format is 'json'
 			passport.authenticate('basic',{session:false})(req, res, next)
-		else res.redirect('/login')
 
 #
 # Authentication
@@ -63,7 +63,7 @@ app.put('/:database_id/tables/:id', TablesController.update)
 # Records
 #
 
-app.get('/:database_id/:table_id/records.:format?', ensureAuthenticated, RecordsController.root)
+app.get('/:database_id/:table_id/records.:format?', passport.authenticate('basic',{session:false}), RecordsController.root)
 app.get('/:database_id/:table_id/records/:id.:format?', ensureAuthenticated, RecordsController.show)
 app.get('/:database_id/:table_id/records/new', ensureAuthenticated, RecordsController.root)
 app.get('/:database_id/:table_id/records/:id/edit', ensureAuthenticated, RecordsController.root)

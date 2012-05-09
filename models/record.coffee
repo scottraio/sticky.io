@@ -7,18 +7,29 @@ Table 		= mongoose.models.Table
 RecordSchema = new Schema(
 	table_id  		: { type: ObjectId, required: true, trim: true }
 	user_id	 		: { type: ObjectId, required: true, trim: true }
-	data	 		: { type: String, required: true }
+	data	 		: { type: Array, required: true }
 )
 
 #
 # Validations
 #
 
-RecordSchema.path('data').validate(Validations.validJSON, 'data')
+#RecordSchema.path('data').validate(Validations.validJSON, 'data')
+
+# 
+# Callbacks
+#
+
+RecordSchema.pre 'save', (next) ->
+	next()
 
 #
 # Record Methods
 #
+
+
+RecordSchema.methods.set_collection = (title) ->
+	this.collection = mongoose.connection.collection(title)
 
 RecordSchema.statics.find_with_collection = (options, cb) ->
 	Record = this
@@ -35,12 +46,11 @@ RecordSchema.statics.find_with_collection = (options, cb) ->
 			cb(err)
 
 RecordSchema.statics.create = (options, cb) ->
-	Record = this
+	Record = this 
 
 	Table.get options, (err, table) ->
 		if table
 			record = new Record
-				data 		: options.data
 				user_id 	: options.user_id
 				table_id 	: table._id
 			
@@ -49,6 +59,8 @@ RecordSchema.statics.create = (options, cb) ->
 			# database title is also the same. 
 			record.set_collection(options.database_id)
 
+			record.formatted_data(options.data)		
+	
 			record.save (err) ->
 				if err
 					cb(err, "/#{options.database_id}/#{table.title}/records/new")
@@ -57,6 +69,17 @@ RecordSchema.statics.create = (options, cb) ->
 			
 		else
 			cb(err, "/#{options.database_id}/tables/new")
+
+RecordSchema.methods.formatted_data = (raw) ->
+	bucket 	= []
+	json 	= JSON.parse(raw)
+	
+	clean = for key,value of json
+		hsh = '{' + key + ':' + value + '}'
+		bucket.push JSON.parse(hsh)
+
+	@data = bucket
+
 
 RecordSchema.statics.delete = (options, cb) ->
 	Record = this
@@ -80,8 +103,6 @@ RecordSchema.statics.query = (db_title) ->
 	return query
 
 
-RecordSchema.methods.set_collection = (title) ->
-	this.collection = mongoose.connection.collection(title)
 
 
 mongoose.model('Record', RecordSchema)

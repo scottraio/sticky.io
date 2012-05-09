@@ -37,6 +37,7 @@ describe 'Table restful JSON API', () ->
 				status.should.eql 200
 				{headers:brs.response[1]}.should.be.json
 				brs.response[1].should.exist
+				console.log brs
 				done()
 
 		afterEach (done) ->
