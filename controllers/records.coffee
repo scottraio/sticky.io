@@ -6,15 +6,16 @@
 
 helpers 	= require './helpers'
 Database 	= app.models.Database
-Table 		= app.models.Table
+Collection 	= app.models.Collection
 Record 		= app.models.Record
 
 exports.root = (req, res) ->
 	helpers.render_json req, res, (done) ->
+		
 		options = {
-			database_id : req.params.database_id
-			table_id 	: req.params.table_id
-			user_id		: req.user._id
+			database_id 	: req.params.database_id
+			collection_id 	: req.params.collection_id
+			user_id			: req.user._id
 		}
 
 		Record.find_with_collection(options,done)
@@ -25,10 +26,10 @@ exports.show = (req, res) ->
 	
 exports.create = (req, res) ->
 	options = {
-		database_id : req.params.database_id
-		table_id 	: req.params.table_id
-		user_id		: req.user._id
-		data 		: req.body.data
+		database_id 	: req.params.database_id
+		collection_id 	: req.params.collection_id
+		user_id			: req.user._id
+		data 			: req.body.data
 	}
 
 	Record.create options, (err, redirect) ->
@@ -41,15 +42,15 @@ exports.create = (req, res) ->
 
 exports.delete = (req, res) ->
 	options = {
-		database_id : req.params.database_id
-		table_id 	: req.params.table_id
-		user_id		: req.user._id
-		_id 		: req.params.id
+		database_id 	: req.params.database_id
+		collection_id 	: req.params.collection_id
+		user_id			: req.user._id
+		_id 			: req.params.id
 	}
 
-	Table.get options, (err, table) ->
+	Collection.get options, (err, collection) ->
 		Record.delete options, (err) ->
-			res.redirect("/#{options.database_id}/#{options.table_id}/records")
+			res.redirect("/#{options.database_id}/#{options.collection_id}/records")
 
 	
 		

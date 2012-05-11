@@ -4,7 +4,8 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Tag</th>
+				<th>ID</th>
+				<th>JSON</th>
 				<th width="1%"></th>
 			</tr>
 		</thead>
@@ -13,10 +14,13 @@
 			-{#records}-
 			<tr>
 				<td>
-					<a href="-{records_path}-/-{_id}-" class="navigate">-{_id}-</a>
+					<a href="-{records_path}-/-{_id}-" class="navigate"><b>-{_id}-</b></a>
 				</td>
 				<td>
-					<a href="-{records_path}-/-{_id}-" class="delete btn btn-danger">Delete</a>
+					<a href="-{records_path}-/-{_id}-.json"><span class="label label-success">JSON</span></a>
+				</td>
+				<td>
+					<a href="-{records_path}-/-{_id}-" class="delete btn btn-danger btn-mini">Delete</a>
 				</td>
 			</tr>
 			-{/records}-
@@ -27,7 +31,7 @@
 </script>
 
 <script id="record_form" type="text/html">
-	<form action="/-{database_id}-/-{table_id}-/records" method="post" class="well form-horizontal">
+	<form action="/-{database_id}-/-{collection_id}-/records" method="post" class="well form-horizontal">
 		<fieldset>
 			<legend>Create a record</legend>
 			<div class="control-group">
@@ -39,7 +43,7 @@
 
 			<div class="form-actions">
 				<button class="btn btn-primary" type="submit">Create Record</button>
-				<a href="/-{database_id}-/-{table_id}-/records" class="btn navigate">Cancel</a>
+				<a href="/-{database_id}-/-{collection_id}-/records" class="btn navigate">Cancel</a>
 			</div>
 		</fieldset>
 	</form>

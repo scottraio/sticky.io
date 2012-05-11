@@ -1,12 +1,12 @@
-App.Views.Tables or= {}
+App.Views.Collections or= {}
 
-class App.Views.Tables.Index extends Backbone.View
+class App.Views.Collections.Index extends Backbone.View
 
 	events:
 		'click .delete' : "delete"
 	
 	initialize: ->	
-		@url = "/#{@options.database_id}/tables"
+		@url = "/#{@options.database_id}/collections"
 
 		$('.breadcrumb').remove()
 
@@ -19,9 +19,9 @@ class App.Views.Tables.Index extends Backbone.View
 	render: ->
 		self = @
 		$.getJSON "#{@url}.json", (items) ->
-			$(self.el).html ich.table_list
-				tables 	: items
-				db_id	: self.options.database_id
+			$(self.el).html ich.collection_list
+				collections : items
+				db_id		: self.options.database_id
 
 	delete: (e) ->
 		self = @

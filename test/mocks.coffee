@@ -9,15 +9,15 @@ exports.database = {
 	user_id 	: '4fa066c415b5565702000008'
 }
 
-exports.table = {
+exports.collection = {
 	title 		: 'Todos'
 	user_id 	: '4fa066c415b5565702000008'
 	database_id : '4fa066c415b5565702000008'
 }
 
 exports.record = {
-	data 		: '[{"task": "Find funding"}]'
-	user_id 	: '4fa066c415b5565702000008'
-	table_id 	: '4fa066c415b5565702000008'
-	database_id : '4fa066c415b5565702000008'
+	data 			: '{"task": "Find funding"}'
+	user_id 		: '4fa066c415b5565702000008'
+	collection_id 	: '4fa066c415b5565702000008'
+	database_id 	: '4fa066c415b5565702000008'
 }

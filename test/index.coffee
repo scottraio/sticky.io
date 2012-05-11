@@ -11,7 +11,7 @@ mock = require './mocks'
 
 require './database_test'
 require './user_test'
-require './table_test'
+require './collection_test'
 require './record_test'
 
 

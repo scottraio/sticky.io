@@ -25,7 +25,7 @@ window.App =
 		window.xhr = mode
 		new App.Routers.DocsRouter()
 		new App.Routers.DatabasesRouter()
-		new App.Routers.TablesRouter()
+		new App.Routers.CollectionsRouter()
 		new App.Routers.RecordsRouter()
 		new App.Routers.UsersRouter()
 		Backbone.history.start {pushState:true}

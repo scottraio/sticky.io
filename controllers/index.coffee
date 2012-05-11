@@ -3,13 +3,13 @@
 # Controllers Main - Hybrid application_controller/routes
 #
 #
-fs 					= require 'fs'
-passport 			= require '../lib/passport'
-Resource			= require '../lib/express_resource'
-TablesController 	= require './tables'
-DatabasesController = require './databases'
-UsersController		= require './users'
-RecordsController	= require './records'
+fs 						= require 'fs'
+passport 				= require '../lib/passport'
+Resource				= require '../lib/express_resource'
+CollectionsController 	= require './collections'
+DatabasesController 	= require './databases'
+UsersController			= require './users'
+RecordsController		= require './records'
 
 ensureAuthenticated = (req, res, next) ->
 	if req.isAuthenticated()
@@ -48,28 +48,28 @@ app.delete('/databases/:id', DatabasesController.delete)
 app.put('/databases/:id', DatabasesController.update)
 
 # 
-# Tables
+# Collections
 #
 
-app.get('/:database_id/tables.:format?', ensureAuthenticated, TablesController.root)
-app.get('/:database_id/tables/:id.:format?', ensureAuthenticated, TablesController.show)
-app.get('/:database_id/tables/new', ensureAuthenticated, TablesController.root)
-app.get('/:database_id/tables/:id/edit', ensureAuthenticated, TablesController.root)
-app.post('/:database_id/tables', ensureAuthenticated, TablesController.create)
-app.delete('/:database_id/tables/:id', TablesController.delete)
-app.put('/:database_id/tables/:id', TablesController.update)
+app.get('/:database_id/collections.:format?', ensureAuthenticated, CollectionsController.root)
+app.get('/:database_id/collections/:id.:format?', ensureAuthenticated, CollectionsController.show)
+app.get('/:database_id/collections/new', ensureAuthenticated, CollectionsController.root)
+app.get('/:database_id/collections/:id/edit', ensureAuthenticated, CollectionsController.root)
+app.post('/:database_id/collections', ensureAuthenticated, CollectionsController.create)
+app.delete('/:database_id/collections/:id', CollectionsController.delete)
+app.put('/:database_id/collections/:id', CollectionsController.update)
 
 #
 # Records
 #
 
-app.get('/:database_id/:table_id/records.:format?', passport.authenticate('basic',{session:false}), RecordsController.root)
-app.get('/:database_id/:table_id/records/:id.:format?', ensureAuthenticated, RecordsController.show)
-app.get('/:database_id/:table_id/records/new', ensureAuthenticated, RecordsController.root)
-app.get('/:database_id/:table_id/records/:id/edit', ensureAuthenticated, RecordsController.root)
-app.post('/:database_id/:table_id/records', ensureAuthenticated, RecordsController.create)
-app.delete('/:database_id/:table_id/records/:id', RecordsController.delete)
-app.put('/:database_id/:table_id/records/:id', RecordsController.update)
+app.get('/:database_id/:collection_id/records.:format?', ensureAuthenticated, RecordsController.root)
+app.get('/:database_id/:collection_id/records/:id.:format?', ensureAuthenticated, RecordsController.show)
+app.get('/:database_id/:collection_id/records/new', ensureAuthenticated, RecordsController.root)
+app.get('/:database_id/:collection_id/records/:id/edit', ensureAuthenticated, RecordsController.root)
+app.post('/:database_id/:collection_id/records', ensureAuthenticated, RecordsController.create)
+app.delete('/:database_id/:collection_id/records/:id', RecordsController.delete)
+app.put('/:database_id/:collection_id/records/:id', RecordsController.update)
 
 
 #

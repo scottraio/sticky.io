@@ -1,0 +1,50 @@
+<!-- Collection -->
+
+<script id="collection_list" type="text/html">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>JSON</th>
+				<th width="1%"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+			-{#collections}-
+			<tr>
+				<td>
+					<a href="/-{db_id}-/-{title}-/records" class="navigate"><b>-{title}-</b></a>
+				</td>
+				<td>
+					<a href="/-{db_id}-/-{title}-/records.json"><span class="label label-success">JSON</span></a>
+				</td>
+				<td>
+					<a href="/-{db_id}-/collections/-{_id}-" class="delete btn btn-danger btn-mini">Delete</a>
+				</td>
+			</tr>
+			-{/collections}-
+		</tbody>
+	</table>
+	
+	<a href="/-{db_id}-/collections/new" class="btn navigate">Add Collection</a>
+</script>
+
+<script id="collection_form" type="text/html">
+	<form action="/-{database_id}-/collections" method="post" class="well form-horizontal">
+		<fieldset>
+			<legend>Create a collection</legend>
+			<div class="control-group">
+				<label class="control-label" for="input01">Title</label>
+				<div class="controls">
+					<input type="text" id="input01" class="input-xlarge" name="title" placeholder="pick a title for your collection" />
+				</div>
+			</div>
+
+			<div class="form-actions">
+				<button class="btn btn-primary" type="submit">Create Collection</button>
+				<a href="/-{database_id}-/collections" class="btn navigate">Cancel</a>
+			</div>
+		</fieldset>
+	</form>
+</script>

@@ -1,24 +1,24 @@
-should  	= require 'should'
-Browser		= require 'zombie'
-mock 		= require './mocks'
-Table 		= app.models.Table
-Database 	= app.models.Database
-User 		= app.models.User
+should  		= require 'should'
+Browser			= require 'zombie'
+mock 			= require './mocks'
+Collection 		= app.models.Collection
+Database 		= app.models.Database
+User 			= app.models.User
 
-describe 'Table', () ->
+describe 'Collection', () ->
 
 	describe 'basic crud operations', () ->
 
 		it 'should save without error', (done) ->
-			table = new Table(mock.table)
-			table.save(done)
+			collection = new Collection(mock.collection)
+			collection.save(done)
 
 		afterEach (done) ->
 			Database.remove {}, done
 
 		return
 
-describe 'Table restful JSON API', () ->
+describe 'Collection restful JSON API', () ->
 
 		beforeEach (done) ->
 			self 			= @
@@ -28,7 +28,7 @@ describe 'Table restful JSON API', () ->
 				db 			= new Database(mock.database)
 				db.user_id 	= self.user._id
 				db.save (err) ->
-					self.url = "#{db.title}/tables"
+					self.url = "#{db.title}/collections"
 					done()
 
 		it 'should return valid JSON for index', (done) ->
@@ -37,7 +37,6 @@ describe 'Table restful JSON API', () ->
 				status.should.eql 200
 				{headers:brs.response[1]}.should.be.json
 				brs.response[1].should.exist
-				console.log brs
 				done()
 
 		afterEach (done) ->

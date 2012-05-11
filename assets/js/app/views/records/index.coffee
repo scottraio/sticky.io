@@ -6,16 +6,16 @@ class App.Views.Records.Index extends Backbone.View
 		'click .delete' : "delete"
 	
 	initialize: ->	
-		@tables_path 	= "/#{@options.database_id}/tables"
-		@records_path 	= "/#{@options.database_id}/#{@options.table_id}/records"
+		@collections_path 	= "/#{@options.database_id}/collections"
+		@records_path 		= "/#{@options.database_id}/#{@options.collection_id}/records"
 
 		$('.breadcrumb').remove()
 
 		$(@el).before ich.breadcrumb 
 			crumbs: [
 				{url:'/databases', title:'Home'},
-				{url:@tables_path, title:@options.database_id, sep:true},
-				{url:@records_path, title:@options.table_id, sep:true}
+				{url:@collections_path, title:@options.database_id, sep:true},
+				{url:@records_path, title:@options.collection_id, sep:true}
 			]
 		
 	render: ->

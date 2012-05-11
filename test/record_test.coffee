@@ -2,7 +2,7 @@ should  	= require 'should'
 Browser		= require 'zombie'
 mock 		= require './mocks'
 Record 		= app.models.Record
-Table 		= app.models.Table
+Collection 	= app.models.Collection
 Database 	= app.models.Database
 User 		= app.models.User
 
@@ -19,6 +19,7 @@ describe 'Record', () ->
 				record.set_collection(db.title)
 				record.save(done)
 
+
 		afterEach (done) ->
 			#Record.remove {}, done
 			done()
@@ -32,28 +33,36 @@ describe 'Record', () ->
 			@user 			= new User(mock.user)
 			@user.email 	= "test-record@pine.io"
 			@user.save (err) ->
-				db 			= new Database(mock.database)
-				db.user_id 	= self.user._id
-				db.save (err) ->
-					table 				= new Table(mock.table)
-					table.user_id 		= self.user_id
-					table.database_id 	= db._id
-					table.save (err) ->
-						self.url = "#{db.title}/#{table.title}/records"
+				self.db 			= new Database(mock.database)
+				self.db.user_id 	= self.user._id
+				self.db.save (err) ->
+					self.collection 				= new Collection(mock.collection)
+					self.collection.user_id 		= self.user_id
+					self.collection.database_id 	= self.db._id
+					self.collection.save (err) ->
+						self.url = "#{self.db.title}/#{self.collection.title}/records"
 						done()
 
 		it 'should return valid JSON for index', (done) ->
 			Browser.visit "http://test-record%40pine.io:pinerocks@localhost:8000/#{@url}.json", {debug: false}, (err, brs, status) ->
-				#should.not.exist err
-				#status.should.eql 200
-				#brs.response.should.exist
-				console.log brs
+				should.not.exist err
+				status.should.eql 200
+				{headers:brs.response[1]}.should.be.json
+				brs.response[1].should.exist
+				done()
+
+		it 'should save formatted data', (done) ->
+			Browser.visit "http://test-record%40pine.io:pinerocks@localhost:8000/#{@url}.json", {debug: false}, (err, brs, status) ->
+				should.not.exist err
+				status.should.eql 200
+				{headers:brs.response[1]}.should.be.json
+				brs.response[1].should.exist
 				done()
 
 		afterEach (done) ->
-			User.collection.remove()
-			Database.collection.remove()
-			Table.collection.remove()
+			User.remove {}
+			Database.remove {}
+			Collection.remove {}
 			done()
 
 		return
