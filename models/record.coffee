@@ -1,3 +1,4 @@
+_ 				= require('underscore')
 Schema 			= mongoose.Schema
 ObjectId 		= Schema.ObjectId
 Validations 	= require('./validations.coffee')
@@ -60,7 +61,6 @@ RecordSchema.statics.create = (options, cb) ->
 			record.set_collection(options.database_id)
 
 			# Preformat the data into an array of hashes
-			console.log options.data
 			record.formatted_data(options.data)		
 	
 			record.save (err) ->
@@ -75,12 +75,13 @@ RecordSchema.statics.create = (options, cb) ->
 RecordSchema.methods.formatted_data = (raw) ->
 	bucket 	= []
 	json 	= JSON.parse(raw)
-	
-	clean = for key,value of json
-		hsh = '{' + key + ':' + value + '}'
-		console.log hsh
-		bucket.push JSON.parse(hsh)
-		console.log bucket
+	keys 	= _.keys(json)
+
+	for key in keys
+		dict 		= {}
+		val 		= json[key]
+		dict[key] 	= val
+		bucket.push dict
 
 	@data = bucket
 

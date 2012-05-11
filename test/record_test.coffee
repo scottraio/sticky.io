@@ -24,8 +24,6 @@ describe 'Record', () ->
 			#Record.remove {}, done
 			done()
 
-		return
-
 	describe 'restful JSON API', () ->
 
 		beforeEach (done) ->
