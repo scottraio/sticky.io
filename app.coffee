@@ -31,7 +31,7 @@ app.configure () ->
 	app.engine('html', cons.handlebars)
 
 	# Defaults
-	app.set 'views', __dirname + '/views'
+	app.set 'views', __dirname + '/app/views'
 	app.set 'view engine', 'html'
 	app.use express.static(pub_dir)
 	app.use express.favicon()
@@ -72,7 +72,7 @@ app.configure 'test', () ->
 # Mongoose models
 #
 
-mongoose = require('./models')
+mongoose = require('./app/models')
 app.models = mongoose.models
 
 #
@@ -80,19 +80,19 @@ app.models = mongoose.models
 #
 
 
-fs.readFile './views/header.html', (err, data) -> handlbars.registerPartial 'header', data.toString()
-fs.readFile './views/footer.html', (err, data) -> handlbars.registerPartial 'footer', data.toString()
-fs.readFile './views/nav.html', (err, data) -> handlbars.registerPartial 'nav', data.toString()
-fs.readFile './views/database.html', (err, data) -> handlbars.registerPartial 'database', data.toString()
-fs.readFile './views/collection.html', (err, data) -> handlbars.registerPartial 'collection', data.toString()
-fs.readFile './views/record.html', (err, data) -> handlbars.registerPartial 'record', data.toString()
+fs.readFile './app/views/header.html', (err, data) -> handlbars.registerPartial 'header', data.toString()
+fs.readFile './app/views/footer.html', (err, data) -> handlbars.registerPartial 'footer', data.toString()
+fs.readFile './app/views/nav.html', (err, data) -> handlbars.registerPartial 'nav', data.toString()
+fs.readFile './app/views/database.html', (err, data) -> handlbars.registerPartial 'database', data.toString()
+fs.readFile './app/views/collection.html', (err, data) -> handlbars.registerPartial 'collection', data.toString()
+fs.readFile './app/views/record.html', (err, data) -> handlbars.registerPartial 'record', data.toString()
 
 handlbars.registerPartial 'vendor_js', js('vendor')
 handlbars.registerPartial 'app_js', js('app')
 handlbars.registerPartial 'stylesheets', css('app')
 
 
-require('./controllers')
+require('./app/controllers')
 
 #
 # Boot server

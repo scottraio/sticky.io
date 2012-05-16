@@ -4,8 +4,8 @@
 #
 #
 fs 						= require 'fs'
-passport 				= require '../lib/passport'
-Resource				= require '../lib/express_resource'
+passport 				= require '../../lib/passport'
+Resource				= require '../../lib/express_resource'
 CollectionsController 	= require './collections'
 DatabasesController 	= require './databases'
 UsersController			= require './users'
@@ -17,6 +17,8 @@ ensureAuthenticated = (req, res, next) ->
 	else
 		if req.params.format is 'json'
 			passport.authenticate('basic',{session:false})(req, res, next)
+		else
+			return next()
 
 #
 # Authentication

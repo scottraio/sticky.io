@@ -1,5 +1,5 @@
 exports.user = {
-	email   	: 'scottraio@gmail.com'
+	email   	: 'test@pine.io'
 	name 		: 'Scott Raio'
 	password	: 'pinerocks'
 }

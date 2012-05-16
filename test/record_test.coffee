@@ -1,6 +1,7 @@
 should  	= require 'should'
 Browser		= require 'zombie'
 mock 		= require './mocks'
+http 		= require './http_helper'
 Record 		= app.models.Record
 Collection 	= app.models.Collection
 Database 	= app.models.Database
@@ -21,15 +22,13 @@ describe 'Record', () ->
 
 
 		afterEach (done) ->
-			#Record.remove {}, done
-			done()
+			Database.remove {}, done
 
 	describe 'restful JSON API', () ->
 
 		beforeEach (done) ->
 			self 			= @
 			@user 			= new User(mock.user)
-			@user.email 	= "test-record@pine.io"
 			@user.save (err) ->
 				self.db 			= new Database(mock.database)
 				self.db.user_id 	= self.user._id
@@ -38,30 +37,18 @@ describe 'Record', () ->
 					self.collection.user_id 		= self.user_id
 					self.collection.database_id 	= self.db._id
 					self.collection.save (err) ->
-						self.url = "#{self.db.title}/#{self.collection.title}/records"
+						self.url = "/#{self.db.title}/#{self.collection.title}/records"
 						done()
 
 		it 'should return valid JSON for index', (done) ->
-			Browser.visit "http://test-record%40pine.io:pinerocks@localhost:8000/#{@url}.json", {debug: false}, (err, brs, status) ->
-				should.not.exist err
-				status.should.eql 200
-				{headers:brs.response[1]}.should.be.json
-				brs.response[1].should.exist
-				done()
-
-		it 'should save formatted data', (done) ->
-			Browser.visit "http://test-record%40pine.io:pinerocks@localhost:8000/#{@url}.json", {debug: false}, (err, brs, status) ->
-				should.not.exist err
-				status.should.eql 200
-				{headers:brs.response[1]}.should.be.json
-				brs.response[1].should.exist
-				done()
+			#http.get "test@pine.io", "pinerocks", "#{@url}.json", (err, res) ->
+			#	console.log err
+			#	console.log res
+			#	done()
+			
 
 		afterEach (done) ->
-			User.remove {}
-			Database.remove {}
-			Collection.remove {}
-			done()
-
-		return
+			User.remove {}, (err) ->
+				Database.remove {}, (err) ->
+					Collection.remove {}, done
 		

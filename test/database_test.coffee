@@ -31,8 +31,7 @@ describe 'Database', () ->
 			done()
 
 		afterEach (done) ->
-			Database.collection.remove()
-			done()
+			Database.remove {}, done
 
 		return
 
@@ -61,8 +60,7 @@ describe 'Database', () ->
 				done()
 
 		afterEach (done) ->
-			User.collection.remove()
-			done()
-
-		return
+			User.remove {}, (err) ->
+				Database.remove {}, done
+	
 

@@ -1,6 +1,7 @@
 should  		= require 'should'
 Browser			= require 'zombie'
 mock 			= require './mocks'
+#http 			= require('./http')
 Collection 		= app.models.Collection
 Database 		= app.models.Database
 User 			= app.models.User
@@ -23,7 +24,6 @@ describe 'Collection restful JSON API', () ->
 		beforeEach (done) ->
 			self 			= @
 			@user 			= new User(mock.user)
-			@user.email 	= "test@pine.io"
 			@user.save (err) ->
 				db 			= new Database(mock.database)
 				db.user_id 	= self.user._id
@@ -40,7 +40,9 @@ describe 'Collection restful JSON API', () ->
 				done()
 
 		afterEach (done) ->
-			@user.remove()
-			done()
+			User.remove {}, (err) ->
+				Database.remove {}, (err) ->
+					Collection.remove {}, done
+			
 
 		return
