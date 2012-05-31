@@ -8,7 +8,7 @@ helpers = require './helpers'
 
 exports.root = (req, res) ->
 	if req.isAuthenticated()
-		res.render('index')
+		res.render('index', {domain:'test'})
 	else
 		res.render('public')
 
@@ -22,12 +22,14 @@ exports.show = (req, res) ->
 exports.create = (req, res) ->
 	user = new app.models.User()
 
+	user.set('subdomain', req.body.subdomain)
 	user.set('name', req.body.name)
 	user.set('email', req.body.email)
 	user.set('password', req.body.password)
 
 	user.save (err) ->
 		if err
+			console.log err
 			res.redirect('/signup')
 		else
 			req.logIn user, (err) ->

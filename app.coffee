@@ -10,6 +10,7 @@ handlbars 	= require 'handlebars'
 passport 	= require 'passport'
 assets 		= require 'connect-assets'
 flash		= require 'connect-flash'
+xmpp 		= require 'simple-xmpp'
 
 #
 # The App
@@ -21,6 +22,8 @@ GLOBAL.app 		= module.exports = express.createServer()
 # Middleware
 #
 
+app.root_dir = __dirname
+
 app.configure () ->
 	pub_dir = __dirname + '/public'
 
@@ -31,7 +34,7 @@ app.configure () ->
 	app.engine('html', cons.handlebars)
 
 	# Defaults
-	app.set 'views', __dirname + '/views'
+	app.set 'views', __dirname + '/app/views'
 	app.set 'view engine', 'html'
 	app.use express.static(pub_dir)
 	app.use express.favicon()
@@ -57,22 +60,22 @@ app.configure () ->
 #
 
 app.configure 'production', () ->
-	app.dbname = 'pine-io-production'
+	app.dbname = 'pine-io-xmpp-production'
 
 app.configure 'development', () ->
 	app.use(express.errorHandler())
-	app.dbname = 'pine-io-development'
+	app.dbname = 'pine-io-xmpp-development'
 
 app.configure 'test', () ->
 	app.use(express.errorHandler())
-	app.dbname = 'pine-io-test'
+	app.dbname = 'pine-io-xmpp-test'
 	
 
 #
 # Mongoose models
 #
 
-mongoose = require('./models')
+mongoose = require('./app/models')
 app.models = mongoose.models
 
 #
@@ -80,24 +83,52 @@ app.models = mongoose.models
 #
 
 
-fs.readFile './views/header.html', (err, data) -> handlbars.registerPartial 'header', data.toString()
-fs.readFile './views/footer.html', (err, data) -> handlbars.registerPartial 'footer', data.toString()
-fs.readFile './views/nav.html', (err, data) -> handlbars.registerPartial 'nav', data.toString()
-fs.readFile './views/database.html', (err, data) -> handlbars.registerPartial 'database', data.toString()
-fs.readFile './views/collection.html', (err, data) -> handlbars.registerPartial 'collection', data.toString()
-fs.readFile './views/record.html', (err, data) -> handlbars.registerPartial 'record', data.toString()
+fs.readFile './app/views/header.html', (err, data) -> handlbars.registerPartial 'header', data.toString()
+fs.readFile './app/views/footer.html', (err, data) -> handlbars.registerPartial 'footer', data.toString()
+fs.readFile './app/views/nav.html', (err, data) -> handlbars.registerPartial 'nav', data.toString()
+fs.readFile './app/views/database.html', (err, data) -> handlbars.registerPartial 'database', data.toString()
+fs.readFile './app/views/collection.html', (err, data) -> handlbars.registerPartial 'collection', data.toString()
+fs.readFile './app/views/record.html', (err, data) -> handlbars.registerPartial 'record', data.toString()
 
 handlbars.registerPartial 'vendor_js', js('vendor')
 handlbars.registerPartial 'app_js', js('app')
 handlbars.registerPartial 'stylesheets', css('app')
 
 
-require('./controllers')
+require('./app/controllers')
+
+
+#
+# Load up XMPP bot
+#
+xmpp.on 'online', ->
+	console.log 'xmpp online'
+
+xmpp.on 'error', (e) ->
+	console.log e
+
+xmpp.on 'chat', (from, message) ->
+	console.log from
+	app.models.User.findOne {email:from}, (err, user) ->
+		note = new app.models.Note()
+	
+		note.set 'message', 	message
+		note.set 'created_at', 	new Date()
+		note.set '_user', 		user._id
+		
+		note.save (err) ->
+			console.log note
+	#xmpp.send(from, 'echo: ' + message)
+
+xmpp.connect
+	jid: "jessraaff@gmail.com"
+	password: "helloyou2"
+	host: "talk.google.com"
+	port: 5222
 
 #
 # Boot server
 #
-
 app.listen(8000)
 
 console.log 'Server running at http://127.0.0.1:8000/'
