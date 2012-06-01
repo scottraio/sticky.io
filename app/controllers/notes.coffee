@@ -16,8 +16,11 @@ exports.show = (req,res) ->
 # GET /notes.json
 #
 exports.index = (req, res) ->
-	helpers.render_json req, res, (done) ->
-		Note.find({_account:req.user._account}).run(done)
+	if req.isAuthenticated()
+		helpers.render_json req, res, (done) ->
+			Note.find({_account:req.user._account}).run(done)
+	else
+		res.render('public')
 
 #
 # creates a new note for an account
