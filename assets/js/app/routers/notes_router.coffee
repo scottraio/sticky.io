@@ -8,7 +8,7 @@ class App.Routers.NotesRouter extends Backbone.Router
 		"notes/:id/edit" 	: "edit"
 	
 	index: ->
-		if App.current_user()
+		if current_user
 			notes = new App.Views.Notes.Index(el: $("#stage"))
 			notes.render()
 		

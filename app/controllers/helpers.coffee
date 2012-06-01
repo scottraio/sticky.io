@@ -11,4 +11,7 @@ exports.render_json = (req,res,fn) ->
 					res.write JSON.stringify(items||[])
 					res.end('\n')
 			fn(cb)
-		else res.render('index', {error: req.flash('error'), success: req.flash('success') })
+		else exports.render_page('index', req, res)
+
+exports.render_page = (page,req,res) ->
+	res.render(page, {error: req.flash('error'), success: req.flash('success'), current_user: JSON.stringify(req.user)  })
