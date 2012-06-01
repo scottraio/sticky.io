@@ -102,28 +102,40 @@ require('./app/controllers')
 # Load up XMPP bot
 #
 xmpp.on 'online', ->
-	console.log 'xmpp online'
+	welcome()
 
 xmpp.on 'error', (e) ->
 	console.log e
 
 xmpp.on 'chat', (from, message) ->
-	console.log from
 	app.models.User.findOne {email:from}, (err, user) ->
-		note = new app.models.Note()
-	
-		note.set 'message', 	message
-		note.set 'created_at', 	new Date()
-		note.set '_user', 		user._id
+		if user
+			note = new app.models.Note()
 		
-		note.save (err) ->
-			console.log note
-	#xmpp.send(from, 'echo: ' + message)
+			note.set 'message', 	message
+			note.set 'created_at', 	new Date()
+			note.set '_user', 		user._id
+			
+			note.save (err) ->
+				console.log note
+		else
+			xmpp.send(from, "Welcome to Pine.io friend! Before we begin, please follow this link: http://pine.io/signup/#{from}")
+
+xmpp.on 'stanza', (stanza) ->
+	
+	if stanza.is('presence') 
+		if stanza.attrs.type is 'subscribe'
+			validate = new xmpp.Element('presence', {type: 'subscribed', to: stanza.attrs.from})
+			xmpp.conn.send(validate)
+
+		if stanza.attrs.type is 'unsubscribe'
+			validate = new xmpp.Element('presence', {type: 'unsubscribed', to: stanza.attrs.from})
+			xmpp.conn.send(validate)
 
 xmpp.connect
-	jid: "jessraaff@gmail.com"
-	password: "helloyou2"
-	host: "talk.google.com"
+	jid: "derby@pine.io"
+	password: "dif3ndere"
+	host: "pine.io"
 	port: 5222
 
 #
@@ -132,3 +144,14 @@ xmpp.connect
 app.listen(8000)
 
 console.log 'Server running at http://127.0.0.1:8000/'
+
+welcome = () ->
+	green = '\u001b[32m'
+	reset = '\u001b[0m';
+	console.log green + " _______  ___   __    _  _______" + reset
+	console.log green + "|       ||   | |  |  | ||       |" + reset
+	console.log green + "|    _  ||   | |   |_| ||    ___|" + reset
+	console.log green + "|   |_| ||   | |       ||   |___ " + reset
+	console.log green + "|    ___||   | |  _    ||    ___|" + reset
+	console.log green + "|   |    |   | | | |   ||   |___ " + reset
+	console.log green + "|___|    |___| |_|  |__||_______|" + reset

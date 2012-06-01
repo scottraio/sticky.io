@@ -21,8 +21,6 @@ exports.show = (req, res) ->
 
 exports.create = (req, res) ->
 	user = new app.models.User()
-
-	user.set('subdomain', req.body.subdomain)
 	user.set('name', req.body.name)
 	user.set('email', req.body.email)
 	user.set('password', req.body.password)
