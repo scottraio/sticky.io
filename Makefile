@@ -5,6 +5,6 @@ server:
 	NODE_ENV=development nodemon ./app.coffee
 
 forever: 
-	NODE_ENV=production forever start ./app.coffee
+	NODE_ENV=production; coffee -c app.coffee; forever start ./app.js
 
 .PHONY: test server forever
