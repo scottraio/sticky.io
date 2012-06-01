@@ -4,4 +4,7 @@ test:
 server: 
 	NODE_ENV=development nodemon ./app.coffee
 
-.PHONY: test server
+forever: 
+	NODE_ENV=production forever start ./app.coffee
+
+.PHONY: test server forever
