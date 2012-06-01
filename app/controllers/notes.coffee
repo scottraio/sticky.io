@@ -9,7 +9,7 @@ User 	= app.models.User
 #
 exports.show = (req,res) ->
 	helpers.render_json req, res, (done) ->
-		Note.findOne({_id:req.params.id}).run(done)
+		Note.findOne({_id:req.params.id, _user:req.user}).run(done)
 
 #
 # lists all notes for an account in a neatly packed JSON array
@@ -18,7 +18,7 @@ exports.show = (req,res) ->
 exports.index = (req, res) ->
 	if req.isAuthenticated()
 		helpers.render_json req, res, (done) ->
-			Note.find({_account:req.user._account}).run(done)
+			Note.find({_user:req.user}).sort('created_at', -1).run(done)
 	else
 		res.render('public')
 
@@ -49,7 +49,7 @@ exports.create = (req, res) ->
 #
 exports.update = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		Note.findOne {_id:req.params.id}, (err, exs_note) ->
+		Note.findOne {_id:req.params.id, _user:req.user}, (err, exs_note) ->
 			exs_note.set 'title', 		req.body.title
 			exs_note.set 'updated_at', 	new Date()
 			exs_note.set '_books', 		req.body.books
@@ -69,12 +69,12 @@ exports.update = (req, res) ->
 #
 exports.edit = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		Note.findOne {_id:req.params.id}, done
+		Note.findOne {_id:req.params.id, _user:req.user}, done
 
 #
 # deletes an note from an account
 #
 exports.delete = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		Note.remove {_id: req.params.id}, (err) ->
+		Note.remove {_id: req.params.id, _user:req.user}, (err) ->
 			done(err, {ok:true})
