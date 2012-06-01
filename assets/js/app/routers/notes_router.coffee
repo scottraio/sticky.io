@@ -1,14 +1,15 @@
 class App.Routers.NotesRouter extends Backbone.Router
 	
 	routes:
-		""				: "index"
+		""					: "index"
 		"notes"				: "index"
 		"notes/new"			: "new"
 		"notes/:id"			: "show"
 		"notes/:id/edit" 	: "edit"
 	
 	index: ->
-		notes = new App.Views.Notes.Index(el: $("#stage"))
-		notes.render()
+		if App.current_user()
+			notes = new App.Views.Notes.Index(el: $("#stage"))
+			notes.render()
 		
 	
