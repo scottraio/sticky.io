@@ -1,75 +1,13 @@
 {{> header}}
 	<style>
-		body { padding:0; }
+		body { padding:0; background:#242424 url('/img/plank-background.png') repeat; }
 	</style>
 
 	<div class="scope container-fluid">
-		<div class="header">
-
-			
-
-			<ul class="nav">
-				<li>
-					<a href="/docs">Docs</a>
-				</li>
-				<li>
-					<a href="/login">Login</a>
-				</li>
-				<li>
-					<a href="/signup">Signup</a>
-				</li>
-			</ul>
-
-		</div>
-
 		<div class="container-fluid body-unit">
 			<div class="logo">
 				<img src="img/pine-logo.png"/>
 			</div>
-			<div class="verbage">
-				<h1>Quickly build and deploy powerful desktop and mobile HTML5 apps.</h1>
-				<div class="btn btn-large btn-inverse">
-					Early Access
-				</div>
-			</div>
 		</div>
 	</div>
-
-	<div class="overview container-fluid">
-		<div class="row-fluid">
-
-			<div class="span4">
-				<h3>Never deploy a database again</h3>
-
-<pre class="prettyprint linenums">
-curl http://pine.io/todos/tasks.json 
-[
- {"subject":"Pick up laundry"}
-]
-</pre>
-				Pine ships with a simple, fast, <b>general purpose</b>, <b>realtime</b>, <b>RESTful</b> database-as-a-service.
-			</div>
-			<div class="span4">
-				<h3>Running serverless?</h3>
-
-<pre class="prettyprint linenums">
-pine create
-pine deploy
-</pre>
-
-				Easily publish your HTML 5 app to Pine. No server-side code required. Pure 100% HTML 5.
-			</div>
-			<div class="span4">
-				<h3>Use HTML 5 Technologies</h3>
-
-				<ul>
-					<li>Realtime - websockets</li>
-					<li>Offline - localStorage</li>
-					<li>Mobile</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	
-
 {{> footer}}

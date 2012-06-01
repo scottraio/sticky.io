@@ -60,15 +60,15 @@ app.configure () ->
 #
 
 app.configure 'production', () ->
-	app.dbname = 'pine-io-xmpp-production'
+	app.dbname = 'pine-io-production'
 
 app.configure 'development', () ->
 	app.use(express.errorHandler())
-	app.dbname = 'pine-io-xmpp-development'
+	app.dbname = 'pine-io-development'
 
 app.configure 'test', () ->
 	app.use(express.errorHandler())
-	app.dbname = 'pine-io-xmpp-test'
+	app.dbname = 'pine-io-test'
 	
 
 #
@@ -86,6 +86,7 @@ app.models = mongoose.models
 fs.readFile './app/views/header.html', (err, data) -> handlbars.registerPartial 'header', data.toString()
 fs.readFile './app/views/footer.html', (err, data) -> handlbars.registerPartial 'footer', data.toString()
 fs.readFile './app/views/nav.html', (err, data) -> handlbars.registerPartial 'nav', data.toString()
+fs.readFile './app/views/notes.html', (err, data) -> handlbars.registerPartial 'notes', data.toString()
 
 handlbars.registerPartial 'vendor_js', js('vendor')
 handlbars.registerPartial 'app_js', js('app')
@@ -95,7 +96,7 @@ handlbars.registerPartial 'stylesheets', css('app')
 require('./app/controllers')
 
 #
-# Load up XMPP bot
+# Load up Derby (XMPP bot)
 #
 xmpp.on 'online', ->
 	welcome()
@@ -113,9 +114,9 @@ xmpp.on 'chat', (from, message) ->
 			note.set '_user', 		user._id
 			
 			note.save (err) ->
-				console.log note
+				console.log "Message saved" if app.dbname is "pine-io-development"
 		else
-			xmpp.send(from, "Welcome to Pine.io friend! Before we begin, please follow this link: http://pine.io/signup/#{from}")
+			xmpp.send(from, "Welcome to Pine.io friend! Before we begin, please follow this link: http://pine.io/signup/")
 
 xmpp.on 'stanza', (stanza) ->
 	

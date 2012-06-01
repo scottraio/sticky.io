@@ -1,12 +1,16 @@
 {{>header}}
 	
+	<style>
+		body { padding:0; background:#242424 url('/img/plank-background.png') repeat; }
+	</style>
+
 	{{message}}
 
-	<div class="container">
+	<div class="web container">
 		<div class="content">
 			<div class="row">
 				<div class="login-form">
-					Login or <a href="/signup">Signup</a>
+					<h3>Login or <a href="/signup">Signup</a></h3>
 					<form action="/login" method="post">
 						<div class="clearfix">
 							<input type="email" name="username" placeholder="email"  />

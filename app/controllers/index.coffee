@@ -39,18 +39,18 @@ app.get('/profile.:format?', ensureAuthenticated, UsersController.show)
 # Notes
 #
 
-app.get('/notes.:format?', ensureAuthenticated, NotesController.root)
+app.get('/notes.:format?', ensureAuthenticated, NotesController.index)
 app.get('/notes/:id.:format?', ensureAuthenticated, NotesController.show)
-app.get('/notes/new', ensureAuthenticated, NotesController.root)
-app.get('/notes/:id/edit', ensureAuthenticated, NotesController.root)
-app.post('/notes', ensureAuthenticated, NotesController.create)
-app.delete('/notes/:id', NotesController.delete)
-app.put('/notes/:id', NotesController.update)
+app.get('/notes/new.:format?', ensureAuthenticated, NotesController.new)
+app.get('/notes/:id/edit.:format?', ensureAuthenticated, NotesController.edit)
+app.post('/notes.:format?', ensureAuthenticated, NotesController.create)
+app.delete('/notes/:id.:format?', ensureAuthenticated, NotesController.delete)
+app.put('/notes/:id.:format?', ensureAuthenticated, NotesController.update)
 
 #
 # Root
 #
-app.get '/', UsersController.root
+app.get '/', NotesController.index
 
 #
 # Docs
