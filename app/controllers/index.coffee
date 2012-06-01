@@ -6,10 +6,8 @@
 fs 						= require 'fs'
 passport 				= require '../../lib/passport'
 Resource				= require '../../lib/express_resource'
-CollectionsController 	= require './collections'
-DatabasesController 	= require './databases'
 UsersController			= require './users'
-RecordsController		= require './records'
+NotesController			= require './notes'
 
 ensureAuthenticated = (req, res, next) ->
 	if req.isAuthenticated()
@@ -38,41 +36,16 @@ app.get('/profile.:format?', ensureAuthenticated, UsersController.show)
 
 
 #
-# Database
+# Notes
 #
 
-app.get('/databases.:format?', ensureAuthenticated, DatabasesController.root)
-app.get('/databases/:id.:format?', ensureAuthenticated, DatabasesController.show)
-app.get('/databases/new', ensureAuthenticated, DatabasesController.root)
-app.get('/databases/:id/edit', ensureAuthenticated, DatabasesController.root)
-app.post('/databases', ensureAuthenticated, DatabasesController.create)
-app.delete('/databases/:id', DatabasesController.delete)
-app.put('/databases/:id', DatabasesController.update)
-
-# 
-# Collections
-#
-
-app.get('/:database_id/collections.:format?', ensureAuthenticated, CollectionsController.root)
-app.get('/:database_id/collections/:id.:format?', ensureAuthenticated, CollectionsController.show)
-app.get('/:database_id/collections/new', ensureAuthenticated, CollectionsController.root)
-app.get('/:database_id/collections/:id/edit', ensureAuthenticated, CollectionsController.root)
-app.post('/:database_id/collections', ensureAuthenticated, CollectionsController.create)
-app.delete('/:database_id/collections/:id', CollectionsController.delete)
-app.put('/:database_id/collections/:id', CollectionsController.update)
-
-#
-# Records
-#
-
-app.get('/:database_id/:collection_id/records.:format?', ensureAuthenticated, RecordsController.root)
-app.get('/:database_id/:collection_id/records/:id.:format?', ensureAuthenticated, RecordsController.show)
-app.get('/:database_id/:collection_id/records/new', ensureAuthenticated, RecordsController.root)
-app.get('/:database_id/:collection_id/records/:id/edit', ensureAuthenticated, RecordsController.root)
-app.post('/:database_id/:collection_id/records', ensureAuthenticated, RecordsController.create)
-app.delete('/:database_id/:collection_id/records/:id', RecordsController.delete)
-app.put('/:database_id/:collection_id/records/:id', RecordsController.update)
-
+app.get('/notes.:format?', ensureAuthenticated, NotesController.root)
+app.get('/notes/:id.:format?', ensureAuthenticated, NotesController.show)
+app.get('/notes/new', ensureAuthenticated, NotesController.root)
+app.get('/notes/:id/edit', ensureAuthenticated, NotesController.root)
+app.post('/notes', ensureAuthenticated, NotesController.create)
+app.delete('/notes/:id', NotesController.delete)
+app.put('/notes/:id', NotesController.update)
 
 #
 # Root
