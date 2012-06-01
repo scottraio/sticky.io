@@ -26,6 +26,7 @@
     "lingo"             : "*",
     "consolidate"       : "*",
     "underscore"        : "*",
+    "wrench"            : "*",
     "request"           : "https://github.com/scottraio/request/tarball/master",
     "simple-xmpp"       : "*"
   }
