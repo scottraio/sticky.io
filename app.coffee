@@ -113,6 +113,11 @@ xmpp.on 'chat', (from, message) ->
 			note.set 'created_at', 	new Date()
 			note.set '_user', 		user._id
 			
+			# parse tags 
+			note.parse_tags()
+			# parse links
+			note.parse_links()
+
 			note.save (err) ->
 				console.log "Message saved" if app.dbname is "pine-io-development"
 		else

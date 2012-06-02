@@ -12,8 +12,10 @@ class App.Views.Notes.Index extends Backbone.View
 		$.getJSON '/notes.json', (items) ->
 			$(self.el).html ich.notes_list
 				notes: items
+				created_at_in_words: () -> $.timeago(this.created_at)
 
 			$(self.el).autolink()
+			$(self.el).autotag()
 
 		
 	delete: (e) ->

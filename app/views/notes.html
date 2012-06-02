@@ -1,9 +1,15 @@
 <script id="notes_list" type="text/html">
 	<ul class="notes">
 		<%#notes%>
-			<li>
+			<li class="well">
 				<div><%message%></div>
-				<div class="meta"><%created_at%> | <a href="/notes/<%_id%>" class="delete">Delete</a></div>
+				<div class="meta">
+					<%created_at_in_words%>
+				</div>
+				<div class="actions">
+					<a href="/notes/<%_id%>/edit" class="navigate">Edit</a>
+					<a href="/notes/<%_id%>" class="delete">Delete</a>
+				</div>
 			</li>
 		<%/notes%>
 	</ul>
