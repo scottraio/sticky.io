@@ -18,6 +18,6 @@ $.fn.autolink = () ->
 
 $.fn.autotag = () ->
 	return this.each( () ->
-		re = /([#]+[A-Za-z0-9-_]+)/g
+		re = /( [#]+[A-Za-z0-9-_]+)/g
 		$(this).html( $(this).html().replace(re, '<span class="tag">$1</span>') )
 	)
