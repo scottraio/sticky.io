@@ -4,8 +4,8 @@
 
 GLOBAL.mongoose = require 'mongoose'
 
-mongoose.connect('mongodb://localhost/' + app.dbname)
-mongoose.set('debug', true) if app.dbname is 'pine-io-development'
+mongoose.connect('mongodb://localhost/' + app.config.dbname)
+mongoose.set('debug', true) if app.config.env is 'development'
 
 require('./manifest')
 

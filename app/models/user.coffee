@@ -17,6 +17,7 @@ UserSchema = new Schema
 	name  	 	: { type: String, required: true, trim: true }
 	email	 	: { type: String, required: true, trim: true, unique: true, lowercase: true }
 	password 	: { type: String, required: true, set: encodePassword }
+	googleId 	: { type: String }
 
 UserSchema.path('name').validate 		Validations.uniqueFieldInsensitive('User', 'name'), 'unique'
 UserSchema.path('email').validate 		Validations.uniqueFieldInsensitive('User', 'email'), 'unique'
