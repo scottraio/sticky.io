@@ -59,7 +59,11 @@ Product
 				1. Requires user to be in application ROOT
 				2. TODO: Figure out remote git deployments
 				3. Pine service needs to accept git repository and store files (Amazon S3?)
-		2. Support Apps: ex. deploying apps, production mode, subdomain(landing page for undeployed apps), etc.
+		2. Support Apps:
+			a. Deploying apps
+			b. Production mode
+			c. Subdomain(landing page for undeployed apps)
+			d. Admin UI
 		3. Security!
 		4. Ability to scaffold an applications (load with backbone, bootstrap, HTML5 boilerplate, etc.)
 	b. Database
