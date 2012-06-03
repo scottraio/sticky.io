@@ -2,7 +2,14 @@
 @import 'web';
 
 #main {
+	margin-top:80px;
+}
 
+img.logo {
+	width:100px;
+	margin:0 auto;
+	display:block;
+	padding:15px;
 }
 
 // Stage
@@ -11,8 +18,48 @@
 	margin:15px 0 0 0;
 }
 
-// Docs
+// Notes
 
-table.restful-docs td span {
-	color:#777;
+ul.notes {
+	padding-top:20px;
+	margin:0;
+	list-style-type:none;
+
+	li {
+		margin:20px 0;
+		font-size:1.2em;
+		position:relative;
+		.meta {
+			padding:5px 0;
+			font-size:0.7em;
+			color:#777;
+		}
+		.actions {
+			position:absolute;
+			right:0;
+			top:0;
+			padding:5px;
+			#gradient > .vertical(#f0f0f0, #eee);
+			.border-radius(0 5px 0 5px);
+			border:1px solid rgba(0, 0, 0, 0.02);
+			width:100px;
+			font-size:0.8em;
+			a {
+				color:#777;
+				width:46px;
+				display:inline-block;
+				text-align:center;
+				&:first-child {
+					border-right:1px solid rgba(0, 0, 0, 0.1);
+				}
+			}
+		}
+	}
 }
+
+span.tag {
+	color:#999;
+}
+
+
+@import "./bootstrap/responsive.less";

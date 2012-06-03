@@ -27,6 +27,7 @@ class App.Main extends Backbone.View
 		
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
+		
 			
 	link_to_fragment: (e) ->
 		navigate $(e.currentTarget).attr("href")

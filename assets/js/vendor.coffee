@@ -5,5 +5,6 @@
 #= require ./vendor/bootstrap.js
 
 #= require ./jquery/jquery.facebox.js
+#= require ./jquery/jquery.timeago.coffee
 #= require ./custom/prettyprint/prettify.js
 

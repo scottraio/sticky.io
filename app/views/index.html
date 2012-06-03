@@ -1,0 +1,17 @@
+{{>header}}
+	
+	
+	{{>nav}}
+
+	<div id="main" class="container">
+		{{#if error}}<div class="alert alert-error">{{error}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
+		{{#if success}}<div class="alert alert-success">{{success}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
+
+		<div id="stage">
+			<!-- content gets loaded here -->
+		</div>
+	</div>
+
+	{{>notes}}
+
+{{>footer}}

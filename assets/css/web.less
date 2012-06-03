@@ -1,77 +1,85 @@
 //Website
 
-.scope a {
-	color:#fff;
-}
+html, body, .scope { height: 100%; background-color:#eee; }
+body > .scope {height: auto; min-height: 100%;}
 
-.scope.container-fluid {
-	background:#242424 url('/img/plank-background.png') repeat;
-	height:400px;
-}
+.scope {
+	#gradient > .vertical(#444, #111);
+	min-height:100%;
+	.google {
+		color:#eee;
+		padding:0 0 5px 25px;
+		font-weight:400;
+		color:#999;
+		font-size:1.2em;
 
-
-.scope .logo {
-	float:left;
-	width:190px;
-}
-
-.scope .nav {
-	background:rgba(0,0,0,.5);
-	float:right;
-	.border-radius(6px);
-	margin-top:20px;
-	color:#fff;
-}
-
-.scope .nav li {
-	display:inline-block;
-	padding:10px;
-	font-size:1.2em;
-}
-
-.scope .body-unit {
-	padding:150px 0 50px 0;
-	width:700px;
-	margin:0 auto;
-}
-
-.scope .body-unit .verbage {
-	width:450px;
-	float:right;
-	text-align:left;
-	padding:0;
-	margin:0;
-}
-
-.scope .body-unit h1 {
-	color:#434343;
-	font-weight:100;
-}
-
-.scope .body-unit h1 b {
-	color:#fff;
-	font-weight:500;
-}
-
-.scope .body-unit .verbage .btn {
-	font-size:1.4em;
-	margin-top:20px;
-}
-
-// Overview section
-
-.overview {
-	margin-top:50px;
-}
-
-.overview h3 {
-	margin-bottom:15px;
-	font-weight:500;
+		background:url('/img/google_plus_icon.png') no-repeat;
+		.email {
+			color:#77b652;
+		}
+	}
+	h1 {
+		color:#fff;
+		font-weight:200;
+		font-size:2em;
+		margin-bottom:10px;
+	}
+	
+	.row-fluid {
+		padding-top:15%;
+	}
+	.logo {
+		text-align:center;
+		img {
+			display:block;
+			margin:0 auto;
+		}
+	}
+	.take-action {
+		.well {
+			background-color:#333;
+			margin-top:15px;
+			ul {
+				margin:0; padding:0;
+				color:#eee;
+				list-style-type:none;
+				li {
+					font-weight:300;
+					padding:2px 0;
+					font-size:1.1em;
+					small {
+						color:#ccc;
+						font-size:0.9em;
+					}
+					.number {
+						color:#b6ff76;
+						font-size:1.1em;
+						font-weight:bold;
+					}
+				}
+			}
+		}
+	}
 }
 
 .login-form {
 	.border-radius(5px);
 	background-color:@white;
-	padding:15px;
-	margin:50px 0 0 0;
+	padding:15px 15px 2px 15px;
+	margin:100px 0 0 0;
+
+	h3 {
+		margin-bottom:15px;
+		font-weight:400;
+	}
+}
+
+.btn-google {
+	img {
+		width:16px;
+		height:16px;
+		position:relative;
+		top:-2px;
+		left:-4px;
+	}
 }
