@@ -1,9 +1,8 @@
 app = require '../app'
-mock = require './mocks'
 
-app.models.Collection.remove {}
-app.models.Database.remove {}
+app.models.Note.remove {}
 app.models.User.remove {}
 
 
-
+require './notes_test.coffee'
+require './tags_test.coffee'

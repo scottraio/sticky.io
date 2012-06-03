@@ -15,6 +15,24 @@ NotesSchema = new Schema
 NotesSchema.pre 'save', (next) ->
 	next()
 
+NotesSchema.statics.tag_list = (query, callback) ->
+
+	mapFunction = () ->
+    	return if !this.tags
+		for index in this.tags
+			emit(this.tags[index], 1)
+
+	reduceFunction = (key, values) ->
+		count = 0
+		for index in values
+			count += values[index]
+		return count
+ 
+	this.collection.mapReduce mapFunction.toString(), reduceFunction.toString(), { query: query }, (err, items) ->
+		console.log err
+		callback() 
+ 
+
 NotesSchema.methods.parse_tags = () ->
 	self = @
 	tag_regex = /[#]+[A-Za-z0-9-_]+/g

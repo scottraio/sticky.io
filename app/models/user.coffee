@@ -7,6 +7,7 @@ Validations = require './validations'
 Setter 		= require './setters'
 SHA2		= new (require('jshashes').SHA512)()
 salt 		= 'sc2ishard'
+xmpp 		= require 'simple-xmpp'
 
 
 encodePassword = (pass) ->
@@ -26,5 +27,10 @@ UserSchema.path('password').validate 	Validations.cannotBeEmpty, 'password'
 
 UserSchema.methods.validPassword = (pass) ->
 	return true if encodePassword(pass) is @password
+
+UserSchema.methods.registerXMPPBot = () ->
+	register = new xmpp.Element('presence', {type: 'subscribe', to: this.email})
+	xmpp.conn.send(register)
+
 
 mongoose.model('User', UserSchema)

@@ -6,6 +6,7 @@
 
 helpers = require './helpers'
 
+
 exports.root = (req, res) ->
 	if req.isAuthenticated()
 		res.render('index', {domain:'test'})
@@ -31,8 +32,11 @@ exports.create = (req, res) ->
 			res.redirect('/signup')
 		else
 			req.logIn user, (err) ->
-				return res.redirect('/login') if err
-				res.redirect('/')
+				if err
+					res.redirect('/login')
+				else
+					req.user.registerXMPPBot()
+					res.redirect('/')
 
 exports.login = (req, res) ->
 	res.render('login', {message: req.flash('error'), title: 'Login to pine.io'})
@@ -43,3 +47,7 @@ exports.logout = (req, res) ->
 
 exports.signup = (req, res) ->
 	res.render('signup', {title: 'Sign-up to pine.io'})
+
+exports.register = (req, res) ->
+	req.user.registerXMPPBot()
+	res.redirect('/')

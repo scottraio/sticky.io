@@ -77,7 +77,7 @@ app.configure 'production', () ->
 		dbname 			: 'pine-io-production'
 		domain 			: 'pine.io'
 		xmpp 			:
-			jid			: 'derby@pine.io'
+			jid			: 'notes@pine.io'
 			host		: 'pine.io'
 			password	: 'p!new00dF1d3rby'
 		google_oauth 	:
@@ -93,7 +93,7 @@ app.configure 'development', () ->
 		dbname 			: 'pine-io-development'
 		domain 			: 'dev.pine.io:8000'
 		xmpp 			:
-			jid			: 'derby-dev@pine.io'
+			jid			: 'notes-dev@pine.io'
 			host		: 'pine.io'
 			password	: 'p!new00dF1d3rby'
 		google_oauth 	:
@@ -151,6 +151,9 @@ xmpp.on 'online', ->
 xmpp.on 'error', (e) ->
 	console.log e
 
+#
+# Used when someone sends pine a message through XMPP
+#
 xmpp.on 'chat', (from, message) ->
 	app.models.User.findOne {email:from}, (err, user) ->
 		if user
@@ -177,7 +180,9 @@ xmpp.on 'chat', (from, message) ->
 			#
 			# Welcome the new user and present a signup link
 			xmpp.send(from, "Welcome to #{app.product_name} friend! Before we begin, please follow this link: http://#{app.config.domain}/auth/google")
-
+#
+# Used when someone adds the pine bot as a buddy through XMPP
+#
 xmpp.on 'stanza', (stanza) ->
 	# stanza's are how XMPP communicates with S2S or S2C
 	# this stanza auto-accepts new friend requests
@@ -192,7 +197,9 @@ xmpp.on 'stanza', (stanza) ->
 		if stanza.attrs.type is 'unsubscribe'
 			validate = new xmpp.Element('presence', {type: 'unsubscribed', to: stanza.attrs.from})
 			xmpp.conn.send(validate)
-
+#
+# Connect the pine bot to the XMPP universe
+#
 xmpp.connect
 	# set the jabber ID to either derby or derby-dev
 	jid: app.config.xmpp.jid
@@ -206,4 +213,3 @@ xmpp.connect
 app.listen(8000)
 
 console.log 'Server running at http://127.0.0.1:8000/'
-console.log app.config

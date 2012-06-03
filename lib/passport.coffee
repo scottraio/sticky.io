@@ -20,8 +20,6 @@ passport.use(new LocalStrategy (username, password, done) ->
 #
 
 passport.use(new BasicStrategy (username, password, done) ->
-	console.log username
-	console.log password
 	app.models.User.findOne { email: username }, (err, user) ->
 		return done(err) 											if (err)
 		return done(null, false, { message: 'Unknown user' }) 		if !user
@@ -52,6 +50,7 @@ passport.use(new GoogleStrategy google_config, (accessToken, refreshToken, profi
 	    				password : Math.random().toString(36).substring(7)
 	    				googleId : profile.id
 	    			user.save (err) ->
+	    				user.registerXMPPBot()
 	    				done(err, user)
 	    		else
 	    			user.set 'googleId', profile.id

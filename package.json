@@ -28,6 +28,7 @@
     "consolidate"             : "*",
     "underscore"              : "*",
     "wrench"                  : "*",
+    "zombie"                  : "*",
     "request"                 : "https://github.com/scottraio/request/tarball/master",
     "simple-xmpp"             : "*"
   }

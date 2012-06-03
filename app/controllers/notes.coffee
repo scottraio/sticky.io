@@ -12,60 +12,53 @@ exports.show = (req,res) ->
 		Note.findOne({_id:req.params.id, _user:req.user}).run(done)
 
 #
-# lists all notes for an account in a neatly packed JSON array
+# lists all notes for an user in a neatly packed JSON array
 # GET /notes.json
 #
 exports.index = (req, res) ->
 	if req.isAuthenticated()
 		helpers.render_json req, res, (done) ->
-			Note.find({_user:req.user}).sort('created_at', -1).run(done)
+			Note.where('_user', req.user).desc('created_at').run(done)
 	else
 		res.render('public')
 
 #
-# creates a new note for an account
+# creates a new note for an user
 # Important: the post data must contain a title and array of book IDs 
 #
 exports.create = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		new_note = new Note()
-		new_note.set 'title', 		req.body.title
-		new_note.set '_books', 		req.body.books
-		new_note.set '_creator', 	req.user._id
-		new_note.set '_modifier', 	req.user._id
-		new_note.set '_account', 	req.user._account
+		note = new Note()
+		note.set 'message', 	req.body.message
+		note.set '_user', 		req.user._id
+		note.set 'created_at', 	new Date()
 
-		new_note.save (err) -> 
+		note.save (err) -> 
 			if err
 				console.log(err)
 				req.flash('error', 'Note could not be saved.')
 				done(err)
 			else
-				done(null, new_note)
+				done(null, note)
 
 #
-# updates an existing note for an account
-# Important: the post data must contain a title and array of book IDs 
+# updates an existing note for an user
 #
 exports.update = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		Note.findOne {_id:req.params.id, _user:req.user}, (err, exs_note) ->
-			exs_note.set 'title', 		req.body.title
-			exs_note.set 'updated_at', 	new Date()
-			exs_note.set '_books', 		req.body.books
-			exs_note.set '_modifier', 	req.user._id
-
-			exs_note.save (err) -> 
+		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
+			note.set 'message', req.body.message
+	
+			note.save (err) -> 
 				if err
 					console.log(err)
 					req.flash('error', 'Note could not be saved.')
 					done(err)
 				else
-					done(null, exs_note)
+					done(null, note)
 
 #
 # grabs an note and returns its JSON
-# Important: does not populate the JSON package with _books, its just the data
 #
 exports.edit = (req, res) ->
 	helpers.render_json req, res, (done) ->

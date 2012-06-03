@@ -8,6 +8,7 @@ passport 				= require '../../lib/passport'
 Resource				= require '../../lib/express_resource'
 UsersController			= require './users'
 NotesController			= require './notes'
+TagsController			= require './tags'
 
 ensureAuthenticated = (req, res, next) ->
 	if req.isAuthenticated()
@@ -26,6 +27,9 @@ app.post('/login', passport.authenticate('local', { successRedirect: '/', failur
 app.get('/logout', UsersController.logout)
 app.get('/signup', UsersController.signup)
 app.post('/signup', UsersController.create)
+
+# Forces registration for XMPP Roster
+app.get('/register', ensureAuthenticated, UsersController.register)
 
 # Redirect the user to Google for authentication.  When complete, Google
 # will redirect the user back to the application at
@@ -47,6 +51,13 @@ app.get('/notes/:id/edit.:format?', ensureAuthenticated, NotesController.edit)
 app.post('/notes.:format?', ensureAuthenticated, NotesController.create)
 app.delete('/notes/:id.:format?', ensureAuthenticated, NotesController.delete)
 app.put('/notes/:id.:format?', ensureAuthenticated, NotesController.update)
+
+#
+# Tags
+#
+
+app.get('/tags.:format?', ensureAuthenticated, TagsController.index)
+app.get('/tags/:id.:format?', ensureAuthenticated, TagsController.show)
 
 #
 # Root
