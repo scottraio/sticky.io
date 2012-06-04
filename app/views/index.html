@@ -7,11 +7,21 @@
 		{{#if error}}<div class="alert alert-error">{{error}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
 		{{#if success}}<div class="alert alert-success">{{success}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
 
+		<div id="tags"></div>
+
 		<div id="stage">
 			<!-- content gets loaded here -->
 		</div>
 	</div>
 
 	{{>notes}}
+
+	<script id="tag_list" type="text/html">
+		<ul>
+			<%#tags%>
+				<li><%_id%></li>
+			<%/tags%>
+		</ul>
+	</script>
 
 {{>footer}}

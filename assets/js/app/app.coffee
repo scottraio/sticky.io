@@ -27,6 +27,8 @@ class App.Main extends Backbone.View
 		
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
+		tag_list = new App.Views.Tags.Index()
+		tag_list.render()
 		
 			
 	link_to_fragment: (e) ->

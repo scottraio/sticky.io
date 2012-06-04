@@ -9,6 +9,14 @@ welcome = () ->
 	console.log green + "|   |    |   | | | |   ||   |___ " + reset
 	console.log green + "|___|    |___| |_|  |__||_______|" + reset
 
+#	 _______  _______  ___   _______  ___   _  __   __ 
+#	|       ||       ||   | |       ||   | | ||  | |  |
+#	|  _____||_     _||   | |       ||   |_| ||  |_|  |
+#	| |_____   |   |  |   | |       ||      _||       |
+#	|_____  |  |   |  |   | |      _||     |_ |_     _|
+#	 _____| |  |   |  |   | |     |_ |    _  |  |   |  
+#	|_______|  |___|  |___| |_______||___| |_|  |___|
+
 #
 # Init
 #
@@ -108,7 +116,7 @@ app.configure 'test', () ->
 		dbname 			: 'pine-io-test'
 		domain 			: 'dev.pine.io:8000'
 		xmpp 			:
-			jid			: 'derby-dev@pine.io'
+			jid			: 'notes-dev@pine.io'
 			host		: 'pine.io'
 			password	: 'p!new00dF1d3rby'
 		google_oauth 	:

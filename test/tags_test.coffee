@@ -15,7 +15,6 @@ describe 'Tags', () ->
 
 		it 'should return valid JSON for INDEX', (done) ->
 			request.get "http://test%40pine.io:pinerocks@localhost:8000/tags.json", (err, res, body) ->
-				console.log res
 				#should.not.exist err
 				#res.should.be.json
 				res.statusCode.should.eql 200
@@ -27,7 +26,7 @@ describe 'Tags', () ->
 
 
 		afterEach (done) ->
-			app.models.User.remove {}, (err) -> 
-				app.models.Note.remove {}, done
+			app.models.Note.remove {}, (err) -> 
+				app.models.User.remove {}, done
 
 	
