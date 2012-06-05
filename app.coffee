@@ -1,21 +1,21 @@
 welcome = () ->
 	green = '\u001b[32m'
 	reset = '\u001b[0m';
-	console.log green + " _______  ___   __    _  _______" + reset
-	console.log green + "|       ||   | |  |  | ||       |" + reset
-	console.log green + "|    _  ||   | |   |_| ||    ___|" + reset
-	console.log green + "|   |_| ||   | |       ||   |___ " + reset
-	console.log green + "|    ___||   | |  _    ||    ___|" + reset
-	console.log green + "|   |    |   | | | |   ||   |___ " + reset
-	console.log green + "|___|    |___| |_|  |__||_______|" + reset
+	console.log green + " _______  _______  ___   _______  ___   _  __   __ " + reset
+	console.log green + "|       ||       ||   | |       ||   | | ||  | |  |" + reset
+	console.log green + "|  _____||_     _||   | |       ||   |_| ||  |_|  |" + reset
+	console.log green + "| |_____   |   |  |   | |       ||      _||       |" + reset
+	console.log green + "|_____  |  |   |  |   | |      _||     |_ |_     _|" + reset
+	console.log green + " _____| |  |   |  |   | |     |_ |    _  |  |   |" + reset
+	console.log green + "|_______|  |___|  |___| |_______||___| |_|  |___|" + reset
 
-#	 _______  _______  ___   _______  ___   _  __   __ 
-#	|       ||       ||   | |       ||   | | ||  | |  |
-#	|  _____||_     _||   | |       ||   |_| ||  |_|  |
-#	| |_____   |   |  |   | |       ||      _||       |
-#	|_____  |  |   |  |   | |      _||     |_ |_     _|
-#	 _____| |  |   |  |   | |     |_ |    _  |  |   |  
-#	|_______|  |___|  |___| |_______||___| |_|  |___|
+#	
+#	
+#	
+#	
+#	
+#	 
+#	
 
 #
 # Init
@@ -83,10 +83,10 @@ app.configure 'production', () ->
 	app.config =
 		env 			: 'production'
 		dbname 			: 'pine-io-production'
-		domain 			: 'pine.io'
+		domain 			: 'sticky.io'
 		xmpp 			:
-			jid			: 'notes@pine.io'
-			host		: 'pine.io'
+			jid			: 'notes@sticky.io'
+			host		: 'sticky.io'
 			password	: 'p!new00dF1d3rby'
 		google_oauth 	:
 			client_id 	: '293797332075-en00tcg0jhnuktrnkk89j95j6g1dipqi.apps.googleusercontent.com'
@@ -99,10 +99,10 @@ app.configure 'development', () ->
 	app.config =
 		env 			: 'development'
 		dbname 			: 'pine-io-development'
-		domain 			: 'dev.pine.io:8000'
+		domain 			: 'dev.sticky.io:8000'
 		xmpp 			:
-			jid			: 'notes-dev@pine.io'
-			host		: 'pine.io'
+			jid			: 'notes-dev@sticky.io'
+			host		: 'sticky.io'
 			password	: 'p!new00dF1d3rby'
 		google_oauth 	:
 			client_id 	: '293797332075.apps.googleusercontent.com'
@@ -116,8 +116,8 @@ app.configure 'test', () ->
 		dbname 			: 'pine-io-test'
 		domain 			: 'dev.pine.io:8000'
 		xmpp 			:
-			jid			: 'notes-dev@pine.io'
-			host		: 'pine.io'
+			jid			: 'notes-dev@sticky.io'
+			host		: 'sticky.io'
 			password	: 'p!new00dF1d3rby'
 		google_oauth 	:
 			client_id 	: '293797332075.apps.googleusercontent.com'
