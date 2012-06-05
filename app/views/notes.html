@@ -1,16 +1,24 @@
 <script id="notes_list" type="text/html">
 	<ul class="notes">
+		<li class="sticky">
+			<span id="tags"></span>
+		</li>
 		<%#notes%>
-			<li class="well">
+			<li class="sticky">
 				<div><%message%></div>
 				<div class="meta">
 					<%created_at_in_words%>
 				</div>
-				<div class="actions">
-					<a href="/notes/<%_id%>/edit" class="navigate">Edit</a>
-					<a href="/notes/<%_id%>" class="delete">Delete</a>
-				</div>
 			</li>
 		<%/notes%>
+	</ul>
+</script>
+
+<script id="tag_list" type="text/html">
+	<ul class="tags">
+		<li><a href="/" class="navigate">All</a></li>
+		<%#tags%>
+		<li><a href="/notes/filter" data-tag-name="<%_id%>" class="tag"><%_id%></a></li>
+		<%/tags%>
 	</ul>
 </script>

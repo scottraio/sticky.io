@@ -3,19 +3,35 @@ App.Views.Notes or= {}
 class App.Views.Notes.Index extends Backbone.View
 	
 	events:
-		'click .delete' : "delete"
+		'click .delete' : 'delete'
+		'click .tag'	: 'search'
 	
-	initialize: ->	
+	initialize: ->
+		@url = '/notes.json'
 
 	render: ->
 		self = @
-		$.getJSON '/notes.json', (items) ->
-			$(self.el).html ich.notes_list
-				notes: items
-				created_at_in_words: () -> $.timeago(this.created_at)
+	
+		$.getJSON @url, (items) ->
+			self.render_view(items)	
 
-			$(self.el).autolink()
-			$(self.el).autotag()
+	search: (e) ->
+		self = @
+
+		$.post '/notes/filter.json', {tags: [$(e.currentTarget).attr('data-tag-name')]}, (items) ->
+			self.render_view(items)	
+		return false
+
+	render_view: (items) ->
+		$('#stage').html ich.notes_list
+			notes: items
+			created_at_in_words: () -> $.timeago(this.created_at)
+
+		$(@el).autolink()
+		$(@el).autotag()
+
+		tag_list = new App.Views.Tags.Index()
+		tag_list.render()
 
 		
 	delete: (e) ->
