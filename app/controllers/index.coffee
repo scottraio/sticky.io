@@ -44,6 +44,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 #
 # Notes
 #
+app.post('/notes/filter.:format?', NotesController.filter)
 app.get('/notes.:format?', ensureAuthenticated, NotesController.index)
 app.get('/notes/:id.:format?', ensureAuthenticated, NotesController.show)
 app.get('/notes/new.:format?', ensureAuthenticated, NotesController.new)
@@ -57,10 +58,11 @@ app.put('/notes/:id.:format?', ensureAuthenticated, NotesController.update)
 #
 
 app.get('/tags.:format?', ensureAuthenticated, TagsController.index)
-app.get('/tags/:id.:format?', ensureAuthenticated, TagsController.show)
+app.get('/tags/reset', ensureAuthenticated, TagsController.reset)
 
 #
 # Root
 #
+
 app.get '/', NotesController.index
 

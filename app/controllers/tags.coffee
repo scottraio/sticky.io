@@ -14,6 +14,17 @@ exports.index = (req,res) ->
 			else
 				if dbres.documents
 					done(null, dbres.documents[0].results)
+
+#
+# GET /tags/reset.json
+#
+exports.reset = (req,res) ->	
+	Note.where({}).desc('created_at').run (err, notes) ->
+		for note in notes
+			notes.tags = []
+			
+			note.save()
+		res.redirect('/')
 		
 
         

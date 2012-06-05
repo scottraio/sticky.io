@@ -21,3 +21,13 @@ $.fn.autotag = () ->
 		re = /( [#]+[A-Za-z0-9-_]+)/g
 		$(this).html( $(this).html().replace(re, '<span class="tag">$1</span>') )
 	)
+
+getParameterByName = (name) ->
+	name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]")
+	regexS = "[\\?&]" + name + "=([^&#]*)"
+	regex = new RegExp(regexS)
+	results = regex.exec(window.location.search)
+	if(results == null)
+		return ""
+	else
+		return decodeURIComponent(results[1].replace(/\+/g, " "))

@@ -3,7 +3,9 @@
 
 @media (min-width: 768px) and (max-width: 979px) {
 
-
+	#main {
+		margin-top:0;
+	}
 
 	// Fixed grid
 	#grid > .core(42px, 20px);
@@ -15,5 +17,15 @@
 	#grid > .input(42px, 20px);
 
 	// No need to reset .thumbnails here since it's the same @gridGutterWidth
+
+	ul.notes {
+    padding-top:0px;
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 3;
+    li.sticky {
+      
+    }
+  }
 
 }

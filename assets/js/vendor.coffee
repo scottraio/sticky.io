@@ -6,5 +6,7 @@
 
 #= require ./jquery/jquery.facebox.js
 #= require ./jquery/jquery.timeago.coffee
-#= require ./custom/prettyprint/prettify.js
+#= require ./jquery/jquery.masonry.coffee
+
+
 

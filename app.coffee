@@ -36,7 +36,7 @@ xmpp 		= require 'simple-xmpp'
 #
 
 GLOBAL.app 			= module.exports = express.createServer()
-app.product_name 	= 'Pine.io'
+app.product_name 	= 'Sticky.io'
 
 #
 # Middleware

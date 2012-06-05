@@ -18,9 +18,21 @@ exports.show = (req,res) ->
 exports.index = (req, res) ->
 	if req.isAuthenticated()
 		helpers.render_json req, res, (done) ->
-			Note.where('_user', req.user).desc('created_at').run(done)
+			if req.query.tags
+				Note.where('_user', req.user).where('tags').in(req.query.tags).desc('created_at').run(done)
+			else
+				Note.where('_user', req.user).desc('created_at').run(done)
 	else
 		res.render('public')
+
+#
+# lists all notes for an user based on tags in a neatly packed JSON array
+# POST /
+#
+exports.filter = (req, res) ->
+	helpers.render_json req, res, (done) ->
+		Note.where('_user', req.user).where('tags').in(req.body.tags).desc('created_at').run(done)			
+	
 
 #
 # creates a new note for an user

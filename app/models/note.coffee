@@ -16,7 +16,9 @@ NotesSchema.methods.parse_tags = () ->
 	tag_regex = /[#]+[A-Za-z0-9-_]+/g
 
 	while ((tags = tag_regex.exec(this.message)) != null)
-		self.tags.push tags[0]
+		# strip tags down and add them to the array
+		# e.g. #todo turns into todo
+		self.tags.push tags[0].substring(1)
 
 NotesSchema.methods.parse_links = () ->
 	self = @

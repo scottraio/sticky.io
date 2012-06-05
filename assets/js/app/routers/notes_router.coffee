@@ -9,7 +9,7 @@ class App.Routers.NotesRouter extends Backbone.Router
 	
 	index: ->
 		if current_user
-			notes = new App.Views.Notes.Index(el: $("#stage"))
+			notes = new App.Views.Notes.Index(el: $("#main"))
 			notes.render()
 		
 	
