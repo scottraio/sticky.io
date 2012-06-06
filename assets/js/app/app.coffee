@@ -16,19 +16,14 @@ class App.Main extends Backbone.View
 		"a.remote" 					: "link_to_remote"
 		"a.navigate" 				: "link_to_fragment"
 		"a.remote-delete" 			: "link_to_delete"
-		"a#submit"					: "link_to_submit"
-		"a[rel*=facebox]"			: "link_to_facebox"
-		".empty_results"			: "add_new_item"
-		".alert-message .close" 	: "close_flash"
+		"button[type=submit]"		: "link_to_submit"
 		"ul.tabs li"				: "link_to_tab"
 		"#load-settings" 			: "load_settings"
-		"#load-add-menu" 			: "load_add_menu"	
 	}
 		
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
-			
-			
+
 	link_to_fragment: (e) ->
 		navigate $(e.currentTarget).attr("href")
 		return false
@@ -51,38 +46,8 @@ class App.Main extends Backbone.View
 		return false
 		
 	link_to_submit: (e) ->
-		# example: 
-		# <form action="some/create|update/action">
-		# 	<%= link_to 'Submit', "#", :rel => "#stage" :class => "keep_facebox_open" %>
-		# </form>
-		# tag a link or button with the id="submit" and rel="#some_target"
-		# to have that objects parent form be submitted in ajax. oh yea, it will
-		# also disable the button or link to prevent double submissions
-		_this 	= $(e.currentTarget)
-		disable_button(_this);
-		form 	= _this.closest("form")
-		target  = _this.attr("rel")
-
-		ajax = $.ajax
-			type: "POST"
-			headers:
-				"Workory-Client": @desktop
-			url: $(form).attr("action")
-			data: $(form).serialize()
-			dataType: "json"
-			complete: (data, status, xhr) ->
-				location = ajax.getResponseHeader("Location")
-				if location is undefined or location is null
-					console.log "'Location' was not found in the response headers"
-				else
-					if target is undefined or target is "#stage" or target is "#facebox .content"
-						navigate location
-					else
-						$(target).load(location)
-				
-				close_all_pops() unless _this.hasClass("keep_facebox_open")
-				$("#needs_save").val("")
-				
+		form 	= $(e.currentTarget).closest("form")
+		form.submit()
 		return false
 
 	link_to_facebox: (e) ->

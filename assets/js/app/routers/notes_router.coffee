@@ -12,4 +12,11 @@ class App.Routers.NotesRouter extends Backbone.Router
 			notes = new App.Views.Notes.Index(el: $("#main"))
 			notes.render()
 		
+	new: ->
+		notes = new App.Views.Notes.New(el: $("#post_new_message"))
+		notes.render()
+
+	show: (id) ->
+		note = new App.Views.Notes.Show(id: id, el: $('#note_details_card'))
+		note.render()
 	

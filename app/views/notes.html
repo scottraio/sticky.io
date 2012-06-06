@@ -4,7 +4,7 @@
 			<span id="tags"></span>
 		</li>
 		<%#notes%>
-			<li class="sticky">
+			<li class="sticky card" data-id="<%_id%>">
 				<div><%message%></div>
 				<div class="meta">
 					<%created_at_in_words%>
@@ -22,3 +22,18 @@
 		<%/tags%>
 	</ul>
 </script>
+
+<script id="note_details" type="text/html">
+	<div class="modal-body">
+		<%message%>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+		<a href="/notes/<%_id%>" class="btn btn-danger delete">Delete</a>
+	</div>
+</script>
+
+
+<div class="modal hide" id="note_details_card">
+	<!-- note card gets loaded in here -->
+</div>

@@ -11,7 +11,7 @@
 
 			<div class="nav-collapse">
 				<ul class="nav">
-					<li><a href="#">post</a></li>
+					<li><a href="/notes/new" class="navigate">post</a></li>
 					<li><a href="#">bookmarks</a></li>
 					<li><a href="#about">browse</a></li>
 				</ul>
@@ -20,3 +20,15 @@
 	</div>
 </div>
 
+
+<div class="modal hide" id="post_new_message">
+	<form action="/notes" method="post">
+		<div class="modal-body">
+			<textarea name="message" placeholder="What's on your mind?"></textarea>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+			<button type="submit" class="btn btn-primary">Post</button>
+		</div>
+	</form>
+</div>

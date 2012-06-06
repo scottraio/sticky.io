@@ -52,6 +52,33 @@ NotesSchema.statics.tag_list = (query,cb) ->
 		out 		: {inline: 1}
 
 	mongoose.connection.db.executeDbCommand command, cb
+
+
+NotesSchema.statics.domain_list = (query,cb) ->
+	Note = this
+
+	map = () ->
+		if !this.links
+        	return
+    
+		for link in this.links
+			emit(tag, 1)
+
+	reduce = (key,values) ->
+		count = 0
+		for index in values
+			count += values[index]
+
+		return count
+
+	command =
+		mapreduce	: "notes"
+		map 		: map.toString()
+		reduce 		: reduce.toString()
+		query 		: query
+		out 		: {inline: 1}
+
+	mongoose.connection.db.executeDbCommand command, cb
 		
 	
 mongoose.model('Note', NotesSchema)

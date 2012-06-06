@@ -1,3 +1,6 @@
+window.save = (model, attrs, options) ->
+	model.save {}, _.extend({data: JSON.stringify(attrs), contentType: 'application/json'}, options)
+
 window.current_user = (attr) ->
 	return App.current_user().attributes[attr]
 

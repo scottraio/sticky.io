@@ -3,8 +3,8 @@ App.Views.Notes or= {}
 class App.Views.Notes.Index extends Backbone.View
 	
 	events:
-		'click .delete' : 'delete'
 		'click .tag'	: 'search'
+		'click .card'	: 'show_note_details'
 	
 	initialize: ->
 		@url = '/notes.json'
@@ -33,13 +33,7 @@ class App.Views.Notes.Index extends Backbone.View
 		tag_list = new App.Views.Tags.Index()
 		tag_list.render()
 
+	show_note_details: (e) ->
+		id = $(e.currentTarget).attr('data-id')
+		navigate "/notes/#{id}"
 		
-	delete: (e) ->
-		self = @
-		$.ajax
-			type: "POST"
-			url: $(e.currentTarget).attr('href') + ".json"
-			data: {_method: 'DELETE'}
-			success: (data, status, xhr) ->
-				self.render()
-		return false

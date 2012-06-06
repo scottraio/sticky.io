@@ -25,7 +25,7 @@ ul.tags {
 .navbar {
 	.box-shadow(~"0 2px 6px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,.1)");
 	.navbar-inner {
-
+		
 		.brand {
 			padding-bottom:10px;
 		}
@@ -73,11 +73,16 @@ ul.notes {
 		padding: 15px;
 		border: 2px solid #FAFAFA;
 		box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
-		background: #FEFEFE;
+		background: #fefefe;
 		background-image: linear-gradient(45deg, #FFF, #F9F9F9);
-		width:250px;
+		width:275px;
 		font-size:1.1em;
 		white-space:wrap;
+		cursor:pointer;
+		box-sizing:border-box;
+		&:hover {
+			background-color:#f0f0f0;
+		}
 		.meta {
 			padding:5px 0;
 			font-size:0.7em;
@@ -103,6 +108,30 @@ ul.notes {
 				}
 			}
 		}
+	}
+}
+
+.btn-sticky {
+
+}
+
+#post_new_message {
+	textarea {
+		width:98%;
+		display:block;
+		height:80px;
+	}
+	form {
+		margin:0;
+	}
+}
+
+#note_details_card {
+	.modal-body {
+		font-size:1.4em;
+		font-weight:300;
+		color:#333;
+		padding:40px 20px;
 	}
 }
 
