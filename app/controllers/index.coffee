@@ -9,6 +9,7 @@ Resource				= require '../../lib/express_resource'
 UsersController			= require './users'
 NotesController			= require './notes'
 TagsController			= require './tags'
+BookmarksController		= require './bookmarks'
 
 ensureAuthenticated = (req, res, next) ->
 	if req.isAuthenticated()
@@ -59,6 +60,12 @@ app.put('/notes/:id.:format?', ensureAuthenticated, NotesController.update)
 
 app.get('/tags.:format?', ensureAuthenticated, TagsController.index)
 app.get('/tags/reset', ensureAuthenticated, TagsController.reset)
+
+#
+# Bookmarks
+#
+
+app.get('/bookmarks.:format?', ensureAuthenticated, BookmarksController.index)
 
 #
 # Root

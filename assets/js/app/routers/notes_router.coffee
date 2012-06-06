@@ -19,4 +19,8 @@ class App.Routers.NotesRouter extends Backbone.Router
 	show: (id) ->
 		note = new App.Views.Notes.Show(id: id, el: $('#note_details_card'))
 		note.render()
+
+	bookmarks: () ->
+		note = new App.Views.Notes.Bookmarks(el: $('#main'))
+		note.render()		
 	

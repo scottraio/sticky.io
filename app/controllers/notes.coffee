@@ -83,3 +83,6 @@ exports.delete = (req, res) ->
 	helpers.render_json req, res, (done) ->
 		Note.remove {_id: req.params.id, _user:req.user}, (err) ->
 			done(err, {ok:true})
+
+
+

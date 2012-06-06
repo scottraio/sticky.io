@@ -14,4 +14,9 @@ exports.render_json = (req,res,fn) ->
 		else exports.render_page('index', req, res)
 
 exports.render_page = (page,req,res) ->
-	res.render(page, {error: req.flash('error'), success: req.flash('success'), current_user: JSON.stringify(req.user)  })
+	app.models.Note.where('_user', req.user).desc('created_at').run (err, notes) ->
+		res.render(page, {
+			error: 			req.flash('error')
+			success: 		req.flash('success')
+			current_user: 	JSON.stringify(req.user)
+		})

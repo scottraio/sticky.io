@@ -141,6 +141,7 @@ fs.readFile './app/views/header.html', (err, data) -> handlbars.registerPartial 
 fs.readFile './app/views/footer.html', (err, data) -> handlbars.registerPartial 'footer', data.toString()
 fs.readFile './app/views/nav.html', (err, data) -> handlbars.registerPartial 'nav', data.toString()
 fs.readFile './app/views/notes.html', (err, data) -> handlbars.registerPartial 'notes', data.toString()
+fs.readFile './app/views/bookmarks.html', (err, data) -> handlbars.registerPartial 'bookmarks', data.toString()
 
 handlbars.registerPartial 'vendor_js', js('vendor')
 handlbars.registerPartial 'app_js', js('app')
@@ -163,8 +164,9 @@ xmpp.on 'error', (e) ->
 # Used when someone sends pine a message through XMPP
 #
 xmpp.on 'chat', (from, message) ->
+
 	app.models.User.findOne {email:from}, (err, user) ->
-		if user
+		unless user is undefined
 			note = new app.models.Note()
 			
 			#
