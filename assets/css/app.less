@@ -6,10 +6,8 @@
 }
 
 img.logo {
-	width:100px;
-	margin:0 auto;
+	width:80px;
 	display:inline-block;
-	padding:15px;
 }
 
 // Stage
@@ -23,6 +21,31 @@ ul.tags {
 	margin:0;
 	padding:0;
 }
+
+.navbar {
+	.box-shadow(~"0 2px 6px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,.1)");
+	.navbar-inner {
+
+		.brand {
+			padding-bottom:10px;
+		}
+		.nav {
+			
+			li {
+				a {
+					color:#eee;
+					font-family:tahoma;
+					line-height:22px;
+					font-weight:200;
+					font-size:0.9em;
+					text-transform:uppercase;
+				}		
+			}
+		}
+		
+	}	
+}
+
 
 // Notes
 
@@ -54,6 +77,7 @@ ul.notes {
 		background-image: linear-gradient(45deg, #FFF, #F9F9F9);
 		width:250px;
 		font-size:1.1em;
+		white-space:wrap;
 		.meta {
 			padding:5px 0;
 			font-size:0.7em;
