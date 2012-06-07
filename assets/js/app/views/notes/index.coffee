@@ -9,9 +9,8 @@ class App.Views.Notes.Index extends Backbone.View
 	initialize: ->
 		@url = '/notes.json'
 
-	render: ->
+	render: (notes) ->
 		self = @
-	
 		$.getJSON @url, (items) ->
 			self.render_view(items)	
 

@@ -15,8 +15,8 @@
 	
 	<script>	
 		$(document).ready(function() {
-			new App.start({{{current_user}}})
-			new App.Main({el: $("body")});			
+			stickyio 	= new App.start({{{current_user}}})
+			new App.Main({el: $("body")});
 		});
 		
 		$(document).on("ajaxComplete", function(e, request, opts) { 

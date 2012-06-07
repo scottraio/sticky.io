@@ -13,6 +13,7 @@ class App.Main extends Backbone.View
 	
 	events: click_or_tap {
 		"div"						: "clear_state"
+		"a.post_message"			: "post_message"
 		"a.remote" 					: "link_to_remote"
 		"a.navigate" 				: "link_to_fragment"
 		"a.remote-delete" 			: "link_to_delete"
@@ -23,6 +24,10 @@ class App.Main extends Backbone.View
 		
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
+
+	post_message: (e) ->
+		push_url '/notes/new'
+		return false
 
 	link_to_fragment: (e) ->
 		navigate $(e.currentTarget).attr("href")

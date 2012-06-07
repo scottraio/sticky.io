@@ -3,16 +3,13 @@ Note 	= app.models.Note
 User 	= app.models.User
 
 #
-# GET /tags.json
+# GET /bookmarks.json
 #
 exports.index = (req,res) ->
 	helpers.render_json req, res, (done) ->
-		Note.tag_list {_user:req.user._id}, (err, dbres) ->
+		Note.domain_list {_user:req.user._id}, (err, dbres) ->
 			if err 
 				done(err)
 			else
 				if dbres.documents
 					done(null, dbres.documents[0].results)
-
-
-        

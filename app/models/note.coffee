@@ -13,12 +13,13 @@ NotesSchema = new Schema
 
 NotesSchema.methods.parse_tags = () ->
 	self = @
-	tag_regex = /[#]+[A-Za-z0-9-_]+/g
+	tag_regex = /\s[#]+[A-Za-z0-9-_]+/g
 
 	while ((tags = tag_regex.exec(this.message)) != null)
+		console.log tags
 		# strip tags down and add them to the array
 		# e.g. #todo turns into todo
-		self.tags.push tags[0].substring(1)
+		self.tags.push tags[0].substring(2)
 
 NotesSchema.methods.parse_links = () ->
 	self = @
@@ -62,14 +63,10 @@ NotesSchema.statics.domain_list = (query,cb) ->
         	return
     
 		for link in this.links
-			emit(tag, 1)
+			emit(link, this)
 
-	reduce = (key,values) ->
-		count = 0
-		for index in values
-			count += values[index]
-
-		return count
+	reduce = (key,note) ->
+		return note.tags
 
 	command =
 		mapreduce	: "notes"
