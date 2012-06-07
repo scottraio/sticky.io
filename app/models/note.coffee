@@ -21,12 +21,16 @@ NotesSchema.methods.parse_tags = () ->
 		# e.g. #todo turns into todo
 		self.tags.push tags[0].substring(2)
 
+	return this.message
+
 NotesSchema.methods.parse_links = () ->
 	self = @
-	link_regex = /((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g
+	link_regex = /((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/g
 
 	while ((links = link_regex.exec(this.message)) != null)
 		self.links.push links[0]
+
+	return this.message
 
 NotesSchema.statics.tag_list = (query,cb) ->
 	Note = this
@@ -63,10 +67,17 @@ NotesSchema.statics.domain_list = (query,cb) ->
         	return
     
 		for link in this.links
-			emit(link, this)
+			regex 	= /((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/g
+			pattern = regex.exec(link)
+			if pattern
+				domain 	= pattern[3]
+			else
+				domain  = null
 
-	reduce = (key,note) ->
-		return note.tags
+			emit(link, {domain: domain, tags: this.tags})
+
+	reduce = (key,values) ->
+		return ""
 
 	command =
 		mapreduce	: "notes"

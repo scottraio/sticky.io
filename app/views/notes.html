@@ -1,27 +1,23 @@
 <script id="notes_list" type="text/html">
-	<ul class="notes">
-		<li class="sticky">
-			<span id="tags"></span>
-		</li>
-		<%#notes%>
-			<li class="sticky card" data-id="<%_id%>">
-				<div><%message%></div>
-				<div class="meta">
-					<%created_at_in_words%>
-				</div>
-			</li>
-		<%/notes%>
-	</ul>
+	<div class="notes_wrapper">
+		<h1>All</h1>
+
+		<ul class="notes">
+			<%#notes%>
+				<li class="sticky card" data-id="<%_id%>">
+					<div><%message%></div>
+					<div class="meta">
+						<%created_at_in_words%>
+					</div>
+				</li>
+			<%/notes%>
+		</ul>
+	</div>
 </script>
 
-<script id="tag_list" type="text/html">
-	<ul class="tags">
-		<li><a href="/" class="navigate">All</a></li>
-		<%#tags%>
-		<li><a href="/notes/filter" data-tag-name="<%_id%>" class="tag"><%_id%></a></li>
-		<%/tags%>
-	</ul>
-</script>
+<div class="modal hide" id="note_details_card">
+	<!-- note card gets loaded in here -->
+</div>
 
 <script id="note_details" type="text/html">
 	<div class="modal-body">
@@ -34,6 +30,3 @@
 </script>
 
 
-<div class="modal hide" id="note_details_card">
-	<!-- note card gets loaded in here -->
-</div>
