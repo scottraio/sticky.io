@@ -32,10 +32,11 @@ class App.Main extends Backbone.View
 
 	search: (e) ->
 		self = @
-		console.log $(e.currentTarget)
-		$.post '/notes/filter.json', {tags: [$(e.currentTarget).attr('data-tag-name')]}, (items) ->
-			notes = new App.Views.Notes.Index(el: $("#main"))
-			notes.render_view(items)
+		tag = $(e.currentTarget).attr('data-tag-name').replace(" #", "")
+
+		$.post '/notes/filter.json', {tags: [tag]}, (items) ->
+			notes = new App.Views.Notes.Index(el: $("#main"), tags: [tag])
+			notes.render_list(items)
 			# clear twitter bootstrap dropdowns
 			$('html').trigger('click.dropdown.data-api')
 

@@ -19,7 +19,8 @@ $.fn.autolink = () ->
 $.fn.autotag = () ->
 	return this.each( () ->
 		re = /( [#]+[A-Za-z0-9-_]+)/g
-		$(this).html( $(this).html().replace(re, '<span class="tag">$1</span>') )
+
+		$(this).html( $(this).html().replace(re, '<a data-tag-name="$1" class="hash-tag tag">$1</a>') )
 	)
 
 getParameterByName = (name) ->

@@ -13,7 +13,7 @@ img.logo {
 // Stage
 
 #stage {
-	margin:15px 0 0 0;
+	margin:0;
 }
 
 ul.tags {
@@ -68,18 +68,39 @@ ul.tags {
 	}
 }
 
-ul.notes {
+@column_gap:10px;
+
+ul.notes_list {
+	padding-top:20px;
+	list-style-type:none;
+	margin:0;
+	li {
+		padding:20px;
+		box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+		background: #fefefe;
+		background-image: linear-gradient(45deg, #FFF, #F9F9F9);
+		font-size:1.1em;
+		line-height:1.1em;
+		.meta {
+			padding:5px 0;
+			font-size:0.9em;
+			color:#777;
+		}
+	}
+}
+
+ul.notes_board {
 	padding-top:20px;
 	margin:0;
 	list-style-type:none;
 	-moz-column-count: 4;
-	-moz-column-gap: 10px;
+	-moz-column-gap: @column_gap;
 	-moz-column-fill: balance;
 	-webkit-column-count: 4;
-	-webkit-column-gap: 10px;
+	-webkit-column-gap: @column_gap;
 	-webkit-column-fill: balance;
 	column-count: 4;
-	column-gap: 10px;
+	column-gap: @column_gap;
 	column-fill: balance;
 
 
@@ -94,16 +115,14 @@ ul.notes {
 		box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
 		background: #fefefe;
 		background-image: linear-gradient(45deg, #FFF, #F9F9F9);
-		width:275px;
+		width:300px;
 		font-size:1.1em;
 		line-height:1.1em;
 		white-space:wrap;
 		cursor:pointer;
 		box-sizing:border-box;
+		min-height:100px;
 		border-radius:2px;
-		&:hover {
-			background-color:#f0f0f0;
-		}
 		.meta {
 			padding:5px 0;
 			font-size:0.7em;
@@ -174,8 +193,12 @@ ul.notes {
 }
 
 
-span.tag {
+.hash-tag {
 	color:#999;
+	&:hover {
+		color:#777;
+		text-decoration:none;
+	}
 }
 
 
