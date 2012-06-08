@@ -39,9 +39,13 @@
 				<ul class="notes_board">
 					<%#notes%>
 						<li class="sticky card" data-id="<%_id%>">
-							<div class="autolink autotag"><%message%></div>
+							<div class="autolink"><%message%></div>
 							<div class="meta">
-								<%created_at_in_words%>
+								<a href="/notes/<%_id%>" class="navigate"><i class="icon-info-sign"></i></a>
+								<div class="created_at">
+									<%created_at_in_words%>
+								</div>
+								
 							</div>
 						</li>
 					<%/notes%>
@@ -60,7 +64,7 @@
 		<%message%>
 	</div>
 	<div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+		<a href="/notes" class="navigate btn" data-dismiss="modal">Cancel</a>
 		<a href="/notes/<%_id%>" class="btn btn-danger delete">Delete</a>
 	</div>
 </script>

@@ -88,6 +88,9 @@
     li.sticky {
       width:100%;
       margin:0;
+      .meta {
+        display:none;
+      }
     }
   }
 
@@ -107,8 +110,7 @@
   // Negative indent the now static "fixed" navbar
   .navbar-fixed-top,
   .navbar-fixed-bottom {
-    margin-left: -20px;
-    margin-right: -20px;
+    
   }
   // Remove padding on container given explicit padding set on body
   .container-fluid {
@@ -185,6 +187,12 @@
     margin-bottom:0 !important;
   }
 
+  .notes_wrapper {
+    .row-fluid:first-child {
+      display:none;
+    }
+  }
+
   ul.notes_board {
     padding-top:0px;
     -moz-column-count: 1;
@@ -197,6 +205,9 @@
     li.sticky {
       width:100%;
       margin:0;
+      .meta {
+        display:none;
+      }
     }
   }
 
