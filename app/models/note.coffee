@@ -1,6 +1,7 @@
 
 Schema 		= mongoose.Schema
 ObjectId 	= Schema.ObjectId
+regex 		= require '../../lib/regex'
 Validations = require './validations'
 Setter 		= require './setters'
 
@@ -13,24 +14,31 @@ NotesSchema = new Schema
 
 NotesSchema.methods.parse_tags = () ->
 	self = @
-	tag_regex = /\s[#]+[A-Za-z0-9-_]+/g
 
-	while ((tags = tag_regex.exec(this.message)) != null)
-		console.log tags
-		# strip tags down and add them to the array
-		# e.g. #todo turns into todo
-		self.tags.push tags[0].substring(2)
+	matches = this.message.match regex.match.tag
 
-	return this.message
+	if matches
+
+		for tag in matches
+			# strip tags down and add them to the array
+			# e.g. #todo turns into todo
+			self.tags.push tag.substring(2)
+
+	return @tags
 
 NotesSchema.methods.parse_links = () ->
 	self = @
-	link_regex = /((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/g
 
-	while ((links = link_regex.exec(this.message)) != null)
-		self.links.push links[0]
+	matches = this.message.match regex.match.link
 
-	return this.message
+	if matches
+
+		for link in matches
+			# strip tags down and add them to the array
+			# e.g. #todo turns into todo
+			self.links.push link
+
+	return @links
 
 NotesSchema.statics.tag_list = (query,cb) ->
 	Note = this

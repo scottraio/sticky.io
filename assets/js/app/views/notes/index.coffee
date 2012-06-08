@@ -16,6 +16,7 @@ class App.Views.Notes.Index extends Backbone.View
 					self.render_list(items)
 				else
 					self.render_board(items)	
+				self.auto_everything()
 
 	render_list: (items) ->
 		self = @
@@ -23,20 +24,19 @@ class App.Views.Notes.Index extends Backbone.View
 			filters: self.filters || "All"
 			notes: items
 			created_at_in_words: () -> $.timeago(this.created_at)
-		@auto_everything()
 		
 	render_board: (items) ->
 		$('#stage').html ich.notes_board
 			filters: self.filters || "All"
 			notes: items
 			created_at_in_words: () -> $.timeago(this.created_at)
-		@auto_everything()
 		
 	show_note_details: (e) ->
 		id = $(e.currentTarget).attr('data-id')
 		navigate "/notes/#{id}"
 
-	auto_everything: (e) ->
-		$(@el).autolink()
-		$(@el).autotag()
+	auto_everything: () ->
+		$('.autotag').autotag()
+		$('.autolink').autolink()
+		
  		

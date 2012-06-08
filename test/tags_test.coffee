@@ -3,10 +3,54 @@ Browser		= require 'zombie'
 request 	= require 'request'
 mock 		= require './helpers/mocks'
 provided 	= require './helpers/provided'
+
+regex 		= require '../lib/regex'
 Note 		= app.models.Note
 User 		= app.models.User
 
 describe 'Tags', () ->
+
+	describe 'regex matching', () ->
+
+		it 'should be able to match a single tag from string', (done) ->
+			matches = "pick up milk #todo".match regex.match.tag
+			matches.should.be.an.instanceof Array
+			matches.should.eql [' #todo']
+
+			done()
+
+		it 'should be able to match mulitple tags from string', (done) ->
+			matches = "pick up milk #todo #food".match regex.match.tag
+			
+			matches.should.be.an.instanceof Array
+			matches.should.eql [' #todo', ' #food']
+			
+			done()
+
+		it 'should be able to match funky tags', (done) ->
+			matches = "pick up milk #todo#tomorrow # #milk_sucks #milk-sucks # beverage #food".match regex.match.tag
+			
+			matches.should.be.an.instanceof Array
+			matches.should.eql [' #todo#tomorrow', ' #milk_sucks', ' #milk-sucks', ' #food']
+			
+			done()
+
+		it 'should be able to parse notes', (done) ->
+			tags = []
+			note = new app.models.Note(message: "pick up milk #todo #food")
+			note.parse_tags()
+			
+			note.tags.should.be.an.instanceof Array
+
+			# for some reason mongoose is not returning 
+			# an array of strings, so we convert it
+			for tag in note.tags
+				tags.push tag
+
+			tags.should.eql ['todo', 'food']
+			
+			done()
+
 
 	describe 'restful JSON API', () ->
 

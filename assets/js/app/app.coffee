@@ -1,3 +1,8 @@
+# copy from lib/regex.coffee
+window.match = 
+	tag 	: /(^|\s)#([^\s]+)/g
+	link 	: /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/g
+
 window.click_or_tap = (events) ->
 	# for property in obj, add "click " to property and use original value
 	new_obj = {} 
@@ -25,6 +30,7 @@ class App.Main extends Backbone.View
 		
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
+		
 
 	post_message: (e) ->
 		push_url '/notes/new'
