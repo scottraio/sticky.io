@@ -1,3 +1,8 @@
+# copy from lib/regex.coffee
+window.match = 
+	tag 	: /(^|\s)#([^\s]+)/g
+	link 	: /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/g
+
 window.click_or_tap = (events) ->
 	# for property in obj, add "click " to property and use original value
 	new_obj = {} 
@@ -14,6 +19,7 @@ class App.Main extends Backbone.View
 	events: click_or_tap {
 		"div"						: "clear_state"
 		"a.post_message"			: "post_message"
+		'.tag'						: 'search'
 		"a.remote" 					: "link_to_remote"
 		"a.navigate" 				: "link_to_fragment"
 		"a.remote-delete" 			: "link_to_delete"
@@ -24,9 +30,22 @@ class App.Main extends Backbone.View
 		
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
+		
 
 	post_message: (e) ->
 		push_url '/notes/new'
+		return false
+
+	search: (e) ->
+		self = @
+		tag = $(e.currentTarget).attr('data-tag-name').replace(" #", "")
+
+		$.post '/notes/filter.json', {tags: [tag]}, (items) ->
+			notes = new App.Views.Notes.Index(el: $("#main"), tags: [tag])
+			notes.render_list(items)
+			# clear twitter bootstrap dropdowns
+			$('html').trigger('click.dropdown.data-api')
+
 		return false
 
 	link_to_fragment: (e) ->

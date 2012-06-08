@@ -2,37 +2,41 @@ App.Views.Notes or= {}
 
 class App.Views.Notes.Index extends Backbone.View
 	
-	events:
-		'click .tag'	: 'search'
-		'click .card'	: 'show_note_details'
+	
 	
 	initialize: ->
-		@url = '/notes.json'
+		@notes 		= new App.Collections.Notes()
+		@filters  	= @options.tags
 
-	render: (notes) ->
+	render: (type) ->
 		self = @
-		$.getJSON @url, (items) ->
-			self.render_view(items)	
+		@notes.fetch 
+			success: (col, items) ->
+				if type is 'list'
+					self.render_list(items)
+				else
+					self.render_board(items)	
+				self.auto_everything()
 
-	search: (e) ->
+	render_list: (items) ->
 		self = @
-
-		$.post '/notes/filter.json', {tags: [$(e.currentTarget).attr('data-tag-name')]}, (items) ->
-			self.render_view(items)	
-		return false
-
-	render_view: (items) ->
 		$('#stage').html ich.notes_list
+			filters: self.filters || "All"
 			notes: items
 			created_at_in_words: () -> $.timeago(this.created_at)
-
-		$(@el).autolink()
-		$(@el).autotag()
-
-		tag_list = new App.Views.Tags.Index()
-		tag_list.render()
-
+		
+	render_board: (items) ->
+		$('#stage').html ich.notes_board
+			filters: self.filters || "All"
+			notes: items
+			created_at_in_words: () -> $.timeago(this.created_at)
+		
 	show_note_details: (e) ->
 		id = $(e.currentTarget).attr('data-id')
 		navigate "/notes/#{id}"
+
+	auto_everything: () ->
+		$('.autotag').autotag()
+		$('.autolink').autolink()
 		
+ 		

@@ -1,11 +1,14 @@
 <script id="bookmarks_list" type="text/html">
-	<h3>Bookmarks</h3>
-	<ul>	
-		<%#bookmarks%>
-			<li>
-				<%_id%>
-				<div><% value.tags %></div>
-			</li>
-		<%/bookmarks%>
-	</ul>
+	<div class="bookmarks">
+		<h1>Bookmarks</h1>
+		<ul>	
+			<%#bookmarks%>
+				<li>
+					<img src="http://www.google.com/s2/u/0/favicons?domain=<%value.domain%>" />
+					<%_id%>
+					<div><% value.tags %></div>
+				</li>
+			<%/bookmarks%>
+		</ul>
+	</div>
 </script>
