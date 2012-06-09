@@ -1,3 +1,10 @@
+window.App =
+	Models: {}
+	Collections: {}
+	Controllers: {}
+	Routers: {}
+	Views: {}
+
 # copy from lib/regex.coffee
 window.match = 
 	tag 	: /(^|\s)#([^\s]+)/g
