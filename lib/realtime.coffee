@@ -1,4 +1,4 @@
-#parseCookie = require('connect').utils.parseCookie
+#p arseCookie = require('connect').utils.parseCookie
 
 
 exports.start = (server) ->

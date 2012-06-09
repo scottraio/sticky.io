@@ -5,6 +5,7 @@ class App.Views.Notes.Show extends Backbone.View
 	events:
 		'click .delete' : 'delete'
 		'click .cancel' : 'cancel'
+		'click .edit' 	: 'edit'
 	
 	initialize: ->
 		@note = new App.Models.Note(id: @options.id)
@@ -34,3 +35,9 @@ class App.Views.Notes.Show extends Backbone.View
 		$(@el).modal('hide')
 		navigate $(e.currentTarget).attr("href")
 		return false
+
+	edit: (e) ->
+		navigate $(e.currentTarget).attr("href")
+		return false
+
+
