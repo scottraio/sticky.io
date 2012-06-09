@@ -67,7 +67,14 @@ exports.update = (req, res) ->
 	helpers.render_json req, res, (done) ->
 		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
 			note.set 'message', req.body.message
-	
+			
+			#
+			# parse tags into note.tags
+			note.parse_tags()
+			#
+			# parse links into note.links
+			note.parse_links()
+
 			note.save (err) -> 
 				if err
 					console.log(err)
