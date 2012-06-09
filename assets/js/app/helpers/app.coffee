@@ -26,18 +26,6 @@ Array.prototype.min = () -> Math.min.apply(null, this)
 # http://stackoverflow.com/questions/920236/jquery-detect-if-selector-returns-null
 $.fn.exists = () -> $(this).get(0) isnt undefined
 
-# there are many cases where we want to disabled a link, button, etc
-# after we clicked it. submiting a form is a great one.
-window.disable_button = (obj) ->
-	$(obj).attr("disabled", true)
-	$(obj).css("background-color", "#ccc")
-
-window.get_gravatar = (email, size) ->
-	# MD5 (Message-Digest Algorithm) by WebToolkit
-	# http://www.webtoolkit.info/javascript-md5.html
-	size = size || 80
-	'http://www.gravatar.com/avatar/' + MD5(email) + '.jpg?s=' + size + "&d=mm"
-
 window.os_name = () ->
 	OSName="Unknown OS"
 	OSName="Windows"  	if navigator.appVersion.indexOf("Win") 		isnt -1
