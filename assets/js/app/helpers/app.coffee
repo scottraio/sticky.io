@@ -116,6 +116,7 @@ window.reset_events = (view) ->
 	$(view.el).unbind("click")
 	$(view.el).unbind("dblclick")
 	$(view.el).unbind("tap")
+	$(view.el).unbind("submit")
 	$(document).unbind("keydown")
 	view.delegateEvents()
 

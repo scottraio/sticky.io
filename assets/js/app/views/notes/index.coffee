@@ -2,7 +2,8 @@ App.Views.Notes or= {}
 
 class App.Views.Notes.Index extends Backbone.View
 	
-	
+	events: 
+		'click .card-info' : 'navigate'
 	
 	initialize: ->
 		@notes 		= new App.Collections.Notes()
@@ -38,5 +39,9 @@ class App.Views.Notes.Index extends Backbone.View
 	auto_everything: () ->
 		$('.autotag').autotag()
 		$('.autolink').autolink()
+
+	navigate: (e) ->
+		navigate $(e.currentTarget).attr("href")
+		return false
 		
  		

@@ -11,6 +11,7 @@ passport 	= require 'passport'
 assets 		= require 'connect-assets'
 flash		= require 'connect-flash'
 xmpp 		= require './lib/xmpp'
+io 			= require './lib/realtime'
 
 #
 # The App
@@ -130,10 +131,13 @@ handlbars.registerPartial 'stylesheets', css('app')
 
 
 require('./app/controllers')
+ 
 
 #
 # Boot server
 #
-app.listen(8000) && xmpp.start()
+xmpp.start()
+server = app.listen(8000)
+io.start(server)
 
 console.log 'Server running at http://127.0.0.1:8000/'

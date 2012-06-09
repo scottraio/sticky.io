@@ -4,6 +4,7 @@ class App.Views.Notes.Show extends Backbone.View
 	
 	events:
 		'click .delete' : 'delete'
+		'click .cancel' : 'cancel'
 	
 	initialize: ->
 		@note = new App.Models.Note(id: @options.id)
@@ -27,4 +28,9 @@ class App.Views.Notes.Show extends Backbone.View
 				$(self.el).modal('hide')
 				# reload the form
 				push_url '/'
+		return false
+
+	cancel: (e) ->
+		$(@el).modal('hide')
+		navigate $(e.currentTarget).attr("href")
 		return false
