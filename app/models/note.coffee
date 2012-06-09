@@ -13,18 +13,18 @@ NotesSchema = new Schema
 	_user 		: { type: ObjectId, required: true, ref: 'User' } 
 
 NotesSchema.methods.parse_tags = () ->
-	self = @
-
-	matches = this.message.match regex.match.tag
+	self 		= @
+	new_tags 	= []
+	matches 	= this.message.match regex.match.tag
 
 	if matches
 
 		for tag in matches
 			# strip tags down and add them to the array
 			# e.g. #todo turns into todo
-			self.tags.push tag.substring(2)
+			new_tags.push tag.substring(2)
 
-	return @tags
+	return @tags = new_tags
 
 NotesSchema.methods.parse_links = () ->
 	self = @
