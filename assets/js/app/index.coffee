@@ -1,3 +1,5 @@
+window.App or= {}
+
 window.App.start = (current_user) ->
 	window.current_user = current_user
 	new App.Routers.NotesRouter()
