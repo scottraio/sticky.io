@@ -17,8 +17,7 @@ class App.Views.Notes.Edit extends Backbone.View
 				$(self.el).modal('show')
 				$(self.el).html ich.edit_note_details(noteJSON)
 				$('textarea[name=message]').focus()
-				# make it easy for our users to read their posts
-				$(self.el).autolink()
+				
 
 	submit: (e) ->
 		self = @
