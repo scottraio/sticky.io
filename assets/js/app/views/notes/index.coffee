@@ -49,7 +49,7 @@ class App.Views.Notes.Index extends Backbone.View
 	auto_image_resolution: (notes) ->
 		for note in notes
 			for link in note.links
-				matched = link.match /(https?:\/\/.*\.(?:png|jpg|gif))/i
+				matched = link.match /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i
 				if matched
 					$("li[data-id='#{note._id}']").prepend "<img src=#{matched[0]} />"
 
