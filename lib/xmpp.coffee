@@ -14,16 +14,14 @@ exports.welcome = () ->
 
 exports.start = () ->
 	return true if app.config.env is 'test'
-	
+
 	#
 	# Load up Derby (XMPP bot)
 	#
 	xmpp.on 'online', ->
-		status = new xmpp.Element('presence')
-		status.c('show').t('chat')
-		status.c('status').t('http://sticky.io')
+		status = new xmpp.Element('presence').c('show').t('chat').up().c('status').t('http://sticky.io')	
 		xmpp.conn.send(status)
-			
+
 		# Welcome the developer with the Pine.io ASCII art
 		exports.welcome()
 
@@ -36,11 +34,7 @@ exports.start = () ->
 	xmpp.on 'chat', (from, message) ->
 		app.models.User.findOne {email:from}, (err, user) ->
 			unless user is undefined or user is null
-				console.log user
-				if message.charAt(0) is "/"
-					exports.command(user, message)
-				else
-					exports.save_message(user, message)
+				exports.save_message(user, message)
 			else
 				#
 				# Welcome the new user and present a signup link
@@ -51,7 +45,7 @@ exports.start = () ->
 	xmpp.on 'stanza', (stanza) ->
 		# stanza's are how XMPP communicates with S2S or S2C
 		# this stanza auto-accepts new friend requests
-		if stanza.is('presence') 
+		if stanza.is('presence')
 			#
 			# send 'subscribed' to new friend requests
 			if stanza.attrs.type is 'subscribe'
@@ -62,6 +56,7 @@ exports.start = () ->
 			if stanza.attrs.type is 'unsubscribe'
 				validate = new xmpp.Element('presence', {type: 'unsubscribed', to: stanza.attrs.from})
 				xmpp.conn.send(validate)
+
 	#
 	# Connect the pine bot to the XMPP universe
 	#
@@ -95,22 +90,5 @@ exports.save_message = (user, message) ->
 	# save the note
 	note.save (err) ->
 		console.log "Message saved" if app.env is "development"
-
-#
-#
-# Commands
-
-exports.command = (user, message) ->
-	command = message.substring(1)
-	switch command
-		when 'help' then return exports.help_command(user)
-		else
-			xmpp.send(user.email, "Could not recognize the command entered")
-
-exports.help_command = (user) ->
-	help = "\n\nWelcome to help"
-	help = "\n---------------\n"
-	help += "1. type help hashtags"
-	xmpp.send user.email, help
 
 
