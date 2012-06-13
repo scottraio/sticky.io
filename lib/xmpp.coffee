@@ -19,6 +19,7 @@ exports.start = () ->
 	# Load up Derby (XMPP bot)
 	#
 	xmpp.on 'online', ->
+		
 		# Welcome the developer with the Pine.io ASCII art
 		exports.welcome()
 
@@ -29,28 +30,13 @@ exports.start = () ->
 	# Used when someone sends pine a message through XMPP
 	#
 	xmpp.on 'chat', (from, message) ->
-
 		app.models.User.findOne {email:from}, (err, user) ->
-			unless user is undefined
-				note = new app.models.Note()
-				
-				#
-				# setup the note
-				note.set 'message', 	message
-				note.set 'created_at', 	new Date()
-				note.set '_user', 		user._id
-				
-				#
-				# parse tags into note.tags
-				note.parse_tags()
-				#
-				# parse links into note.links
-				note.parse_links()
-
-				#
-				# save the note
-				note.save (err) ->
-					console.log "Message saved" if app.env is "development"
+			unless user is undefined or user is null
+				console.log user
+				if message.charAt(0) is "/"
+					exports.command(user, message)
+				else
+					exports.save_message(user, message)
 			else
 				#
 				# Welcome the new user and present a signup link
@@ -62,6 +48,10 @@ exports.start = () ->
 		# stanza's are how XMPP communicates with S2S or S2C
 		# this stanza auto-accepts new friend requests
 		if stanza.is('presence') 
+			status = new xmpp.Element('presence')
+			status.c('show').t('chat')
+			status.c('status').t('http://sticky.io')
+			xmpp.conn.send(status)
 			#
 			# send 'subscribed' to new friend requests
 			if stanza.attrs.type is 'subscribe'
@@ -81,3 +71,46 @@ exports.start = () ->
 		password: app.config.xmpp.password
 		host: app.config.xmpp.host
 		port: 5222
+
+#
+#
+# Stick it!
+
+exports.save_message = (user, message) ->
+	note = new app.models.Note()
+	#
+	# setup the note
+	note.set 'message', 	message
+	note.set 'created_at', 	new Date()
+	note.set '_user', 		user._id
+	
+	#
+	# parse tags into note.tags
+	note.parse_tags()
+	#
+	# parse links into note.links
+	note.parse_links()
+
+	#
+	# save the note
+	note.save (err) ->
+		console.log "Message saved" if app.env is "development"
+
+#
+#
+# Commands
+
+exports.command = (user, message) ->
+	command = message.substring(1)
+	switch command
+		when 'help' then return exports.help_command(user)
+		else
+			xmpp.send(user.email, "Could not recognize the command entered")
+
+exports.help_command = (user) ->
+	help = "\n\nWelcome to help"
+	help = "\n---------------\n"
+	help += "1. type help hashtags"
+	xmpp.send user.email, help
+
+
