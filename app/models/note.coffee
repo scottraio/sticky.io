@@ -84,7 +84,7 @@ NotesSchema.statics.domain_list = (query,cb) ->
 			else
 				domain  = null
 
-			emit(link, {domain: domain, tags: this.tags})
+			emit(link, {domain: domain, tags: this.tags, created_at: this.created_at})
 
 	reduce = (key,values) ->
 		return ""

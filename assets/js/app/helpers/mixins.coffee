@@ -12,10 +12,11 @@ String.prototype.contains = (it) -> return this.indexOf(it) != -1
 
 $.fn.autolink = () ->
 	return this.each( () ->
-		$(this).html( $(this).html().replace(match.tag, ' <a data-tag-name="$2" class="hash-tag tag">&#35;$2</a>') )
 		$(this).html( $(this).html().replace(match.link, "<a href='$1' target='_blank'>$1</a>") )
-		$(this).html( $(this).html().replace(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i, "") )
+		$(this).html( $(this).html().replace(match.tag, ' <a data-tag-name="$2" class="hash-tag tag">&#35;$2</a>') )
 	)
 
-$.fn.autotag = () ->
-	
+$.fn.remove_img_links = () ->
+	return this.each( () ->
+		$(this).html( $(this).html().replace(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i, "") )
+	)	

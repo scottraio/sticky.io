@@ -18,8 +18,10 @@ class App.Views.Notes.Index extends Backbone.View
 				else
 					self.render_board(items)	
 
+				$('.autolink').autolink()
+
 				self.auto_image_resolution(items)
-				self.auto_link()
+
 				
 
 	render_list: (items) ->
@@ -43,8 +45,6 @@ class App.Views.Notes.Index extends Backbone.View
 		navigate $(e.currentTarget).attr("href")
 		return false
 
-	auto_link: () ->
-		$('.autolink').autolink()
 
 	auto_image_resolution: (notes) ->
 		for note in notes
@@ -52,6 +52,8 @@ class App.Views.Notes.Index extends Backbone.View
 				matched = link.match /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i
 				if matched
 					$("li[data-id='#{note._id}']").prepend "<img src=#{matched[0]} />"
+
+		$('.autolink').remove_image_links()
 
 		
  		

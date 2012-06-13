@@ -9,9 +9,16 @@ class App.Views.Bookmarks.Index extends Backbone.View
 		self = @
 		@bookmarks.fetch
 			success: (col, bookmarkJSON) ->
-				
+				console.log bookmarkJSON
+
 				$(self.el).html ich.bookmarks_list
 					bookmarks: bookmarkJSON
+					tags: () -> 
+						tags = ""
+						for tag in this.value.tags
+							tags += "<a class='hash-tag tag'>##{tag}</a>"
+						tags
+					created_at_in_words: () -> $.timeago(this.value.created_at)
 
 				$(self.el).autolink()
 		
