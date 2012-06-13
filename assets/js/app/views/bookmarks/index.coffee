@@ -18,7 +18,7 @@ class App.Views.Bookmarks.Index extends Backbone.View
 						for tag in this.value.tags
 							tags += "<a class='hash-tag tag'>##{tag}</a>"
 						tags
-					created_at_in_words: () -> $.timeago(this.value.created_at)
+					created_at_in_words: () -> this.value.created_at
 
 				$(self.el).autolink()
 		
