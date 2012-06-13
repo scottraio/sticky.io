@@ -30,6 +30,6 @@
     "wrench"                  : "*",
     "zombie"                  : "*",
     "request"                 : "https://github.com/scottraio/request/tarball/master",
-    "simple-xmpp"             : "*"
+    "simple-xmpp"             : "https://github.com/scottraio/node-simple-xmpp/tarball/master"
   }
 }

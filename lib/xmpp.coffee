@@ -19,7 +19,7 @@ exports.start = () ->
 	# Load up Derby (XMPP bot)
 	#
 	xmpp.on 'online', ->
-		status = new xmpp.Element('presence').c('show').t('chat').up().c('status').t('http://sticky.io')	
+		status = new xmpp.Element('presence').c('status').t('http://sticky.io').up()
 		xmpp.conn.send(status)
 
 		# Welcome the developer with the Pine.io ASCII art
@@ -57,6 +57,7 @@ exports.start = () ->
 				validate = new xmpp.Element('presence', {type: 'unsubscribed', to: stanza.attrs.from})
 				xmpp.conn.send(validate)
 
+
 	#
 	# Connect the pine bot to the XMPP universe
 	#
@@ -66,6 +67,7 @@ exports.start = () ->
 		password: app.config.xmpp.password
 		host: app.config.xmpp.host
 		port: 5222
+		status: 'http://sticky.io'
 
 #
 #
@@ -90,5 +92,7 @@ exports.save_message = (user, message) ->
 	# save the note
 	note.save (err) ->
 		console.log "Message saved" if app.env is "development"
+
+
 
 

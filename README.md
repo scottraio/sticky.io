@@ -1,7 +1,7 @@
-pine.io
-=======
+sticky.io
+=========
 
-Bookmarking/Micronotes/Tasking over XMPP
+Micronotes over XMPP
 
 
 Setup
@@ -20,6 +20,10 @@ Ubuntu
 	$ npm install node-expat
 	$ sudo apt-get install libicu-dev 
 	$ npm install node-stringprep
+
+OSX
+---
+	https://github.com/astro/node-stringprep
 
 Run it!
 -------
