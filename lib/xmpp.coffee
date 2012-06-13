@@ -19,7 +19,11 @@ exports.start = () ->
 	# Load up Derby (XMPP bot)
 	#
 	xmpp.on 'online', ->
-		
+		status = new xmpp.Element('presence')
+		status.c('show').t('chat')
+		status.c('status').t('http://sticky.io')
+		xmpp.conn.send(status)
+			
 		# Welcome the developer with the Pine.io ASCII art
 		exports.welcome()
 
@@ -48,10 +52,6 @@ exports.start = () ->
 		# stanza's are how XMPP communicates with S2S or S2C
 		# this stanza auto-accepts new friend requests
 		if stanza.is('presence') 
-			status = new xmpp.Element('presence')
-			status.c('show').t('chat')
-			status.c('status').t('http://sticky.io')
-			xmpp.conn.send(status)
 			#
 			# send 'subscribed' to new friend requests
 			if stanza.attrs.type is 'subscribe'

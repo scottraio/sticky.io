@@ -64,7 +64,9 @@ NotesSchema.statics.tag_list = (query,cb) ->
 		query 		: query
 		out 		: {inline: 1}
 
-	mongoose.connection.db.executeDbCommand command, cb
+	mongoose.connection.db.executeDbCommand command, (err, res) ->
+		console.log res
+		cb(err, res)
 
 
 NotesSchema.statics.domain_list = (query,cb) ->

@@ -66,7 +66,7 @@ app.get('/tags/reset', ensureAuthenticated, TagsController.reset)
 # Bookmarks
 #
 
-app.get('/bookmarks.:format?', ensureAuthenticated, BookmarksController.index)
+app.get('/links.:format?', ensureAuthenticated, BookmarksController.index)
 
 #
 # Root

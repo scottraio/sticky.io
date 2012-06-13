@@ -2,6 +2,7 @@ class App.Routers.BookmarksRouter extends Backbone.Router
 	
 	routes:
 		"bookmarks"	: "index"
+		"links"		: "index"
 	
 	index: ->
 		if current_user
