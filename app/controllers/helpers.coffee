@@ -15,7 +15,7 @@ exports.render_json = (req,res,fn) ->
 
 exports.render_page = (page,req,res) ->
 	console.log app
-	app.models.Tag.find {}, (err, tags) ->
+	app.models.Tag.find {_user:req.user._id}, (err, tags) ->
 
 		res.render(page, {
 			error: 			req.flash('error')
