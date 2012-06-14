@@ -15,6 +15,8 @@ exports.welcome = () ->
 exports.start = () ->
 	return true if app.config.env is 'test'
 
+	currently_online = []
+
 	#
 	# Load up Derby (XMPP bot)
 	#
@@ -24,6 +26,23 @@ exports.start = () ->
 
 		# Welcome the developer with the Pine.io ASCII art
 		exports.welcome()
+
+	
+		# Convience feature: Auto message users who just sign on
+		#setTimeout( () ->
+		#	xmpp.on 'buddy', (jid, status, stanza) ->
+		#		unless /@sticky.io/.test jid
+		#			switch status
+		#				when 'online'
+		#					xmpp.send(jid, "http://sticky.io")
+		#,2000)
+
+		
+	
+
+		#console.log currently_online
+
+
 
 	xmpp.on 'error', (e) ->
 		console.log e
@@ -91,6 +110,12 @@ exports.save_message = (user, message) ->
 	#
 	# save the note
 	note.save (err) ->
+
+		# todo support
+		#if /( #todo)/.test message
+			# ask if they want to be reminded
+			# then store the reminder
+
 		console.log "Message saved" if app.env is "development"
 
 

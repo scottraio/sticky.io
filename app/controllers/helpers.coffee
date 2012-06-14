@@ -14,9 +14,8 @@ exports.render_json = (req,res,fn) ->
 		else exports.render_page('index', req, res)
 
 exports.render_page = (page,req,res) ->
-	app.models.Note.tag_list {_user:req.user._id}, (err, dbres) ->
-		if dbres.documents
-			tags = dbres.documents[0].results
+	console.log app
+	app.models.Tag.find {}, (err, tags) ->
 
 		res.render(page, {
 			error: 			req.flash('error')

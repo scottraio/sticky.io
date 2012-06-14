@@ -4,6 +4,7 @@ class App.Views.Notes.Index extends Backbone.View
 	
 	events: 
 		'click .card-info' : 'navigate'
+		'click .navigate'  : 'navigate'
 	
 	initialize: ->
 		@notes 		= new App.Collections.Notes()
@@ -13,16 +14,15 @@ class App.Views.Notes.Index extends Backbone.View
 		self = @
 		@notes.fetch 
 			success: (col, items) ->
-				if type is 'list'
-					self.render_list(items)
-				else
-					self.render_board(items)	
-
-				$('.autolink').autolink()
-
-				self.auto_image_resolution(items)
-
-				
+				switch type
+					when 'list'
+						self.render_list(items)
+					when 'grouped'
+						self.render_grouped(items)
+					when 'board'
+						self.render_board(items)	
+						self.auto_image_resolution(items)
+					
 
 	render_list: (items) ->
 		self = @
@@ -30,13 +30,40 @@ class App.Views.Notes.Index extends Backbone.View
 			filters: self.filters || "All"
 			notes: items
 			created_at_in_words: () -> $.timeago(this.created_at)
+		$('.autolink').autolink()
 		
 	render_board: (items) ->
 		$('#stage').html ich.notes_board
 			filters: self.filters || "All"
 			notes: items
 			created_at_in_words: () -> $.timeago(this.created_at)
+		$('.autolink').autolink()
+
+	render_grouped: (items) ->
+		self = @
+		tags = new App.Collections.Tags()
+
+		tags.fetch
+			success: (col, tagsJSON) ->
+				
+				$('#stage').html ich.notes_grouped
+					tags 				: tagsJSON 
+					notes_by_tag 		: () -> self.notes_by_tag(this,items)
+					created_at_in_words : () -> $.timeago(this.created_at)
+					
+				$('.autolink').autolink()				
+	
+	notes_by_tag: (tag, items) ->
+		notes = "<li class=\"sticky card\">"
+
+		for item in items
+			notes += "<div><div class=\"autolink\">#{item.message}</div></div>" if item.tags.indexOf(tag._id) isnt -1
 		
+		notes += "</li>"	
+		
+		return notes
+
+
 	show_note_details: (e) ->
 		id = $(e.currentTarget).attr('data-id')
 		navigate "/notes/#{id}"
@@ -53,7 +80,7 @@ class App.Views.Notes.Index extends Backbone.View
 				if matched
 					$("li[data-id='#{note._id}']").prepend "<img src=#{matched[0]} />"
 
-		$('.autolink').remove_image_links()
+		$('.autolink').remove_img_links()
 
 		
  		
