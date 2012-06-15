@@ -10,6 +10,40 @@ img.logo {
 	display:inline-block;
 }
 
+// Sidebar
+
+.sidebar {
+	min-height:500px;
+	.profile {
+		padding:10px;
+		font-size:0.8em;
+		b {
+			display:block;
+		}
+		img {
+			margin-right:5px;
+		}
+	}
+	ul {
+		list-style-type:none;
+		margin:0;
+		li {
+			padding:5px 10px;
+			background-color:#f9f9f9;
+			border-bottom:1px solid #f0f0f0;
+			text-transform:uppercase;
+			font-size:0.8em;
+			i {
+				margin-right:3px;
+				opacity:0.8;
+			}
+		}
+		li.header {
+			font-weight:bold;
+		}
+	}
+}
+
 // Stage
 
 #stage {
@@ -68,10 +102,25 @@ ul.tags {
 	}
 }
 
+.card {
+	display: inline-block;
+	margin: 0 2px 15px 0;
+	border: 2px solid #fafafa;
+	box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+	background: #fefefe;
+	background-image: linear-gradient(45deg, #FFF, #F9F9F9);
+	font-size:1.1em;
+	line-height:1.1em;
+	cursor:pointer;
+	box-sizing:border-box;
+	word-wrap: break-word;
+	border-radius:2px;
+	width:100%;
+}
+
 @column_gap:10px;
 
 ul.notes_list {
-	padding-top:20px;
 	list-style-type:none;
 	margin:0;
 	li {
@@ -90,7 +139,6 @@ ul.notes_list {
 }
 
 ul.notes_board {
-	padding-top:20px;
 	margin:0;
 	list-style-type:none;
 	-moz-column-count: 4;
@@ -103,23 +151,11 @@ ul.notes_board {
 	column-gap: @column_gap;
 	column-fill: auto;
 
-	li.sticky {
+	li.card {
 		-moz-column-break-inside: avoid;
 		-webkit-column-break-inside: avoid;
 		column-break-inside: avoid;
-		display: inline-block;
-		margin: 0 2px 15px 0;
-		border: 2px solid #fafafa;
-		box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
-		background: #fefefe;
-		background-image: linear-gradient(45deg, #FFF, #F9F9F9);
-		font-size:1.1em;
-		line-height:1.1em;
-		cursor:pointer;
-		box-sizing:border-box;
-		word-wrap: break-word;
-		width:275px;
-		border-radius:2px;
+		min-width:240px;
 		img {
 			width:90%;
 			margin:10px auto 0 auto;
@@ -151,9 +187,7 @@ ul.notes_board {
 	}
 }
 
-.btn-sticky {
 
-}
 
 #post_new_message {
 	textarea {

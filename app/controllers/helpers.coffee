@@ -1,3 +1,5 @@
+Tag = app.models.Tag
+
 exports.render_json = (req,res,fn) ->
 	switch req.params.format
 		when 'json'			
@@ -14,13 +16,14 @@ exports.render_json = (req,res,fn) ->
 		else exports.render_page('index', req, res)
 
 exports.render_page = (page,req,res) ->
-	app.models.Tag.find {"value._user":req.user._id}, (err, tags) ->
-
-		res.render(page, {
-			error: 			req.flash('error')
-			success: 		req.flash('success')
-			current_user: 	JSON.stringify(req.user)
-			is_logged_in: 	true if req.user
-			tags:			tags
-		})
+	Tag.update_index {_user:req.user._id}, () ->
+		Tag.find {"value._user":req.user._id}, (err, tags) ->
+			res.render(page, {
+				error: 			req.flash('error')
+				success: 		req.flash('success')
+				current_user: 	JSON.stringify(req.user)
+				is_logged_in: 	true if req.user
+				tags:			tags
+				req:			req
+			})
 		

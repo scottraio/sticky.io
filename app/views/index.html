@@ -3,13 +3,46 @@
 	
 	{{>nav}}
 
-	<div id="main" class="container">
+	<div id="main" class="container-fluid">
 		{{#if error}}<div class="alert alert-error">{{error}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
 		{{#if success}}<div class="alert alert-success">{{success}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
-
-		<div id="stage">
-			<!-- content gets loaded here -->
+		
+		<div class="row-fluid">
+			<div class="span2">
+				<div class="sidebar card">
+					<div class="profile clearfix">
+						<div class="pull-left">
+							<img src="http://profiles.google.com/s2/u/0/photos/profile/{{req.user.googleId}}?sz=32" />
+						</div>
+						<div class="pull-left">
+							<b>{{req.user.name}}</b>
+							{{req.user.email}}
+						</div>
+					</div>
+					<ul>
+						<li class="header">Tags</li>
+						<li>
+							<i class="icon-tags"></i>
+							<a href="/notes" class="navigate">all</a>
+						</li>
+						{{#tags}}
+							<li>
+								<i class="icon-tag"></i>
+								<a href="/notes/filter" data-tag-name="{{_id}}" class="tag">{{_id}}</a>
+							</li>
+						{{/tags}}
+					</ul>
+				</div>
+			</div>
+			<div class="span10">
+				<div id="stage">
+					<!-- content gets loaded here -->
+				</div>
+			</div>
 		</div>
+
+		
+		
 	</div>
 
 	{{>notes}}

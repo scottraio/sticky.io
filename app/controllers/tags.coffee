@@ -8,4 +8,5 @@ Tag 	= app.models.Tag
 #
 exports.index = (req,res) ->
 	helpers.render_json req, res, (done) ->
-		Tag.find {"value._user":req.user._id}, done
+		Tag.update_index {_user:req.user._id}, () ->
+			Tag.find {"value._user":req.user._id}, done

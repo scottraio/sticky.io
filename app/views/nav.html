@@ -4,35 +4,10 @@
 		<div class="container-fluid">
 			<a class="brand navigate" href="/notes"><img class="logo" src="/img/sticky-logo-medium.png"/></a>
 
-			{{#is_logged_in}}
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</a>
-
-				<div class="nav-collapse">
-					<ul class="nav">
-						<li><a href="/notes/new" class="post_message">post</a></li>
-						<li><a href="/links" class="navigate">links</a></li>
-
-						<li class="dropdown" id="tags_menu">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#tags_menu">browse <b class="caret"></b></a> 
-
-							<ul class="dropdown-menu">
-								<li>
-									<a href="/notes" class="navigate">all</a>
-								</li>
-								{{#tags}}
-									<li>
-										<a href="/notes/filter" data-tag-name="{{_id}}" class="tag">{{_id}}</a>
-									</li>
-								{{/tags}}
-							</ul>
-						</li>
-					</ul>
-  
-				</div><!--/.nav-collapse -->
+			{{#is_logged_in}}				
+				<ul class="nav">
+					<li><a href="/notes/new" class="post_message">post</a></li>
+				</ul>
 			{{/is_logged_in}}
 		</div>
 
