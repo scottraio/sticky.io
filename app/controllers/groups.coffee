@@ -11,7 +11,7 @@ exports.show = (req,res) ->
 	helpers.render_json req, res, (done) ->
 		Group.findOne({name:req.params.id, _users:req.user.id}).run (err, group) ->
 			if group
-				Note.where('_user', req.user).where('groups', group.name).populate('_user').desc('created_at').run (err, notes) ->
+				Note.where('groups', group.name).populate('_user').desc('created_at').run (err, notes) ->
 					done(err, {notes: notes, group: group})
 			else
 				done(err, {})
