@@ -9,4 +9,5 @@ window.App =
 		new App.Routers.NotesRouter()
 		new App.Routers.UsersRouter()
 		new App.Routers.BookmarksRouter()
+		new App.Routers.GroupsRouter()
 		Backbone.history.start {pushState:true}

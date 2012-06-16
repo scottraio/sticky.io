@@ -29,9 +29,3 @@ class App.Routers.NotesRouter extends Backbone.Router
 		note = new App.Views.Notes.Edit(id: id, el: $('#note_details_card'))
 		reset_events(note)
 		note.render()
-
-	bookmarks: () ->
-		note = new App.Views.Notes.Bookmarks(el: $('#main'))
-		reset_events(note)
-		note.render()
-	

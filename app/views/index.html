@@ -8,7 +8,7 @@
 		{{#if success}}<div class="alert alert-success">{{success}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
 		
 		<div class="row-fluid">
-			<div class="span2">
+			<div class="sidebar-wrapper span2">
 				<div class="sidebar card">
 					<div class="profile clearfix">
 						<div class="pull-left">
@@ -19,6 +19,15 @@
 							{{req.user.email}}
 						</div>
 					</div>
+					<ul>
+						<li class="header">
+							Groups
+							<a class="add-group pull-right" href="/groups/new">+ Add</a>
+						</li>
+						{{#groups}}
+						<li><a href="/groups/{{name}}" class="group-link navigate">@{{name}}</a></li>
+						{{/groups}}
+					</ul>
 					<ul>
 						<li class="header">Tags</li>
 						<li>
@@ -34,7 +43,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="span10">
+			<div class="stage-wrapper span10">
 				<div id="stage">
 					<!-- content gets loaded here -->
 				</div>
@@ -46,6 +55,8 @@
 	</div>
 
 	{{>notes}}
+	{{>groups}}
 	{{>bookmarks}}
+
 
 {{>footer}}

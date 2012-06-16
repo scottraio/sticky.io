@@ -29,7 +29,7 @@ class App.Views.Notes.Edit extends Backbone.View
 		save @note, attrs, {
 			success: (data, res) ->
 				# reload the form
-				navigate "/notes/#{self.note.id}"
+				$(self.el).modal('hide')
 
 			error: (data, res) ->
 				console.log 'error'

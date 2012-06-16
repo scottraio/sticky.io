@@ -7,29 +7,36 @@ Setter 		= require './setters'
 
 NotesSchema = new Schema
 	message  	: { type: String, required: true, trim: true }
-	tags		: { type: Array }
-	links 		: { type: Array }
+	tags		: { type: Array, default: [] }
+	links 		: { type: Array, default: [] }
+	groups 		: { type: Array, default: [] }
 	created_at	: { type: Date, required: true }
 	_user 		: { type: ObjectId, required: true, ref: 'User' } 
+
+
+NotesSchema.methods.parse = () ->
+	@parse_tags()
+	@parse_links()
+	@parse_groups()
 
 NotesSchema.methods.parse_tags = () ->
 	self 		= @
 	new_tags 	= []
-	matches 	= this.message.match regex.match.tag
+	matches 	= @message.match regex.match.tag
 
 	if matches
 
 		for tag in matches
 			# strip tags down and add them to the array
 			# e.g. #todo turns into todo
-			new_tags.push tag.substring(2)
+			new_tags.push tag.replace(/#/, '').replace(/\s/, '')
 
 	return @tags = new_tags
 
 NotesSchema.methods.parse_links = () ->
 	self = @
 
-	matches = this.message.match regex.match.link
+	matches = @message.match regex.match.link
 
 	if matches
 
@@ -39,6 +46,20 @@ NotesSchema.methods.parse_links = () ->
 			self.links.push link
 
 	return @links
+
+NotesSchema.methods.parse_groups = () ->
+	self = @
+
+	matches = @message.match regex.match.group
+
+	if matches
+
+		for group in matches
+			# strip tags down and add them to the array
+			# e.g. #todo turns into todo
+			self.groups.push group.replace(/@/, '').replace(/\s/, '')
+
+	return @groups
 
 
 NotesSchema.statics.domain_list = (query,cb) ->

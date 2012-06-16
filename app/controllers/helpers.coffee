@@ -1,4 +1,5 @@
-Tag = app.models.Tag
+Tag 	= app.models.Tag
+Group 	= app.models.Group
 
 exports.render_json = (req,res,fn) ->
 	switch req.params.format
@@ -16,14 +17,17 @@ exports.render_json = (req,res,fn) ->
 		else exports.render_page('index', req, res)
 
 exports.render_page = (page,req,res) ->
-	Tag.update_index {_user:req.user._id}, () ->
-		Tag.find {"value._user":req.user._id}, (err, tags) ->
-			res.render(page, {
-				error: 			req.flash('error')
-				success: 		req.flash('success')
-				current_user: 	JSON.stringify(req.user)
-				is_logged_in: 	true if req.user
-				tags:			tags
-				req:			req
-			})
+	Tag.update_index {_user:req.user.id}, () ->
+		Tag.find {"value._user":req.user.id}, (err, tags) ->
+			Group.find {_users:req.user.id}, (err, groups) ->
+
+				res.render(page, {
+					error: 			req.flash('error')
+					success: 		req.flash('success')
+					current_user: 	JSON.stringify(req.user)
+					is_logged_in: 	true if req.user
+					tags:			tags
+					groups: 		groups
+					req:			req
+				})
 		

@@ -28,7 +28,6 @@
 								<div class="created_at">
 									<%created_at_in_words%>
 								</div>
-								
 							</div>
 						</li>
 					<%/notes%>
@@ -61,9 +60,10 @@
 		<%message%>
 	</div>
 	<div class="modal-footer">
-		<a href="/notes/<%_id%>/edit" class="edit pull-left btn btn-primary">Edit</a>
+		<a href="/notes/<%_id%>" class="btn pull-left btn-danger delete">Delete</a>
+
 		<a href="/notes" class="cancel btn" data-dismiss="modal">Cancel</a>
-		<a href="/notes/<%_id%>" class="btn btn-danger delete">Delete</a>
+		<a href="/notes/<%_id%>/edit" class="edit btn btn-primary">Edit</a>
 	</div>
 </script>
 

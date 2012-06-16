@@ -8,8 +8,10 @@ passport 				= require '../../lib/passport'
 Resource				= require '../../lib/express_resource'
 UsersController			= require './users'
 NotesController			= require './notes'
+GroupsController		= require './groups'
 TagsController			= require './tags'
 BookmarksController		= require './bookmarks'
+
 
 ensureAuthenticated = (req, res, next) ->
 	if req.isAuthenticated()
@@ -54,6 +56,18 @@ app.get('/notes/:id/edit.:format?', ensureAuthenticated, NotesController.edit)
 app.post('/notes.:format?', ensureAuthenticated, NotesController.create)
 app.delete('/notes/:id.:format?', ensureAuthenticated, NotesController.delete)
 app.put('/notes/:id.:format?', ensureAuthenticated, NotesController.update)
+
+#
+# Groups
+#
+
+app.get('/groups.:format?', ensureAuthenticated, GroupsController.index)
+app.get('/groups/:id.:format?', ensureAuthenticated, GroupsController.show)
+app.get('/groups/new.:format?', ensureAuthenticated, GroupsController.new)
+app.get('/groups/:id/edit.:format?', ensureAuthenticated, GroupsController.edit)
+app.post('/groups.:format?', ensureAuthenticated, GroupsController.create)
+app.delete('/groups/:id.:format?', ensureAuthenticated, GroupsController.delete)
+app.put('/groups/:id.:format?', ensureAuthenticated, GroupsController.update)
 
 #
 # Tags

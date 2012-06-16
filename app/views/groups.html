@@ -1,0 +1,44 @@
+<div class="modal hide" id="add_new_group">
+	<form action="/groups" method="post">
+		<div class="modal-body">
+
+			<div class="controls">
+				<label>Group Name</label>
+				<div class="input-prepend">
+					<span class="add-on">@</span><input type="text" name="name" class="name input-large" placeholder="Pick a name for your group" />
+				</div>
+            </div>
+
+            <div class="controls">
+				<label>Members</label>
+				<textarea name="members" class="members" placeholder="Enter member's email address"></textarea>
+            </div>
+			
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+			<button type="submit" class="btn btn-primary">Add</button>
+		</div>
+	</form>
+</div>
+
+<script id="groups_list" type="text/html">
+	<div class="notes_wrapper fluid-container">
+
+		<div class="row-fluid">
+			<ul class="notes_list span12">
+				<%#notes%>
+					<li class="card" data-id="<%_id%>">
+						<img src="http://profiles.google.com/s2/u/0/photos/profile/<%_user.googleId%>?sz=48" class="pull-left avatar" />
+						<div class="pull-left">
+							<div class="autolink"><%message%></div>
+							<div class="meta">
+								<%created_at_in_words%>
+							</div>
+						</div>
+					</li>
+				<%/notes%>
+			</ul>
+		</div>
+	</div>
+</script>

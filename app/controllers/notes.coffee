@@ -46,11 +46,8 @@ exports.create = (req, res) ->
 		note.set 'created_at', 	new Date()
 
 		#
-		# parse tags into note.tags
-		note.parse_tags()
-		#
-		# parse links into note.links
-		note.parse_links()
+		# parse tags/links/groups into arrays
+		note.parse()
 
 		note.save (err) -> 
 			if err

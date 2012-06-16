@@ -1,6 +1,7 @@
 # copy from lib/regex.coffee
 window.match = 
 	tag 	: /(^|\s)#([^\s]+)/g
+	group 	: /(^|\s)@([^\s]+)/g
 	link 	: /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/g
 
 window.click_or_tap = (events) ->
@@ -17,9 +18,9 @@ window.click_or_tap = (events) ->
 class App.Main extends Backbone.View
 	
 	events: click_or_tap {
-		"div"						: "clear_state"
-		"a.post_message"			: "post_message"
-		'.tag'						: 'search'
+		"a.post-message"			: "post_message"
+		"a.add-group"				: "add_group"
+		'.tag'						: 'filter_by_tag'
 		"a.remote" 					: "link_to_remote"
 		"a.navigate" 				: "link_to_fragment"
 		"a.remote-delete" 			: "link_to_delete"
@@ -36,7 +37,11 @@ class App.Main extends Backbone.View
 		push_url '/notes/new'
 		return false
 
-	search: (e) ->
+	add_group: (e) ->
+		push_url '/groups/new'
+		return false
+
+	filter_by_tag: (e) ->
 		self = @
 		tag = $(e.currentTarget).attr('data-tag-name').replace(" #", "")
 
@@ -47,6 +52,15 @@ class App.Main extends Backbone.View
 			$('html').trigger('click.dropdown.data-api')
 
 		return false
+
+	#
+	#
+	#
+	# 	Legacy Methods
+	#
+	#
+	#---------------------------------------------------------
+
 
 	link_to_fragment: (e) ->
 		navigate $(e.currentTarget).attr("href")

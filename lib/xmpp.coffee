@@ -101,11 +101,8 @@ exports.save_message = (user, message) ->
 	note.set '_user', 		user._id
 	
 	#
-	# parse tags into note.tags
-	note.parse_tags()
-	#
-	# parse links into note.links
-	note.parse_links()
+	# parse tags/links/groups into arrays
+	note.parse()
 
 	#
 	# save the note
