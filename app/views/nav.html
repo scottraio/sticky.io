@@ -1,12 +1,12 @@
-<div class="navbar navbar-fixed-top">
+<div class="navbar">
 	<div class="navbar-inner">
 		
 		<div class="container-fluid">
 			<a class="brand navigate" href="/notes"><img class="logo" src="/img/sticky-logo-medium.png"/></a>
 
 			{{#is_logged_in}}				
-				<ul class="nav">
-					<li><a href="/notes/new" class="post-message">post</a></li>
+				<ul class="nav pull-right">
+					<a href="/logout">Logout</a>
 				</ul>
 			{{/is_logged_in}}
 		</div>

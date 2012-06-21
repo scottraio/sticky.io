@@ -1,10 +1,6 @@
 @import 'bootstrap/bootstrap';
 @import 'web';
 
-#main {
-	margin-top:80px;
-}
-
 img.logo {
 	width:80px;
 	display:inline-block;
@@ -23,13 +19,18 @@ img.logo {
 		img {
 			margin-right:5px;
 		}
+		a.btn-success {
+			width:100%;
+			box-sizing:border-box;
+			float:left;
+			margin-top:10px;
+		}
 	}
 	ul {
 		list-style-type:none;
 		margin:0 0 10px 0;
 		li {
 			padding:5px 10px;
-			background-color:#f9f9f9;
 			border-bottom:1px solid #f0f0f0;
 			text-transform:uppercase;
 			font-size:0.8em;
@@ -65,7 +66,7 @@ img.logo {
 // Stage
 
 #stage {
-	margin:0 0 0 2.564102564%;
+	margin:0 0 0 (2.564102564% / 2);
 }
 
 .row-fluid .stage-wrapper.span10 {
@@ -81,7 +82,7 @@ ul.tags {
 }
 
 .navbar {
-	.box-shadow(~"0 2px 6px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,.1)");
+	//.box-shadow(~"0 2px 6px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,.1)");
 	.navbar-inner {
 		
 		.brand {
@@ -91,12 +92,11 @@ ul.tags {
 			
 			li {
 				a {
-					color:#eee;
+					color:#222;
 					font-family:tahoma;
 					line-height:22px;
 					font-weight:200;
 					font-size:0.9em;
-					text-transform:uppercase;
 				}		
 			}
 			li.dropdown {
@@ -128,7 +128,6 @@ ul.tags {
 
 .card {
 	display: inline-block;
-	margin: 0 2px 15px 0;
 	border: 2px solid #fafafa;
 	box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
 	background: #fefefe;
@@ -138,7 +137,6 @@ ul.tags {
 	cursor:pointer;
 	box-sizing:border-box;
 	word-wrap: break-word;
-	border-radius:2px;
 	width:100%;
 	.avatar {
 		margin-right:15px;
@@ -183,6 +181,8 @@ ul.notes_board {
 		-webkit-column-break-inside: avoid;
 		column-break-inside: avoid;
 		min-width:240px;
+		margin: 0 2px 15px 0;
+		border-radius:2px;
 		img {
 			width:90%;
 			margin:10px auto 0 auto;

@@ -10,6 +10,9 @@
 		<div class="row-fluid">
 			<div class="sidebar-wrapper span2">
 				<div class="sidebar card">
+
+					
+
 					<div class="profile clearfix">
 						<div class="pull-left">
 							<img src="http://profiles.google.com/s2/u/0/photos/profile/{{req.user.googleId}}?sz=32" />
@@ -18,7 +21,9 @@
 							<b>{{req.user.name}}</b>
 							{{req.user.email}}
 						</div>
+						<a href="/notes/new" class="post-message btn btn-success">Post a Note</a>
 					</div>
+
 					<ul>
 						<li class="header">
 							Groups
