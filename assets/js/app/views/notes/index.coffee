@@ -57,7 +57,7 @@ class App.Views.Notes.Index extends Backbone.View
 		notes = "<li class=\"sticky card\">"
 
 		for item in items
-			notes += "<div><div class=\"autolink\">#{item.message}</div></div>" if item.tags.indexOf(tag._id) isnt -1
+			notes += "<div class='group'><div class=\"autolink\">#{item.message}</div></div>" if item.tags.indexOf(tag._id) isnt -1
 		
 		notes += "</li>"	
 		
