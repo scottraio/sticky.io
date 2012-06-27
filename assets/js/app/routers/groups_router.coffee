@@ -6,8 +6,7 @@ class App.Routers.GroupsRouter extends Backbone.Router
 		"groups/:id/edit" 	: "edit"
 
 	new: ->
-		group = new App.Views.Groups.New(el: $("#add_new_group"))
-		reset_events(group)
+		group = new App.Views.Groups.New(el: $("#group_modal"))
 		group.render()
 
 	show: (id) ->
@@ -16,6 +15,5 @@ class App.Routers.GroupsRouter extends Backbone.Router
 		group.render()
 
 	edit: (id) ->
-		group = new App.Views.Groups.Edit(id: id, el: $('#add_new_group'))
-		reset_events(group)
+		group = new App.Views.Groups.Edit(id: id, el: $('#group_modal'))
 		group.render()

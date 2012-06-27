@@ -1,4 +1,3 @@
-
 Schema 		= mongoose.Schema
 ObjectId 	= Schema.ObjectId
 regex 		= require '../../lib/regex'

@@ -39,12 +39,8 @@ exports.index = (req, res) ->
 exports.create = (req, res) ->
 	helpers.render_json req, res, (done) ->
 		# find all members 
-		User.find({}).where('email').in(req.body.members).where('_id').ne(req.user.id).run (err, users) ->
-			# load the creator as the initial member
-			members = [req.user.id]
-			# build the members list
-			for user in users
-				members.push user._id
+		Group.with_members req, (members) ->
+
 			# save the group
 			group = new Group()
 			group.set 'name', 			req.body.name
@@ -66,15 +62,22 @@ exports.create = (req, res) ->
 #
 exports.update = (req, res) ->
 	helpers.render_json req, res, (done) ->
+		console.log req.body
+
 		Group.findOne {_id:req.params.id}, (err, group) ->
-			group.set 'name', req.body.name
-			group.save (err) -> 
-				if err
-					console.log(err)
-					req.flash('error', 'Group could not be saved.')
-					done(err)
-				else
-					done(null, group)
+			# grab the CSV string from the body, remove white-space, then split the emails by 
+			# a comma. 
+			Group.with_members req, (members) ->
+			
+				group.set 'name', req.body.name
+				group.set '_users', members
+				group.save (err) -> 
+					if err
+						console.log(err)
+						req.flash('error', 'Group could not be saved.')
+						done(err)
+					else
+						done(null, group)
 
 #
 # grabs an group and returns its JSON

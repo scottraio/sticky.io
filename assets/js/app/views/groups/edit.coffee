@@ -4,7 +4,6 @@ class App.Views.Groups.Edit extends Backbone.View
 	
 	events:
 		'submit form' 			: 'submit'
-		'button[type=submit]'	: 'submit'
 		'click .delete'			: 'delete'	
 	
 	initialize: ->
@@ -21,28 +20,25 @@ class App.Views.Groups.Edit extends Backbone.View
 				$(self.el).html ich.groups_form
 					group 		: groupJSON
 					save_label 	: "Save notebook"
-					users_email : () -> _.pluck(groupJSON._users, 'email')
+					users_email : () -> _.pluck(groupJSON._users, 'email').join(',')
 					is_update 	: true
 
 				# focus on the name
 				$('input.name', self.el).focus()
 
 				# init the members controls
-				new App.Views.Groups.Members(el: $("#members")) 
+				# new App.Views.Groups.Members(el: $('#members')) 
 
 	submit: (e) ->
 		self = @
-		attrs = {
-			name: $('input.name', @el).val()
-			members:  $('textarea.members', @el).val().split(",")
-		}
+		attrs = $('form', @el).serializeObject()
 
 		save @group, attrs, {
 			success: (data, res) ->
-				# close modal window
-				$(self.el).modal('hide')
-				# reload the view
-				window.location.href = '/'
+				# reload the view by refreshing the page
+				# we do this because a big chunk of the navigation 
+				# is built at page load
+				window.location.href = "/groups/#{res._id}"
 
 			error: (data, res) ->
 				console.log 'error'

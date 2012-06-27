@@ -14,8 +14,10 @@ class App.Views.Notes.Edit extends Backbone.View
 		self = @
 		@note.fetch 
 			success: (err, noteJSON) -> 
+				# make the textarea's height the same height as the autolink height
+				height = $('.autolink', self.el).height()
 				$(self.el).html("
-					<textarea name=\"message\">#{noteJSON.message}</textarea>
+					<textarea name=\"message\" style=\"height:#{height}px\">#{noteJSON.message}</textarea>
 					<div class=\"meta meta-edit\">
 						<a href=\"/notes/#{noteJSON._id}\" class=\"btn btn-mini btn-primary\">Save</a>
 						<a href=\"/notes/#{noteJSON._id}\" class=\"push btn btn-mini\">Cancel</a>

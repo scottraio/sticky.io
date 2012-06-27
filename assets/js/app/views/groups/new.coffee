@@ -17,19 +17,14 @@ class App.Views.Groups.New extends Backbone.View
 
 	submit: (e) ->
 		self = @
-		attrs = {
-			name: $('input.name', @el).val()
-			members:  $('textarea.members', @el).val().split(",")
-		}
+		attrs = $('form', @el).serializeObject()
 
 		save @group, attrs, {
 			success: (data, res) ->
-				# close modal window
-				$(self.el).modal('hide')
-				$('input.name', self.el).val("")
-				$('textarea.members', self.el).val("")
-				# reload the view
-				push_url '/'
+				# reload the view by refreshing the page
+				# we do this because a big chunk of the navigation 
+				# is built at page load
+				window.location.href = "/groups/#{res._id}"
 
 			error: (data, res) ->
 				console.log 'error'

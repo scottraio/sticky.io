@@ -1,36 +1,33 @@
-<div class="modal hide" id="add_new_group">
+<!-- basic modal for groups form -->
+<div class="modal hide" id="group_modal">
 </div>
 
 <script id="groups_form" type="text/html">
 	<form action="/groups" method="post">
-		
+		<div class="modal-header">
+			<a href="#" class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+			<h3>Edit Notebook</h3>
+    	</div>
 		<div class="modal-body">
 			<div class="controls">
-				<label>Notebook Title</label>
+				<label><i class="icon-book"></i> Notebook Title</label>
 				
 				<input type="text" name="name" value="<%group.name%>" class="name input-xlarge" placeholder="Pick a name for your notebook" />
 			</div>
 
 			<div class="controls">
-				<label>People</label>
+				<label><i class="icon-user"></i> People</label>
 				<div id="members">
-					<%#users_email%>
-					<div class="member">
-						<input type="text" name="members[]" class="input-xlarge" value="<%.%>" placeholder="enter email address" />
-						<a href="#" class="btn add-member"><i class="icon-plus"></i></a>
-						<a href="#" class="btn rem-member"><i class="icon-minus"></i></a>
-					</div>
-					<%/users_email%>
+					<textarea name="members" class="input-xlarge" value="<%.%>" placeholder="enter email address"><%users_email%></textarea>
 				</div>
 			</div>
 		</div>
 
 		<div class="modal-footer">
+			<button type="submit" class="btn btn-small btn-primary"><%save_label%></button>
 			<%#is_update%>
-			<a class="pull-left btn btn-danger delete">Delete</a>
+			<a class="pull-right btn btn-small btn-danger delete">Delete</a>
 			<%/is_update%>
-			<a href="#" class="btn" data-dismiss="modal">Cancel</a>
-			<button type="submit" class="btn btn-primary"><%save_label%></button>
 		</div>
 
 	</form>
