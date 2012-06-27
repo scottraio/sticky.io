@@ -1,29 +1,3 @@
-
-<!-- 
-	Notes List
--->
-
-<script id="notes_list" type="text/html">
-	<div class="notes_wrapper fluid-container">
-		<div class="row-fluid">
-			<ul class="notes_list span12">
-				<%#notes%>
-					<li class="card" data-id="<%_id%>">
-						<div class="autolink"><%message%></div>
-						<div class="meta">
-							<%created_at_in_words%>
-						</div>
-					</li>
-				<%/notes%>
-			</ul>
-		</div>
-	</div>
-</script>
-
-<!-- 
-	Notes Board
--->
-
 <script id="notes_board" type="text/html">
 	<div class="notes_wrapper fluid-container">
 		<div class="row-fluid">
@@ -31,13 +5,7 @@
 				<ul class="notes_board">
 					<%#notes%>
 						<li class="sticky card" data-id="<%_id%>">
-							<div class="autolink"><%message%></div>
-							<div class="meta">
-								<a href="/notes/<%_id%>" class="card-info"><i class="icon-info-sign"></i></a>
-								<div class="created_at">
-									<%created_at_in_words%>
-								</div>
-							</div>
+							<%>sticky%>					
 						</li>
 					<%/notes%>
 				</ul>
@@ -46,50 +14,19 @@
 	</div>
 </script>
 
-<!-- 
-	Notes Grouped
--->
+<!-- hack to get icanhaz partials to load from JS -->
+<script id="single_note" type="text/html">
+	<%#note%>
+	<%>sticky%>
+	<%/note%>
+</script>
 
-<script id="notes_grouped" type="text/html">
-	<div class="notes_wrapper fluid-container">
-		<div class="row-fluid">
-			<div class="span12">
-				<ul class="notes_list">
-					<%#tags%>
-						<%{notes_by_tag%>
-					<%/tags%>
-				</ul>
-			</div>
+<script id="sticky" class="partial" type="text/html">
+	<a href="/notes/<%_id%>" class="delete hide"><i class="icon-remove"></i></a>
+	<div class="autolink"><%message%></div>
+	<div class="meta">
+		<div class="created_at">
+			<%created_at_in_words%>
 		</div>
 	</div>
 </script>
-
-<div class="modal hide" id="note_details_card">
-	<!-- note card gets loaded in here -->
-</div>
-
-<script id="note_details" type="text/html">
-	<div class="modal-body">
-		<%message%>
-	</div>
-	<div class="modal-footer">
-		<a href="/notes/<%_id%>" class="btn pull-left btn-danger delete">Delete</a>
-
-		<a href="/notes" class="cancel btn" data-dismiss="modal">Cancel</a>
-		<a href="/notes/<%_id%>/edit" class="edit btn btn-primary">Edit</a>
-	</div>
-</script>
-
-<script id="edit_note_details" type="text/html">
-	<form action="/notes/<%_id%>" method="post">
-		<div class="modal-body">
-			<textarea name='message'><%message%></textarea>
-		</div>
-		<div class="modal-footer">
-			<a href="/notes/<%_id%>" class="cancel btn">Cancel</a>
-			<a href="/notes/<%_id%>" class="btn btn-primary">Save</a>
-		</div>
-	</form>
-</script>
-
-

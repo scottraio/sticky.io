@@ -3,73 +3,53 @@ App.Views.Notes or= {}
 class App.Views.Notes.Index extends Backbone.View
 	
 	events: 
-		'click .card-info' : 'navigate'
-		'click .navigate'  : 'navigate'
+		'dblclick .sticky' 	: 'edit'
+		'click .delete'  	: 'delete'
 	
 	initialize: ->
+		@params		= @options.params
 		@notes 		= new App.Collections.Notes()
-		@filters  	= @options.tags
+		# set the url to the search query, if there is a search query
+		if window.location.search
+			@notes.url 	= window.location.pathname + ".json" + window.location.search
 
-	render: (type) ->
+	render: (items) ->
 		self = @
 		@notes.fetch 
 			success: (col, items) ->
-				switch type
-					when 'list'
-						self.render_list(items)
-					when 'grouped'
-						self.render_grouped(items)
-					when 'board'
-						self.render_board(items)	
-						self.auto_image_resolution(items)
-					
+				self.load_view(items)
 
-	render_list: (items) ->
-		self = @
-		$('#stage').html ich.notes_list
-			filters: self.filters || "All"
-			notes: items
-			created_at_in_words: () -> $.timeago(this.created_at)
-		$('.autolink').autolink()
-		
-	render_board: (items) ->
+	load_view: (items) ->
 		$('#stage').html ich.notes_board
-			filters: self.filters || "All"
 			notes: items
 			created_at_in_words: () -> $.timeago(this.created_at)
+
+		# autolink everything
 		$('.autolink').autolink()
 
-	render_grouped: (items) ->
-		self = @
-		tags = new App.Collections.Tags()
+		# add the sidebar
+		$("ul.notes_board").prepend ich.sidebar()		
 
-		tags.fetch
-			success: (col, tagsJSON) ->
-				
-				$('#stage').html ich.notes_grouped
-					tags 				: tagsJSON 
-					notes_by_tag 		: () -> self.notes_by_tag(this,items)
-					created_at_in_words : () -> $.timeago(this.created_at)
-					
-				$('.autolink').autolink()				
+		# make it sortable
+		$("ul.notes_board").sortable
+			items: "li.sticky"
+		
+		# resolve any images
+		@auto_image_resolution(items)
+
 	
-	notes_by_tag: (tag, items) ->
-		notes = "<li class=\"sticky card\">"
-
-		for item in items
-			notes += "<div class='group'><div class=\"autolink\">#{item.message}</div></div>" if item.tags.indexOf(tag._id) isnt -1
-		
-		notes += "</li>"	
-		
-		return notes
-
-
-	show_note_details: (e) ->
+	edit: (e) ->
 		id = $(e.currentTarget).attr('data-id')
-		navigate "/notes/#{id}"
+		push_url "/notes/#{id}/edit"
 
-	navigate: (e) ->
-		navigate $(e.currentTarget).attr("href")
+
+	delete: (e) ->
+		self = @
+		sticky = $(e.currentTarget).parent('.sticky')
+		note = new App.Models.Note(id: sticky.attr('data-id'))
+		note.destroy
+			success: (model, res) ->
+				$(sticky).remove()
 		return false
 
 

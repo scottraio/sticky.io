@@ -63,6 +63,7 @@ app.put('/notes/:id.:format?', ensureAuthenticated, NotesController.update)
 
 app.get('/groups.:format?', ensureAuthenticated, GroupsController.index)
 app.get('/groups/:id.:format?', ensureAuthenticated, GroupsController.show)
+app.get('/groups/:id/notes.:format?', ensureAuthenticated, GroupsController.notes)
 app.get('/groups/new.:format?', ensureAuthenticated, GroupsController.new)
 app.get('/groups/:id/edit.:format?', ensureAuthenticated, GroupsController.edit)
 app.post('/groups.:format?', ensureAuthenticated, GroupsController.create)

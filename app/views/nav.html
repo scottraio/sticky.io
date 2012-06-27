@@ -5,9 +5,28 @@
 			<a class="brand navigate" href="/notes"><img class="logo" src="/img/sticky-logo-medium.png"/></a>
 
 			{{#is_logged_in}}				
-				<ul class="nav pull-right">
-					<a href="/logout">Logout</a>
-				</ul>
+			<div class="profile clearfix">
+
+
+
+				<form action="/notes" method="get" class="navbar-search pull-left">
+					<input type="text" name="keyword" class="search-query" placeholder="Search">
+				</form>
+
+				<div class="btn-group pull-right">
+					<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+						<i id="gravatar"><img src="http://profiles.google.com/s2/u/0/photos/profile/{{req.user.googleId}}?sz=16" /></i>
+						{{req.user.email}}
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="/logout">Sign Out</a></li>
+					</ul>
+				</div>
+
+				<a href="/notes/new" class="post-message pull-right btn"><i class="icon-edit"></i> Add</a>
+
+			</div>
 			{{/is_logged_in}}
 		</div>
 

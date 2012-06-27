@@ -8,10 +8,10 @@ window.navigate = (href) ->
 
 	# if the page we are navigating to is the same page from where
 	# we came from. Don't navigate to the href, just reload it
-	if href is window.location.pathname
+	if href is window.location.pathname + window.location.search
 		push_url href
 	else
-		Backbone.history.navigate href.substr(1), true 
+		Backbone.history.navigate href.substr(1), true
 
 window.push_url = (href) ->
 	Backbone.history.loadUrl href.substr(1)

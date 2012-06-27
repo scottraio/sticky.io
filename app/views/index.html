@@ -7,55 +7,12 @@
 		{{#if error}}<div class="alert alert-error">{{error}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
 		{{#if success}}<div class="alert alert-success">{{success}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
 		
-		<div class="row-fluid">
-			<div class="sidebar-wrapper span2">
-				<div class="sidebar card">
-
-					
-
-					<div class="profile clearfix">
-						<div class="pull-left">
-							<img src="http://profiles.google.com/s2/u/0/photos/profile/{{req.user.googleId}}?sz=32" />
-						</div>
-						<div class="pull-left">
-							<b>{{req.user.name}}</b>
-							{{req.user.email}}
-						</div>
-						<a href="/notes/new" class="post-message btn btn-success">Post a Note</a>
-					</div>
-
-					<ul>
-						<li class="header">
-							Notebooks
-							<a class="add-group pull-right" href="/groups/new"> + Add</a>
-						</li>
-						{{#groups}}
-						<li><a href="/groups/{{name}}" class="group-link navigate"><i class="icon-book"></i> {{name}}</a></li>
-						{{/groups}}
-					</ul>
-					<ul>
-						<li class="header">Tags</li>
-						<li>
-							<i class="icon-tags"></i>
-							<a href="/notes" class="navigate">all</a>
-						</li>
-						{{#tags}}
-							<li>
-								<i class="icon-tag"></i>
-								<a href="/notes/filter" data-tag-name="{{_id}}" class="tag">{{_id}}</a>
-							</li>
-						{{/tags}}
-					</ul>
-				</div>
+	
+		<div class="stage-wrapper">
+			<div id="stage">
+				<!-- content gets loaded here -->
 			</div>
-			<div class="stage-wrapper span10">
-				<div id="stage">
-					<!-- content gets loaded here -->
-				</div>
-			</div>
-		</div>
-
-		
+		</div>	
 		
 	</div>
 
@@ -63,5 +20,51 @@
 	{{>groups}}
 	{{>bookmarks}}
 
+
+	<script id="sidebar" type="text/html">
+		<li class="sidebar card hide">
+			<ul>
+				<li class="header">Date</li>
+				<li>
+					<i class="icon-th-large"></i>
+					<a href="/notes" class="navigate">All Notes</a>
+				</li>
+				<li>
+					<i class="icon-time"></i>
+					<a href="/notes?days=1" class="navigate">Today</a>
+				</li>
+				<li>
+					<i class="icon-time"></i>
+					<a href="/notes?days=7" class="navigate">Last 7 days</a>
+				</li>
+				<li>
+					<i class="icon-time"></i>
+					<a href="/notes?days=30" class="navigate">Last Month</a>
+				</li>
+			</ul>
+			<ul>
+				<li class="header">
+					Notebooks
+					<a class="navigate pull-right" href="/groups/new"> + Add</a>
+				</li>
+				{{#groups}}
+				<li>
+					<i class="icon-book"></i>
+					<a href="/groups/{{id}}" class="group-link navigate">{{name}}</a>
+					<a href="/groups/{{id}}/edit" class="navigate pull-right"><i class="icon-pencil"></i></a>
+				</li>
+				{{/groups}}
+			</ul>
+			<ul>
+				<li class="header">Tags</li>
+				{{#tags}}
+					<li>
+						<i class="icon-tag"></i>
+						<a href="/notes?tags[]={{_id}}" class="tag navigate">{{_id}}</a>
+					</li>
+				{{/tags}}
+			</ul>
+		</li>
+	</script>
 
 {{>footer}}

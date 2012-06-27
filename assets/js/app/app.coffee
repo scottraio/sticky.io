@@ -20,9 +20,9 @@ class App.Main extends Backbone.View
 	events: click_or_tap {
 		"a.post-message"			: "post_message"
 		"a.add-group"				: "add_group"
-		'.tag'						: 'filter_by_tag'
 		"a.remote" 					: "link_to_remote"
 		"a.navigate" 				: "link_to_fragment"
+		"a.push" 					: "link_to_push"
 		"a.remote-delete" 			: "link_to_delete"
 		"button[type=submit]"		: "link_to_submit"
 		"ul.tabs li"				: "link_to_tab"
@@ -32,25 +32,12 @@ class App.Main extends Backbone.View
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
 		
-
 	post_message: (e) ->
 		push_url '/notes/new'
 		return false
 
 	add_group: (e) ->
 		push_url '/groups/new'
-		return false
-
-	filter_by_tag: (e) ->
-		self = @
-		tag = $(e.currentTarget).attr('data-tag-name').replace(" #", "")
-
-		$.post '/notes/filter.json', {tags: [tag]}, (items) ->
-			notes = new App.Views.Notes.Index(el: $("#main"), tags: [tag])
-			notes.render_list(items)
-			# clear twitter bootstrap dropdowns
-			$('html').trigger('click.dropdown.data-api')
-
 		return false
 
 	#
@@ -64,6 +51,10 @@ class App.Main extends Backbone.View
 
 	link_to_fragment: (e) ->
 		navigate $(e.currentTarget).attr("href")
+		return false
+
+	link_to_push: (e) ->
+		push_url $(e.currentTarget).attr("href")
 		return false
 	
 	link_to_remote: (e) ->
@@ -122,8 +113,4 @@ class App.Main extends Backbone.View
 
 	load_settings: (e) ->
 		navigate $(e.currentTarget).attr("href")
-		return false
-
-	load_add_menu: (e) ->
-		$(".sidebar-footer").after ich.sidebarFooterAddMenu()
 		return false

@@ -9,9 +9,17 @@ Group 	= app.models.Group
 #
 exports.show = (req,res) ->
 	helpers.render_json req, res, (done) ->
-		Group.findOne({name:req.params.id, _users:req.user.id}).run (err, group) ->
+		Group.findOne({_id:req.params.id, _users:req.user.id}).populate('_users').run(done)
+
+#
+# returns a single group provided an ID
+# GET /groups/:id/notes.json
+#
+exports.notes = (req,res) ->
+	helpers.render_json req, res, (done) ->
+		Group.findOne({_id:req.params.id, _users:req.user.id}).run (err, group) ->
 			if group
-				Note.where('groups', group.name).populate('_user').desc('created_at').run (err, notes) ->
+				Note.where('groups', group.name.toLowerCase()).populate('_user').desc('created_at').run (err, notes) ->
 					done(err, {notes: notes, group: group})
 			else
 				done(err, {})

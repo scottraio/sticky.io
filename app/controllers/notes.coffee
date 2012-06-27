@@ -16,22 +16,24 @@ exports.show = (req,res) ->
 # GET /notes.json
 #
 exports.index = (req, res) ->
-	if req.isAuthenticated()
-		helpers.render_json req, res, (done) ->
-			if req.query.tags
-				Note.where('_user', req.user).where('tags').in(req.query.tags).desc('created_at').run(done)
-			else
-				Note.where('_user', req.user).desc('created_at').run(done)
-	else
-		res.render('public')
-
-#
-# lists all notes for an user based on tags in a neatly packed JSON array
-# POST /
-#
-exports.filter = (req, res) ->
+	res.render('public') unless req.isAuthenticated()
+	
 	helpers.render_json req, res, (done) ->
-		Note.where('_user', req.user).where('tags').in(req.body.tags).desc('created_at').run(done)			
+		note = Note.where('_user', req.user)
+
+		# Filter by keyword
+		if req.query.keyword
+			note.where('message', new RegExp(req.query.keyword))
+		# Filter by tags
+		if req.query.tags
+			note.where('tags').in(req.query.tags) 
+		# From a specific time period
+		if req.query.days
+			today 	= new Date()
+			start 	= new Date().setDate(today.getDate() - req.query.days)
+			note.where('created_at').equals({$gte: new Date(start), $lt: today})
+	
+		note.desc('created_at').run(done)
 	
 
 #

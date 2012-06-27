@@ -24,8 +24,8 @@ class App.Views.Notes.New extends Backbone.View
 				# close modal window
 				$(self.el).modal('hide')
 				$('textarea', self.el).val("")
-				# reload the form
-				push_url '/'
+				# reload the current path
+				push_url window.location.pathname + window.location.search
 
 			error: (data, res) ->
 				console.log 'error'

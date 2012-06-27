@@ -12,6 +12,8 @@ class App.Views.Groups.New extends Backbone.View
 	render: () ->
 		$(@el).modal('show')
 		$('input.name', @el).focus()
+		$(@el).html ich.groups_form
+			save_label : "Create Notebook"
 
 	submit: (e) ->
 		self = @

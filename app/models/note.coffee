@@ -13,7 +13,12 @@ NotesSchema = new Schema
 	created_at	: { type: Date, required: true }
 	_user 		: { type: ObjectId, required: true, ref: 'User' } 
 
+# Indexes
+NotesSchema.index { created_at:-1, tags: 1,  _user: 1 }
+NotesSchema.index { created_at:-1 }
+NotesSchema.index { _user:1 }
 
+# Parses all tags, links, and groups from message 
 NotesSchema.methods.parse = () ->
 	@parse_tags()
 	@parse_links()
@@ -57,7 +62,7 @@ NotesSchema.methods.parse_groups = () ->
 		for group in matches
 			# strip tags down and add them to the array
 			# e.g. #todo turns into todo
-			self.groups.push group.replace(/@/, '').replace(/\s/, '')
+			self.groups.push group.replace(/@/, '').replace(/\s/, '').toLowerCase()
 
 	return @groups
 

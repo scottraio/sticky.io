@@ -11,7 +11,7 @@
   *z-index: 2;
 
   overflow: visible;
-  margin: @baseLineHeight 0;
+  //padding: @baseLineHeight 0;
 }
 
 // Gradient is applied to it's own element because overflow visible is not honored by IE when filter is present
@@ -19,9 +19,11 @@
   min-height: @navbarHeight;
   //padding-left:  20px;
   //padding-right: 20px;
-  //#gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
+  #gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
   //.border-radius(4px);
-  //.box-shadow(~"0 1px 3px rgba(0,0,0,.25), inset 0 -1px 0 rgba(0,0,0,.1)");
+  //.box-shadow(~"0 1px 3px rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.1)");
+  border-bottom:1px solid rgba(0,0,0,.15);
+  .box-shadow(0 1px 5px rgba(0,0,0,.1));
 }
 
 // Set width to auto for default container

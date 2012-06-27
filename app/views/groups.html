@@ -1,26 +1,41 @@
 <div class="modal hide" id="add_new_group">
+</div>
+
+<script id="groups_form" type="text/html">
 	<form action="/groups" method="post">
+		
 		<div class="modal-body">
+			<div class="controls">
+				<label>Notebook Title</label>
+				
+				<input type="text" name="name" value="<%group.name%>" class="name input-xlarge" placeholder="Pick a name for your notebook" />
+			</div>
 
 			<div class="controls">
-				<label>Group Name</label>
-				<div class="input-prepend">
-					<span class="add-on">@</span><input type="text" name="name" class="name input-large" placeholder="Pick a name for your group" />
+				<label>People</label>
+				<div id="members">
+					<%#users_email%>
+					<div class="member">
+						<input type="text" name="members[]" class="input-xlarge" value="<%.%>" placeholder="enter email address" />
+						<a href="#" class="btn add-member"><i class="icon-plus"></i></a>
+						<a href="#" class="btn rem-member"><i class="icon-minus"></i></a>
+					</div>
+					<%/users_email%>
 				</div>
-            </div>
+			</div>
+		</div>
 
-            <div class="controls">
-				<label>Members</label>
-				<textarea name="members" class="members" placeholder="Enter member's email address"></textarea>
-            </div>
-			
-		</div>
 		<div class="modal-footer">
+			<%#is_update%>
+			<a class="pull-left btn btn-danger delete">Delete</a>
+			<%/is_update%>
 			<a href="#" class="btn" data-dismiss="modal">Cancel</a>
-			<button type="submit" class="btn btn-primary">Add</button>
+			<button type="submit" class="btn btn-primary"><%save_label%></button>
 		</div>
+
 	</form>
-</div>
+</script>
+
 
 <script id="groups_list" type="text/html">
 	<div class="notes_wrapper fluid-container">

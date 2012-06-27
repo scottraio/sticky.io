@@ -2,11 +2,6 @@ App.Views.Notes or= {}
 
 class App.Views.Notes.Show extends Backbone.View
 	
-	events:
-		'click .delete' : 'delete'
-		'click .cancel' : 'cancel'
-		'click .edit' 	: 'edit'
-	
 	initialize: ->
 		@note = new App.Models.Note(id: @options.id)
 
@@ -14,30 +9,13 @@ class App.Views.Notes.Show extends Backbone.View
 		self = @
 		@note.fetch 
 			success: (err, noteJSON) -> 
-				$(self.el).modal('show')
-				$(self.el).html ich.note_details(noteJSON)
+				$(self.el).html ich.single_note
+					note				: noteJSON
+					created_at_in_words	: () -> $.timeago(this.created_at)
 
 				# make it easy for our users to read their posts
 				$(self.el).autolink()
-				$(self.el).autotag()
 
-	delete: (e) ->
-		self = @
-		@note.destroy
-			success: (model, res) ->
-				# close modal window
-				$(self.el).modal('hide')
-				# reload the form
-				push_url '/'
-		return false
-
-	cancel: (e) ->
-		$(@el).modal('hide')
-		navigate $(e.currentTarget).attr("href")
-		return false
-
-	edit: (e) ->
-		navigate $(e.currentTarget).attr("href")
-		return false
+				return noteJSON
 
 

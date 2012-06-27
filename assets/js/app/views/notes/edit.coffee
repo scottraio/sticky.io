@@ -14,9 +14,14 @@ class App.Views.Notes.Edit extends Backbone.View
 		self = @
 		@note.fetch 
 			success: (err, noteJSON) -> 
-				$(self.el).modal('show')
-				$(self.el).html ich.edit_note_details(noteJSON)
-				$('textarea[name=message]').focus()
+				$(self.el).html("
+					<textarea name=\"message\">#{noteJSON.message}</textarea>
+					<div class=\"meta meta-edit\">
+						<a href=\"/notes/#{noteJSON._id}\" class=\"btn btn-mini btn-primary\">Save</a>
+						<a href=\"/notes/#{noteJSON._id}\" class=\"push btn btn-mini\">Cancel</a>
+					</div>
+				")
+				$('textarea', self.el).focus()
 				
 
 	submit: (e) ->
@@ -28,8 +33,8 @@ class App.Views.Notes.Edit extends Backbone.View
 
 		save @note, attrs, {
 			success: (data, res) ->
-				# reload the form
-				$(self.el).modal('hide')
+				# reload the sticky
+				push_url "/notes/#{self.note.id}"
 
 			error: (data, res) ->
 				console.log 'error'
@@ -38,7 +43,8 @@ class App.Views.Notes.Edit extends Backbone.View
 		return false
 
 	cancel: (e) ->
-		navigate $(e.currentTarget).attr("href")
+		push_url $(e.currentTarget).attr("href")
 		return false
+
 	
 		

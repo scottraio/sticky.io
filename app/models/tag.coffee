@@ -10,7 +10,6 @@ TagsSchema = new Schema
 
 
 TagsSchema.statics.update_index = (options, cb) ->
-	
 	map = () ->
 		if !this.tags
         	return
@@ -31,8 +30,7 @@ TagsSchema.statics.update_index = (options, cb) ->
 		mapreduce	: "notes"
 		map 		: map.toString()
 		reduce 		: reduce.toString()
-		query 		: {_user: options._user}
-		out 		: {merge: "tags"}
+		out 		: "tags"
 
 	mongoose.connection.db.executeDbCommand command, (err, res) ->
 		cb()
