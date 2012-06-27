@@ -66,11 +66,8 @@ exports.update = (req, res) ->
 			note.set 'message', req.body.message
 			
 			#
-			# parse tags into note.tags
-			note.parse_tags()
-			#
-			# parse links into note.links
-			note.parse_links()
+			# parse tags/links/groups into arrays
+			note.parse()
 
 			note.save (err) -> 
 				if err

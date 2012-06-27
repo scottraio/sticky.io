@@ -11,6 +11,10 @@ class App.Views.Groups.Show extends Backbone.View
 
 		@group.fetch
 			success: (col, groupJSON) ->
-				notes_view = new App.Views.Notes.Index()
-				notes_view.load_view(groupJSON.notes)
+				if groupJSON 
+					notes_view = new App.Views.Notes.Index()
+					notes_view.load_view(groupJSON.notes)
+				else
+					# add the sidebar
+					#$("ul.notes_board").prepend ich.sidebar()	
 					
