@@ -87,5 +87,10 @@ app.get('/links.:format?', ensureAuthenticated, BookmarksController.index)
 # Root
 #
 
-app.get '/', NotesController.index
+
+app.get '/', (req, res) ->
+	if req.isAuthenticated()
+		NotesController.index(req,res)
+	else
+		res.render('public') 
 

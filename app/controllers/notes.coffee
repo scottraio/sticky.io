@@ -16,8 +16,6 @@ exports.show = (req,res) ->
 # GET /notes.json
 #
 exports.index = (req, res) ->
-	res.render('public') unless req.isAuthenticated()
-	
 	helpers.render_json req, res, (done) ->
 		note = Note.where('_user', req.user)
 
