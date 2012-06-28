@@ -16,7 +16,7 @@
 				<div class="btn-group pull-right">
 					<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
 						<i id="gravatar"><img src="http://profiles.google.com/s2/u/0/photos/profile/{{req.user.googleId}}?sz=16" /></i>
-						{{req.user.email}}
+						<span class="username">{{req.user.email}}</span>
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
