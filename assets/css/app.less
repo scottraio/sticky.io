@@ -179,12 +179,52 @@ ul.notes_board {
 			color:#777;
 			box-sizing:border-box;
 			background-color:#f0f0f0;
-	
+			
+			.color-choice {
+				.border-radius(4px);
+				border:1px dashed #ccc;
+				background-color:#fff;
+				width:13px;
+				height:13px;
+				float:left;
+				cursor:pointer;
+				position:relative;
+				top:2px;
+			}
+			
+			.dashed { border:1px dashed #ccc; }
+			.blue { border:0; background-color:@blue; }
+			.green { border:0; background-color:@green; }
+			.red { border:0; background-color:@red; }
+			.orange { border:0; background-color:@orange; }
+			.yellow { border:0; background-color:@yellow; }
+			.pink { border:0; background-color:@pink; }
+			.purple { border:0; background-color:@purple; }
+			.gray { border:0; background-color:@gray; }
+			.beige { border:0; background-color:@beige; }
+
+			.dropdown-menu {
+				.color-choice {
+					margin-left:4px;
+					top:0;
+				}
+			}
 			.created_at {
 				margin-right:2px;
 				float:right;
 			}
 		}
+
+		.meta.blue { background-color:lighten(@blue, 50%); }
+		.meta.green { background-color:lighten(@green, 50%); }
+		.meta.red { background-color:lighten(@red, 48%); }
+		.meta.orange { background-color:lighten(@orange, 50%); }
+		.meta.yellow { background-color:lighten(@yellow, 40%); }
+		.meta.pink { background-color:lighten(@pink, 48%); }
+		.meta.purple { background-color:lighten(@purple, 48%); }
+		.meta.gray { background-color:lighten(@gray, 55%); }
+		.meta.beige { background-color:lighten(@beige, 5%); }
+
 		.meta-edit {
 			font-size:0.8em;
 		}
@@ -204,6 +244,8 @@ ul.notes_board {
 		}
 	}
 }
+
+
 
 #post_new_message {
 	padding:10px;

@@ -23,8 +23,22 @@
 
 <script id="sticky" class="partial" type="text/html">
 	<a href="/notes/<%_id%>" class="delete hide"><i class="icon-remove"></i></a>
-	<div class="autolink"><%message%></div>
-	<div class="meta">
+	<div class="autolink">
+		<%message%>
+	</div>
+	<div class="meta <%color%>">
+		<div class="color-choice dropdown-toggle <%color%>" data-toggle="dropdown"></div>
+		<div class="dropdown-menu">
+			<div class="color-choice red" data-color="red"></div>
+			<div class="color-choice blue" data-color="blue"></div>
+			<div class="color-choice green" data-color="green"></div>
+			<div class="color-choice yellow" data-color="yellow"></div>
+			<div class="color-choice purple" data-color="purple"></div>
+			<div class="color-choice pink" data-color="pink"></div>
+			<div class="color-choice beige" data-color="beige"></div>
+			<div class="color-choice gray" data-color="gray"></div>
+			<div class="color-choice dashed" data-color="default"></div>
+		</div>
 		<div class="created_at">
 			<%created_at_in_words%>
 		</div>

@@ -3,8 +3,9 @@ App.Views.Notes or= {}
 class App.Views.Notes.Index extends Backbone.View
 	
 	events: 
-		'dblclick .sticky' 	: 'edit'
-		'click .delete'  	: 'delete'
+		'dblclick .sticky' 						: 'edit'
+		'click .delete'  						: 'delete'
+		'click .dropdown-menu .color-choice'  	: 'update_color'
 	
 	initialize: ->
 		@params		= @options.params
@@ -51,6 +52,24 @@ class App.Views.Notes.Index extends Backbone.View
 			success: (model, res) ->
 				$(sticky).remove()
 		return false
+
+	update_color: (e) ->
+		color 	= $(e.currentTarget).attr('data-color')
+		note 	= new App.Models.Note(id: $(e.currentTarget).parents('.sticky').attr('data-id'))
+
+		save note, {color: color}
+			success: (data, res) ->
+				meta = $(e.currentTarget).parents('.meta')
+				meta.removeClass()
+				meta.addClass('meta')
+				meta.addClass(color)
+
+				color_box = meta.find('.color-choice:first')
+				color_box.removeClass()
+				color_box.addClass('color-choice')
+				color_box.addClass(color)
+			error: (data, res) ->
+				console.log 'error'
 
 
 	auto_image_resolution: (notes) ->
