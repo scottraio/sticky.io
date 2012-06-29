@@ -39,18 +39,18 @@ NotesSchema.methods.parse_tags = () ->
 	return @tags = new_tags
 
 NotesSchema.methods.parse_links = () ->
-	self = @
-
-	matches = @message.match regex.match.link
+	self 		= @
+	new_links 	= []
+	matches 	= @message.match regex.match.link
 
 	if matches
 
 		for link in matches
 			# strip tags down and add them to the array
 			# e.g. #todo turns into todo
-			self.links.push link
+			new_links.push link
 
-	return @links
+	return @links = new_links
 
 NotesSchema.methods.parse_groups = () ->
 	self = @
