@@ -6,23 +6,10 @@
 	<div id="main" class="container-fluid">
 		{{#if error}}<div class="alert alert-error">{{error}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
 		{{#if success}}<div class="alert alert-success">{{success}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
-		
-	
+
+
 		<div class="stage-wrapper">
-			<div id="stage">
-				<!-- content gets loaded here -->
-			</div>
-		</div>	
-		
-	</div>
-
-	{{>notes}}
-	{{>groups}}
-	{{>bookmarks}}
-
-
-	<script id="sidebar" type="text/html">
-		<li class="sidebar card hide">
+			<div class="sidebar">
 			<ul>
 				<li class="header">Date</li>
 				<li>
@@ -45,13 +32,12 @@
 			<ul>
 				<li class="header">
 					Notebooks
-					<a class="navigate pull-right" href="/groups/new"> + Add</a>
+					
 				</li>
 				{{#groups}}
 				<li>
 					<i class="icon-book"></i>
 					<a href="/groups/{{id}}" class="group-link navigate">{{name}}</a>
-					<a href="/groups/{{id}}/edit" class="navigate pull-right"><i class="icon-pencil"></i></a>
 				</li>
 				{{/groups}}
 			</ul>
@@ -64,7 +50,17 @@
 					</li>
 				{{/tags}}
 			</ul>
-		</li>
-	</script>
+		</div>
+			<div id="stage">
+				<!-- content gets loaded here -->
+			</div>
+		</div>	
+		
+		
+	</div>
+
+	{{>notes}}
+	{{>groups}}
+	{{>bookmarks}}
 
 {{>footer}}

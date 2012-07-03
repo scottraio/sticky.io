@@ -10,6 +10,8 @@ class App.Views.Notes.Index extends Backbone.View
 	initialize: ->
 		@params		= @options.params
 		@notes 		= new App.Collections.Notes()
+		@groups 	= new App.Views.Groups.Index()
+
 		# set the url to the search query, if there is a search query
 		if window.location.search
 			@notes.url 	= window.location.pathname + ".json" + window.location.search
@@ -18,9 +20,12 @@ class App.Views.Notes.Index extends Backbone.View
 		self = @
 		@notes.fetch 
 			success: (col, items) ->
-				self.load_view(items)
+				self.load_view(items)	
 
 	load_view: (items) ->
+		self = @ 
+
+		# setup the notes_board
 		$('#stage').html ich.notes_board
 			notes: items
 			created_at_in_words: () -> $.timeago(this.created_at)
@@ -29,12 +34,34 @@ class App.Views.Notes.Index extends Backbone.View
 		$('.autolink').autolink()
 
 		# add the sidebar
-		$("ul.notes_board").prepend ich.sidebar()		
+		#
+		
+		$('#stage ul.notes_board li').each (i, sticky) ->
+			self.acts_as_draggable(sticky)
+			self.acts_as_droppable(sticky)
+
+		
+    	# make it stackable
+		#$("ul.notes_board li.sticky").droppable
+		#	over: (event, ui) ->
+		#		$li = $(this)
+		#		self.t = setTimeout () ->
+		#			$li.addClass("stack")
+		#		, 1500
+		#	out: (event, ui) ->
+		#		clearTimeout(self.t)
+		#		$("ul.notes_board li.sticky").removeClass('stack')
+		#	drop: (event, ui) ->
+		#		clearTimeout(self.t)
+		#		if $(this).hasClass('stack')
+		#			$(ui.draggable[0]).hide()
+		#			$(this).addClass('deck')
+		#		$("ul.notes_board li.sticky").removeClass('stack')
 
 		# make it sortable
-		$("ul.notes_board").sortable
-			items: "li.sticky"
-		
+		#$("ul.notes_board li.sticky").draggable
+		#	revert: true
+
 		# resolve any images
 		@auto_image_resolution(items)
 
@@ -81,5 +108,60 @@ class App.Views.Notes.Index extends Backbone.View
 
 		$('.autolink').remove_img_links()
 
+	acts_as_droppable: (li) ->
+		li.addEventListener 'drop', (e) ->
+			# this / e.target is current target element.
+			if e.stopPropagation
+				e.stopPropagation() # stops the browser from redirecting.
+			
+			# source 
+			source_id = e.dataTransfer.getData('Text')
+			$("li[data-id=#{source_id}]").remove()
+
+			# target
+			unless $(this).attr('data-id') is source_id
+				$(this).addClass('deck')
+				$(this).removeClass('stack')
+
+			return false
+		, false
+
+		li.addEventListener 'dragenter', (e) ->
+			$(this).addClass('stack')
+			return false
+		, false
+
+		li.addEventListener 'dragover', (e) ->
+			# Necessary. Allows us to drop.
+			e.preventDefault() if e.preventDefault
+			e.dataTransfer.dropEffect = 'copy';
+			$(this).addClass('stack')
+		, false
+
+		li.addEventListener 'dragleave', (e) ->
+			$(this).removeClass('stack') # this / e.target is previous target element.
+		, false
+
+
+	acts_as_draggable: (li) ->
+		self = @
+
+		li.setAttribute('draggable', 'true')
+
+		li.addEventListener 'dragstart', (e) ->
+			e.dataTransfer.effectAllowed = 'copy' # only dropEffect='copy' will be dropable
+			e.dataTransfer.setData('Text', $(e.currentTarget).attr('data-id')) 
+			this.style.opacity = '0.4'
+		, false
+
+		li.addEventListener 'dragend', (e) ->
+			#_.each $("ul.notes_board li.sticky"), (dragger) ->
+			#	$(dragger).attr("draggable", true) unless li is dragger
+
+			#_.each $("ul.notes_board li.sticky"), (li) ->
+			#	$(li).removeClass('stack')
+
+			this.style.opacity = '1'
+		, false
+
 		
- 		

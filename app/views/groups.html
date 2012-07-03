@@ -34,23 +34,12 @@
 </script>
 
 
-<script id="groups_list" type="text/html">
-	<div class="notes_wrapper fluid-container">
+<script id="groups_board" type="text/html">
+	
+	<%#stacks%>
+		<li class="sticky deck card" data-id="<%_id%>">
+			<a href="/groups/<%_id%>" class="navigate title"><%name%></a>
+		</li>
+	<%/stacks%>
 
-		<div class="row-fluid">
-			<ul class="notes_list span12">
-				<%#notes%>
-					<li class="card" data-id="<%_id%>">
-						<img src="http://profiles.google.com/s2/u/0/photos/profile/<%_user.googleId%>?sz=48" class="pull-left avatar" />
-						<div class="pull-left">
-							<div class="autolink"><%message%></div>
-							<div class="meta">
-								<%created_at_in_words%>
-							</div>
-						</div>
-					</li>
-				<%/notes%>
-			</ul>
-		</div>
-	</div>
 </script>

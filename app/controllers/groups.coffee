@@ -30,7 +30,7 @@ exports.notes = (req,res) ->
 #
 exports.index = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		Group.find({_id:req.params.id}).run(done)		
+		Group.find({_users:req.user.id}).run(done)		
 	
 #
 # creates a new group for an user
