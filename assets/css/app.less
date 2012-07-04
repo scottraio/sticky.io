@@ -22,9 +22,7 @@ img.logo {
 			i {
 				margin-right:1px;
 				opacity:0.8;
-			}
-			
-
+			}			
 		}
 		li.header {
 			font-weight:400;
@@ -35,6 +33,31 @@ img.logo {
 				color:#999;
 				font-weight:normal;
 				font-size:0.8em;
+			}
+		}
+	}
+	ul.notebooks {
+		li {
+			display:inline-block;
+			height:70px;
+			width:70px;
+			margin-bottom:5px;
+			background-color:rgba(255, 255, 255, 0.8);
+			text-transform:uppercase;
+			text-align:center;
+			font-size:0.8em;
+			.border-radius(2px);
+			.box-shadow(0px 0px 3px #c9c9c9);
+			line-height:6em;
+			cursor:pointer;
+			&:hover {
+				background-color:lighten(@linkColor, 55%);
+				a {
+					color:#333;
+				}
+			}
+			a {
+				color:#999;	
 			}
 		}
 	}
@@ -230,6 +253,8 @@ ul.notes_board {
 		}
 	}
 }
+
+
 
 #post_new_message {
 	padding:10px;
