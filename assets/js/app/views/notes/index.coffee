@@ -40,7 +40,7 @@ class App.Views.Notes.Index extends Backbone.View
 			self.acts_as_draggable(sticky)
 			self.acts_as_droppable(sticky)
 
-		
+
     	# make it stackable
 		#$("ul.notes_board li.sticky").droppable
 		#	over: (event, ui) ->
