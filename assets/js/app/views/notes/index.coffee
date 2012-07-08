@@ -5,12 +5,11 @@ class App.Views.Notes.Index extends Backbone.View
 	events: 
 		'dblclick .sticky' 						: 'edit'
 		'click .delete'  						: 'delete'
-		'submit .create-a-notebook'				: 'create_notebook'
+		'click .dropdown-menu .color-choice'  	: 'update_color'
 	
 	initialize: ->
 		@params		= @options.params
 		@notes 		= new App.Collections.Notes()
-		@groups 	= new App.Views.Groups.Index()
 
 		# set the url to the search query, if there is a search query
 		if window.location.search
@@ -36,11 +35,11 @@ class App.Views.Notes.Index extends Backbone.View
 		# add the sidebar
 		#
 		
-		$('#notebooks li').each (i, notebook) ->		
-			self.acts_as_droppable(notebook)
+		#$('#notebooks li').each (i, notebook) ->		
+		#	self.acts_as_droppable(notebook)
 
-		$('#stage ul.notes_board li').each (i, sticky) ->
-			self.acts_as_draggable(sticky)
+		#$('#stage ul.notes_board li').each (i, sticky) ->
+		#	self.acts_as_draggable(sticky)
 
 
     	# make it stackable
@@ -82,10 +81,26 @@ class App.Views.Notes.Index extends Backbone.View
 				$(sticky).remove()
 		return false
 
-	create_notebook: (e) ->
-		$(e.currentTarget).parents("li.sticky").addClass("deck")
-		$(e.currentTarget).parents("li.sticky").html("<h1>#{$('input', e.currentTarget).val()}</h1>")
-		return false
+	update_color: (e) ->
+		color 	= $(e.currentTarget).attr('data-color')
+		note 	= new App.Models.Note(id: $(e.currentTarget).parents('.sticky').attr('data-id'))
+
+		save note, {color: color}
+			success: (data, res) ->
+				meta = $(e.currentTarget).parents('div.meta')
+				meta.removeClass()
+				meta.addClass('meta')
+				meta.addClass(color)
+
+				color_box = meta.children('.color-choice:first')
+				color_box.removeClass()
+				color_box.addClass('color-choice')
+				color_box.addClass(color)
+
+				console.log meta
+				console.log color_box
+			error: (data, res) ->
+				console.log 'error'
 
 	auto_image_resolution: (notes) ->
 		for note in notes

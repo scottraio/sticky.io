@@ -25,7 +25,6 @@ class App.Main extends Backbone.View
 		".sidebar li" 					: "link_to_notebook"
 		"a.push" 						: "link_to_push"
 		"a.remote-delete" 				: "link_to_delete"
-		".dropdown-menu .color-choice"  : "update_color"
 	}
 		
 	initialize: ->
@@ -38,19 +37,6 @@ class App.Main extends Backbone.View
 	add_group: (e) ->
 		push_url '/groups/new'
 		return false
-
-	update_color: (e) ->
-		color 	= $(e.currentTarget).attr('data-color')
-		note 	= new App.Models.Note(id: $(e.currentTarget).parents('.sticky').attr('data-id'))
-
-		meta = $(e.currentTarget).parents('li')
-		meta.removeClass()
-		meta.addClass(color)
-
-		color_box = meta.find('.color-choice:first')
-		color_box.removeClass()
-		color_box.addClass('color-choice')
-		color_box.addClass(color)
 			
 
 	#

@@ -15,7 +15,6 @@ class App.Views.Notes.Show extends Backbone.View
 				
 				# make it easy for our users to read their posts
 				$(self.el).autolink()
-
 				return noteJSON
 
 
