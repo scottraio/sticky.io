@@ -5,7 +5,7 @@ class App.Views.Notes.Index extends Backbone.View
 	events: 
 		'dblclick .sticky' 						: 'edit'
 		'click .delete'  						: 'delete'
-		'click .dropdown-menu .color-choice'  	: 'update_color'
+		'submit .create-a-notebook'				: 'create_notebook'
 	
 	initialize: ->
 		@params		= @options.params
@@ -36,9 +36,11 @@ class App.Views.Notes.Index extends Backbone.View
 		# add the sidebar
 		#
 		
+		$('#notebooks li').each (i, notebook) ->		
+			self.acts_as_droppable(notebook)
+
 		$('#stage ul.notes_board li').each (i, sticky) ->
 			self.acts_as_draggable(sticky)
-			self.acts_as_droppable(sticky)
 
 
     	# make it stackable
@@ -80,24 +82,10 @@ class App.Views.Notes.Index extends Backbone.View
 				$(sticky).remove()
 		return false
 
-	update_color: (e) ->
-		color 	= $(e.currentTarget).attr('data-color')
-		note 	= new App.Models.Note(id: $(e.currentTarget).parents('.sticky').attr('data-id'))
-
-		save note, {color: color}
-			success: (data, res) ->
-				meta = $(e.currentTarget).parents('.meta')
-				meta.removeClass()
-				meta.addClass('meta')
-				meta.addClass(color)
-
-				color_box = meta.find('.color-choice:first')
-				color_box.removeClass()
-				color_box.addClass('color-choice')
-				color_box.addClass(color)
-			error: (data, res) ->
-				console.log 'error'
-
+	create_notebook: (e) ->
+		$(e.currentTarget).parents("li.sticky").addClass("deck")
+		$(e.currentTarget).parents("li.sticky").html("<h1>#{$('input', e.currentTarget).val()}</h1>")
+		return false
 
 	auto_image_resolution: (notes) ->
 		for note in notes
@@ -116,18 +104,17 @@ class App.Views.Notes.Index extends Backbone.View
 			
 			# source 
 			source_id = e.dataTransfer.getData('Text')
-			$("li[data-id=#{source_id}]").remove()
+			#$("li[data-id=#{source_id}]").remove()
 
 			# target
-			unless $(this).attr('data-id') is source_id
-				$(this).addClass('deck')
-				$(this).removeClass('stack')
+			#unless $(this).attr('data-id') is source_id
+				#@=$(this).removeClass('stack')
 
 			return false
 		, false
 
 		li.addEventListener 'dragenter', (e) ->
-			$(this).addClass('stack')
+			$(this).addClass('active')
 			return false
 		, false
 
@@ -135,11 +122,11 @@ class App.Views.Notes.Index extends Backbone.View
 			# Necessary. Allows us to drop.
 			e.preventDefault() if e.preventDefault
 			e.dataTransfer.dropEffect = 'copy';
-			$(this).addClass('stack')
+			$(this).addClass('active')
 		, false
 
 		li.addEventListener 'dragleave', (e) ->
-			$(this).removeClass('stack') # this / e.target is previous target element.
+			$(this).removeClass('active') # this / e.target is previous target element.
 		, false
 
 
@@ -152,6 +139,7 @@ class App.Views.Notes.Index extends Backbone.View
 			e.dataTransfer.effectAllowed = 'copy' # only dropEffect='copy' will be dropable
 			e.dataTransfer.setData('Text', $(e.currentTarget).attr('data-id')) 
 			this.style.opacity = '0.4'
+			$("#notebooks").show()
 		, false
 
 		li.addEventListener 'dragend', (e) ->
@@ -160,7 +148,7 @@ class App.Views.Notes.Index extends Backbone.View
 
 			#_.each $("ul.notes_board li.sticky"), (li) ->
 			#	$(li).removeClass('stack')
-
+			$("#notebooks").hide()
 			this.style.opacity = '1'
 		, false
 

@@ -8,6 +8,7 @@ img.logo {
 	display:inline-block;
 }
 
+
 // Sidebar
 
 .sidebar {
@@ -43,10 +44,59 @@ img.logo {
 			width:73px;
 			padding:0;
 			text-align:center;
-			line-height:6em;
 			cursor:pointer;
+			position:relative;
+			a {
+				margin-top:15px;
+				display:block;
+			}
+			.meta {
+				width:100%;
+				bottom:0;
+				position:absolute;
+				box-sizing:border-box;
+				padding:2px;
+				
+				.color-choice {
+					border:1px dashed #ccc;
+					background-color:#fff;
+					width:10px;
+					height:10px;
+					cursor:pointer;
+					float:left;
+				}
+				
+				.dashed { border:1px dashed #ccc; }
+				.blue { border:0; background-color:@blue; }
+				.green { border:0; background-color:@green; }
+				.red { border:0; background-color:@red; }
+				.orange { border:0; background-color:@orange; }
+				.yellow { border:0; background-color:@yellow; }
+				.pink { border:0; background-color:@pink; }
+				.purple { border:0; background-color:@purple; }
+				.gray { border:0; background-color:@gray; }
+				.beige { border:0; background-color:@beige; }
+
+				.dropdown-menu {
+					.color-choice {
+						margin-left:4px;
+						top:0;
+					}
+				}	
+
+			}
 			
 		}
+
+		li.blue { background-color:lighten(@blue, 50%); }
+		li.green { background-color:lighten(@green, 50%); }
+		li.red { background-color:lighten(@red, 48%); }
+		li.orange { background-color:lighten(@orange, 50%); }
+		li.yellow { background-color:lighten(@yellow, 40%); }
+		li.pink { background-color:lighten(@pink, 48%); }
+		li.purple { background-color:lighten(@purple, 48%); }
+		li.gray { background-color:lighten(@gray, 55%); }
+		li.beige { background-color:lighten(@beige, 5%); }
 	}
 }
 
@@ -58,7 +108,7 @@ img.logo {
 // Stage
 
 #stage {
-	margin-left:165px;
+	
 }
 
 
@@ -81,11 +131,19 @@ ul.tags {
 			
 			li {
 				a {
-					color:#222;
-					font-family:tahoma;
-					line-height:22px;
-					font-weight:200;
-					font-size:0.9em;
+					color:#444;
+					font-family: "bebas-neue";
+					line-height:24px;
+					font-size:1.5em;
+					padding-left:5px;
+					&:hover {
+						color:@darkStickyGreen;
+					}
+					i {
+						position:relative;
+						top:4px;
+						opacity:0.7;
+					}
 				}		
 			}
 			
@@ -141,6 +199,20 @@ ul.notes_board {
 		border-width: 2px;
 		.transition(border linear .2s);
 	}
+	li.deck {
+		h1 {
+			background-color:#eee;
+			width:100%;
+			box-sizing:border-box;
+			font-size:1em;
+			text-indent:15px;
+			font-weight:600;
+			text-align: center;
+			a {
+				color:#333;
+			}
+		}
+	}
 	li.card {
 		-moz-column-break-inside: avoid;
 		-webkit-column-break-inside: avoid;
@@ -175,36 +247,6 @@ ul.notes_board {
 			color:#777;
 			box-sizing:border-box;
 			background-color:#f0f0f0;
-			
-			.color-choice {
-				.border-radius(4px);
-				border:1px dashed #ccc;
-				background-color:#fff;
-				width:13px;
-				height:13px;
-				float:left;
-				cursor:pointer;
-				position:relative;
-				top:2px;
-			}
-			
-			.dashed { border:1px dashed #ccc; }
-			.blue { border:0; background-color:@blue; }
-			.green { border:0; background-color:@green; }
-			.red { border:0; background-color:@red; }
-			.orange { border:0; background-color:@orange; }
-			.yellow { border:0; background-color:@yellow; }
-			.pink { border:0; background-color:@pink; }
-			.purple { border:0; background-color:@purple; }
-			.gray { border:0; background-color:@gray; }
-			.beige { border:0; background-color:@beige; }
-
-			.dropdown-menu {
-				.color-choice {
-					margin-left:4px;
-					top:0;
-				}
-			}
 			.created_at {
 				margin-right:2px;
 				float:right;
@@ -221,6 +263,7 @@ ul.notes_board {
 		.meta.gray { background-color:lighten(@gray, 55%); }
 		.meta.beige { background-color:lighten(@beige, 5%); }
 
+		// edit related stuff
 		.meta-edit {
 			font-size:0.8em;
 		}
@@ -231,6 +274,25 @@ ul.notes_board {
 			border:0;
 			box-sizing:border-box;
 			line-height:1em;
+		}
+		.define-title {
+			width:100%;
+			position:absolute;
+			top:0;
+			bottom:0;
+			margin:0;
+			border:0;
+			box-sizing:border-box;
+			line-height:1em;
+			background-color:#eee;
+			input {
+				display:block;
+				margin:20px auto 0 auto;
+				width:200px;
+				padding:2px;
+				font-size:0.8em;
+
+			}
 		}
 	}
 	li:hover {
@@ -254,11 +316,6 @@ ul.notes_board {
 		margin:0;
 	}
 }
-
-.post-message {
-	margin-right:10px;
-}
-
 
 .modal {
 	padding:20px;

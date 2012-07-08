@@ -6,9 +6,16 @@
 
 			{{#is_logged_in}}				
 			<div class="profile clearfix">
-				<form action="/notes" method="get" class="navbar-search pull-left">
-					<input type="text" name="keyword" class="search-query" placeholder="Search">
-				</form>
+				
+
+				<ul class="nav">
+					<li><a href="/notes/new" class="tk-bebas-neue post-message"><i class="icon-plus"></i> Add</a></li>
+					<li><a href="/groups" class="tk-bebas-neue"><i class="icon-book"></i> Notebooks</a></li>
+					<li><a href="#" class="tk-bebas-neue"><i class="icon-calendar"></i> Calendar</a></li>
+				</ul>
+
+
+				
 
 				<div class="btn-group pull-right">
 					<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
@@ -21,7 +28,11 @@
 					</ul>
 				</div>
 
-				<a href="/notes/new" class="post-message pull-right btn"><i class="icon-plus"></i> Add</a>
+				
+
+				<form action="/notes" method="get" class="navbar-search pull-right">
+					<input type="text" name="keyword" class="search-query" placeholder="Discover">
+				</form>
 
 			</div>
 			{{/is_logged_in}}

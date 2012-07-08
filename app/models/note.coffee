@@ -10,6 +10,7 @@ NotesSchema = new Schema
 	tags		: { type: Array, default: [] }
 	links 		: { type: Array, default: [] }
 	groups 		: { type: Array, default: [] }
+	path		: { type: String, default: '' }
 	created_at	: { type: Date, required: true }
 	_user 		: { type: ObjectId, required: true, ref: 'User' } 
 

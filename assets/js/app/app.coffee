@@ -18,15 +18,14 @@ window.click_or_tap = (events) ->
 class App.Main extends Backbone.View
 	
 	events: click_or_tap {
-		"a.post-message"			: "post_message"
-		"a.add-group"				: "add_group"
-		"a.remote" 					: "link_to_remote"
-		"a.navigate" 				: "link_to_fragment"
-		"a.push" 					: "link_to_push"
-		"a.remote-delete" 			: "link_to_delete"
-		"button[type=submit]"		: "link_to_submit"
-		"ul.tabs li"				: "link_to_tab"
-		"#load-settings" 			: "load_settings"
+		"a.post-message"				: "post_message"
+		"a.add-group"					: "add_group"
+		"a.remote" 						: "link_to_remote"
+		"a.navigate" 					: "link_to_fragment"
+		".sidebar li" 					: "link_to_notebook"
+		"a.push" 						: "link_to_push"
+		"a.remote-delete" 				: "link_to_delete"
+		".dropdown-menu .color-choice"  : "update_color"
 	}
 		
 	initialize: ->
@@ -40,6 +39,20 @@ class App.Main extends Backbone.View
 		push_url '/groups/new'
 		return false
 
+	update_color: (e) ->
+		color 	= $(e.currentTarget).attr('data-color')
+		note 	= new App.Models.Note(id: $(e.currentTarget).parents('.sticky').attr('data-id'))
+
+		meta = $(e.currentTarget).parents('li')
+		meta.removeClass()
+		meta.addClass(color)
+
+		color_box = meta.find('.color-choice:first')
+		color_box.removeClass()
+		color_box.addClass('color-choice')
+		color_box.addClass(color)
+			
+
 	#
 	#
 	#
@@ -51,6 +64,10 @@ class App.Main extends Backbone.View
 
 	link_to_fragment: (e) ->
 		navigate $(e.currentTarget).attr("href")
+		return false
+
+	link_to_notebook: (e) ->
+		navigate $(e.currentTarget).children("a").attr("href")
 		return false
 
 	link_to_push: (e) ->

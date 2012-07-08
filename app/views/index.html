@@ -7,31 +7,8 @@
 		{{#if error}}<div class="alert alert-error">{{error}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
 		{{#if success}}<div class="alert alert-success">{{success}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
 
-
 		<div class="stage-wrapper">
-			<div class="sidebar">
-				<ul class="notebooks">
-					{{#groups}}
-					<li>
-						<a href="/groups/{{id}}" class="navigate">{{name}}</a>
-					</li>
-					{{/groups}}
-				</ul>
-				<ul>
-					<li>
-						<i class="icon-time"></i>
-						<a href="/notes?days=1" class="navigate">Today</a>
-					</li>
-					<li>
-						<i class="icon-time"></i>
-						<a href="/notes?days=7" class="navigate">Last 7 days</a>
-					</li>
-					<li>
-						<i class="icon-time"></i>
-						<a href="/notes?days=30" class="navigate">Last Month</a>
-					</li>
-				</ul>
-			</div>
+			
 			<div id="stage">
 				<!-- content gets loaded here -->
 			</div>
@@ -45,3 +22,4 @@
 	{{>bookmarks}}
 
 {{>footer}}
+
