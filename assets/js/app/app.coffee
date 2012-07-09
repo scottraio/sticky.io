@@ -31,8 +31,8 @@ class App.Main extends Backbone.View
 		$('.dropdown-toggle').dropdown()
 		$('#calendar').DatePicker
 			flat: true
-			date: ['2008-07-28','2008-07-31']
-			current: '2008-07-31'
+			date: [new Date(),new Date()]
+			current: new Date()
 			calendars: 2
 
 			mode: 'range'

@@ -22,7 +22,8 @@ div.datepicker {
 	top: -10px;
 	left: 0px;
 	padding:15px;
-	.box-shadow(0px 0px 25px #999);
+	.box-shadow(0px 0px 6px #666);
+	.border-radius(5px);
 	&:before {
 		content:" ";
 		position:absolute;
@@ -41,7 +42,7 @@ div.datepicker table {
 	border-collapse:collapse;
 }
 div.datepicker a {
-	color: #eee;
+	color: #000;
 	text-decoration: none;
 	cursor: default;
 	outline: none;
@@ -65,6 +66,7 @@ div.datepicker tbody a {
 }
 .datepickerDays a {
 	width: 20px;
+	padding-right:5px;
 	line-height: 20px;
 }
 .datepickerYears a,
@@ -75,7 +77,7 @@ div.datepicker tbody a {
 	text-align: center;
 }
 td.datepickerNotInMonth a {
-	color: #666;
+	color: #999;
 }
 tbody.datepickerDays td.datepickerSelected{
 	//background: #136A9F;
@@ -83,7 +85,8 @@ tbody.datepickerDays td.datepickerSelected{
 	background: @stickyGreen;
 }
 tbody.datepickerDays td.datepickerNotInMonth.datepickerSelected {
-	background: #17384d;
+	//background: #17384d;
+	background: #ccc;	
 }
 tbody.datepickerYears td.datepickerSelected,
 tbody.datepickerMonths td.datepickerSelected{
