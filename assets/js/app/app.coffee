@@ -17,25 +17,38 @@ window.click_or_tap = (events) ->
 
 class App.Main extends Backbone.View
 	
-	events: click_or_tap {
-		"a.post-message"				: "post_message"
-		"a.add-group"					: "add_group"
-		"a.remote" 						: "link_to_remote"
-		"a.navigate" 					: "link_to_fragment"
-		".sidebar li" 					: "link_to_notebook"
-		"a.push" 						: "link_to_push"
-		"a.remote-delete" 				: "link_to_delete"
-	}
+	events: 
+		"click a.post-message"				: "post_message"
+		"mouseover .calendar_by_date"		: "show_calendar"
+		"mouseout .calendar_by_date"		: "hide_calendar"
+		"click a.remote" 					: "link_to_remote"
+		"click a.navigate" 					: "link_to_fragment"
+		"click .sidebar li" 				: "link_to_notebook"
+		"click a.push" 						: "link_to_push"
+		"click a.remote-delete" 			: "link_to_delete"
 		
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
+		$('#calendar').DatePicker
+			flat: true
+			date: ['2008-07-28','2008-07-31']
+			current: '2008-07-31'
+			calendars: 2
+
+			mode: 'range'
+			starts: 1
+
 		
 	post_message: (e) ->
 		push_url '/notes/new'
 		return false
 
-	add_group: (e) ->
-		push_url '/groups/new'
+	show_calendar: (e) ->
+		$('#calendar').show()
+		return false
+
+	hide_calendar: (e) ->
+		$('#calendar').hide()
 		return false
 			
 

@@ -1,10 +1,10 @@
 class App.Routers.GroupsRouter extends Backbone.Router
 	
 	routes:
-		"groups"			: "index"
-		"groups/new"		: "new"
-		"groups/:id"		: "show"
-		"groups/:id/edit" 	: "edit"
+		"notebooks"				: "index"
+		"notebooks/new"			: "new"
+		"notebooks/:id"			: "show"
+		"notebooks/:id/edit" 	: "edit"
 
 	index: ->
 		group = new App.Views.Groups.Index(el: $("#stage"))

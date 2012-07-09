@@ -7,5 +7,6 @@
 
 #= require ./jquery/jquery.facebox.js
 #= require ./jquery/jquery.timeago.coffee
+#= require ./jquery/jquery.daterange.js
 
 

@@ -1,7 +1,8 @@
-helpers = require './helpers'
-Note 	= app.models.Note
-User 	= app.models.User
-Group 	= app.models.Group
+helpers 	= require './helpers'
+Note 		= app.models.Note
+User 		= app.models.User
+Group 		= app.models.Group
+Notebook 	= app.models.Notebook
 
 #
 # returns a single group provided an ID
@@ -17,12 +18,8 @@ exports.show = (req,res) ->
 #
 exports.notes = (req,res) ->
 	helpers.render_json req, res, (done) ->
-		Group.findOne({_id:req.params.id, _users:req.user.id}).run (err, group) ->
-			if group
-				Note.where('groups', group.name.toLowerCase()).populate('_user').desc('created_at').run (err, notes) ->
-					done(err, {notes: notes, group: group})
-			else
-				done(err, {})
+		Note.where('groups', req.params.id.toLowerCase()).where('_user', req.user.id).populate('_user').desc('created_at').run (err, notes) ->
+			done(err, {notes: notes})
 
 #
 # lists all groups for an user in a neatly packed JSON array
@@ -30,7 +27,8 @@ exports.notes = (req,res) ->
 #
 exports.index = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		Group.find({_users:req.user.id}).run(done)		
+		Notebook.update_index {_user:req.user.id}, () ->
+			Notebook.find {"value._user":req.user.id}, done		
 	
 #
 # creates a new group for an user

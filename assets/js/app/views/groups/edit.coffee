@@ -38,7 +38,7 @@ class App.Views.Groups.Edit extends Backbone.View
 				# reload the view by refreshing the page
 				# we do this because a big chunk of the navigation 
 				# is built at page load
-				window.location.href = "/groups/#{res._id}"
+				window.location.href = "/notebooks/#{res._id}"
 
 			error: (data, res) ->
 				console.log 'error'

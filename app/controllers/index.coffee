@@ -61,14 +61,14 @@ app.put('/notes/:id.:format?', ensureAuthenticated, NotesController.update)
 # Groups
 #
 
-app.get('/groups.:format?', ensureAuthenticated, GroupsController.index)
-app.get('/groups/:id.:format?', ensureAuthenticated, GroupsController.show)
-app.get('/groups/:id/notes.:format?', ensureAuthenticated, GroupsController.notes)
-app.get('/groups/new.:format?', ensureAuthenticated, GroupsController.new)
-app.get('/groups/:id/edit.:format?', ensureAuthenticated, GroupsController.edit)
-app.post('/groups.:format?', ensureAuthenticated, GroupsController.create)
-app.delete('/groups/:id.:format?', ensureAuthenticated, GroupsController.delete)
-app.put('/groups/:id.:format?', ensureAuthenticated, GroupsController.update)
+app.get('/notebooks.:format?', ensureAuthenticated, GroupsController.index)
+app.get('/notebooks/:id.:format?', ensureAuthenticated, GroupsController.show)
+app.get('/notebooks/:id/notes.:format?', ensureAuthenticated, GroupsController.notes)
+app.get('/notebooks/new.:format?', ensureAuthenticated, GroupsController.new)
+app.get('/notebooks/:id/edit.:format?', ensureAuthenticated, GroupsController.edit)
+app.post('/notebooks.:format?', ensureAuthenticated, GroupsController.create)
+app.delete('/notebooks/:id.:format?', ensureAuthenticated, GroupsController.delete)
+app.put('/notebooks/:id.:format?', ensureAuthenticated, GroupsController.update)
 
 #
 # Tags

@@ -15,7 +15,7 @@ NotebookSchema.statics.update_index = (options, cb) ->
         	return
     
 		for group in this.groups
-			emit(tag, {count:1, _user:this._user})
+			emit(group, {count:1, _user:this._user})
 
 	reduce = (key,values) ->
 		result = {count: 0, _user: values._user}
@@ -33,6 +33,8 @@ NotebookSchema.statics.update_index = (options, cb) ->
 		out 		: "notebooks"
 
 	mongoose.connection.db.executeDbCommand command, (err, res) ->
+		console.log err
+		console.log res
 		cb()
 	
-mongoose.model('Tag', NotebookSchema)
+mongoose.model('Notebook', NotebookSchema)

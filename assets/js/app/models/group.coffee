@@ -2,6 +2,6 @@ class App.Models.Group extends Backbone.Model
 
 	url: () ->
 		if this.isNew()
-			"/groups.json"
+			"/notebooks.json"
 		else
-			"/groups/" + this.id + ".json"
+			"/notebooks/" + this.id + ".json"

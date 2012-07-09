@@ -5,7 +5,7 @@ class App.Views.Groups.Show extends Backbone.View
 	
 	initialize: ->
 		@group 		= new App.Models.Group(id: @options.id)
-		@group.url 	= "/groups/#{@options.id}/notes.json"
+		@group.url 	= "/notebooks/#{@options.id}/notes.json"
 
 	render: () ->
 
