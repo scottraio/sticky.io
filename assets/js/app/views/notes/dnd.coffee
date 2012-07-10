@@ -2,51 +2,8 @@ App.Views.Notes or= {}
 
 class App.Views.Notes.DnD extends Backbone.View
 
-
-	unpack_and_save: (target) ->
-		self = @
-		source_id 	= $(self.srcElement).attr('data-id')
-		parent_id	= $(self.draggable).attr('data-id')
-
-		@unbind_note new App.Models.Note(id: parent_id), source_id, () ->
-			$(target).removeClass('drop')		
-			push_url window.location.pathname + "?" + window.location.search
-
-		@clear_path new App.Models.Note(id: source_id)
-		
-
-
-	assign_and_save: (target, parent_id) ->
-		self = @
-		source_id 	= $(@draggable).attr('data-id')
-
-		@bind_note new App.Models.Note(id: parent_id), source_id, () ->
-			$(self.draggable).remove()
-			$(target).removeClass('stack')		
-			push_url window.location.pathname + "?" + window.location.search
-			
-		@set_path new App.Models.Note(id: source_id), parent_id
-
-	bind_note: (note, source_id, cb) ->
-		save , {_notes: source_id}
-			success: (data, res) -> cb()
-			error: (data, res) -> console.log 'error'
-
-	unbind_note: (note, source_id, cb) ->
-		save note, {unbind: source_id}
-			success: (data, res) -> cb()
-			error: (data, res) -> console.log 'error'
-
-	clear_path: (note) ->
-		save note, {clear_path: true}
-			success: (data, res) -> # do something
-			error: (data, res) -> console.log 'error'
-
-	set_path: (note, path) ->
-		save note, {path: path}
-			success: (data, res) -> # success
-			error: (data, res) -> console.log 'error'
-
+	reload: () ->
+		push_url window.location.pathname + "?" + window.location.search
 
 	#
 	# Drag and Drop
@@ -58,18 +15,27 @@ class App.Views.Notes.DnD extends Backbone.View
 		body.on 'drop', (e) ->
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 		
-			if $(self.srcElement).hasClass("subnote")
+			note 		= $(self.srcElement)
+			note_id		= note.attr('data-id')
+			parent_id 	= $(self.draggable).attr('data-id')
+
+			if note.hasClass("subnote") and note_id isnt parent_id
+				
 				if self.options.id 
-					self.assign_and_save(this, self.options.id)
+					$.getJSON "/notes/#{note_id}/rebind/#{parent_id}/#{self.options.id}.json", (res) ->
+						self.reload()
 				else
-					self.unpack_and_save(this)
+					$.getJSON "/notes/#{note_id}/unbind/#{parent_id}.json", (res) ->
+						self.reload()
+
+				$(body).removeClass('drop')
 				
 			return false
 		
 
 		body.on 'dragenter', (e) ->
 			if $(self.srcElement).hasClass("subnote")
-				$(this).addClass('drop')
+				$(body).addClass('drop')
 				$(self.srcElement).hide()
 			return false
 
@@ -78,13 +44,13 @@ class App.Views.Notes.DnD extends Backbone.View
 			e.preventDefault() if e.preventDefault
 			# source 
 			if $(self.srcElement).hasClass("subnote")
-				$(this).addClass('drop')
+				$(body).addClass('drop')
 				e.originalEvent.dataTransfer.dropEffect = 'copy'
 			
 			return false	
 
 		body.on 'dragleave', (e) ->
-			$(this).removeClass('drop') # this / e.target is previous target element.
+			$(body).removeClass('drop') # this / e.target is previous target element.
 
 	acts_as_droppable: (li) ->
 		self = @
@@ -93,9 +59,13 @@ class App.Views.Notes.DnD extends Backbone.View
 			# this / e.target is current target element.
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 
+			note_id 	= $(self.draggable).attr('data-id')
+			parent_id 	= $(this).attr('data-id')
+
 			# target
 			unless this is self.draggable
-				self.assign_and_save(this, $(this).attr('data-id'))
+				$.getJSON "/notes/#{note_id}/bind/#{parent_id}.json", (res) ->
+					self.reload()
 			return false
 
 		li.on 'dragenter', (e) ->

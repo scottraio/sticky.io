@@ -16,9 +16,9 @@ class App.Views.Notes.Edit extends Backbone.View
 			success: (err, noteJSON) -> 
 				# make the textarea's height the same height as the autolink height
 				height = $('.autolink', self.el).height()
-				$(self.el).html("
+				$(".pole-position", self.el).html("
 					<textarea name=\"message\" style=\"height:#{height}px\">#{noteJSON.message}</textarea>
-					<div class=\"meta meta-edit\">
+					<div class=\"\">
 						<a href=\"/notes/#{noteJSON._id}\" class=\"btn btn-mini btn-primary\">Save</a>
 						<a href=\"/notes/#{noteJSON._id}\" class=\"push btn btn-mini\">Cancel</a>
 					</div>
@@ -36,7 +36,8 @@ class App.Views.Notes.Edit extends Backbone.View
 		save @note, attrs, {
 			success: (data, res) ->
 				# reload the sticky
-				push_url "/notes/#{self.note.id}"
+				$(".pole-position", self.el).html data.message
+				$('.autolink').autolink()
 
 			error: (data, res) ->
 				console.log 'error'
@@ -45,7 +46,11 @@ class App.Views.Notes.Edit extends Backbone.View
 		return false
 
 	cancel: (e) ->
-		push_url $(e.currentTarget).attr("href")
+		self = @
+		@note.fetch 
+			success: (err, noteJSON) ->
+				$(".pole-position", self.el).html noteJSON.message
+				$('.autolink').autolink()
 		return false
 
 	

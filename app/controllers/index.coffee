@@ -58,9 +58,15 @@ app.delete('/notes/:id.:format?', ensureAuthenticated, NotesController.delete)
 app.put('/notes/:id.:format?', ensureAuthenticated, NotesController.update)
 
 #
+# Notes Tree
+#
+app.get('/notes/:id/bind/:parent_id.:format?', ensureAuthenticated, NotesController.bind)
+app.get('/notes/:id/unbind/:parent_id.:format?', ensureAuthenticated, NotesController.unbind)
+app.get('/notes/:id/rebind/:from_id/:to_id.:format?', ensureAuthenticated, NotesController.rebind)
+
+#
 # Groups
 #
-
 app.get('/notebooks.:format?', ensureAuthenticated, GroupsController.index)
 app.get('/notebooks/:id.:format?', ensureAuthenticated, GroupsController.show)
 app.get('/notebooks/:id/notes.:format?', ensureAuthenticated, GroupsController.notes)

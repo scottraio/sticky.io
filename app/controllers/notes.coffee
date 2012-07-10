@@ -39,12 +39,14 @@ exports.index = (req, res) ->
 			note.where('created_at').equals({$gte: new Date(start), $lt: today})
 	
 		if _.isEmpty(req.query)
-			note.or([{'path':null}, {'path':''}, {'path':undefined}])
+			note.where('_parent', null)
 
 		if populate
 			note.populate('_notes')
 
-		note.desc('created_at').run(done)
+		note.desc('created_at').run (err, items) ->
+			console.log err
+			done(err, items)
 	
 
 #
@@ -81,15 +83,8 @@ exports.update = (req, res) ->
 				# parse tags/links/groups into arrays
 				note.parse()
 
-			
-			note._notes.remove(req.body.unbind)	if req.body.unbind	
-			note._notes.push req.body._notes 	if req.body._notes
-			note.set 'color', req.body.color	if req.body.color
-			note.set 'path', req.body.path 		if req.body.path
-			note.set 'path', ''	 				if req.body.clear_path
-
-			console.log req.body.unbind
-			console.log note._notes
+			if req.body.color
+				note.set 'color', req.body.color	
 
 			note.save (err) -> 
 				if err
@@ -98,6 +93,45 @@ exports.update = (req, res) ->
 					done(err)
 				else
 					done(null, note)
+
+#
+# Motes Tree
+#
+
+exports.bind = (req, res) ->
+	helpers.render_json req, res, (done) ->
+		Note.note_and_parent req, (note, parent) ->
+			# magic
+			parent._notes.push note._id
+			note._parent = parent._id
+			
+			note.save (err) -> 
+				parent.save(done) unless err
+
+
+exports.unbind = (req, res) ->
+	helpers.render_json req, res, (done) ->
+		Note.note_and_parent req, (note, parent) ->
+			# magic
+			parent._notes.remove(note._id)
+			note._parent = null
+			
+			note.save (err) -> 
+				parent.save(done) unless err
+
+exports.rebind = (req, res) ->
+	helpers.render_json req, res, (done) ->
+		Note.from_note_to_note req, (note, from, to) ->
+			# magic
+			from._notes.remove(note._id)
+			to._notes.push(note._id)
+			note._parent = to._id
+			
+			note.save (err) -> 
+				from.save (err) ->
+					to.save(done)
+
+
 
 #
 # grabs an note and returns its JSON

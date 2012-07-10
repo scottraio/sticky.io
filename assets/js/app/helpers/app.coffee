@@ -36,10 +36,7 @@ window.os_name = () ->
 	return OSName
 
 window.reset_events = (view) ->
-	$(view.el).unbind("click")
-	$(view.el).unbind("dblclick")
-	$(view.el).unbind("tap")
-	$(view.el).unbind("submit")
-	$(document).unbind("keydown")
+	$(view.el).unbind()
+	$("body").unbind()
 	view.delegateEvents()
 

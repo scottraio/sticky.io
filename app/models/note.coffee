@@ -10,15 +10,27 @@ NotesSchema = new Schema
 	tags		: { type: Array, default: [] }
 	links 		: { type: Array, default: [] }
 	groups 		: { type: Array, default: [] }
-	path		: { type: String, default: '' }
 	created_at	: { type: Date, required: true }
 	_user 		: { type: ObjectId, required: true, ref: 'User' } 
+	_parent		: { type: ObjectId, ref: 'Note' }
 	_notes 		: [ { type: ObjectId, ref: 'Note' } ]
 
 # Indexes
 NotesSchema.index { created_at:-1, tags: 1,  _user: 1 }
 NotesSchema.index { created_at:-1 }
 NotesSchema.index { _user:1 }
+
+NotesSchema.statics.note_and_parent = (req, cb) ->
+	app.models.Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->			
+		app.models.Note.findOne {_id:req.params.parent_id, _user:req.user}, (err, parent) ->
+			cb(note,parent)
+
+NotesSchema.statics.from_note_to_note = (req, cb) ->
+	app.models.Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
+		app.models.Note.findOne {_id:req.params.from_id, _user:req.user}, (err, from) ->		
+			app.models.Note.findOne {_id:req.params.to_id, _user:req.user}, (err, to) ->
+				cb(note,from,to)
+
 
 # Parses all tags, links, and groups from message 
 NotesSchema.methods.parse = () ->
