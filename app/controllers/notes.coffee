@@ -17,7 +17,7 @@ exports.show = (req,res) ->
 #
 exports.index = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		note = Note.where('_user', req.user)
+		note = Note.where('_user', req.user).or([{'path':null}, {'path':''}]).populate('_notes')
 
 		# Filter by keyword
 		if req.query.keyword
@@ -67,8 +67,15 @@ exports.update = (req, res) ->
 				note.set 'message', req.body.message
 				# parse tags/links/groups into arrays
 				note.parse()
+
 			if req.body.color
 				note.set 'color', req.body.color
+
+			if req.body._notes
+				note._notes.push req.body._notes
+
+			if req.body.path
+				note.set 'path', req.body.path
 
 			note.save (err) -> 
 				if err
@@ -76,6 +83,7 @@ exports.update = (req, res) ->
 					req.flash('error', 'Note could not be saved.')
 					done(err)
 				else
+					console.log "saved"
 					done(null, note)
 
 #

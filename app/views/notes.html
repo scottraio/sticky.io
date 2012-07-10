@@ -26,6 +26,12 @@
 	<div class="autolink">
 		<%message%>
 	</div>
+	<%#_notes%>
+		<div class="autolink subnote"  draggable="true">
+			<a href="/notes/<%_id%>" class="sub-delete hide"><i class="icon-remove"></i></a>
+			<%message%>
+		</div>
+	<%/_notes%>
 	<div class="meta <%color%>">
 		<div class="color-choice dropdown-toggle <%color%>" data-toggle="dropdown"></div>
 		<div class="dropdown-menu">

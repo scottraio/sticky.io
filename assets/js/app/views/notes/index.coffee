@@ -38,8 +38,9 @@ class App.Views.Notes.Index extends Backbone.View
 		#$('#notebooks li').each (i, notebook) ->		
 		#	self.acts_as_droppable(notebook)
 
-		#$('#stage ul.notes_board li').each (i, sticky) ->
-		#	self.acts_as_draggable(sticky)
+		$('#stage ul.notes_board li').each (i, sticky) ->
+			self.acts_as_draggable(sticky)
+			self.acts_as_droppable(sticky)
 
 
     	# make it stackable
@@ -118,18 +119,27 @@ class App.Views.Notes.Index extends Backbone.View
 				e.stopPropagation() # stops the browser from redirecting.
 			
 			# source 
-			source_id = e.dataTransfer.getData('Text')
-			#$("li[data-id=#{source_id}]").remove()
-
+			source_id 	= e.dataTransfer.getData('Text')
+			dest_id 	= $(this).attr('data-id')
 			# target
-			#unless $(this).attr('data-id') is source_id
-				#@=$(this).removeClass('stack')
+			unless $(this).attr('data-id') is source_id
+				save new App.Models.Note(id: dest_id), {_notes: source_id}
+					success: (data, res) ->
+						$("li[data-id=#{source_id}]").remove()
+						$(this).removeClass('stack')		
+					error: (data, res) ->
+						console.log 'error'
 
+				save new App.Models.Note(id: source_id), {path: dest_id}
+					success: (data, res) ->
+						# success
+					error: (data, res) ->
+						console.log 'error'
 			return false
 		, false
 
 		li.addEventListener 'dragenter', (e) ->
-			$(this).addClass('active')
+			$(this).addClass('stack')
 			return false
 		, false
 
@@ -137,11 +147,11 @@ class App.Views.Notes.Index extends Backbone.View
 			# Necessary. Allows us to drop.
 			e.preventDefault() if e.preventDefault
 			e.dataTransfer.dropEffect = 'copy';
-			$(this).addClass('active')
+			$(this).addClass('stack')
 		, false
 
 		li.addEventListener 'dragleave', (e) ->
-			$(this).removeClass('active') # this / e.target is previous target element.
+			$(this).removeClass('stack') # this / e.target is previous target element.
 		, false
 
 

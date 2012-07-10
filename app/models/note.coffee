@@ -13,6 +13,7 @@ NotesSchema = new Schema
 	path		: { type: String, default: '' }
 	created_at	: { type: Date, required: true }
 	_user 		: { type: ObjectId, required: true, ref: 'User' } 
+	_notes 		: [ { type: ObjectId, ref: 'Note' } ]
 
 # Indexes
 NotesSchema.index { created_at:-1, tags: 1,  _user: 1 }
