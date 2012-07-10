@@ -19,8 +19,7 @@ class App.Main extends Backbone.View
 	
 	events: 
 		"click a.post-message"				: "post_message"
-		"mouseover .calendar_by_date"		: "show_calendar"
-		"mouseout .calendar_by_date"		: "hide_calendar"
+		"click .calendar_by_date"			: "show_calendar"
 		"click a.remote" 					: "link_to_remote"
 		"click a.navigate" 					: "link_to_fragment"
 		"click .sidebar li" 				: "link_to_notebook"
@@ -44,7 +43,7 @@ class App.Main extends Backbone.View
 		return false
 
 	show_calendar: (e) ->
-		$('#calendar').show()
+		$('#calendar').toggle()
 		return false
 
 	hide_calendar: (e) ->

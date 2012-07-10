@@ -1,3 +1,4 @@
+_ 		= require 'underscore'
 helpers = require './helpers'
 Note 	= app.models.Note
 User 	= app.models.User
@@ -9,7 +10,7 @@ User 	= app.models.User
 #
 exports.show = (req,res) ->
 	helpers.render_json req, res, (done) ->
-		Note.findOne({_id:req.params.id, _user:req.user}).run(done)
+		Note.findOne({_id:req.params.id, _user:req.user}).populate('_notes').run(done)
 
 #
 # lists all notes for an user in a neatly packed JSON array
@@ -17,7 +18,9 @@ exports.show = (req,res) ->
 #
 exports.index = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		note = Note.where('_user', req.user).or([{'path':null}, {'path':''}]).populate('_notes')
+		note = Note.where('_user', req.user)
+		
+		populate = true
 
 		# Filter by keyword
 		if req.query.keyword
@@ -25,12 +28,22 @@ exports.index = (req, res) ->
 		# Filter by tags
 		if req.query.tags
 			note.where('tags').in(req.query.tags) 
+		# Filter by notebooks
+		if req.query.notebooks
+			note.where('groups').in(req.query.notebooks) 
+			populate = false
 		# From a specific time period
 		if req.query.days
 			today 	= new Date()
 			start 	= new Date().setDate(today.getDate() - req.query.days)
 			note.where('created_at').equals({$gte: new Date(start), $lt: today})
 	
+		if _.isEmpty(req.query)
+			note.or([{'path':null}, {'path':''}, {'path':undefined}])
+
+		if populate
+			note.populate('_notes')
+
 		note.desc('created_at').run(done)
 	
 
@@ -68,14 +81,15 @@ exports.update = (req, res) ->
 				# parse tags/links/groups into arrays
 				note.parse()
 
-			if req.body.color
-				note.set 'color', req.body.color
+			
+			note._notes.remove(req.body.unbind)	if req.body.unbind	
+			note._notes.push req.body._notes 	if req.body._notes
+			note.set 'color', req.body.color	if req.body.color
+			note.set 'path', req.body.path 		if req.body.path
+			note.set 'path', ''	 				if req.body.clear_path
 
-			if req.body._notes
-				note._notes.push req.body._notes
-
-			if req.body.path
-				note.set 'path', req.body.path
+			console.log req.body.unbind
+			console.log note._notes
 
 			note.save (err) -> 
 				if err
@@ -83,7 +97,6 @@ exports.update = (req, res) ->
 					req.flash('error', 'Note could not be saved.')
 					done(err)
 				else
-					console.log "saved"
 					done(null, note)
 
 #
