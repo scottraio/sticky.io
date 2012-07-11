@@ -37,6 +37,8 @@ window.os_name = () ->
 
 window.reset_events = (view) ->
 	$(view.el).unbind()
-	$("body").unbind()
+	$("body").unbind("drop")
+	$("body").unbind("dragenter")
+	$("body").unbind("dragover")
 	view.delegateEvents()
 

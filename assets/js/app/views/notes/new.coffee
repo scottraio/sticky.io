@@ -5,6 +5,7 @@ class App.Views.Notes.New extends Backbone.View
 	events:
 		'submit form' 			: 'submit'
 		'button[type=submit]'	: 'submit'
+		'click .cancel'			: 'cancel'
 	
 	initialize: ->
 		@note = new App.Models.Note()
@@ -31,6 +32,10 @@ class App.Views.Notes.New extends Backbone.View
 				console.log 'error'
 		}
 		
+		return false
+
+	cancel: (e) ->
+		$(@el).modal('hide')
 		return false
 	
 		
