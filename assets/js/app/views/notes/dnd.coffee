@@ -59,13 +59,25 @@ class App.Views.Notes.DnD extends Backbone.View
 			# this / e.target is current target element.
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 
-			note_id 	= $(self.draggable).attr('data-id')
+			is_subnote = $(self.srcElement).hasClass("subnote")
+
+			if is_subnote
+				note = $(self.srcElement)
+				old  = $(self.draggable)
+			else
+				note = $(self.draggable)
+
+			note_id 	= note.attr('data-id')
 			parent_id 	= $(this).attr('data-id')
 
 			# target
 			unless this is self.draggable
-				$.getJSON "/notes/#{note_id}/bind/#{parent_id}.json", (res) ->
-					self.reload()
+				if is_subnote
+					$.getJSON "/notes/#{note_id}/rebind/#{old.attr('data-id')}/#{parent_id}.json", (res) ->
+						self.reload()
+				else
+					$.getJSON "/notes/#{note_id}/bind/#{parent_id}.json", (res) ->
+						self.reload()
 			return false
 
 		li.on 'dragenter', (e) ->

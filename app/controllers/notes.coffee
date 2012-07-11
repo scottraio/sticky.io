@@ -10,7 +10,10 @@ User 	= app.models.User
 #
 exports.show = (req,res) ->
 	helpers.render_json req, res, (done) ->
-		Note.findOne({_id:req.params.id, _user:req.user}).populate('_notes').run(done)
+		Note.where('_user', req.user._id)
+			.or([{'_id': req.params.id},{'_parent':req.params.id}])
+			.populate('_notes', null, {_parent: { $ne : req.params.id } })
+			.run(done)
 
 #
 # lists all notes for an user in a neatly packed JSON array

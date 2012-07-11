@@ -29,7 +29,7 @@ class App.Views.Notes.Index extends Backbone.View
 			notes: items
 			created_at_in_words: () -> $.timeago(this.created_at)
 			has_subnotes: () -> true if this._notes && this._notes.length > 0
-			subnote_count: () -> this._notes.length
+			subnote_count: () -> this._notes.length + 1 if this._notes
 
 		dnd = new App.Views.Notes.DnD(@options)		
 		dnd.acts_as_draggable $('#stage ul.notes_board li')
@@ -76,9 +76,6 @@ class App.Views.Notes.Index extends Backbone.View
 				color_box.removeClass()
 				color_box.addClass('color-choice')
 				color_box.addClass(color)
-
-				console.log meta
-				console.log color_box
 			error: (data, res) ->
 				console.log 'error'
 

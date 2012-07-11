@@ -24,17 +24,22 @@
 <script id="sticky" class="partial" type="text/html">
 	<a href="/notes/<%_id%>" class="delete hide"><i class="icon-remove"></i></a>
 	<div class="pole-position autolink">
+		<%#has_subnotes%>
+		<a href="/notes/<%_id%>" class="navigate"><i class="icon-plus"></i></a>
+		<%/has_subnotes%>
 		<%message%>
 	</div>
+	
 	<%#_notes%>
 		<div class="autolink subnote" data-id="<%_id%>" draggable="true">
 			<a href="#" class="sub-delete hide"><i class="icon-remove"></i></a>
-			<%#has_subnotes%>
+			<%#has_subnotes%>		
 			<a href="/notes/<%_id%>" class="navigate"><span class="badge badge-success"><%subnote_count%></span></a>
-			<%/has_subnotes%>
+			<%/has_subnotes%>		
 			<%message%>
 		</div>
 	<%/_notes%>
+	
 	<div class="meta <%color%>">
 		<div class="color-choice dropdown-toggle <%color%>" data-toggle="dropdown"></div>
 		<div class="dropdown-menu">
