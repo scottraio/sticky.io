@@ -10,6 +10,8 @@ $.fn.hasAncestor = (a) ->
 
 String.prototype.contains = (it) -> return this.indexOf(it) != -1
 
+Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
+
 $.fn.serializeObject = () ->
 	o = {}
 	a = this.serializeArray()

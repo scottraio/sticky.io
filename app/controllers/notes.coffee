@@ -1,3 +1,4 @@
+_ 		= require 'underscore'
 helpers = require './helpers'
 Note 	= app.models.Note
 User 	= app.models.User
@@ -7,9 +8,12 @@ User 	= app.models.User
 # returns a single note provided an ID
 # GET /notes/:id.json
 #
-exports.show = (req,res) ->
+exports.expanded = (req,res) ->
 	helpers.render_json req, res, (done) ->
-		Note.findOne({_id:req.params.id, _user:req.user}).run(done)
+		Note.where('_user', req.user._id)
+			.or([{'_id': req.params.id},{'_parent':req.params.id}])
+			.populate('_notes', null, {_parent: { $ne : req.params.id } })
+			.run(done)
 
 #
 # lists all notes for an user in a neatly packed JSON array
@@ -17,7 +21,9 @@ exports.show = (req,res) ->
 #
 exports.index = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		note = Note.where('_user', req.user).or([{'path':null}, {'path':''}]).populate('_notes')
+		note = Note.where('_user', req.user)
+		
+		populate = true
 
 		# Filter by keyword
 		if req.query.keyword
@@ -25,13 +31,25 @@ exports.index = (req, res) ->
 		# Filter by tags
 		if req.query.tags
 			note.where('tags').in(req.query.tags) 
+		# Filter by notebooks
+		if req.query.notebooks
+			note.where('groups').in(req.query.notebooks) 
+			populate = false
 		# From a specific time period
 		if req.query.days
 			today 	= new Date()
 			start 	= new Date().setDate(today.getDate() - req.query.days)
 			note.where('created_at').equals({$gte: new Date(start), $lt: today})
 	
-		note.desc('created_at').run(done)
+		if _.isEmpty(req.query)
+			note.where('_parent', null)
+
+		if populate
+			note.populate('_notes')
+
+		note.desc('created_at').run (err, items) ->
+			console.log err
+			done(err, items)
 	
 
 #
@@ -69,13 +87,7 @@ exports.update = (req, res) ->
 				note.parse()
 
 			if req.body.color
-				note.set 'color', req.body.color
-
-			if req.body._notes
-				note._notes.push req.body._notes
-
-			if req.body.path
-				note.set 'path', req.body.path
+				note.set 'color', req.body.color	
 
 			note.save (err) -> 
 				if err
@@ -83,13 +95,51 @@ exports.update = (req, res) ->
 					req.flash('error', 'Note could not be saved.')
 					done(err)
 				else
-					console.log "saved"
 					done(null, note)
+
+#
+# Motes Tree
+#
+
+exports.bind = (req, res) ->
+	helpers.render_json req, res, (done) ->
+		Note.note_and_parent req, (note, parent) ->
+			# magic
+			parent._notes.push note._id
+			note._parent = parent._id
+			
+			note.save (err) -> 
+				parent.save(done) unless err
+
+
+exports.unbind = (req, res) ->
+	helpers.render_json req, res, (done) ->
+		Note.note_and_parent req, (note, parent) ->
+			# magic
+			parent._notes.remove(note._id)
+			note._parent = null
+			
+			note.save (err) -> 
+				parent.save(done) unless err
+
+exports.rebind = (req, res) ->
+	helpers.render_json req, res, (done) ->
+		Note.from_note_to_note req, (note, from, to) ->
+			# magic
+			from._notes.remove(note._id)
+			to._notes.push(note._id)
+			note._parent = to._id
+			
+			note.save (err) -> 
+				from.save (err) ->
+					to.save(done)
+
+
 
 #
 # grabs an note and returns its JSON
 #
-exports.edit = (req, res) ->
+exports.show = (req, res) ->
 	helpers.render_json req, res, (done) ->
 		Note.findOne {_id:req.params.id, _user:req.user}, done
 

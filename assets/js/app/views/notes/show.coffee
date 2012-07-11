@@ -3,18 +3,13 @@ App.Views.Notes or= {}
 class App.Views.Notes.Show extends Backbone.View
 	
 	initialize: ->
-		@note = new App.Models.Note(id: @options.id)
+		@note 		= new App.Models.Note(id: @options.id)
+		@note.url 	= "/notes/#{@options.id}/expanded.json"
 
 	render: () ->
 		self = @
 		@note.fetch 
-			success: (err, noteJSON) -> 
-				$(self.el).html ich.single_note
-					note				: noteJSON
-					created_at_in_words	: () -> $.timeago(this.created_at)
-				
-				# make it easy for our users to read their posts
-				$(self.el).autolink()
-				return noteJSON
-
-
+			success: (err, notesJSON) -> 
+				console.log notesJSON
+				index = new App.Views.Notes.Index(el: $("#main"), id: self.options.id)
+				index.load_view(notesJSON)
