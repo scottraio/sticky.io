@@ -8,7 +8,7 @@ class App.Views.Notes.Edit extends Backbone.View
 		'click .cancel' 		: 'cancel'
 	
 	initialize: ->
-		@note = new App.Models.Note(id: @options.id)
+		@note 		= new App.Models.Note(id: @options.id)
 
 	render: () ->
 		self = @
@@ -20,7 +20,7 @@ class App.Views.Notes.Edit extends Backbone.View
 					<textarea name=\"message\" style=\"height:#{height}px\">#{noteJSON.message}</textarea>
 					<div class=\"\">
 						<a href=\"/notes/#{noteJSON._id}\" class=\"btn btn-mini btn-primary\">Save</a>
-						<a href=\"/notes/#{noteJSON._id}\" class=\"push btn btn-mini\">Cancel</a>
+						<a href=\"/notes/#{noteJSON._id}\" class=\"cancel btn btn-mini\">Cancel</a>
 					</div>
 				")
 				$('textarea', self.el).focus()
@@ -28,17 +28,12 @@ class App.Views.Notes.Edit extends Backbone.View
 
 	submit: (e) ->
 		self = @
-		attrs = {
-			message	: $('textarea', @el).val()
-			_method : 'put'
-		}
-
-		save @note, attrs, {
+	
+		save @note, { message : $('textarea', @el).val() }, {
 			success: (data, res) ->
 				# reload the sticky
-				$(".pole-position", self.el).html data.message
+				$(".pole-position", self.el).html data.attributes.message
 				$('.autolink').autolink()
-
 			error: (data, res) ->
 				console.log 'error'
 		}

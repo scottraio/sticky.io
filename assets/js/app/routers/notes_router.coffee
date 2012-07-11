@@ -19,11 +19,10 @@ class App.Routers.NotesRouter extends Backbone.Router
 		notes.render()
 
 	show: (id) ->
-		note = new App.Views.Notes.Show(id: id, el: $(".sticky[data-id=#{id}]"))
+		note = new App.Views.Notes.Show(id: id, el: $("li.sticky[data-id=#{id}]"))
 		reset_events(note)
 		note.render()
 
 	edit: (id) ->
-		note = new App.Views.Notes.Edit(id: id, el: $(".sticky[data-id=#{id}]"))
-		reset_events(note)
+		note = new App.Views.Notes.Edit(id: id, el: $("li.sticky[data-id=#{id}]"))
 		note.render()

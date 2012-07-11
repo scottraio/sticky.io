@@ -8,7 +8,7 @@ User 	= app.models.User
 # returns a single note provided an ID
 # GET /notes/:id.json
 #
-exports.show = (req,res) ->
+exports.expanded = (req,res) ->
 	helpers.render_json req, res, (done) ->
 		Note.where('_user', req.user._id)
 			.or([{'_id': req.params.id},{'_parent':req.params.id}])
@@ -139,7 +139,7 @@ exports.rebind = (req, res) ->
 #
 # grabs an note and returns its JSON
 #
-exports.edit = (req, res) ->
+exports.show = (req, res) ->
 	helpers.render_json req, res, (done) ->
 		Note.findOne {_id:req.params.id, _user:req.user}, done
 

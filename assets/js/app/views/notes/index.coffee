@@ -3,7 +3,7 @@ App.Views.Notes or= {}
 class App.Views.Notes.Index extends Backbone.View
 	
 	events: 
-		'dblclick .sticky' 						: 'edit'
+		'dblclick li.sticky' 						: 'edit'
 		'click .delete'  						: 'delete'
 		'click .dropdown-menu .color-choice'  	: 'update_color'
 	
@@ -40,6 +40,8 @@ class App.Views.Notes.Index extends Backbone.View
 
 		# autolink everything
 		$('.autolink').autolink()
+		# enable dropdowns (color)
+		$('.dropdown-toggle').dropdown()
 
 		# resolve any images
 		@auto_image_resolution(items)
@@ -49,6 +51,7 @@ class App.Views.Notes.Index extends Backbone.View
 	
 	edit: (e) ->
 		id = $(e.currentTarget).attr('data-id')
+		console.log id
 		push_url "/notes/#{id}/edit"
 
 
@@ -62,6 +65,7 @@ class App.Views.Notes.Index extends Backbone.View
 		return false
 
 	update_color: (e) ->
+		console.log "test"
 		color 	= $(e.currentTarget).attr('data-color')
 		note 	= new App.Models.Note(id: $(e.currentTarget).parents('.sticky').attr('data-id'))
 
