@@ -12,7 +12,7 @@ exports.expanded = (req,res) ->
 	helpers.render_json req, res, (done) ->
 		Note.where('_user', req.user._id)
 			.or([{'_id': req.params.id},{'_parent':req.params.id}])
-			.populate('_notes', null, {_parent: { $ne : req.params.id } })
+			.populate('_notes')
 			.run(done)
 
 #

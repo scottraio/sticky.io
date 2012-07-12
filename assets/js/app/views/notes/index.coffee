@@ -3,7 +3,7 @@ App.Views.Notes or= {}
 class App.Views.Notes.Index extends Backbone.View
 	
 	events: 
-		'dblclick li.sticky' 						: 'edit'
+		'dblclick li.sticky' 					: 'edit'
 		'click .delete'  						: 'delete'
 		'click .dropdown-menu .color-choice'  	: 'update_color'
 	
@@ -19,7 +19,9 @@ class App.Views.Notes.Index extends Backbone.View
 		self = @
 		@notes.fetch 
 			success: (col, items) ->
-				self.load_view(items)	
+				self.load_view(items)
+
+				$(".crumb-bar").html("<a href=\"/notes\" class=\"navigate headline\">Home</a>")
 
 	load_view: (items) ->
 		self = @ 
@@ -31,7 +33,7 @@ class App.Views.Notes.Index extends Backbone.View
 			has_subnotes: () -> true if this._notes && this._notes.length > 0
 			subnote_count: () -> this._notes.length + 1 if this._notes
 
-		dnd = new App.Views.Notes.DnD(@options)		
+		dnd = new App.Views.Notes.DnD(id: @options.id)		
 		dnd.acts_as_draggable $('#stage ul.notes_board li')
 		dnd.acts_as_droppable $('#stage ul.notes_board li')
 		dnd.acts_as_draggable $('#stage ul.notes_board li .subnote')
