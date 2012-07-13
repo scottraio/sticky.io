@@ -58,6 +58,7 @@ exports.index = (req, res) ->
 #
 exports.create = (req, res) ->
 	helpers.render_json req, res, (done) ->
+
 		note = new Note()
 		note.set 'message', 	req.body.message
 		note.set '_user', 		req.user._id
@@ -73,7 +74,13 @@ exports.create = (req, res) ->
 				req.flash('error', 'Note could not be saved.')
 				done(err)
 			else
-				done(null, note)
+				if req.body.parent_id
+					req.params.id = note._id
+					req.params.parent_id = req.body.parent_id
+					exports.bind(req, res)
+				else
+					done(null, note)
+				
 
 #
 # updates an existing note for an user

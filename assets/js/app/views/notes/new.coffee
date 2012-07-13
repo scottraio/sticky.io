@@ -14,10 +14,16 @@ class App.Views.Notes.New extends Backbone.View
 		$(@el).modal('show')
 		$('textarea', @el).focus()
 
+		parent_id = window.location.pathname.replace('/notes/', '')
+		if parent_id.length > 0
+			$('input.parent', @el).val(parent_id) 
+			$('.is_parent', @el).show()
+
 	submit: (e) ->
 		self = @
 		attrs = {
 			message: $('textarea', @el).val()
+			parent_id: $('input.parent', @el).val()
 		}
 
 		save @note, attrs, {

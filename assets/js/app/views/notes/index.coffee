@@ -31,7 +31,7 @@ class App.Views.Notes.Index extends Backbone.View
 			notes: items
 			created_at_in_words: () -> $.timeago(this.created_at)
 			has_subnotes: () -> true if this._notes && this._notes.length > 0
-			subnote_count: () -> this._notes.length + 1 if this._notes
+			subnote_count: () -> this._notes.length if this._notes
 
 		dnd = new App.Views.Notes.DnD(id: @options.id)		
 		dnd.acts_as_draggable $('#stage ul.notes_board li')
