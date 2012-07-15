@@ -284,26 +284,7 @@ ul.notes_board {
 }
 
 
-
-#post_new_message {
-	padding:10px;
-	textarea {
-		width:98%;
-		display:block;
-		height:80px;
-		margin:0;
-	}
-	.is_parent {
-		margin-bottom:5px;
-		input.parent {
-			width:auto;
-		}	
-	}
-	
-	form {
-		margin:0;
-	}
-}
+// Modals
 
 .modal {
 	padding:20px;
@@ -343,6 +324,36 @@ ul.notes_board {
 }
 
 
+#post_new_message {
+	padding:10px;
+	textarea {
+		width:100%;
+		display:block;
+		height:80px;
+		margin:0;
+	}
+	.modal-footer {
+		padding-top:10px;
+	}
+	.is_parent {
+		background-color:#f0f0f0;
+		margin-top:10px;
+		padding:2px 10px 0px 10px;
+		border:1px solid #e0e0e0;
+		.border-radius(5px);
+		color:#777;
+		font-size:0.87em;
+		input.parent {
+			top:-2px;
+			position:relative;
+			width:auto;
+		}	
+	}
+	
+	form {
+		margin:0;
+	}
+}
 
 .hash-tag {
 	color:#999;

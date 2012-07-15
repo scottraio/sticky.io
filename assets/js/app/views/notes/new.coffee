@@ -9,15 +9,21 @@ class App.Views.Notes.New extends Backbone.View
 	
 	initialize: ->
 		@note = new App.Models.Note()
+		console.log @options.id
 
 	render: () ->
 		$(@el).modal('show')
 		$('textarea', @el).focus()
 
-		parent_id = window.location.pathname.replace('/notes/', '')
-		if parent_id.length > 0
-			$('input.parent', @el).val(parent_id) 
+		$('input.parent', @el).val(@options.id) 
+
+		unless @options.id is undefined
 			$('.is_parent', @el).show()
+		else
+			$('.is_parent', @el).hide()
+			
+
+
 
 	submit: (e) ->
 		self = @
@@ -43,5 +49,3 @@ class App.Views.Notes.New extends Backbone.View
 	cancel: (e) ->
 		$(@el).modal('hide')
 		return false
-	
-		

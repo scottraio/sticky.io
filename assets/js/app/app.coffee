@@ -39,7 +39,13 @@ class App.Main extends Backbone.View
 
 		
 	post_message: (e) ->
-		push_url '/notes/new'
+		parent_id 	= window.location.pathname.split('/').splice(2, 1)[0]
+
+		unless parent_id is undefined
+			push_url "/notes/#{parent_id}/new"
+		else
+			push_url '/notes/new'
+
 		return false
 
 	show_calendar: (e) ->

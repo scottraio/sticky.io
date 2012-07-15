@@ -5,6 +5,12 @@ class App.Views.Notes.DnD extends Backbone.View
 	initialize: () ->
 		@current_note_id = @options.id
 
+		@acts_as_draggable $('#stage ul.notes_board li')
+		@acts_as_droppable $('#stage ul.notes_board li')
+		@acts_as_draggable $('#stage ul.notes_board li .subnote')
+		# make the stage droppable for subnotes
+		@droppable_body $('body')
+
 	reload: () ->
 		push_url window.location.pathname + "?" + window.location.search
 

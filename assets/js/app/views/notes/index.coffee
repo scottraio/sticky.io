@@ -20,7 +20,6 @@ class App.Views.Notes.Index extends Backbone.View
 		@notes.fetch 
 			success: (col, items) ->
 				self.load_view(items)
-
 				$(".crumb-bar").html("<a href=\"/notes\" class=\"navigate headline\">Home</a>")
 
 	load_view: (items) ->
@@ -33,12 +32,8 @@ class App.Views.Notes.Index extends Backbone.View
 			has_subnotes: () -> true if this._notes && this._notes.length > 0
 			subnote_count: () -> this._notes.length if this._notes
 
+		# Drag and Drop everything
 		dnd = new App.Views.Notes.DnD(id: @options.id)		
-		dnd.acts_as_draggable $('#stage ul.notes_board li')
-		dnd.acts_as_droppable $('#stage ul.notes_board li')
-		dnd.acts_as_draggable $('#stage ul.notes_board li .subnote')
-		# make the stage droppable for subnotes
-		dnd.droppable_body $('body')
 
 		# autolink everything
 		$('.autolink').autolink()
@@ -48,12 +43,8 @@ class App.Views.Notes.Index extends Backbone.View
 		# resolve any images
 		@auto_image_resolution(items)
 
-		
-
-	
 	edit: (e) ->
 		id = $(e.currentTarget).attr('data-id')
-		console.log id
 		push_url "/notes/#{id}/edit"
 
 
