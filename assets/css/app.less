@@ -130,6 +130,9 @@ ul.notes_board {
 	column-gap: @column_gap;
 	column-fill: auto;
 	overflow: visible;
+	.completed {
+		text-decoration: line-through;
+	}
 	li.stack {
 		border-color: rgba(82,168,236,.8);
 		border-width: 2px;
@@ -300,12 +303,6 @@ ul.notes_board {
 	}
 	.modal-body {
 		padding-bottom:0;
-		input {
-			width:100%;
-			padding:5px;
-			height:30px;
-			box-sizing:border-box;
-		}
 		textarea {
 			width:100%;
 			padding:5px;
@@ -338,16 +335,11 @@ ul.notes_board {
 	.is_parent {
 		background-color:#f0f0f0;
 		margin-top:10px;
-		padding:2px 10px 0px 10px;
+		padding:5px;
 		border:1px solid #e0e0e0;
 		.border-radius(5px);
 		color:#777;
 		font-size:0.87em;
-		input.parent {
-			top:-2px;
-			position:relative;
-			width:auto;
-		}	
 	}
 	
 	form {

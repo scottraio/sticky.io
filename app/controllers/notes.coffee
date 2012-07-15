@@ -88,6 +88,9 @@ exports.create = (req, res) ->
 exports.update = (req, res) ->
 	helpers.render_json req, res, (done) ->
 		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
+
+			console.log req.body.completed
+
 			if req.body.message
 				note.set 'message', req.body.message
 				# parse tags/links/groups into arrays
@@ -95,6 +98,9 @@ exports.update = (req, res) ->
 
 			if req.body.color
 				note.set 'color', req.body.color	
+
+			if req.body.completed
+				note.set 'completed', req.body.completed
 
 			note.save (err) -> 
 				if err
