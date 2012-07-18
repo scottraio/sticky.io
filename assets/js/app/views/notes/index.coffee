@@ -3,9 +3,10 @@ App.Views.Notes or= {}
 class App.Views.Notes.Index extends Backbone.View
 	
 	events: 
-		'dblclick li.sticky' 						: 'edit'
+		'dblclick li.sticky' 					: 'edit'
 		'click .delete'  						: 'delete'
 		'click .dropdown-menu .color-choice'  	: 'update_color'
+		'click .task-completed'					: 'mark_completed'
 	
 	initialize: ->
 		@params		= @options.params
@@ -19,7 +20,8 @@ class App.Views.Notes.Index extends Backbone.View
 		self = @
 		@notes.fetch 
 			success: (col, items) ->
-				self.load_view(items)	
+				self.load_view(items)
+				$(".crumb-bar").html("<a href=\"/notes\" class=\"navigate headline\">Home</a>")
 
 	load_view: (items) ->
 		self = @ 
@@ -29,16 +31,13 @@ class App.Views.Notes.Index extends Backbone.View
 			notes: items
 			created_at_in_words: () -> $.timeago(this.created_at)
 			has_subnotes: () -> true if this._notes && this._notes.length > 0
-			subnote_count: () -> this._notes.length + 1 if this._notes
+			subnote_count: () -> this._notes.length if this._notes
+			is_taskable: () -> true if this.message.indexOf('#todo') > 0
 
-		dnd = new App.Views.Notes.DnD(@options)		
-		dnd.acts_as_draggable $('#stage ul.notes_board li')
-		dnd.acts_as_droppable $('#stage ul.notes_board li')
-		dnd.acts_as_draggable $('#stage ul.notes_board li .subnote')
-		# make the stage droppable for subnotes
-		dnd.droppable_body $('body')
+		# Drag and Drop everything
+		dnd = new App.Views.Notes.DnD(id: @options.id)		
 
-		# autolink everything
+		# auto-link everything
 		$('.autolink').autolink()
 		# enable dropdowns (color)
 		$('.dropdown-toggle').dropdown()
@@ -46,12 +45,8 @@ class App.Views.Notes.Index extends Backbone.View
 		# resolve any images
 		@auto_image_resolution(items)
 
-		
-
-	
 	edit: (e) ->
 		id = $(e.currentTarget).attr('data-id')
-		console.log id
 		push_url "/notes/#{id}/edit"
 
 
@@ -65,7 +60,6 @@ class App.Views.Notes.Index extends Backbone.View
 		return false
 
 	update_color: (e) ->
-		console.log "test"
 		color 	= $(e.currentTarget).attr('data-color')
 		note 	= new App.Models.Note(id: $(e.currentTarget).parents('.sticky').attr('data-id'))
 
@@ -80,6 +74,23 @@ class App.Views.Notes.Index extends Backbone.View
 				color_box.removeClass()
 				color_box.addClass('color-choice')
 				color_box.addClass(color)
+			error: (data, res) ->
+				console.log 'error'
+
+	mark_completed: (e) ->
+		$sticky		= $( $(e.currentTarget).parents('[data-id]')[0] )
+
+		note_id 	= $sticky.attr('data-id')
+		note 		= new App.Models.Note(id: note_id)
+		is_complete = $(e.currentTarget).is(":checked")
+
+		save note, {completed: is_complete}
+			success: (data, res) ->
+				if is_complete
+					$(e.currentTarget).parent('.autolink').addClass('completed')
+				else
+					$(e.currentTarget).parent('.autolink').removeClass('completed')
+				
 			error: (data, res) ->
 				console.log 'error'
 

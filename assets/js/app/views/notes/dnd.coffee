@@ -2,8 +2,24 @@ App.Views.Notes or= {}
 
 class App.Views.Notes.DnD extends Backbone.View
 
+	initialize: () ->
+		@current_note_id = @options.id
+
+		@acts_as_draggable $('#stage ul.notes_board li')
+		@acts_as_droppable $('#stage ul.notes_board li')
+		@acts_as_draggable $('#stage ul.notes_board li .subnote')
+		# make the stage droppable for subnotes
+		@droppable_body $('body')
+
 	reload: () ->
 		push_url window.location.pathname + "?" + window.location.search
+
+	is_inside_note: () ->
+		true if @current_note_id
+
+	is_subnote: () ->
+		$(@srcElement).hasClass("subnote")
+
 
 	#
 	# Drag and Drop
@@ -21,7 +37,7 @@ class App.Views.Notes.DnD extends Backbone.View
 
 			if note.hasClass("subnote") and note_id isnt parent_id
 				
-				if self.options.id 
+				if self.is_inside_note()
 					$.getJSON "/notes/#{note_id}/rebind/#{parent_id}/#{self.options.id}.json", (res) ->
 						self.reload()
 				else
@@ -59,21 +75,23 @@ class App.Views.Notes.DnD extends Backbone.View
 			# this / e.target is current target element.
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 
-			is_subnote = $(self.srcElement).hasClass("subnote")
-
-			if is_subnote
-				note = $(self.srcElement)
-				old  = $(self.draggable)
+			if self.is_subnote()
+				note 	= $(self.srcElement)
+				old_id  = $(self.draggable).attr('data-id')
 			else
-				note = $(self.draggable)
+				note 	= $(self.draggable)
+
+			if self.is_inside_note()
+				note 	= $(self.draggable) 
+				old_id  = self.current_note_id
 
 			note_id 	= note.attr('data-id')
 			parent_id 	= $(this).attr('data-id')
 
 			# target
 			unless this is self.draggable
-				if is_subnote
-					$.getJSON "/notes/#{note_id}/rebind/#{old.attr('data-id')}/#{parent_id}.json", (res) ->
+				if old_id
+					$.getJSON "/notes/#{note_id}/rebind/#{old_id}/#{parent_id}.json", (res) ->
 						self.reload()
 				else
 					$.getJSON "/notes/#{note_id}/bind/#{parent_id}.json", (res) ->

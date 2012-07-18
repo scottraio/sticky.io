@@ -14,15 +14,13 @@
 
 				<ul class="nav">
 					<li><a href="/notes/new" class="tk-bebas-neue post-message"><i class="icon-plus icon-white"></i> Add</a></li>
-					<li><a href="/notebooks" class="navigate tk-bebas-neue"><i class="icon-book icon-white"></i> Notebooks</a></li>
+					<!--
 					<li class="calendar_by_date">
 						<a href="#" class="tk-bebas-neue"><i class="icon-calendar icon-white"></i> Calendar</a>
 						<div id="calendar" class="hide clearfix"></div>
 					</li>
+					-->
 				</ul>
-
-
-				
 
 				<div class="btn-group pull-right">
 					<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
@@ -34,8 +32,6 @@
 						<li><a href="/logout">Sign Out</a></li>
 					</ul>
 				</div>
-
-				
 
 				<form action="/notes" method="get" class="navbar-search pull-right">
 					<input type="text" name="keyword" class="search-query" placeholder="Discover">
@@ -53,9 +49,13 @@
 	<form action="/notes" method="post">
 		<div class="modal-body">
 			<textarea name="message" placeholder="What's on your mind?"></textarea>
+
+			<div class="is_parent hide">
+				<input type="checkbox" class="parent" checked="true" /> Create under current sticky
+			</div>
 		</div>
 		<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+			<a href="#" class="cancel btn" data-dismiss="modal">Cancel</a>
 			<button type="submit" class="btn btn-primary">Post</button>
 		</div>
 	</form>

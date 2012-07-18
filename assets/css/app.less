@@ -27,7 +27,27 @@ body.drop {
 
 // Stage
 
-#stage {
+#main {
+	.crumb-bar {
+
+		.headline {
+			font-size:1.2em;
+			font-weight:normal;
+			margin:10px 5px 10px 0;
+			padding:5px 10px;
+			max-width:400px;
+			text-overflow:ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			background-color:rgba(255, 255, 255, 0.3);
+			display:inline-block;
+			color:#333;
+			cursor: pointer;
+			&:hover {
+				background-color:rgba(255, 255, 255, 0.6);
+			}
+		}
+	}
 	
 }
 
@@ -111,6 +131,9 @@ ul.notes_board {
 	column-gap: @column_gap;
 	column-fill: auto;
 	overflow: visible;
+	.completed {
+		text-decoration: line-through;
+	}
 	li.stack {
 		border-color: rgba(82,168,236,.8);
 		border-width: 2px;
@@ -265,18 +288,7 @@ ul.notes_board {
 }
 
 
-
-#post_new_message {
-	padding:10px;
-	textarea {
-		width:98%;
-		display:block;
-		height:80px;
-	}
-	form {
-		margin:0;
-	}
-}
+// Modals
 
 .modal {
 	padding:20px;
@@ -292,12 +304,6 @@ ul.notes_board {
 	}
 	.modal-body {
 		padding-bottom:0;
-		input {
-			width:100%;
-			padding:5px;
-			height:30px;
-			box-sizing:border-box;
-		}
 		textarea {
 			width:100%;
 			padding:5px;
@@ -316,6 +322,31 @@ ul.notes_board {
 }
 
 
+#post_new_message {
+	padding:10px;
+	textarea {
+		width:100%;
+		display:block;
+		height:80px;
+		margin:0;
+	}
+	.modal-footer {
+		padding-top:10px;
+	}
+	.is_parent {
+		background-color:#f0f0f0;
+		margin-top:10px;
+		padding:5px;
+		border:1px solid #e0e0e0;
+		.border-radius(5px);
+		color:#777;
+		font-size:0.87em;
+	}
+	
+	form {
+		margin:0;
+	}
+}
 
 .hash-tag {
 	color:#999;

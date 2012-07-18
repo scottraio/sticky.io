@@ -4,6 +4,7 @@ class App.Routers.NotesRouter extends Backbone.Router
 		""					: "index"
 		"notes"				: "index"
 		"notes/new"			: "new"
+		"notes/:id/new"		: "new"
 		"notes/:id"			: "show"
 		"notes/:id/edit" 	: "edit"
 	
@@ -13,8 +14,8 @@ class App.Routers.NotesRouter extends Backbone.Router
 			reset_events(notes)
 			notes.render()
 		
-	new: ->
-		notes = new App.Views.Notes.New(el: $("#post_new_message"))
+	new: (id) ->
+		notes = new App.Views.Notes.New(el: $("#post_new_message"), id: id)
 		reset_events(notes)
 		notes.render()
 

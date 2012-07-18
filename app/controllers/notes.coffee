@@ -12,7 +12,7 @@ exports.expanded = (req,res) ->
 	helpers.render_json req, res, (done) ->
 		Note.where('_user', req.user._id)
 			.or([{'_id': req.params.id},{'_parent':req.params.id}])
-			.populate('_notes', null, {_parent: { $ne : req.params.id } })
+			.populate('_notes')
 			.run(done)
 
 #
@@ -58,6 +58,7 @@ exports.index = (req, res) ->
 #
 exports.create = (req, res) ->
 	helpers.render_json req, res, (done) ->
+
 		note = new Note()
 		note.set 'message', 	req.body.message
 		note.set '_user', 		req.user._id
@@ -73,7 +74,13 @@ exports.create = (req, res) ->
 				req.flash('error', 'Note could not be saved.')
 				done(err)
 			else
-				done(null, note)
+				if req.body.parent_id
+					req.params.id = note._id
+					req.params.parent_id = req.body.parent_id
+					exports.bind(req, res)
+				else
+					done(null, note)
+				
 
 #
 # updates an existing note for an user
@@ -81,6 +88,9 @@ exports.create = (req, res) ->
 exports.update = (req, res) ->
 	helpers.render_json req, res, (done) ->
 		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
+
+			console.log req.body.completed
+
 			if req.body.message
 				note.set 'message', req.body.message
 				# parse tags/links/groups into arrays
@@ -88,6 +98,9 @@ exports.update = (req, res) ->
 
 			if req.body.color
 				note.set 'color', req.body.color	
+
+			if req.body.completed
+				note.set 'completed', req.body.completed
 
 			note.save (err) -> 
 				if err

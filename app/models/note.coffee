@@ -7,6 +7,7 @@ Setter 		= require './setters'
 NotesSchema = new Schema
 	message  	: { type: String, required: true, trim: true }
 	color  		: { type: String, trim: true, default: null }
+	completed  	: { type: Boolean, default: false }
 	tags		: { type: Array, default: [] }
 	links 		: { type: Array, default: [] }
 	groups 		: { type: Array, default: [] }
