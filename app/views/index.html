@@ -1,21 +1,39 @@
 {{>header}}
-	
-	
-	{{>nav}}
 
-	<div id="main" class="container-fluid">
+  <div id="new-sticky-header">
+    <input type="text" name="message" placeholder="What's on your mind?" class="tk-ratio" />
+  </div>
+
+
+  <div id="main" class="container-fluid tk-ratio">
+    <!--
 		{{#if error}}<div class="alert alert-error">{{error}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
 		{{#if success}}<div class="alert alert-success">{{success}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
 
 		<div class="crumb-bar">
-		</div>
+    </div>
+    -->
 
-		<div class="stage-wrapper">	
-			<div id="stage">
-				<!-- content gets loaded here -->
-			</div>
-		</div>	
-		
+      <div id="sidebar" class="span3">
+        <ul class="sidebar-nav">
+          <li>Inbox</li>
+          <li>@workory</li>
+          <li>@combatgent</li>
+          <li>@thoughts</li>
+          <li>@sticky</li>
+        </ul>
+      </div>
+
+      <div id="inbox" class="span5">
+			  <div id="stage">
+				  <!-- content gets loaded here -->
+			  </div>
+      </div>
+
+      <div id="expanded-view" class="span4">
+        test
+      </div>
+
 		
 	</div>
 
