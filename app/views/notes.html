@@ -21,23 +21,20 @@
 	<ul class="notes_board">
 		<%#notes%>
 			<li class="sticky card" data-id="<%_id%>" draggable="true">
-				<%>sticky%>					
+					<a href="/notes/<%_id%>" class="hide navigate expand"></a>
+					<%>sticky%>
+					<div class="meta">
+						created <%created_at_in_words%>
+						<a href="https://twitter.com/share" class="twitter-share-button" data-dnt="true" data-count="none" data-via="twitterapi">Tweet</a>
+				</div>
 			</li>
 		<%/notes%>
 	</ul>
 </script>
 
-<!-- hack to get icanhaz partials to load from JS -->
-<script id="single_note" type="text/html">
-	<%#note%>
-	<%>sticky%>
-	<%/note%>
-</script>
 
 <script id="sticky" class="partial" type="text/html">
-	<a href="/notes/<%_id%>" class="delete hide"><i class="icon-remove"></i></a>
-	<div class="pole-position autolink <%#completed%>completed<%/completed%>">
-		
+	<div class="pole-position autolink <%#completed%>completed<%/completed%>">					
 		<%#is_taskable%>
 			<input type="checkbox" class="task-completed" <%#completed%>checked="true"<%/completed%> />
 		<%/is_taskable%>
@@ -59,8 +56,4 @@
 			<%message%>
 		</div>
 	<%/_notes%>
-
-	<div class="meta">
-		created <%created_at_in_words%>
-	</div>
 </script>

@@ -4,7 +4,6 @@ class App.Views.Notes.Index extends Backbone.View
 
 	events:
 		'dblclick li.sticky' 					          : 'edit' 
-		'click li.sticky'                       : 'show'
 		'click .delete'  						            : 'delete'
 		'click .dropdown-menu .color-choice'  	: 'update_color'
 		'click .task-completed'					        : 'mark_completed'
