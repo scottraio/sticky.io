@@ -1,12 +1,13 @@
 App.Views.Notes or= {}
 
 class App.Views.Notes.Index extends Backbone.View
-	
-	events: 
-		'dblclick li.sticky' 					: 'edit'
-		'click .delete'  						: 'delete'
+
+	events:
+		'dblclick li.sticky' 					          : 'edit' 
+		'click li.sticky'                       : 'show'
+		'click .delete'  						            : 'delete'
 		'click .dropdown-menu .color-choice'  	: 'update_color'
-		'click .task-completed'					: 'mark_completed'
+		'click .task-completed'					        : 'mark_completed'
 	
 	initialize: ->
 		@params		= @options.params
@@ -18,7 +19,7 @@ class App.Views.Notes.Index extends Backbone.View
 
 	render: (items) ->
 		self = @
-		@notes.fetch 
+		@notes.fetch
 			success: (col, items) ->
 				self.load_view(items)
 				$(".crumb-bar").html("<a href=\"/notes\" class=\"navigate headline\">Home</a>")
@@ -27,7 +28,7 @@ class App.Views.Notes.Index extends Backbone.View
 		self = @ 
 
 		# setup the notes_board
-		$('#stage').html ich.notes_board
+		$(@el).html ich.notes_board
 			notes: items
 			created_at_in_words: () -> $.timeago(this.created_at)
 			has_subnotes: () -> true if this._notes && this._notes.length > 0
@@ -45,10 +46,14 @@ class App.Views.Notes.Index extends Backbone.View
 		# resolve any images
 		@auto_image_resolution(items)
 
+	show: (e) ->
+		id = $(e.currentTarget).attr('data-id')
+		push_url "/notes/#{id}"
+		return false
+
 	edit: (e) ->
 		id = $(e.currentTarget).attr('data-id')
 		push_url "/notes/#{id}/edit"
-
 
 	delete: (e) ->
 		self = @

@@ -1,17 +1,30 @@
-<script id="notes_board" type="text/html">
-	<div class="notes_wrapper fluid-container">
-		<div class="row-fluid">
-			<div class="span12">
-				<ul class="notes_board">
-					<%#notes%>
-						<li class="sticky card" data-id="<%_id%>" draggable="true">
-							<%>sticky%>					
-						</li>
-					<%/notes%>
-				</ul>
-			</div>
-		</div>
+<script id="expanded_note" type="text/html">
+	<div class="expanded-note">
+		<%parent_note.message%>
 	</div>
+
+	<ul class="notes_board">
+		<%#notes%>
+			<li class="sticky card" data-id="<%_id%>" draggable="true">
+				<%>sticky%>					
+			</li>
+		<%/notes%>
+	</ul>
+	
+</script>
+
+<script id="notes_board" type="text/html">
+	<div class="board_controls">
+		
+	</div>
+
+	<ul class="notes_board">
+		<%#notes%>
+			<li class="sticky card" data-id="<%_id%>" draggable="true">
+				<%>sticky%>					
+			</li>
+		<%/notes%>
+	</ul>
 </script>
 
 <!-- hack to get icanhaz partials to load from JS -->
@@ -31,7 +44,7 @@
 
 		<%message%>
 	</div>
-	
+
 	<%#_notes%>
 		<div class="autolink subnote <%#completed%>completed<%/completed%>" data-id="<%_id%>" draggable="true">
 			<a href="#" class="sub-delete hide"><i class="icon-remove"></i></a>
@@ -47,4 +60,7 @@
 		</div>
 	<%/_notes%>
 
+	<div class="meta">
+		created <%created_at_in_words%>
+	</div>
 </script>
