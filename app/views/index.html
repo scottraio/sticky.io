@@ -1,23 +1,41 @@
 {{>header}}
-	
-	
-	{{>nav}}
 
-	<div id="main" class="container-fluid">
-		{{#if error}}<div class="alert alert-error">{{error}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
-		{{#if success}}<div class="alert alert-success">{{success}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
+  <div id="new-sticky-header">
+    <input type="text" name="message" placeholder="What's on your mind?"/>
+    <div class="logo">STICKY</div>
+  </div>
 
-		<div class="crumb-bar">
-		</div>
 
-		<div class="stage-wrapper">	
-			<div id="stage">
-				<!-- content gets loaded here -->
-			</div>
-		</div>	
-		
-		
-	</div>
+  <div class="main-wrapper container-fluid">
+    <div id="main">
+      <!--
+		  {{#if error}}<div class="alert alert-error">{{error}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
+		  {{#if success}}<div class="alert alert-success">{{success}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
+
+		  <div class="crumb-bar">
+      </div>
+      -->
+
+      <div id="sidebar" class="span3">
+        <ul class="sidebar-nav">
+          <li><a href="/notes" class="navigate">Inbox</a></li>
+          {{#groups}}
+          <li><a href="/notes?notebooks[]={{name}}" class="navigate">@{{name}}</a></li>
+          {{/groups}}
+        </ul>
+      </div>
+
+      <div id="inbox" class="span5">
+			  <div id="stage">
+		      <!-- content gets loaded here -->
+	      </div>
+      </div>
+
+      <div id="expanded-view" class="span4">
+        test
+      </div>	
+    </div>
+  </div>
 
 	{{>notes}}
 	{{>groups}}

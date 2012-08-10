@@ -13,7 +13,7 @@ NotebookSchema.statics.update_index = (options, cb) ->
 	map = () ->
 		if !this.groups
         	return
-    
+
 		for group in this.groups
 			emit(group, {count:1, _user:this._user})
 
@@ -28,9 +28,9 @@ NotebookSchema.statics.update_index = (options, cb) ->
 
 	command =
 		mapreduce	: "notes"
-		map 		: map.toString()
+		map 		  : map.toString()
 		reduce 		: reduce.toString()
-		out 		: "notebooks"
+		out 		  : "notebooks"
 
 	mongoose.connection.db.executeDbCommand command, (err, res) ->
 		console.log err

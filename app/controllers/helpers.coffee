@@ -22,12 +22,12 @@ exports.render_page = (page,req,res) ->
 			Group.find {_users:req.user.id}, (err, groups) ->
 
 				res.render(page, {
-					error: 			req.flash('error')
-					success: 		req.flash('success')
-					current_user: 	JSON.stringify(req.user)
-					is_logged_in: 	true if req.user
-					tags:			tags
-					groups: 		groups
-					req:			req
+					error         : 	req.flash('error')
+					success       :   req.flash('success')
+					current_user  : 	JSON.stringify(req.user)
+					is_logged_in  : 	true if req.user
+					tags          :		tags
+					groups        : 	groups
+					req           :		req
 				})
 		

@@ -1,17 +1,30 @@
-<script id="notes_board" type="text/html">
-	<div class="notes_wrapper fluid-container">
-		<div class="row-fluid">
-			<div class="span12">
-				<ul class="notes_board">
-					<%#notes%>
-						<li class="sticky card" data-id="<%_id%>" draggable="true">
-							<%>sticky%>					
-						</li>
-					<%/notes%>
-				</ul>
-			</div>
-		</div>
+<script id="expanded_note" type="text/html">
+	<div class="expanded-note">
+		<%parent_note.message%>
 	</div>
+
+	<ul class="notes_board">
+		<%#notes%>
+			<li class="sticky card" data-id="<%_id%>" draggable="true">
+				<%>sticky%>					
+			</li>
+		<%/notes%>
+	</ul>
+	
+</script>
+
+<script id="notes_board" type="text/html">
+	<div class="board_controls">
+		
+	</div>
+
+	<ul class="notes_board">
+		<%#notes%>
+			<li class="sticky card" data-id="<%_id%>" draggable="true">
+				<%>sticky%>					
+			</li>
+		<%/notes%>
+	</ul>
 </script>
 
 <!-- hack to get icanhaz partials to load from JS -->
@@ -24,9 +37,6 @@
 <script id="sticky" class="partial" type="text/html">
 	<a href="/notes/<%_id%>" class="delete hide"><i class="icon-remove"></i></a>
 	<div class="pole-position autolink <%#completed%>completed<%/completed%>">
-		<%#has_subnotes%>
-			<a href="/notes/<%_id%>" class="navigate"><i class="icon-plus"></i></a>
-		<%/has_subnotes%>
 		
 		<%#is_taskable%>
 			<input type="checkbox" class="task-completed" <%#completed%>checked="true"<%/completed%> />
@@ -34,7 +44,7 @@
 
 		<%message%>
 	</div>
-	
+
 	<%#_notes%>
 		<div class="autolink subnote <%#completed%>completed<%/completed%>" data-id="<%_id%>" draggable="true">
 			<a href="#" class="sub-delete hide"><i class="icon-remove"></i></a>
@@ -49,23 +59,8 @@
 			<%message%>
 		</div>
 	<%/_notes%>
-	
-	<div class="meta <%color%>">
-		<div class="color-choice dropdown-toggle <%color%>" data-toggle="dropdown"></div>
-		<div class="dropdown-menu">
-			<div class="color-choice red" data-color="red"></div>
-			<div class="color-choice blue" data-color="blue"></div>
-			<div class="color-choice blueDark" data-color="blueDark"></div>
-			<div class="color-choice green" data-color="green"></div>
-			<div class="color-choice greenOlive" data-color="greenOlive"></div>
-			<div class="color-choice teal" data-color="teal"></div>
-			<div class="color-choice yellow" data-color="yellow"></div>
-			<div class="color-choice gray" data-color="gray"></div>
-			<div class="color-choice dashed" data-color="default"></div>
-		</div>
-		<div class="created_at">
-			<%created_at_in_words%>
-		</div>
+
+	<div class="meta">
+		created <%created_at_in_words%>
 	</div>
-	
 </script>

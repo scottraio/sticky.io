@@ -17,14 +17,10 @@ class App.Views.Notes.Show extends Backbone.View
 						parent = note 
 					else
 						notes.push note
-					
-				index = new App.Views.Notes.Index(el: $("#main"), id: self.options.id)
-				index.load_view(notes)
+			
+				console.log parent
+				console.log notes
 
-				navigating_up = $(".crumb-bar a[href='/notes/#{parent._id}']").length > 0
-
-				if navigating_up
-					$(".crumb-bar a[href='/notes/#{parent._id}']").next("a").remove()
-				else
-					$(".crumb-bar").append("<a href=\"/notes/#{parent._id}\" class=\"navigate headline\">#{parent.message}</a>")
-
+				$(self.el).html ich.expanded_note
+					parent_note : parent
+					notes 			: notes

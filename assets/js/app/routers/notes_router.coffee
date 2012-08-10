@@ -10,7 +10,7 @@ class App.Routers.NotesRouter extends Backbone.Router
 	
 	index: (params) ->
 		if current_user
-			notes 	= new App.Views.Notes.Index(el: $("#main"), params: params)
+			notes 	= new App.Views.Notes.Index(el: $("#stage"), params: params)
 			reset_events(notes)
 			notes.render()
 		
@@ -20,7 +20,7 @@ class App.Routers.NotesRouter extends Backbone.Router
 		notes.render()
 
 	show: (id) ->
-		note = new App.Views.Notes.Show(id: id, el: $("li.sticky[data-id=#{id}]"))
+		note = new App.Views.Notes.Show(id: id, el: $("#expanded-view"))
 		reset_events(note)
 		note.render()
 

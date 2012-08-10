@@ -34,7 +34,6 @@ exports.index = (req, res) ->
 		# Filter by notebooks
 		if req.query.notebooks
 			note.where('groups').in(req.query.notebooks) 
-			populate = false
 		# From a specific time period
 		if req.query.days
 			today 	= new Date()
