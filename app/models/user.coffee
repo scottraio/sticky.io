@@ -1,13 +1,13 @@
-wrench		= require 'wrench'
-util 		= require 'util'
-path		= require 'path'
-Schema 		= mongoose.Schema
-ObjectId 	= Schema.ObjectId
+wrench			= require 'wrench'
+util 				= require 'util'
+path				= require 'path'
+Schema 			= mongoose.Schema
+ObjectId 		= Schema.ObjectId
 Validations = require './validations'
-Setter 		= require './setters'
-SHA2		= new (require('jshashes').SHA512)()
-salt 		= 'sc2ishard'
-xmpp 		= require 'simple-xmpp'
+Setter 			= require './setters'
+SHA2				= new (require('jshashes').SHA512)()
+salt 				= 'sc2ishard'
+xmpp 				= require 'simple-xmpp'
 
 
 encodePassword = (pass) ->

@@ -12,7 +12,7 @@ NotebookSchema = new Schema
 NotebookSchema.statics.update_index = (options, cb) ->
 	map = () ->
 		if !this.groups
-        	return
+    	return
 
 		for group in this.groups
 			emit(group, {count:1, _user:this._user})

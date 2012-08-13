@@ -1,5 +1,5 @@
-Tag 	= app.models.Tag
-Group 	= app.models.Group
+Tag 			= app.models.Tag
+Notebook 	= app.models.Notebook
 
 exports.render_json = (req,res,fn) ->
 	switch req.params.format
@@ -17,17 +17,24 @@ exports.render_json = (req,res,fn) ->
 		else exports.render_page('index', req, res)
 
 exports.render_page = (page,req,res) ->
-	Tag.update_index {_user:req.user.id}, () ->
+	exports.update_index req, () ->
 		Tag.find {"value._user":req.user.id}, (err, tags) ->
-			Group.find {_users:req.user.id}, (err, groups) ->
+			Notebook.find {"value._user":req.user.id}, (err, notebooks) ->
 
-				res.render(page, {
-					error         : 	req.flash('error')
-					success       :   req.flash('success')
-					current_user  : 	JSON.stringify(req.user)
-					is_logged_in  : 	true if req.user
-					tags          :		tags
-					groups        : 	groups
-					req           :		req
-				})
+					res.render(page, {
+						error         : 	req.flash('error')
+						success       :   req.flash('success')
+						current_user  : 	JSON.stringify(req.user)
+						is_logged_in  : 	true if req.user
+						tags          :		tags
+						notebooks     : 	notebooks
+						req           :		req
+					})
 		
+
+exports.update_index = (req,cb) ->
+	Tag.update_index {_user:req.user.id}, () ->
+		Notebook.update_index {_user:req.user.id}, () ->
+			cb()
+
+

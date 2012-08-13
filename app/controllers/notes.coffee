@@ -1,7 +1,7 @@
-_ 		= require 'underscore'
+_ 			= require 'underscore'
 helpers = require './helpers'
-Note 	= app.models.Note
-User 	= app.models.User
+Note 		= app.models.Note
+User 		= app.models.User
 
 
 #
@@ -57,38 +57,45 @@ exports.index = (req, res) ->
 #
 exports.create = (req, res) ->
 	helpers.render_json req, res, (done) ->
+		
+		# find the last note that was saved. If it has been more than 5 minutes since the last note.
+		# go ahead and save a new note. If this new note is being saved within that 5 min window, stack it
+		# to the last note found.
+		Note.last_note req.user, (last_note) ->
 
-		note = new Note()
-		note.set 'message', 	req.body.message
-		note.set '_user', 		req.user._id
-		note.set 'created_at', 	new Date()
+			note = new Note()
+			note.set 'message', 	req.body.message
+			note.set '_user', 		req.user._id
+			note.set 'created_at', 	new Date()
 
-		#
-		# parse tags/links/groups into arrays
-		note.parse()
+			#
+			# parse tags/links/groups into arrays
+			note.parse()
 
-		note.save (err) -> 
-			if err
-				console.log(err)
-				req.flash('error', 'Note could not be saved.')
-				done(err)
-			else
-				if req.body.parent_id
-					req.params.id = note._id
-					req.params.parent_id = req.body.parent_id
-					exports.bind(req, res)
+			#
+			#
+			# last note
+			seconds_since_last_post = (new Date() - last_note.created_at) / 1000
+
+			note.save (err) ->
+				if err
+					console.log(err)
+					req.flash('error', 'Note could not be saved.')
+					done(err)
 				else
-					done(null, note)
-				
-
+					if seconds_since_last_post <= 300
+						Note.stack {user:req.user, child_id:note._id, parent_id:last_note._id}, done	
+					else if req.body.parent_id
+						Note.stack {user:req.user, child_id:note._id, parent_id:last_note._id}, done		
+					else	
+						done(null, note)
+					
 #
 # updates an existing note for an user
 #
 exports.update = (req, res) ->
 	helpers.render_json req, res, (done) ->
 		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
-
-			console.log req.body.completed
 
 			if req.body.message
 				note.set 'message', req.body.message
@@ -110,21 +117,19 @@ exports.update = (req, res) ->
 					done(null, note)
 
 #
-# Motes Tree
+# Notes Tree - aka "stacks"
 #
 
-exports.bind = (req, res) ->
-	helpers.render_json req, res, (done) ->
-		Note.note_and_parent req, (note, parent) ->
-			# magic
-			parent._notes.push note._id
-			note._parent = parent._id
+exports.stack = (req, done) ->
+	Note.note_and_parent req, (note, parent) ->
+		# magic
+		parent._notes.push note._id
+		note._parent = parent._id
 			
-			note.save (err) -> 
-				parent.save(done) unless err
+		note.save (err) -> 
+			parent.save(done) unless err
 
-
-exports.unbind = (req, res) ->
+exports.unstack = (req, res) ->
 	helpers.render_json req, res, (done) ->
 		Note.note_and_parent req, (note, parent) ->
 			# magic
@@ -134,7 +139,7 @@ exports.unbind = (req, res) ->
 			note.save (err) -> 
 				parent.save(done) unless err
 
-exports.rebind = (req, res) ->
+exports.restack = (req, res) ->
 	helpers.render_json req, res, (done) ->
 		Note.from_note_to_note req, (note, from, to) ->
 			# magic

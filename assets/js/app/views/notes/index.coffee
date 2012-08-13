@@ -11,7 +11,6 @@ class App.Views.Notes.Index extends Backbone.View
 	initialize: ->
 		@params		= @options.params
 		@notes 		= new App.Collections.Notes()
-
 		# set the url to the search query, if there is a search query
 		if window.location.search
 			@notes.url 	= window.location.pathname + ".json" + window.location.search
@@ -29,10 +28,11 @@ class App.Views.Notes.Index extends Backbone.View
 		# setup the notes_board
 		$(@el).html ich.notes_board
 			notes: items
-			created_at_in_words: () -> $.timeago(this.created_at)
-			has_subnotes: () -> true if this._notes && this._notes.length > 0
-			subnote_count: () -> this._notes.length if this._notes
-			is_taskable: () -> true if this.message.indexOf('#todo') > 0
+			created_at_in_words	: () -> $.timeago(this.created_at)
+			has_subnotes				: () -> true if this._notes && this._notes.length > 0
+			subnote_count				: () -> this._notes.length if this._notes
+			is_taskable					: () -> true if this.message.indexOf('#todo') > 0
+			#within_notebook			: () -> return _.has(self.params, 'notebooks[]')
 
 		# Drag and Drop everything
 		dnd = new App.Views.Notes.DnD(id: @options.id)		

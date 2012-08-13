@@ -18,9 +18,6 @@ class App.Views.Notes.Show extends Backbone.View
 					else
 						notes.push note
 			
-				console.log parent
-				console.log notes
-
 				$(self.el).html ich.expanded_note
 					parent_note : parent
 					notes 			: notes

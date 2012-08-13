@@ -93,27 +93,33 @@ exports.start = () ->
 # Stick it!
 
 exports.save_message = (user, message) ->
-	note = new app.models.Note()
-	#
-	# setup the note
-	note.set 'message', 	message
-	note.set 'created_at', 	new Date()
-	note.set '_user', 		user._id
-	
-	#
-	# parse tags/links/groups into arrays
-	note.parse()
+	# find the last note that was saved. If it has been more than 5 minutes since the last note.
+	# go ahead and save a new note. If this new note is being saved within that 5 min window, stack it
+	# to the last note found.
+	Note.last_note req.user, (last_note) ->
+		#
+		# New Note
+		note = new app.models.Note
+		#
+		# setup the note
+		note.set 'message', 		message
+		note.set 'created_at', 	new Date()
+		note.set '_user', 			user._id
+		
+		#
+		# parse tags/links/groups into arrays
+		note.parse()
 
-	#
-	# save the note
-	note.save (err) ->
+		#
+		# save the note
+		note.save (err) ->
 
-		# todo support
-		#if /( #todo)/.test message
-			# ask if they want to be reminded
-			# then store the reminder
+			# todo support
+			#if /( #todo)/.test message
+				# ask if they want to be reminded
+				# then store the reminder
 
-		console.log "Message saved" if app.env is "development"
+			console.log "Message saved" if app.env is "development"
 
 
 

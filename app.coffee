@@ -2,21 +2,21 @@
 # Init
 #
 
-fs			= require 'fs'
-http 		= require 'http'
-express		= require 'express'
-cons 		= require 'consolidate'
+fs					= require 'fs'
+http 				= require 'http'
+express			= require 'express'
+cons 				= require 'consolidate'
 handlbars 	= require 'handlebars'
-passport 	= require 'passport'
-assets 		= require 'connect-assets'
-flash		= require 'connect-flash'
-xmpp 		= require './lib/xmpp'
+passport 		= require 'passport'
+assets 			= require 'connect-assets'
+flash				= require 'connect-flash'
+xmpp 				= require './lib/xmpp'
 
 #
 # The App
 #
 
-GLOBAL.app 			= module.exports = express.createServer()
+GLOBAL.app 				= module.exports = express.createServer()
 app.product_name 	= 'Sticky.io'
 
 #
@@ -62,48 +62,64 @@ app.configure () ->
 
 app.configure 'production', () ->
 	app.config =
-		env 			: 'production'
+		env 				: 'production'
 		dbname 			: 'pine-io-production'
 		domain 			: 'sticky.io'
-		xmpp 			:
-			jid			: 'notes@sticky.io'
-			host		: 'sticky.io'
+		xmpp:
+			jid				: 'notes@sticky.io'
+			host			: 'sticky.io'
 			password	: 'p!new00dF1d3rby'
-		google_oauth 	:
+		google_oauth:
 			client_id 	: '293797332075-en00tcg0jhnuktrnkk89j95j6g1dipqi.apps.googleusercontent.com'
 			secret		: 'R3o_wrzOo6B7DDmpzcU2rto4'
 			redirect 	: '/auth/google/callback'
 		
+app.configure 'staging', () ->
+
+	app.config =
+		env 				: 'staging'
+		dbname 			: 'pine-io-production'
+		domain 			: 'beta.sticky.io'
+		xmpp:
+			jid				: 'notes@sticky.io'
+			host			: 'sticky.io'
+			password	: 'p!new00dF1d3rby'
+		google_oauth:
+			client_id 	: '293797332075.apps.googleusercontent.com'
+			secret			: 'rtqXf-Ows1RgGn5V5oUg5Qa7'
+			redirect 		: '/auth/google/callback'
+
 
 app.configure 'development', () ->
 	app.use(express.errorHandler())
+
 	app.config =
-		env 			: 'development'
+		env 				: 'development'
 		dbname 			: 'pine-io-development'
 		domain 			: 'dev.sticky.io:8000'
-		xmpp 			:
-			jid			: 'notes-dev@sticky.io'
-			host		: 'sticky.io'
+		xmpp:
+			jid				: 'notes-dev@sticky.io'
+			host			: 'sticky.io'
 			password	: 'p!new00dF1d3rby'
-		google_oauth 	:
+		google_oauth:
 			client_id 	: '293797332075.apps.googleusercontent.com'
-			secret		: 'rtqXf-Ows1RgGn5V5oUg5Qa7'
-			redirect 	: '/auth/google/callback'
+			secret			: 'rtqXf-Ows1RgGn5V5oUg5Qa7'
+			redirect 		: '/auth/google/callback'
 
 app.configure 'test', () ->
 	app.use(express.errorHandler())
 	app.config =
-		env 			: 'test'
+		env 				: 'test'
 		dbname 			: 'pine-io-test'
 		domain 			: 'dev.pine.io:8000'
-		xmpp 			:
-			jid			: 'notes-dev@sticky.io'
-			host		: 'sticky.io'
+		xmpp:
+			jid				: 'notes-dev@sticky.io'
+			host			: 'sticky.io'
 			password	: 'p!new00dF1d3rby'
-		google_oauth 	:
+		google_oauth:
 			client_id 	: '293797332075.apps.googleusercontent.com'
-			secret		: 'rtqXf-Ows1RgGn5V5oUg5Qa7'
-			redirect 	: '/auth/google/callback'
+			secret			: 'rtqXf-Ows1RgGn5V5oUg5Qa7'
+			redirect 		: '/auth/google/callback'
 	
 
 #

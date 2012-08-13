@@ -28,9 +28,9 @@ TagsSchema.statics.update_index = (options, cb) ->
 
 	command =
 		mapreduce	: "notes"
-		map 		: map.toString()
+		map 			: map.toString()
 		reduce 		: reduce.toString()
-		out 		: "tags"
+		out 			: "tags"
 
 	mongoose.connection.db.executeDbCommand command, (err, res) ->
 		cb()

@@ -11,7 +11,7 @@ mongoose.set('debug', true) if app.config.env is 'development'
 
 require('./manifest')
 
-app.models		= mongoose.models
+app.models			= mongoose.models
 module.exports  = mongoose
 
 mongoose.connection.on 'open', () ->

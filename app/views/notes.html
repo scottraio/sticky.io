@@ -1,47 +1,62 @@
+<!--
+	Expanded Note
+-->
+
 <script id="expanded_note" type="text/html">
 	<div class="expanded-note">
-		<%parent_note.message%>
+		<textarea><%parent_note.message%></textarea>
 	</div>
 
 	<ul class="notes_board">
 		<%#notes%>
 			<li class="sticky card" data-id="<%_id%>" draggable="true">
-				<%>sticky%>					
+				<%message%>	
 			</li>
 		<%/notes%>
 	</ul>
 	
 </script>
 
+<!--
+	Notes Board
+-->
+
 <script id="notes_board" type="text/html">
 	<div class="board_controls">
-		
+		<%#within_notebook%>
+			TRUE
+		<%/within_notebook%>	
 	</div>
 
 	<ul class="notes_board">
 		<%#notes%>
 			<li class="sticky card" data-id="<%_id%>" draggable="true">
-					<a href="/notes/<%_id%>" class="hide navigate expand"></a>
-					<%>sticky%>
+					<a href="/notes/<%_id%>" class="navigate expand hide"></a>
+					<div class="pole-position autolink <%#completed%>completed<%/completed%>">					
+						<%#is_taskable%>
+							<input type="checkbox" class="task-completed" <%#completed%>checked="true"<%/completed%> />
+						<%/is_taskable%>
+
+						<%message%>
+					</div>
+
+					<%>sub_stickies%>
+					
 					<div class="meta">
 						created <%created_at_in_words%>
 						<a href="https://twitter.com/share" class="twitter-share-button" data-dnt="true" data-count="none" data-via="twitterapi">Tweet</a>
-				</div>
+					</div>
 			</li>
 		<%/notes%>
 	</ul>
 </script>
 
+<!--
+	Sticky Partial - Resuable code
+-->
 
-<script id="sticky" class="partial" type="text/html">
-	<div class="pole-position autolink <%#completed%>completed<%/completed%>">					
-		<%#is_taskable%>
-			<input type="checkbox" class="task-completed" <%#completed%>checked="true"<%/completed%> />
-		<%/is_taskable%>
-
-		<%message%>
-	</div>
-
+<script id="sub_stickies" class="partial" type="text/html">
+	
 	<%#_notes%>
 		<div class="autolink subnote <%#completed%>completed<%/completed%>" data-id="<%_id%>" draggable="true">
 			<a href="#" class="sub-delete hide"><i class="icon-remove"></i></a>

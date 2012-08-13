@@ -17,45 +17,16 @@ window.click_or_tap = (events) ->
 
 class App.Main extends Backbone.View
 	
-	events: 
-		"click a.post-message"				: "post_message"
-		"click .calendar_by_date"			: "show_calendar"
-		"click a.remote" 					: "link_to_remote"
-		"click a.navigate" 					: "link_to_fragment"
-		"click .sidebar li" 				: "link_to_notebook"
-		"click a.push" 						: "link_to_push"
+	events:
+		"click a.remote" 							: "link_to_remote"
+		"click a.navigate" 						: "link_to_fragment"
+		"click .sidebar li" 					: "link_to_notebook"
+		"click a.push" 								: "link_to_push"
 		"click a.remote-delete" 			: "link_to_delete"
 		
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
-		$('#calendar').DatePicker
-			flat: true
-			date: [new Date(),new Date()]
-			current: new Date()
-			calendars: 2
-
-			mode: 'range'
-			starts: 1
-
-		
-	post_message: (e) ->
-		parent_id 	= window.location.pathname.split('/').splice(2, 1)[0]
-
-		unless parent_id is undefined
-			push_url "/notes/#{parent_id}/new"
-		else
-			push_url '/notes/new'
-
-		return false
-
-	show_calendar: (e) ->
-		$('#calendar').toggle()
-		return false
-
-	hide_calendar: (e) ->
-		$('#calendar').hide()
-		return false
-			
+		new App.Views.Notes.New(el: $('#new-sticky-header'))
 
 	#
 	#

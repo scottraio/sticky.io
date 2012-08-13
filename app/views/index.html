@@ -1,7 +1,9 @@
 {{>header}}
 
   <div id="new-sticky-header">
-    <input type="text" name="message" placeholder="What's on your mind?"/>
+		<form action="/notes" method="post">	
+    	<input type="text" name="message" placeholder="What's on your mind?"/>
+		</form>
     <div class="logo">STICKY</div>
   </div>
 
@@ -16,23 +18,37 @@
       </div>
       -->
 
-      <div id="sidebar" class="span3">
-        <ul class="sidebar-nav">
+      <div id="sidebar">
+				<div class="profile">
+					<i id="gravatar"><img src="http://profiles.google.com/s2/u/0/photos/profile/{{req.user.googleId}}?sz=32" /></i>
+					<div class="details">
+						<div>{{req.user.email}}</div>
+						<a href="/logout">Logout</a>
+					</div>
+				</div>
+
+				<ul class="sidebar-nav">
           <li><a href="/notes" class="navigate">Inbox</a></li>
-          {{#groups}}
-          <li><a href="/notes?notebooks[]={{name}}" class="navigate">@{{name}}</a></li>
-          {{/groups}}
+          {{#notebooks}}
+          	<li><a href="/notes?notebooks[]={{_id}}" class="navigate">@{{_id}}</a></li>
+					{{/notebooks}}
         </ul>
+
+				<ul class="tags">
+					{{#tags}}
+						<li><a href="/notes?tags[]={{_id}}" class="navigate">#{{_id}}</a></li>
+					{{/tags}}
+				</ul>
+
       </div>
 
-      <div id="inbox" class="span5">
+      <div id="inbox">
 			  <div id="stage">
 		      <!-- content gets loaded here -->
 	      </div>
       </div>
 
-      <div id="expanded-view" class="span4">
-        test
+      <div id="expanded-view">
       </div>	
     </div>
   </div>
