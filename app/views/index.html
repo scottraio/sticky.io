@@ -19,6 +19,9 @@
       -->
 
       <div id="sidebar">
+				<div class="search">
+					<input type="text" name="keyword" placeholder="Discover" />
+				</div>
 				<div class="profile">
 					<i id="gravatar"><img src="http://profiles.google.com/s2/u/0/photos/profile/{{req.user.googleId}}?sz=32" /></i>
 					<div class="details">
@@ -26,6 +29,8 @@
 						<a href="/logout">Logout</a>
 					</div>
 				</div>
+
+			
 
 				<ul class="sidebar-nav">
           <li><a href="/notes" class="navigate">Inbox</a></li>

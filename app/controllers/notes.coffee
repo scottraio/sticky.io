@@ -57,38 +57,13 @@ exports.index = (req, res) ->
 #
 exports.create = (req, res) ->
 	helpers.render_json req, res, (done) ->
-		
-		# find the last note that was saved. If it has been more than 5 minutes since the last note.
-		# go ahead and save a new note. If this new note is being saved within that 5 min window, stack it
-		# to the last note found.
-		Note.last_note req.user, (last_note) ->
-
-			note = new Note()
-			note.set 'message', 	req.body.message
-			note.set '_user', 		req.user._id
-			note.set 'created_at', 	new Date()
-
-			#
-			# parse tags/links/groups into arrays
-			note.parse()
-
-			#
-			#
-			# last note
-			seconds_since_last_post = (new Date() - last_note.created_at) / 1000
-
-			note.save (err) ->
-				if err
-					console.log(err)
-					req.flash('error', 'Note could not be saved.')
-					done(err)
-				else
-					if seconds_since_last_post <= 300
-						Note.stack {user:req.user, child_id:note._id, parent_id:last_note._id}, done	
-					else if req.body.parent_id
-						Note.stack {user:req.user, child_id:note._id, parent_id:last_note._id}, done		
-					else	
-						done(null, note)
+		Note.create_note req.user, req.body.message, (err,note) ->
+			if err
+				console.log(err)
+				req.flash('error', 'Note could not be saved.')
+				done(err)
+			else
+				done(null, note)
 					
 #
 # updates an existing note for an user

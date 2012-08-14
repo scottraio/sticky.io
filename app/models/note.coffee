@@ -24,8 +24,41 @@ NotesSchema.index { created_at:-1 }
 NotesSchema.index { _user:1 }
 
 #
-# Static Methods
 #
+# Static Methods
+NotesSchema.statics.create_note = (user,message,cb) ->
+	# Setup the Note namespace
+	Note = app.models.Note
+	# find the last note that was saved. If it has been more than 5 minutes since the last note.
+	# go ahead and save a new note. If this new note is being saved within that 5 min window, stack it
+	# to the last note found.
+	Note.last_note user, (last_note) ->
+
+		note = new Note()
+		note.set 'message', 		message
+		note.set '_user', 			user._id
+		note.set 'created_at', 	new Date()
+
+		#
+		# parse tags/links/groups into arrays
+		note.parse()
+
+		#
+		# last note
+		if last_note isnt undefined
+			seconds_since_last_post = (new Date() - last_note.created_at) / 1000
+		
+		#
+		# save note
+		note.save (err) ->
+			if err
+				cb(err)
+			else
+				if last_note && seconds_since_last_post <= 300
+					Note.stack {user:user, child_id:note._id, parent_id:last_note._id}, cb	
+				else	
+					cb(null, note)
+
 NotesSchema.statics.last_note = (user, cb) ->
 	app.models.Note.where('_user',user._id)
 		.where('_parent', null)
@@ -46,8 +79,8 @@ NotesSchema.statics.from_note_to_note = (req, cb) ->
 				cb(note,from,to)
 
 #
-# Stacking
 #
+# Stacking
 NotesSchema.statics.stack = (options, cb) ->
 	app.models.Note.findOne {_id:options.child_id, _user:options.user}, (err, child) ->			
 		app.models.Note.findOne {_id:options.parent_id, _user:options.user}, (err, parent) ->
@@ -62,8 +95,8 @@ NotesSchema.statics.stack = (options, cb) ->
 					cb(err, null)
 
 #
-# Parses all tags, links, and groups from message 
 #
+# Parses all tags, links, and groups from message 
 NotesSchema.methods.parse = () ->
 	@parse_tags()
 	@parse_links()

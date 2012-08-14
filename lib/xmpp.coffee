@@ -36,13 +36,8 @@ exports.start = () ->
 		#				when 'online'
 		#					xmpp.send(jid, "http://sticky.io")
 		#,2000)
-
-		
-	
-
+		#
 		#console.log currently_online
-
-
 
 	xmpp.on 'error', (e) ->
 		console.log e
@@ -53,7 +48,8 @@ exports.start = () ->
 	xmpp.on 'chat', (from, message) ->
 		app.models.User.findOne {email:from}, (err, user) ->
 			unless user is undefined or user is null
-				exports.save_message(user, message)
+				app.models.Note.create_note user, message, (err, note) ->
+					return false if err
 			else
 				#
 				# Welcome the new user and present a signup link
@@ -76,7 +72,6 @@ exports.start = () ->
 				validate = new xmpp.Element('presence', {type: 'unsubscribed', to: stanza.attrs.from})
 				xmpp.conn.send(validate)
 
-
 	#
 	# Connect the pine bot to the XMPP universe
 	#
@@ -87,40 +82,3 @@ exports.start = () ->
 		host: app.config.xmpp.host
 		port: 5222
 		status: 'http://sticky.io'
-
-#
-#
-# Stick it!
-
-exports.save_message = (user, message) ->
-	# find the last note that was saved. If it has been more than 5 minutes since the last note.
-	# go ahead and save a new note. If this new note is being saved within that 5 min window, stack it
-	# to the last note found.
-	Note.last_note req.user, (last_note) ->
-		#
-		# New Note
-		note = new app.models.Note
-		#
-		# setup the note
-		note.set 'message', 		message
-		note.set 'created_at', 	new Date()
-		note.set '_user', 			user._id
-		
-		#
-		# parse tags/links/groups into arrays
-		note.parse()
-
-		#
-		# save the note
-		note.save (err) ->
-
-			# todo support
-			#if /( #todo)/.test message
-				# ask if they want to be reminded
-				# then store the reminder
-
-			console.log "Message saved" if app.env is "development"
-
-
-
-

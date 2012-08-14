@@ -4,7 +4,7 @@ class App.Views.Notes.Show extends Backbone.View
 
 
 	initialize: ->
-		@note 		= new App.Models.Note(id: @options.id)
+		@note 			= new App.Models.Note(id: @options.id)
 		@note.url 	= "/notes/#{@options.id}/expanded.json"
 
 	render: () ->
@@ -21,3 +21,6 @@ class App.Views.Notes.Show extends Backbone.View
 				$(self.el).html ich.expanded_note
 					parent_note : parent
 					notes 			: notes
+
+				$('textarea', self.el).autosize()
+
