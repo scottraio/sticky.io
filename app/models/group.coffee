@@ -1,8 +1,8 @@
-Schema 		= mongoose.Schema
-ObjectId 	= Schema.ObjectId
-regex 		= require '../../lib/regex'
+Schema 			= mongoose.Schema
+ObjectId 		= Schema.ObjectId
+regex 			= require 'sticky-regex'
 Validations = require './validations'
-Setter 		= require './setters'
+Setter 			= require './setters'
 
 GroupsSchema = new Schema
 	name  		: { type: String, required: true, trim: true}

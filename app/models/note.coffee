@@ -1,6 +1,6 @@
 Schema 			= mongoose.Schema
 ObjectId 		= Schema.ObjectId
-regex 			= require '../../lib/regex'
+regex 			= require 'sticky-regex'
 Validations = require './validations'
 Setter 			= require './setters'
 

@@ -1,10 +1,4 @@
-#
-#
-# Users Controller
-#
-#
-
-helpers = require './helpers'
+render = require 'sticky-render'
 
 
 exports.root = (req, res) ->
@@ -17,7 +11,7 @@ exports.index = (req, res) ->
 	res.render('signup', {title: 'Sign-up to pine.io'})
 
 exports.show = (req, res) ->
-	helpers.render_json req, res, (done) ->
+	render.json req, res, (done) ->
 		app.models.User.findOne {_id:req.user._id}, done
 
 exports.create = (req, res) ->

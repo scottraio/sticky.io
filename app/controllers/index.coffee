@@ -3,14 +3,12 @@
 # Controllers Main - Hybrid application_controller/routes
 #
 #
-fs 						= require 'fs'
-passport 				= require '../../lib/passport'
-Resource				= require '../../lib/express_resource'
+fs 									= require 'fs'
+passport 						= require 'sticky-passport'
+Resource						= require 'express-resource'
 UsersController			= require './users'
 NotesController			= require './notes'
 GroupsController		= require './groups'
-TagsController			= require './tags'
-BookmarksController		= require './bookmarks'
 
 
 ensureAuthenticated = (req, res, next) ->
@@ -66,34 +64,8 @@ app.get('/notes/:id/unbind/:parent_id.:format?', ensureAuthenticated, NotesContr
 app.get('/notes/:id/rebind/:from_id/:to_id.:format?', ensureAuthenticated, NotesController.rebind)
 
 #
-# Groups
-#
-app.get('/notebooks.:format?', ensureAuthenticated, GroupsController.index)
-app.get('/notebooks/:id.:format?', ensureAuthenticated, GroupsController.show)
-app.get('/notebooks/:id/notes.:format?', ensureAuthenticated, GroupsController.notes)
-app.get('/notebooks/new.:format?', ensureAuthenticated, GroupsController.new)
-app.get('/notebooks/:id/edit.:format?', ensureAuthenticated, GroupsController.edit)
-app.post('/notebooks.:format?', ensureAuthenticated, GroupsController.create)
-app.delete('/notebooks/:id.:format?', ensureAuthenticated, GroupsController.delete)
-app.put('/notebooks/:id.:format?', ensureAuthenticated, GroupsController.update)
-
-#
-# Tags
-#
-
-app.get('/tags.:format?', ensureAuthenticated, TagsController.index)
-app.get('/tags/reset', ensureAuthenticated, TagsController.reset)
-
-#
-# Bookmarks
-#
-
-app.get('/links.:format?', ensureAuthenticated, BookmarksController.index)
-
-#
 # Root
 #
-
 
 app.get '/', (req, res) ->
 	if req.isAuthenticated()

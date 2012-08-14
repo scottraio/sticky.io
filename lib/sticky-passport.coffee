@@ -1,4 +1,4 @@
-passport 		= require('passport')
+passport 				= require('passport')
 LocalStrategy 	= require('passport-local').Strategy
 BasicStrategy 	= require('passport-http').BasicStrategy
 GoogleStrategy 	= require('passport-google-oauth').OAuth2Strategy
@@ -32,9 +32,9 @@ passport.use(new BasicStrategy (username, password, done) ->
 #
 
 google_config = {
-	clientID: app.config.google_oauth.client_id,
-	clientSecret: app.config.google_oauth.secret,
-	callbackURL: "http://#{app.config.domain}#{app.config.google_oauth.redirect}"
+	clientID: settings.google_oauth.client_id,
+	clientSecret: settings.google_oauth.secret,
+	callbackURL: "http://#{settings.domain}#{settings.google_oauth.redirect}"
 }
 
 passport.use(new GoogleStrategy google_config, (accessToken, refreshToken, profile, done) ->

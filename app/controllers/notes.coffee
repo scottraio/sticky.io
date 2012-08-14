@@ -1,15 +1,14 @@
 _ 			= require 'underscore'
-helpers = require './helpers'
+render 	= require 'sticky-render'
 Note 		= app.models.Note
 User 		= app.models.User
-
 
 #
 # returns a single note provided an ID
 # GET /notes/:id.json
 #
 exports.expanded = (req,res) ->
-	helpers.render_json req, res, (done) ->
+	render.json req, res, (done) ->
 		Note.where('_user', req.user._id)
 			.or([{'_id': req.params.id},{'_parent':req.params.id}])
 			.populate('_notes')
@@ -20,7 +19,7 @@ exports.expanded = (req,res) ->
 # GET /notes.json
 #
 exports.index = (req, res) ->
-	helpers.render_json req, res, (done) ->
+	render.json req, res, (done) ->
 		note = Note.where('_user', req.user)
 		
 		populate = true
@@ -56,7 +55,7 @@ exports.index = (req, res) ->
 # Important: the post data must contain a title and array of book IDs 
 #
 exports.create = (req, res) ->
-	helpers.render_json req, res, (done) ->
+	render.json req, res, (done) ->
 		Note.create_note req.user, req.body.message, (err,note) ->
 			if err
 				console.log(err)
@@ -69,7 +68,7 @@ exports.create = (req, res) ->
 # updates an existing note for an user
 #
 exports.update = (req, res) ->
-	helpers.render_json req, res, (done) ->
+	render.json req, res, (done) ->
 		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
 
 			if req.body.message
@@ -105,7 +104,7 @@ exports.stack = (req, done) ->
 			parent.save(done) unless err
 
 exports.unstack = (req, res) ->
-	helpers.render_json req, res, (done) ->
+	render.json req, res, (done) ->
 		Note.note_and_parent req, (note, parent) ->
 			# magic
 			parent._notes.remove(note._id)
@@ -115,7 +114,7 @@ exports.unstack = (req, res) ->
 				parent.save(done) unless err
 
 exports.restack = (req, res) ->
-	helpers.render_json req, res, (done) ->
+	render.json req, res, (done) ->
 		Note.from_note_to_note req, (note, from, to) ->
 			# magic
 			from._notes.remove(note._id)
@@ -132,14 +131,14 @@ exports.restack = (req, res) ->
 # grabs an note and returns its JSON
 #
 exports.show = (req, res) ->
-	helpers.render_json req, res, (done) ->
+	render.json req, res, (done) ->
 		Note.findOne {_id:req.params.id, _user:req.user}, done
 
 #
 # deletes an note from an account
 #
 exports.delete = (req, res) ->
-	helpers.render_json req, res, (done) ->
+	render.json req, res, (done) ->
 		Note.remove {_id: req.params.id, _user:req.user}, (err) ->
 			done(err, {ok:true})
 

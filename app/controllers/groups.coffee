@@ -1,6 +1,6 @@
-helpers 	= require './helpers'
-Note 		= app.models.Note
-User 		= app.models.User
+render 		= require 'sticky-render'
+Note 			= app.models.Note
+User 			= app.models.User
 Group 		= app.models.Group
 Notebook 	= app.models.Notebook
 

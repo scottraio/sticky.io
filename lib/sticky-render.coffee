@@ -1,7 +1,7 @@
 Tag 			= app.models.Tag
 Notebook 	= app.models.Notebook
 
-exports.render_json = (req,res,fn) ->
+exports.json = (req,res,fn) ->
 	switch req.params.format
 		when 'json'			
 			cb = (err, items) ->

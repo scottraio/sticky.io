@@ -1,0 +1,52 @@
+default:
+  port: 8000
+  dbname: 'sticky-development'
+  domain: 'dev.sticky.io:8000'
+  xmpp:
+    jid: 'notes-dev@sticky.io'
+    host: 'sticky.io'
+    password: 'p!new00dF1d3rby'
+  google_oauth:
+    client_id: '293797332075.apps.googleusercontent.com'
+    secret: 'rtqXf-Ows1RgGn5V5oUg5Qa7'
+    redirect: '/auth/google/callback'
+
+production:
+  port: 8000
+  dbname: 'sticky-production'
+  domain: 'sticky.io'
+  xmpp:
+    jid: 'notes@sticky.io'
+    host: 'sticky.io'
+    password: 'p!new00dF1d3rby'
+  google_oauth:
+    client_id: '293797332075-en00tcg0jhnuktrnkk89j95j6g1dipqi.apps.googleusercontent.com'
+    secret: 'R3o_wrzOo6B7DDmpzcU2rto4'
+    redirect: '/auth/google/callback'
+
+staging:
+  port: 8001
+  dbname: 'sticky-production'
+  domain: 'beta.sticky.io'
+  xmpp:
+    jid: 'notes@sticky.io'
+    host: 'sticky.io'
+    password: 'p!new00dF1d3rby'
+  google_oauth:
+    client_id: '293797332075.apps.googleusercontent.com'
+    secret: 'rtqXf-Ows1RgGn5V5oUg5Qa7'
+    redirect: '/auth/google/callback'
+
+test:
+  port: 8002
+  dbname: 'pine-io-test'
+  domain: 'dev.pine.io:8000'
+  xmpp:
+    jid: 'notes-dev@sticky.io'
+    host: 'sticky.io'
+    password: 'p!new00dF1d3rby'
+  google_oauth:
+    client_id: '293797332075.apps.googleusercontent.com'
+    secret: 'rtqXf-Ows1RgGn5V5oUg5Qa7'
+    redirect: '/auth/google/callback'
+

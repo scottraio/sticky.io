@@ -13,7 +13,7 @@ exports.welcome = () ->
 
 
 exports.start = () ->
-	return true if app.config.env is 'test'
+	return true if app.env is 'test'
 
 	currently_online = []
 
@@ -53,7 +53,7 @@ exports.start = () ->
 			else
 				#
 				# Welcome the new user and present a signup link
-				xmpp.send(from, "Welcome to #{app.product_name} friend! Before we begin, please follow this link: http://#{app.config.domain}/auth/google")
+				xmpp.send(from, "Welcome to #{app.product_name} friend! Before we begin, please follow this link: http://#{settings.domain}/auth/google")
 	#
 	# Used when someone adds the pine bot as a buddy through XMPP
 	#
@@ -77,8 +77,8 @@ exports.start = () ->
 	#
 	xmpp.connect
 		# set the jabber ID to either derby or derby-dev
-		jid: app.config.xmpp.jid
-		password: app.config.xmpp.password
-		host: app.config.xmpp.host
+		jid: settings.xmpp.jid
+		password: settings.xmpp.password
+		host: settings.xmpp.host
 		port: 5222
 		status: 'http://sticky.io'
