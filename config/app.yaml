@@ -33,8 +33,8 @@ staging:
     host: 'sticky.io'
     password: 'p!new00dF1d3rby'
   google_oauth:
-    client_id: '293797332075.apps.googleusercontent.com'
-    secret: 'rtqXf-Ows1RgGn5V5oUg5Qa7'
+    client_id: '293797332075-49fmd872lari80jsivjdg82b8gdkiha8.apps.googleusercontent.com'
+    secret: 'GCXiJBiuNIgZtkPCrkmLSqY8'
     redirect: '/auth/google/callback'
 
 test:

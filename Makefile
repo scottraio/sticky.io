@@ -5,9 +5,9 @@ development:
 	NODE_ENV=development NODE_PATH=`pwd`/lib nodemon ./app.coffee
 
 staging:
-	NODE_ENV=staging NODE_PATH=`pwd`/lib coffee -c app.coffee; forever start ./app.js
+	coffee -c app.coffee; NODE_ENV=staging NODE_PATH=`pwd`/lib forever start ./app.js
 
 production:
-	NODE_ENV=production NODE_PATH=`pwd`/lib coffee -c app.coffee; forever start ./app.js
+	coffee -c app.coffee; NODE_ENV=production NODE_PATH=`pwd`/lib forever start ./app.js
 
 .PHONY: test server forever
