@@ -29,7 +29,7 @@ staging:
   dbname: 'sticky-production'
   domain: 'beta.sticky.io'
   xmpp:
-    jid: 'notes@sticky.io'
+    jid: 'notes-beta@sticky.io'
     host: 'sticky.io'
     password: 'p!new00dF1d3rby'
   google_oauth:
