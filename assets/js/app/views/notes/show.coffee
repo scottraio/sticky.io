@@ -21,7 +21,7 @@ class App.Views.Notes.Show extends Backbone.View
 				$(self.el).html ich.expanded_note
 					parent_note : parent
 					notes 			: notes
-					stacked_at_in_words	: () -> $.timeago(this.stacked_at)
+					stacked_at_in_words	: () -> this.stacked_at && $.timeago(this.stacked_at)
 
 
 				$('textarea', self.el).autosize()
