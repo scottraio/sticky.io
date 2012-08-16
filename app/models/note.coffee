@@ -12,6 +12,7 @@ NotesSchema = new Schema
 	links 			: { type: Array, default: [] }
 	groups 			: { type: Array, default: [] }
 	created_at	: { type: Date, required: true }
+	stacked_at	: { type: Date, default: null }
 	_user 			: { type: ObjectId, required: true, ref: 'User' } 
 	_parent			: { type: ObjectId, ref: 'Note' }
 	_notes 			: [ { type: ObjectId, ref: 'Note' } ]
@@ -45,17 +46,21 @@ NotesSchema.statics.create_note = (user,message,cb) ->
 
 		#
 		# last note
-		if last_note isnt undefined
+		if last_note
 			seconds_since_last_post = (new Date() - last_note.created_at) / 1000
-		
+
+		console.log seconds_since_last_post
 		#
 		# save note
 		note.save (err) ->
 			if err
 				cb(err)
 			else
-				if last_note && seconds_since_last_post <= 300
-					Note.stack {user:user, child_id:note._id, parent_id:last_note._id}, cb	
+				if last_note and seconds_since_last_post <= 300
+					if note.groups.length > 0
+						cb(null, note)
+					else
+						Note.stack {user:user, child_id:note._id, parent_id:last_note._id}, cb	
 				else	
 					cb(null, note)
 
@@ -63,7 +68,7 @@ NotesSchema.statics.last_note = (user, cb) ->
 	app.models.Note.where('_user',user._id)
 		.where('_parent', null)
 		.limit(1)
-		.sort('created_by', -1)
+		.sort('created_at', -1)
 		.run (err, last_note) ->
 			cb(last_note[0])
 
@@ -84,10 +89,11 @@ NotesSchema.statics.from_note_to_note = (req, cb) ->
 NotesSchema.statics.stack = (options, cb) ->
 	app.models.Note.findOne {_id:options.child_id, _user:options.user}, (err, child) ->			
 		app.models.Note.findOne {_id:options.parent_id, _user:options.user}, (err, parent) ->
-			# magic
+			# assign child id to parent
 			parent._notes.push child._id
-			child._parent = parent._id
-				
+			# assign parent to child
+			child._parent 		= parent._id
+			child.stacked_at 	= new Date()
 			child.save (err) -> 
 				unless err
 					parent.save(cb)

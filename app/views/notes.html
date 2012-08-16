@@ -7,10 +7,11 @@
 		<textarea><%parent_note.message%></textarea>
 	</div>
 
-	<ul class="notes_board">
+	<ul class="timeline">
 		<%#notes%>
 			<li class="sticky card" data-id="<%_id%>" draggable="true">
-				<%message%>	
+				<%message%>
+				<div class="timestamp"><%stacked_at_in_words%></div>	
 			</li>
 		<%/notes%>
 	</ul>

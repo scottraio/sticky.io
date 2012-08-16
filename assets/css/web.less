@@ -3,22 +3,19 @@
 html, body, .wrap { height: 100%;}
 body > .wrap {height: auto; min-height: 100%;}
 
-#logo {
-	//THIS IS A TEST
-	width: 374px;
-	height: 330px;
-	background: -webkit-linear-gradient(top, #07ADE1 0%, #07A6DC 70%, #0676BB);
-	background:    -moz-linear-gradient(top, #07ADE1 0%, #07A6DC 70%, #0676BB);
-	background:     -ms-linear-gradient(top, #07ADE1 0%, #07A6DC 70%, #0676BB);
-	background:      -o-linear-gradient(top, #07ADE1 0%, #07A6DC 70%, #0676BB);
-	background:         linear-gradient(top, #07ADE1 0%, #07A6DC 70%, #0676BB);
-	box-shadow: 0 44px 0 #035D90;
-	border-radius: 105px;
-	padding: 55px;
- 
-	position: relative;
-	margin: 0 auto 100px auto;
+.web-wrapper {
+	margin-top:100px;
+	.logo {
+		margin:0 auto;
+		position:relative;
+		width:100px;
+		height:64px;
+		font-size:5em;
+		background:url('/img/sticky-symbolx64.png') 0px 0px no-repeat;
+		padding-left:72px;
+	}
 }
+
 .white {
 	background: #fff;
 	height: 100%;
@@ -26,7 +23,7 @@ body > .wrap {height: auto; min-height: 100%;}
 	border-radius: 50px;
 	position: relative;
 }
- 
+
 .left_scope,
 .right_scope {
 	background: #4D4D4D;
@@ -37,14 +34,13 @@ body > .wrap {height: auto; min-height: 100%;}
 	position: absolute;
 	box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
- 
+
 .left_scope { left: 45px; }
 .right_scope { right: 45px; }
- 
+
 .left_scope::after,
 .right_scope::after {
 	bottom: -130px;
- 
 	content: '';
 	background: #4D4D4D;
 	width: 56px;
@@ -53,11 +49,11 @@ body > .wrap {height: auto; min-height: 100%;}
 	display: block;
 	right: 0;
 }
- 
+
 .left_scope::after {
 	left: 0;
 }
- 
+
 .right_scope::after {
 	right: 0;
 }
@@ -83,10 +79,10 @@ body > .wrap {height: auto; min-height: 100%;}
 	padding:25px;
 	position:relative;
 	text-align:center;
-	border: 1px solid #ddd;
-	box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
-	background: #fefefe;
-	background-image: linear-gradient(45deg, #FFF, #F9F9F9);
+	//border: 1px solid #ddd;
+	//box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+	//background: #fefefe;
+	//background-image: linear-gradient(45deg, #FFF, #F9F9F9);
 	.signon {
 		position:relative;
 		top:2px;
@@ -100,16 +96,6 @@ body > .wrap {height: auto; min-height: 100%;}
 	
 	.row-fluid {
 		padding-top:15%;
-	}
-	.logo {
-		font-family:"bebas-neue";
-		letter-spacing:.02em;
-		text-align:center;
-		font-size:92px;
-		img {
-			display:block;
-			margin:0 auto;
-		}
 	}
 	.take-action {
 		.well {

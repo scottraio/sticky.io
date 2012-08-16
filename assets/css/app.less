@@ -1,5 +1,4 @@
 @import 'bootstrap/bootstrap';
-@import 'web';
 @import 'calendar';
 
 body {
@@ -35,7 +34,8 @@ body.drop {
 
 
 #new-sticky-header {
-  background:rgba(255, 255, 255, 0.96);
+  border-top:2px solid rgb(171, 209, 75);
+	background:rgba(255, 255, 255, 0.96);
   padding:10px;
   width:100%;
   position:fixed;
@@ -198,7 +198,40 @@ body.drop {
 				}
 		 	}
 		}
-  }
+		.timeline {
+			list-style-type:none;
+			padding:0;
+			margin:0;
+			position:relative;
+			left:16px;
+			border-right:2px solid rgb(171, 209, 75);
+			li {
+				position:relative;
+				padding:10px 15px 10px 0;
+				left:-12px;
+				border-top:1px solid #eee;
+				&:after {
+					content:"";
+					display:block;
+					position:absolute;
+					right:-17px;
+					top:-4px;
+					.border-radius(20px);
+					width:5px;
+					height:5px;
+					background-color:rgb(171, 209, 75);
+					border:2px solid #fff;
+				}
+				.timestamp {
+					margin-top:15px;
+					font-size:0.8em;
+					color:#999;
+					font-family:Helvetica Neue;
+					box-sizing:border-box;
+				}
+			}
+  	}
+	}
 
   .crumb-bar {
 
@@ -260,6 +293,7 @@ body.drop {
 ul.notes_board {
 	margin:0;
 	list-style-type:none;
+	width:500px;
 	.completed {
 		text-decoration: line-through;
 	}
@@ -271,6 +305,7 @@ ul.notes_board {
 	  border-bottom:1px solid #e0e0e0;
    	padding:15px;
     background-color:#fefefe;
+		word-wrap: break-word;
 		.expand {
 			.border-radius(15px);
 			width:15px;
@@ -501,4 +536,7 @@ ul.notes_board {
 	}
 }
 
+
 @import "./bootstrap/responsive.less";
+@import 'web';
+
