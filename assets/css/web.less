@@ -1,19 +1,57 @@
 //Website
 
-html, body, .wrap { height: 100%;}
-body > .wrap {height: auto; min-height: 100%;}
-
-.web-wrapper {
-	margin-top:100px;
+.web-header {
+	background-color:rgba(255, 255, 255, 0.8);
+	position:absolute;
+	width:100%;
+	height:200px;
+	text-align:center;
+	padding-top:20px;
+	padding-bottom:30px;
 	.logo {
-		margin:0 auto;
+		width:200px;
 		position:relative;
-		width:100px;
-		height:64px;
+		right:0;
 		font-size:5em;
 		background:url('/img/sticky-symbolx64.png') 0px 0px no-repeat;
-		padding-left:72px;
+		padding-left:50px;
+		padding-bottom:20px;
+		line-height:1.15em;
+		margin:0 auto;
 	}
+	h1 {
+		font-weight:normal;
+		padding-top:20px;
+		padding-bottom:20px;
+	}
+}
+
+.web-scope {
+	overflow:hidden;
+	img {
+		margin:auto;
+		width:100%;
+		min-width:800px;
+	}
+}
+
+.web-gmail {
+	position:absolute;
+	top:75px;
+	width:100%;
+	text-align:center;	
+	.scope {
+		h1 {
+			color:#fff;
+			font-size:3em;
+		}
+	}	
+}
+
+.web-ui {
+	border:1px solid #000;
+	width:100%;
+	height:400px;	
 }
 
 .white {
@@ -70,58 +108,6 @@ body > .wrap {height: auto; min-height: 100%;}
 	display: block;
 	left: 0;
 	z-index: -1;
-}
-
-.scope {
-	// #gradient > .vertical(#444, #111);
-	//background:url('/img/web-bg.png');
-	margin:0 auto;
-	padding:25px;
-	position:relative;
-	text-align:center;
-	//border: 1px solid #ddd;
-	//box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
-	//background: #fefefe;
-	//background-image: linear-gradient(45deg, #FFF, #F9F9F9);
-	.signon {
-		position:relative;
-		top:2px;
-	}
-	h1 {
-		color:#333;
-		font-weight:200;
-		font-size:2em;
-		margin-bottom:10px;
-	}
-	
-	.row-fluid {
-		padding-top:15%;
-	}
-	.take-action {
-		.well {
-			background-color:#333;
-			margin-top:15px;
-			ul {
-				margin:0; padding:0;
-				color:#eee;
-				list-style-type:none;
-				li {
-					font-weight:300;
-					padding:2px 0;
-					font-size:1.1em;
-					small {
-						color:#ccc;
-						font-size:0.9em;
-					}
-					.number {
-						color:#b6ff76;
-						font-size:1.1em;
-						font-weight:bold;
-					}
-				}
-			}
-		}
-	}
 }
 
 .login-form {
