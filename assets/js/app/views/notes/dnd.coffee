@@ -12,6 +12,7 @@ class App.Views.Notes.DnD extends Backbone.View
 		@droppable_body $('body')
 
 	reload: () ->
+		console.log "test"
 		push_url window.location.pathname + "?" + window.location.search
 
 	is_inside_note: () ->
@@ -38,10 +39,10 @@ class App.Views.Notes.DnD extends Backbone.View
 			if note.hasClass("subnote") and note_id isnt parent_id
 				
 				if self.is_inside_note()
-					$.getJSON "/notes/#{note_id}/rebind/#{parent_id}/#{self.options.id}.json", (res) ->
+					$.getJSON "/notes/#{note_id}/restack/#{parent_id}/#{self.options.id}.json", (res) ->
 						self.reload()
 				else
-					$.getJSON "/notes/#{note_id}/unbind/#{parent_id}.json", (res) ->
+					$.getJSON "/notes/#{note_id}/unstack/#{parent_id}.json", (res) ->
 						self.reload()
 
 				$(body).removeClass('drop')
@@ -76,25 +77,25 @@ class App.Views.Notes.DnD extends Backbone.View
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 
 			if self.is_subnote()
-				note 	= $(self.srcElement)
+				note 		= $(self.srcElement)
 				old_id  = $(self.draggable).attr('data-id')
 			else
-				note 	= $(self.draggable)
+				note = $(self.draggable)
 
 			if self.is_inside_note()
-				note 	= $(self.draggable) 
+				note 		= $(self.draggable) 
 				old_id  = self.current_note_id
 
 			note_id 	= note.attr('data-id')
-			parent_id 	= $(this).attr('data-id')
+			parent_id = $(this).attr('data-id')
 
-			# target
+			# stack unless the note we're stacking is the same as the note we're dragging
 			unless this is self.draggable
 				if old_id
-					$.getJSON "/notes/#{note_id}/rebind/#{old_id}/#{parent_id}.json", (res) ->
+					$.getJSON "/notes/#{note_id}/restack/#{old_id}/#{parent_id}.json", (res) ->
 						self.reload()
 				else
-					$.getJSON "/notes/#{note_id}/bind/#{parent_id}.json", (res) ->
+					$.getJSON "/notes/#{note_id}/stack/#{parent_id}.json", (res) ->
 						self.reload()
 			return false
 

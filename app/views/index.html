@@ -20,7 +20,9 @@
 
       <div id="sidebar">
 				<div class="search">
-					<input type="text" name="keyword" placeholder="Discover" />
+					<form action="/notes" method="get" class="navbar-search">
+						<input type="text" name="keyword" class="search-query" placeholder="Discover">
+					</form>
 				</div>
 				<div class="profile">
 					<i id="gravatar"><img src="http://profiles.google.com/s2/u/0/photos/profile/{{req.user.googleId}}?sz=32" /></i>

@@ -59,9 +59,9 @@ app.put('/notes/:id.:format?', ensureAuthenticated, NotesController.update)
 # Notes Tree
 #
 app.get('/notes/:id/expanded.:format?', ensureAuthenticated, NotesController.expanded)
-app.get('/notes/:id/bind/:parent_id.:format?', ensureAuthenticated, NotesController.bind)
-app.get('/notes/:id/unbind/:parent_id.:format?', ensureAuthenticated, NotesController.unbind)
-app.get('/notes/:id/rebind/:from_id/:to_id.:format?', ensureAuthenticated, NotesController.rebind)
+app.get('/notes/:id/stack/:parent_id.:format?', ensureAuthenticated, NotesController.stack)
+app.get('/notes/:id/unstack/:parent_id.:format?', ensureAuthenticated, NotesController.unstack)
+app.get('/notes/:id/restack/:from_id/:to_id.:format?', ensureAuthenticated, NotesController.restack)
 
 #
 # Root

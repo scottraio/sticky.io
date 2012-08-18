@@ -49,7 +49,6 @@ NotesSchema.statics.create_note = (user,message,cb) ->
 		if last_note
 			seconds_since_last_post = (new Date() - last_note.created_at) / 1000
 
-		console.log seconds_since_last_post
 		#
 		# save note
 		note.save (err) ->

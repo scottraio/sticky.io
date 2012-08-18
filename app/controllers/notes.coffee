@@ -94,15 +94,10 @@ exports.update = (req, res) ->
 # Notes Tree - aka "stacks"
 #
 
-exports.stack = (req, done) ->
-	Note.note_and_parent req, (note, parent) ->
-		# magic
-		parent._notes.push note._id
-		note._parent = parent._id
-			
-		note.save (err) -> 
-			parent.save(done) unless err
-
+exports.stack = (req, res) ->
+	render.json req, res, (done) ->
+		Note.stack {user:req.user, child_id:req.params.id, parent_id:req.params.parent_id}, done
+	
 exports.unstack = (req, res) ->
 	render.json req, res, (done) ->
 		Note.note_and_parent req, (note, parent) ->
