@@ -102,6 +102,7 @@ NotesSchema.statics.populate_stacks = (notes, cb) ->
 			for subnote in subnotes	
 				index = note._notes.indexOf(subnote._id)
 				note._notes[index] = subnote if index isnt -1
+				console.log note._notes
 			# return the results for mapping
 		cb(err, notes)
 
