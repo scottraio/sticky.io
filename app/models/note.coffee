@@ -1,8 +1,7 @@
 Schema 			= mongoose.Schema
-ObjectId 		= Schema.ObjectId
+Base				= require 'sticky-model'
 regex 			= require 'sticky-regex'
-Validations = require './validations'
-Setter 			= require './setters'
+_						= require 'underscore'
 
 NotesSchema = new Schema
 	message  		: { type: String, required: true, trim: true }
@@ -13,9 +12,10 @@ NotesSchema = new Schema
 	groups 			: { type: Array, default: [] }
 	created_at	: { type: Date, required: true }
 	stacked_at	: { type: Date, default: null }
-	_user 			: { type: ObjectId, required: true, ref: 'User' } 
-	_parent			: { type: ObjectId, ref: 'Note' }
-	_notes 			: [ { type: ObjectId, ref: 'Note' } ]
+	_user 			: { type: Schema.ObjectId, required: true, ref: 'User' }
+	_parent			: { type: Schema.ObjectId, ref: 'Note' }
+	_notes 			: [ { type: Schema.ObjectId, ref: 'Note' } ]
+	_domains		: [ { type: Schema.ObjectId, ref: 'Domain' } ]
 
 #
 # Indexes
@@ -55,7 +55,7 @@ NotesSchema.statics.create_note = (user,message,cb) ->
 			if err
 				cb(err)
 			else
-				if last_note and seconds_since_last_post <= 300
+				if false #last_note and seconds_since_last_post <= 300
 					if note.groups.length > 0
 						cb(null, note)
 					else
@@ -85,6 +85,27 @@ NotesSchema.statics.from_note_to_note = (req, cb) ->
 #
 #
 # Stacking
+
+NotesSchema.statics.populate_stacks = (notes, cb) ->
+	Note = app.models.Note
+	# extract ids from each parent note
+	subnote_ids = []
+	for note in notes
+		subnote_ids.push note._notes
+	ids = _.flatten(subnote_ids)
+	
+	Note.where('_id').in(ids).populate('_domains').run (err, subnotes) ->
+		for note in notes
+			# convert to object so we can manipulate
+			note.toObject()
+			# populate the _notes accordingly
+			for subnote in subnotes	
+				index = note._notes.indexOf(subnote._id)
+				note._notes[index] = subnote if index isnt -1
+			# return the results for mapping
+		cb(err, notes)
+
+
 NotesSchema.statics.stack = (options, cb) ->
 	app.models.Note.findOne {_id:options.child_id, _user:options.user}, (err, child) ->			
 		app.models.Note.findOne {_id:options.parent_id, _user:options.user}, (err, parent) ->
@@ -128,18 +149,22 @@ NotesSchema.methods.parse_tags = () ->
 # Parse all links
 #
 NotesSchema.methods.parse_links = () ->
-	self 		= @
-	new_links 	= []
-	matches 	= @message.match regex.match.link
+	self 				= @
+	matches 		= @message.match regex.match.link
+	Domain			= app.models.Domain
 
-	if matches
-
+	if matches	
 		for link in matches
-			# strip tags down and add them to the array
-			# e.g. #todo turns into todo
-			new_links.push link
+			domain = new Domain()
+			domain.crawl link, self, (err, domain) ->
+				console.log err if err
+				console.log domain
+				self._domains.push domain._id
+				self.save (err) ->
+					console.log err if err
+				
 
-	return @links = new_links
+	return @_domains
 
 #
 # Parse Groups/Notebooks
@@ -182,10 +207,10 @@ NotesSchema.statics.domain_list = (query,cb) ->
 
 	command =
 		mapreduce	: "notes"
-		map 		: map.toString()
+		map 			: map.toString()
 		reduce 		: reduce.toString()
 		query 		: query
-		out 		: {inline: 1}
+		out 			: {inline: 1}
 
 	mongoose.connection.db.executeDbCommand command, cb
 		

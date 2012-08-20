@@ -27,16 +27,18 @@ class App.Views.Notes.Index extends Backbone.View
 
 		# setup the notes_board
 		$(@el).html ich.notes_board
-			notes: items
+			notes								: items
 			created_at_in_words	: () -> $.timeago(this.created_at)
 			has_subnotes				: () -> true if this._notes && this._notes.length > 0
 			subnote_count				: () -> this._notes.length if this._notes
 			is_taskable					: () -> true if this.message.indexOf('#todo') > 0
-			#within_notebook			: () -> return _.has(self.params, 'notebooks[]')
-
+			has_domains					: () -> true if this._domains && this._domains.length > 0
+			domain							: () -> this.url.toLocation().hostname if this.url
+			
 		# Drag and Drop everything
 		dnd = new App.Views.Notes.DnD(id: @options.id)		
 
+		$('.remove-stray-links').remove_stray_links()
 		# auto-link everything
 		$('.autolink').autolink()
 		# enable dropdowns (color)

@@ -1,14 +1,12 @@
 Schema 			= mongoose.Schema
-ObjectId 		= Schema.ObjectId
+Base				= require 'sticky-model'
 regex 			= require 'sticky-regex'
-Validations = require './validations'
-Setter 			= require './setters'
 
 GroupsSchema = new Schema
-	name  		: { type: String, required: true, trim: true}
+	name  			: { type: String, required: true, trim: true}
 	created_at	: { type: Date, required: true }
-	_users 		: [{ type: ObjectId, ref: 'User' }]
-	_moderators : [{ type: ObjectId, ref: 'User' }]
+	_users 			: [{ type: Schema.ObjectId, ref: 'User' }]
+	_moderators : [{ type: Schema.ObjectId, ref: 'User' }]
 
 # Indexes
 GroupsSchema.index { name: 1, _users: 1 }, { unique: true }

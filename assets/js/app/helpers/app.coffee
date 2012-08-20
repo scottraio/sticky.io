@@ -42,3 +42,4 @@ window.reset_events = (view) ->
 	$("body").unbind("dragover")
 	view.delegateEvents()
 
+

@@ -1,13 +1,10 @@
 Schema 			= mongoose.Schema
-ObjectId 		= Schema.ObjectId
+Base				= require 'sticky-model'
 regex 			= require 'sticky-regex'
-Validations = require './validations'
-Setter 			= require './setters'
 
 NotebookSchema = new Schema
 	_id 		: { type: String }
-	value		: { count: Number, _user: ObjectId }
-
+	value		: { count: Number, _user: Schema.ObjectId }
 
 NotebookSchema.statics.update_index = (options, cb) ->
 	map = () ->

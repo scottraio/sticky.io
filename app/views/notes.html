@@ -14,8 +14,7 @@
 				<div class="timestamp"><%stacked_at_in_words%></div>	
 			</li>
 		<%/notes%>
-	</ul>
-	
+	</ul>	
 </script>
 
 <!--
@@ -33,15 +32,20 @@
 		<%#notes%>
 			<li class="sticky card" data-id="<%_id%>" draggable="true">
 					<a href="/notes/<%_id%>" class="navigate expand hide"></a>
-					<div class="pole-position autolink <%#completed%>completed<%/completed%>">					
-						<%#is_taskable%>
-							<input type="checkbox" class="task-completed" <%#completed%>checked="true"<%/completed%> />
-						<%/is_taskable%>
-
-						<%message%>
+				
+					<div class="pole-position autolink <%#completed%>completed<%/completed%>">						
+						<%>sticky%>
 					</div>
 
-					<%>sub_stickies%>
+					<%#_notes%>
+						<div class="autolink subnote <%#completed%>completed<%/completed%>" data-id="<%_id%>" draggable="true">
+							<a href="#" class="sub-delete hide"><i class="icon-remove"></i></a>
+							<%#has_subnotes%>		
+								<a href="/notes/<%_id%>" class="navigate"><span class="badge badge-success"><%subnote_count%></span></a>
+							<%/has_subnotes%>
+							<%>sticky%>
+						</div>
+					<%/_notes%>
 					
 					<div class="meta">
 						created <%created_at_in_words%>
@@ -56,20 +60,22 @@
 	Sticky Partial - Resuable code
 -->
 
-<script id="sub_stickies" class="partial" type="text/html">
+<script id="sticky" class="partial" type="text/html">
+	<%#is_taskable%>
+		<input type="checkbox" class="task-completed" <%#completed%>checked="true"<%/completed%> />
+	<%/is_taskable%>
 	
-	<%#_notes%>
-		<div class="autolink subnote <%#completed%>completed<%/completed%>" data-id="<%_id%>" draggable="true">
-			<a href="#" class="sub-delete hide"><i class="icon-remove"></i></a>
-			<%#has_subnotes%>		
-				<a href="/notes/<%_id%>" class="navigate"><span class="badge badge-success"><%subnote_count%></span></a>
-			<%/has_subnotes%>
 
-			<%#is_taskable%>
-				<input type="checkbox" class="task-completed" <%#completed%>checked="true"<%/completed%> />
-			<%/is_taskable%>
-
-			<%message%>
+	<div class="<%#has_domains%>remove-stray-links<%/has_domains%>">
+		<%message%>
+	</div>
+	
+	<%#_domains%>
+		<div>
+			<a href="<%url%>" target="_blank">
+				<img src="http://www.google.com/s2/u/0/favicons?domain=<%domain%>" />
+				<%title%>
+			</a>
 		</div>
-	<%/_notes%>
+	<%/_domains%>
 </script>

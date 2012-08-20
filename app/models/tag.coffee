@@ -1,19 +1,16 @@
 Schema 			= mongoose.Schema
-ObjectId 		= Schema.ObjectId
+Base				= require 'sticky-model'
 regex 			= require 'sticky-regex'
-Validations = require './validations'
-Setter 			= require './setters'
 
 TagsSchema = new Schema
 	_id 		: { type: String }
-	value		: { count: Number, _user: ObjectId }
+	value		: { count: Number, _user: Schema.ObjectId }
 
 
 TagsSchema.statics.update_index = (options, cb) ->
 	map = () ->
 		if !this.tags
         	return
-    
 		for tag in this.tags
 			emit(tag, {count:1, _user:this._user})
 

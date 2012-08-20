@@ -12,6 +12,7 @@ require('./note.coffee')
 require('./group.coffee')
 require('./tag.coffee')
 require('./notebook.coffee')
+require('./domain.coffee')
 
 app.models			= mongoose.models
 module.exports  = mongoose

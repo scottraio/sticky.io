@@ -22,8 +22,6 @@ exports.index = (req, res) ->
 	render.json req, res, (done) ->
 		note = Note.where('_user', req.user)
 		
-		populate = true
-
 		# Filter by keyword
 		if req.query.keyword
 			note.where('message', new RegExp(req.query.keyword))
@@ -42,12 +40,14 @@ exports.index = (req, res) ->
 		if _.isEmpty(req.query)
 			note.where('_parent', null)
 
-		if populate
-			note.populate('_notes')
+		note.populate('_domains')
 
 		note.desc('created_at').run (err, items) ->
-			console.log err
-			done(err, items)
+			console.log err if err
+			# Hack! - This func should be supported in some version of mongoose 3.x
+			# https://github.com/LearnBoost/mongoose/issues/601
+			Note.populate_stacks items, (err, notes) ->
+				done(err, notes)
 	
 
 #
