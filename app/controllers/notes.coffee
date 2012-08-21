@@ -39,7 +39,7 @@ exports.index = (req, res) ->
 		
 		#
 		# Are we querying based off criteria?
-		criteria = true unless _.isEmpty(req.query.tags) and _.isEmpty(req.query.groups) and _.isEmpty(req.query.keyword)
+		criteria = true unless _.isEmpty(req.query.tags) and _.isEmpty(req.query.notebooks) and _.isEmpty(req.query.keyword)
 
 		#
 		# From a specific time period
