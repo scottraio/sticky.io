@@ -38,6 +38,10 @@ exports.index = (req, res) ->
 			note.where('groups').in(req.query.notebooks) 
 		
 		#
+		# Are we querying based off criteria?
+		criteria =  true if _.isEmpty(req.query.tags) or _.isEmpty(req.query.groups) or _.isEmpty(req.query.keyword)
+
+		#
 		# From a specific time period
 		today 		= new Date()
 		yesterday = new Date(new Date().setDate(today.getDate() - 1))
@@ -53,11 +57,10 @@ exports.index = (req, res) ->
 			
 			note.where('created_at').equals(range)
 		else
-			note.where('created_at').equals({$gte: yesterday, $lt: today})
+			note.where('created_at').equals({$gte: yesterday, $lt: today}) unless criteria
 
-		#
 		# Only show root level elements unless we are querying
-		if _.isEmpty(req.query.tags) and _.isEmpty(req.query.groups)
+		unless criteria		
 			note.where('_parent', null)
 
 		#
