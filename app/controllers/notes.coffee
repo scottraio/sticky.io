@@ -57,8 +57,8 @@ exports.index = (req, res) ->
 
 		#
 		# TODO: Not sure if this is need anymore
-		if _.isEmpty(req.query)
-			note.where('_parent', null)
+		# if _.isEmpty(req.query)
+		note.where('_parent', null)
 
 		#
 		# Populate domains for root level stickies
