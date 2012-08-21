@@ -159,7 +159,7 @@ NotesSchema.methods.parse_links = () ->
 			domain.crawl link, self, (err, domain) ->
 				console.log err if err
 				console.log domain
-				unless self._domains.indexOf(domain._id) is -1
+				if self._domains.indexOf(domain._id) is -1
 					self._domains.push domain._id
 					self.save (err) ->
 						console.log err if err
