@@ -39,7 +39,7 @@ exports.index = (req, res) ->
 		
 		#
 		# Are we querying based off criteria?
-		criteria =  true unless _.isEmpty(req.query.tags) or _.isEmpty(req.query.groups) or _.isEmpty(req.query.keyword)
+		criteria = true unless _.isEmpty(req.query.tags) and _.isEmpty(req.query.groups) and _.isEmpty(req.query.keyword)
 
 		#
 		# From a specific time period
@@ -59,6 +59,7 @@ exports.index = (req, res) ->
 		else
 			note.where('created_at').equals({$gte: yesterday, $lt: today}) unless criteria
 
+		#
 		# Only show root level elements unless we are querying
 		unless criteria		
 			note.where('_parent', null)
