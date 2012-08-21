@@ -3,6 +3,13 @@
 -->
 
 <script id="expanded_note" type="text/html">
+	<div class="expanded-actions">
+		<a href="https://twitter.com/share"><i class="icon-tweet"></i> Tweet</a>
+		<a href="/notes/<%parent_note._id%>" class="delete" data-id="<%parent_note._id%>"><i class="icon-trash"></i> Delete</a>
+		
+		<span id="save-notice"></span>
+	</div>
+		
 	<div class="expanded-note">
 		<textarea><%parent_note.message%></textarea>
 	</div>
@@ -22,12 +29,6 @@
 -->
 
 <script id="notes_board" type="text/html">
-	<div class="board_controls">
-		<%#within_notebook%>
-			TRUE
-		<%/within_notebook%>	
-	</div>
-
 	<ul class="notes_board">
 		<%#notes%>
 			<li class="sticky card" data-id="<%_id%>" draggable="true">
@@ -49,7 +50,6 @@
 					
 					<div class="meta">
 						created <%created_at_in_words%>
-						<a href="https://twitter.com/share" class="twitter-share-button" data-dnt="true" data-count="none" data-via="twitterapi">Tweet</a>
 					</div>
 			</li>
 		<%/notes%>
@@ -62,16 +62,10 @@
 
 <script id="sticky" class="partial" type="text/html">
 
-	<div class="<%#has_domains%>remove-stray-links<%/has_domains%>">
-		<%#is_taskable%>
-			<input type="checkbox" class="task-completed" <%#completed%>checked="true"<%/completed%> />
-		<%/is_taskable%>
-
-		<%message%>
-	</div>
+	<div class="message <%#has_domains%>remove-stray-links<%/has_domains%>"><%#is_taskable%><input type="checkbox" class="task-completed" <%#completed%>checked="true"<%/completed%> /> <%/is_taskable%><%message%></div>
 	
 	<%#_domains%>
-		<div>
+		<div class="link">
 			<a href="<%url%>" target="_blank">
 				<img src="http://www.google.com/s2/u/0/favicons?domain=<%domain%>" />
 				<%title%>

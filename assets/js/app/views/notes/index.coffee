@@ -38,6 +38,8 @@ class App.Views.Notes.Index extends Backbone.View
 		# Drag and Drop everything
 		dnd = new App.Views.Notes.DnD(id: @options.id)		
 
+
+		# Build the rest of the UI accordingly
 		$('.remove-stray-links').remove_stray_links()
 		# auto-link everything
 		$('.autolink').autolink()
