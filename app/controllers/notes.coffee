@@ -22,24 +22,46 @@ exports.index = (req, res) ->
 	render.json req, res, (done) ->
 		note = Note.where('_user', req.user)
 		
+		#
 		# Filter by keyword
 		if req.query.keyword
 			note.where('message', new RegExp(req.query.keyword))
+		
+		#
 		# Filter by tags
 		if req.query.tags
 			note.where('tags').in(req.query.tags) 
+		
+		#
 		# Filter by notebooks
 		if req.query.notebooks
 			note.where('groups').in(req.query.notebooks) 
+		
+		#
 		# From a specific time period
-		if req.query.days
-			today 	= new Date()
-			start 	= new Date().setDate(today.getDate() - req.query.days)
-			note.where('created_at').equals({$gte: new Date(start), $lt: today})
-	
+		today 		= new Date()
+		yesterday = new Date(new Date().setDate(today.getDate() - 1))
+		last_week = new Date(new Date().setDate(today.getDate() - 7))
+
+		if req.query.from
+			switch req.query.from
+				when 'today' 			then range={$lt: today, $gte: yesterday}
+				when 'yesterday' 	then range={$lt: yesterday, $gte: new Date().setDate(yesterday.getDate() - 1)}
+				when 'last_week'  then range={$lt: last_week, $gte:new Date().setDate(last_week.getDate() - 7)}
+				when 'forever' 		then range={$lt:today}
+				else range={$lt:today, $gte:yesterday}
+			
+			note.where('created_at').equals(range)
+		else
+			note.where('created_at').equals({$gte: yesterday, $lt: today})
+
+		#
+		# TODO: Not sure if this is need anymore
 		if _.isEmpty(req.query)
 			note.where('_parent', null)
 
+		#
+		# Populate domains for root level stickies
 		note.populate('_domains')
 
 		note.desc('created_at').run (err, items) ->

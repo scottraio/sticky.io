@@ -161,10 +161,13 @@ NotesSchema.methods.parse_links = () ->
 				console.log domain
 				if self._domains.indexOf(domain._id) is -1
 					self._domains.push domain._id
-					self.save (err) ->
-						console.log err if err
+				self.save (err) ->
+					console.log err if err
+	else
+		self._domains = []
+		self.save (err) ->
+			console.log err if err
 				
-
 	return @_domains
 
 #

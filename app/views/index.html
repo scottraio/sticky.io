@@ -35,8 +35,11 @@
 			
 
 				<ul class="sidebar-nav">
-          <li><a href="/notes" class="navigate">Inbox</a></li>
-          {{#notebooks}}
+          <li><a href="/notes?from=today" class="navigate">Today</a></li>
+					<li><a href="/notes?from=yesterday" class="navigate">Yesterday</a></li>
+					<li><a href="/notes?from=last_week" class="navigate">Last Week</a></li>
+					<li><a href="/notes?from=forever" class="navigate">All Notes</a></li>
+					{{#notebooks}}
           	<li><a href="/notes?notebooks[]={{_id}}" class="navigate">@{{_id}}</a></li>
 					{{/notebooks}}
         </ul>
