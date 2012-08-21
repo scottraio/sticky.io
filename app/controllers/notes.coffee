@@ -56,9 +56,9 @@ exports.index = (req, res) ->
 			note.where('created_at').equals({$gte: yesterday, $lt: today})
 
 		#
-		# TODO: Not sure if this is need anymore
-		# if _.isEmpty(req.query)
-		note.where('_parent', null)
+		# Only show root level elements unless we are querying
+		if _.isEmpty(req.query.tags) and _.isEmpty(req.query.groups)
+			note.where('_parent', null)
 
 		#
 		# Populate domains for root level stickies
