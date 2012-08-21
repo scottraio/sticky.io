@@ -20,6 +20,7 @@ class App.Main extends Backbone.View
 	events:
 		"click a.remote" 							: "link_to_remote"
 		"click a.navigate" 						: "link_to_fragment"
+		"click a.order"								: "link_to_sort"
 		"click .sidebar li" 					: "link_to_notebook"
 		"click a.push" 								: "link_to_push"
 		"click a.remote-delete" 			: "link_to_delete"
@@ -27,6 +28,13 @@ class App.Main extends Backbone.View
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
 		new App.Views.Notes.New(el: $('#new-sticky-header'))
+
+	link_to_sort: (e) ->
+		direction = $(e.currentTarget).attr('data-direction')
+		search = document.location.search.replace(/(&|order=)[^\&]+/, '')
+		search = search + "&order=#{direction}"
+		navigate document.location.pathname + search
+		return false
 
 	#
 	#

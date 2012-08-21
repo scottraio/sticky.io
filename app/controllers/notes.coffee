@@ -68,7 +68,16 @@ exports.index = (req, res) ->
 		# Populate domains for root level stickies
 		note.populate('_domains')
 
-		note.desc('created_at').run (err, items) ->
+		if req.query.order
+			switch req.query.order
+				when 'desc' then order=-1
+				when 'asc' 	then order=1
+
+			note.sort('created_at', order)
+		else
+			note.sort('created_at', -1)
+
+		note.run (err, items) ->
 			console.log err if err
 			# Hack! - This func should be supported in some version of mongoose 3.x
 			# https://github.com/LearnBoost/mongoose/issues/601
