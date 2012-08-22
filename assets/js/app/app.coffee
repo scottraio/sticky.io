@@ -42,8 +42,8 @@ class App.Main extends Backbone.View
 			calendars: 1,
 			starts: 1
 			onChange: (formated, dates) ->
-				d1 		= new Date(dates[1])
-				d2		= new Date(dates[0])
+				d1 		= new Date(dates[0])
+				d2		= new Date(dates[1])
 				start = d1.toJSON()
 				end 	= d2.toJSON()
 				navigate "/notes?start=#{start}&end=#{end}"
