@@ -71,5 +71,5 @@ app.get '/', (req, res) ->
 	if req.isAuthenticated()
 		NotesController.index(req,res)
 	else
-		res.render('public')
+		res.render('public', {current_user:null})
 

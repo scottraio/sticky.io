@@ -1,8 +1,8 @@
 # copy from lib/regex.coffee
 window.match = 
-	tag 	: /(^|\s)#([^\s]+)/g
+	tag 		: /(^|\s)#([^\s]+)/g
 	group 	: /(^|\s)@([^\s]+)/g
-	link 	: /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/g
+	link 		: /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/g
 
 window.click_or_tap = (events) ->
 	# for property in obj, add "click " to property and use original value
@@ -27,6 +27,27 @@ class App.Main extends Backbone.View
 		
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
+		
+		today					= new Date()
+		threedaysago 	= new Date(new Date().setDate(today.getDate() - 3))
+
+		# date picker
+		$('.date-picker').DatePicker
+			format: '/m/d/Y',
+			flat: true,
+			extraHeight: 0,
+			mode: 'range',
+			date: [threedaysago, today],
+			current: new Date(),
+			calendars: 1,
+			starts: 1
+			onChange: (formated, dates) ->
+				d1 		= new Date(dates[0])
+				d2		= new Date(dates[1])
+				start = d1.toJSON()
+				end 	= d2.toJSON()
+				navigate "/notes?start=#{start}&end=#{end}"
+
 		new App.Views.Notes.New(el: $('#new-sticky-header'))
 
 	link_to_sort: (e) ->

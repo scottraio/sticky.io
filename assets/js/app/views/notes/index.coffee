@@ -18,36 +18,32 @@ class App.Views.Notes.Index extends Backbone.View
 	render: (items) ->
 		self = @
 		@notes.fetch
-			success: (col, items) ->
-				self.load_view(items)
+			success: (col, notes) ->
+				self.notes = notes
+				self.load_view()
 				$(".crumb-bar").html("<a href=\"/notes\" class=\"navigate headline\">Home</a>")
 
-	load_view: (items) ->
+	load_view: () ->
 		self = @ 
+
+		for note in @notes
+			note.message = note.message.replace(/\n/g, '<br />')
 
 		# setup the notes_board
 		$(@el).html ich.notes_board
-			notes								: items
-			created_at_in_words	: () -> $.timeago(this.created_at)
+			notes								: @notes
+			note_message				: () -> escape(this.message)
+			created_at_in_words	: () -> this.created_at && $.timeago(this.created_at)
 			has_subnotes				: () -> true if this._notes && this._notes.length > 0
 			subnote_count				: () -> this._notes.length if this._notes
 			is_taskable					: () -> true if this.message && this.message.indexOf('#todo') > 0
 			has_domains					: () -> true if this._domains && this._domains.length > 0
 			domain							: () -> this.url.toLocation().hostname if this.url
-			
+		
 		# Drag and Drop everything
 		dnd = new App.Views.Notes.DnD(id: @options.id)		
 
-
-		# Build the rest of the UI accordingly
-		$('.remove-stray-links').remove_stray_links()
-		# auto-link everything
-		$('.autolink').autolink()
-		# enable dropdowns (color)
-		$('.dropdown-toggle').dropdown()
-
-		# resolve any images
-		@auto_image_resolution(items)
+		@ui_after_hook()
 
 	show: (e) ->
 		id = $(e.currentTarget).attr('data-id')
@@ -111,5 +107,22 @@ class App.Views.Notes.Index extends Backbone.View
 
 		$('.autolink').remove_img_links()
 
-
+	
+	ui_after_hook: ->	
+		# Build the rest of the UI accordingly
+		$('.remove-stray-links').remove_stray_links()
+		# auto-link everything
+		$('.autolink').autolink()
+		# enable dropdowns (color)
+		$('.dropdown-toggle').dropdown()
 		
+		if @params && @params.tags
+			$('.date-picker').DatePickerClear()
+			$('.tag-label').html(@params.tags)
+		else
+			$('.tag-label').html('Tag')
+		
+		# resolve any images
+		@auto_image_resolution(@notes)
+
+
