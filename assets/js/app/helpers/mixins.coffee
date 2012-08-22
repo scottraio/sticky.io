@@ -31,9 +31,8 @@ $.fn.serializeObject = () ->
 
 $.fn.autolink = () ->
 	return this.each( () ->
-		#$(this).html( $(this).html().replace(match.link, "<a href='$1' target='_blank'><img src='http://www.google.com/s2/favicons?domain=$1' class='favicon' /> $1</a>") )	
 		$(this).html( $(this).html().replace(match.tag, ' <a data-tag-name="$2" class="hash-tag tag">&#35;$2</a>') )
-		$(this).html( $(this).html().replace(match.group, ' <a href="/notes?notebooks=$2" class="group-link navigate">@$2</a>') )
+		$(this).html( $(this).html().replace(match.group, '<a href="/notes?notebooks=$2" class="group-link navigate">@$2</a>') )
 	)
 
 $.fn.remove_img_links = () ->
