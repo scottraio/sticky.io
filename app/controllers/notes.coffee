@@ -43,8 +43,9 @@ exports.index = (req, res) ->
 
 		#
 		# From a specific time period
-		today			= new Date()
-		yesterday = new Date(new Date().setDate(today.getDate() - 1))
+		today					= new Date()
+		yesterday 		= new Date(new Date().setDate(today.getDate() - 1))
+		threedaysago  = new Date(new Date().setDate(today.getDate() - 3))
 
 		if req.query.start
 			start = new Date(req.query.start)
@@ -52,7 +53,7 @@ exports.index = (req, res) ->
 
 			note.where('created_at').equals({$gte: start, $lt: end})
 		else
-			note.where('created_at').equals({$gte: yesterday}) unless criteria
+			note.where('created_at').equals({$gte: threedaysago}) unless criteria
 
 		#
 		# Only show root level elements unless we are querying
