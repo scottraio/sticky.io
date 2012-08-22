@@ -1,19 +1,19 @@
 div.datepicker {
 	position: relative;
-	font-size: 1em;
+	font-size: 0.9em;
 	font-family:Helvetica Neue;
-	width: 215px;
+	width: 210px;
 	height: 160px;
 	position: absolute;
 	cursor: default;
 	top: 0;
 	left: 0;
 	display: none;
-	margin:0 auto 10px auto;
+	margin:10px auto 20px auto;
 }
 .datepickerContainer {
 	position: absolute;
-	width:215px;
+	width:210px;
 	height:160px;
 }
 .datepickerBorderT {
@@ -128,9 +128,9 @@ td.datepickerNotInMonth a {
 }
 tbody.datepickerDays td.datepickerSelected{
 	//background: #136A9F;
-	background: rgb(171, 209, 75);
+	background: rgba(171, 209, 75, 0.5);
 	a {
-		color:#444;
+		color:#f0f0f0;
 	}
 }
 tbody.datepickerDays td.datepickerNotInMonth.datepickerSelected {
@@ -142,7 +142,8 @@ tbody.datepickerMonths td.datepickerSelected{
 }
 div.datepicker a:hover,
 div.datepicker a:hover {
-	color: #88c5eb;
+	//color: #88c5eb;
+	color:rgb(171, 209, 75);
 }
 div.datepicker td.datepickerNotInMonth a:hover {
 	color: #999;

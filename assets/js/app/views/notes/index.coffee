@@ -108,7 +108,13 @@ class App.Views.Notes.Index extends Backbone.View
 		$('.autolink').remove_img_links()
 
 	
-	ui_after_hook: ->	
+	ui_after_hook: ->
+		unless @params
+			today					= new Date()
+			threedaysago 	= new Date(new Date().setDate(today.getDate() - 3))
+
+			$('.date-picker').DatePickerSetDate([threedaysago, today]);
+
 		# Build the rest of the UI accordingly
 		$('.remove-stray-links').remove_stray_links()
 		# auto-link everything
