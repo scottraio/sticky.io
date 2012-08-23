@@ -5,13 +5,22 @@
 
 <script id="expanded_note" type="text/html">
 	<div class="expanded-actions">
-		<a href="https://twitter.com/share"><i class="icon-tweet"></i> Tweet</a>
-		<a href="/notes/{{parent_note._id}}" class="delete" data-id="{{parent_note._id}}"><i class="icon-trash"></i> Delete</a>
 		<span id="save-notice"></span>
+		<div class="btn-toolbar">
+			<div class="btn-group">
+				<a class="btn make-bold" href="#"><strong>B</strong></a>
+				<a class="btn make-italic" href="#"><em>i</em></a>
+				<a class="btn make-underline" href="#"><u>U</u></a>
+			</div>
+			<div class="btn-group">
+				<a class="btn" href="#"><i class="icon-tweet"></i></a>
+				<a href="/notes/{{parent_note._id}}" class="btn delete" data-id="{{parent_note._id}}"><i class="icon-trash"></i></a>
+			</div>
+		</div>
 	</div>
-		
+
 	<div class="expanded-note">
-		<textarea>{{!note message gets loaded here}}</textarea>
+		<div id="editable-message" contenteditable="true">{{!note message gets loaded here}}</div>
 	</div>
 
 	<ul class="timeline">
@@ -61,15 +70,5 @@
 -->
 
 <script id="sticky" class="partial" type="text/html">
-
 	<div class="message {{#has_domains}}remove-stray-links{{/has_domains}}">{{#is_taskable}}<input type="checkbox" class="task-completed" {{#completed}}checked="true"{{/completed}} /> {{/is_taskable}}{{{message}}}</div>
-	
-	{{#_domains}}
-		<div class="link">
-			<a href="{{url}}" target="_blank">
-				<img src="http://www.google.com/s2/u/0/favicons?domain={{domain}}" />
-				{{title}}
-			</a>
-		</div>
-	{{/_domains}}
 </script>

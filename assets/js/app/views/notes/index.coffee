@@ -26,8 +26,7 @@ class App.Views.Notes.Index extends Backbone.View
 	load_view: () ->
 		self = @ 
 
-		for note in @notes
-			note.message = note.message.replace(/\n/g, '<br />')
+		@ui_before_hook()
 
 		# setup the notes_board
 		$(@el).html ich.notes_board
@@ -108,6 +107,15 @@ class App.Views.Notes.Index extends Backbone.View
 		$('.autolink').remove_img_links()
 
 	
+
+	ui_before_hook: ->
+		self = @
+		for note in @notes
+			note.message = note.message.replace(/\n/g, '<br />')
+			self.format_domain(note)
+			for subnote in note._notes
+				self.format_domain(subnote)
+	
 	ui_after_hook: ->
 		unless @params
 			today					= new Date()
@@ -116,7 +124,7 @@ class App.Views.Notes.Index extends Backbone.View
 			$('.date-picker').DatePickerSetDate([threedaysago, today])
 
 		# Build the rest of the UI accordingly
-		$('.remove-stray-links').remove_stray_links()
+		#$('.remove-stray-links').remove_stray_links()
 		# auto-link everything
 		$('.message').autolink()
 		# enable dropdowns (color)
@@ -131,4 +139,7 @@ class App.Views.Notes.Index extends Backbone.View
 		# resolve any images
 		@auto_image_resolution(@notes)
 
-
+	format_domain: (note) ->
+			for domain in note._domains
+				hostname 			= domain.url.toLocation().hostname
+				note.message 	= note.message.replace domain.url, "<a href='#{domain.url}' target='_blank'><img src='http://www.google.com/s2/u/0/favicons?domain=#{hostname}' /> #{domain.title}</a>"
