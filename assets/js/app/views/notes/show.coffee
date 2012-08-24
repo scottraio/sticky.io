@@ -15,12 +15,12 @@ class App.Views.Notes.Show extends Backbone.View
 
 	render: () ->
 		self = @
-		@note.fetch 
-			success: (err, notesJSON) -> 
+		@note.fetch
+			success: (err, notesJSON) ->
 				notes = []
 				for note in notesJSON
 					if note._id is self.options.id
-						parent = note 
+						parent = note
 					else
 						notes.push note
 			

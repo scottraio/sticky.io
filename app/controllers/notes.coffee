@@ -57,7 +57,7 @@ exports.index = (req, res) ->
 
 		#
 		# Only show root level elements unless we are querying
-		unless criteria		
+		if _.isEmpty(req.query.tags)		
 			note.where('_parent', null)
 
 		#

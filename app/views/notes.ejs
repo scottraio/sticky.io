@@ -40,8 +40,8 @@
 <script id="notes_board" type="text/html">
 	<ul class="notes_board">
 		{{#notes}}
-			<li class="sticky card" data-id="{{_id}}" draggable="true">
-				<a href="/notes/{{_id}}" class="navigate expand hide"></a>
+			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}}" data-id="{{_id}}">
+				<a href="/notes/{{_id}}" class="navigate expand hide"><i class="icon-pencil"></i></a>
 				
 				<div class="pole-position autolink {{#completed}}completed{{/completed}}">						
 					{{>sticky}}
@@ -50,15 +50,12 @@
 				{{#_notes}}
 					<div class="autolink subnote {{#completed}}completed{{/completed}}" data-id="{{_id}}}" draggable="true">
 						<a href="#" class="sub-delete hide"><i class="icon-remove"></i></a>
-						{{#has_subnotes}}
-							<a href="/notes/{{_id}}" class="navigate"><span class="badge badge-success">{{subnote_count}}</span></a>
-						{{/has_subnotes}}
 						{{>sticky}}
 					</div>
 				{{/_notes}}
 					
 				<div class="meta">
-					created {{created_at_in_words}}
+				{{created_at_in_date}}
 				</div>
 			</li>
 		{{/notes}}

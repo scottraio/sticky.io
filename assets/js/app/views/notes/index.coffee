@@ -33,6 +33,7 @@ class App.Views.Notes.Index extends Backbone.View
 			notes								: @notes
 			note_message				: () -> escape(this.message)
 			created_at_in_words	: () -> this.created_at && $.timeago(this.created_at)
+			created_at_in_date 	: () -> self.format_date(this.created_at)
 			has_subnotes				: () -> true if this._notes && this._notes.length > 0
 			subnote_count				: () -> this._notes.length if this._notes
 			is_taskable					: () -> true if this.message && this.message.indexOf('#todo') > 0
@@ -110,6 +111,9 @@ class App.Views.Notes.Index extends Backbone.View
 
 	ui_before_hook: ->
 		self = @
+	
+		$('#expanded-view').html('')
+
 		for note in @notes
 			note.message = note.message.replace(/\n/g, '<br />')
 			self.format_domain(note)
@@ -140,6 +144,11 @@ class App.Views.Notes.Index extends Backbone.View
 		@auto_image_resolution(@notes)
 
 	format_domain: (note) ->
+		if note._domains
 			for domain in note._domains
 				hostname 			= domain.url.toLocation().hostname
 				note.message 	= note.message.replace domain.url, "<a href='#{domain.url}' target='_blank'><img src='http://www.google.com/s2/u/0/favicons?domain=#{hostname}' /> #{domain.title}</a>"
+	
+	format_date: (date) ->
+		date = new Date(date)
+		return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear()
