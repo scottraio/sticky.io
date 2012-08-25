@@ -11,12 +11,8 @@ class App.Views.Notes.Show extends Backbone.View
 		'click .save'							: 'save'
 
 	initialize: ->
-		# animate the widths
-		$('#inbox').width(500)
-		$('#expanded-view').width(400)
-
 		# select the note inside the inbox
-		$("li[data-id=#{@options.id}]").addClass('selected')
+		$('#inbox li.sticky').removeClass('selected')
 
 		@note 			= new App.Models.Note(id: @options.id)
 		@note.url 	= "/notes/#{@options.id}/expanded.json"
@@ -39,6 +35,10 @@ class App.Views.Notes.Show extends Backbone.View
 
 				$('#editable-message', self.el).html(parent.message)
 				$('#editable-message').focus()
+
+				$("#inbox li[data-id=#{self.options.id}]").addClass('selected')	
+				$("#inbox li[data-id=#{self.options.id}]").css('opacity', 1)
+				$('#inbox li.sticky:not(.selected)').css('opacity', 0.4)
 
 	save: () ->	
 		@note = new App.Models.Note(id: @options.id)

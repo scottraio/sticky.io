@@ -8,9 +8,6 @@ class App.Views.Notes.Index extends Backbone.View
 		'click .task-completed'					        : 'mark_completed'
 	
 	initialize: ->
-		$('#inbox').width(650)
-		$('#expanded-view').width(250)
-
 		@params		= @options.params
 		@notes 		= new App.Collections.Notes()
 		# set the url to the search query, if there is a search query
