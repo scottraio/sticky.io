@@ -11,6 +11,13 @@ class App.Views.Notes.Show extends Backbone.View
 		'click .save'							: 'save'
 
 	initialize: ->
+		# animate the widths
+		$('#inbox').width(500)
+		$('#expanded-view').width(400)
+
+		# select the note inside the inbox
+		$("li[data-id=#{@options.id}]").addClass('selected')
+
 		@note 			= new App.Models.Note(id: @options.id)
 		@note.url 	= "/notes/#{@options.id}/expanded.json"
 
@@ -31,7 +38,7 @@ class App.Views.Notes.Show extends Backbone.View
 					stacked_at_in_words	: () -> this.stacked_at && $.timeago(this.stacked_at)
 
 				$('#editable-message', self.el).html(parent.message)
-				#$('#editable-message', self.el).autosize()
+				$('#editable-message').focus()
 
 	save: () ->	
 		@note = new App.Models.Note(id: @options.id)
