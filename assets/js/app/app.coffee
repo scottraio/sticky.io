@@ -18,6 +18,7 @@ window.click_or_tap = (events) ->
 class App.Main extends Backbone.View
 	
 	events:
+		"click #delete-note .danger" 	: "delete_note"
 		"click a.remote" 							: "link_to_remote"
 		"click a.navigate" 						: "link_to_fragment"
 		"click a.order"								: "link_to_sort"
@@ -27,7 +28,7 @@ class App.Main extends Backbone.View
 		
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
-		
+
 		today					= new Date()
 		threedaysago 	= new Date(new Date().setDate(today.getDate() - 3))
 
@@ -55,6 +56,18 @@ class App.Main extends Backbone.View
 		search = document.location.search.replace(/(&|order=)[^\&]+/, '')
 		search = search + "&order=#{direction}"
 		navigate document.location.pathname + search
+		return false
+
+	delete_note: (e) ->
+		note_id = $('#delete-note').attr('data-id')
+		note = new App.Models.Note(id: note_id)
+		note.destroy
+			success: (model, res) ->
+				# clear the html from the expanded view
+				$("#expanded-view").html('')
+				# remove the sticky from the inbox
+				$("li.sticky[data-id=#{note_id}]").remove()
+				$('#delete-note').modal('hide')
 		return false
 
 	#

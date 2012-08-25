@@ -3,11 +3,12 @@ App.Views.Notes or= {}
 class App.Views.Notes.Show extends Backbone.View
 
 	events:
-		'click .delete' 					: 'delete'
+		'click .confirm' 					: 'confirm_delete'
 		'click .make-bold'				: 'make_bold'
 		'click .make-italic'			: 'make_italic'
 		'click .make-underline' 	: 'make_underline'
 		'keyup #editable-message' : 'autosave'
+		'click .save'							: 'save'
 
 	initialize: ->
 		@note 			= new App.Models.Note(id: @options.id)
@@ -32,23 +33,26 @@ class App.Views.Notes.Show extends Backbone.View
 				$('#editable-message', self.el).html(parent.message)
 				#$('#editable-message', self.el).autosize()
 
+	save: () ->	
+		@note = new App.Models.Note(id: @options.id)
+		save @note, { message : $('#editable-message', self.el).html() }, {
+			success: (data, res) ->
+				$('#save-notice').html('Saved')
+				@timer = setTimeout((->						
+					$('#save-notice').html('')
+				), 3000)
+			error: (data, res) ->
+				console.log 'error'
+		}
+		return false
+
 	autosave: (e) ->
 		self 	= @	
-		@note = new App.Models.Note(id: @options.id)
 		idle 	= 0
 		clearTimeout(@timer)
 	
-
 		@timer = setTimeout((->
-			save self.note, { message : $('#editable-message', self.el).html() }, {
-				success: (data, res) ->
-					$('#save-notice').html('Saved')
-					self.timer = setTimeout((->						
-						$('#save-notice').html('')
-					), 3000)
-				error: (data, res) ->
-					console.log 'error'
-			}
+			self.save()
 		), 3000)
 
 	make_bold: (e) ->
@@ -63,15 +67,8 @@ class App.Views.Notes.Show extends Backbone.View
 		document.execCommand('underline', false, null)
 		return false
 
-	delete: (e) ->
-			self = @
-			note_id = $(e.currentTarget).attr('data-id')
-			note = new App.Models.Note(id: note_id)
-			note.destroy
-				success: (model, res) ->
-					# clear the html from the expanded view
-					$(self.el).html('')
-					# remove the sticky from the inbox
-					$("li.sticky[data-id=#{note_id}]").remove()
-			return false
+	confirm_delete: (e) ->
+		$('#delete-note').attr('data-id', $(e.currentTarget).attr('data-id')).modal()
+		return false
+
 
