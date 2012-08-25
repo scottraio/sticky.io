@@ -3,7 +3,6 @@ App.Views.Notes or= {}
 class App.Views.Notes.Index extends Backbone.View
 
 	events:
-		'dblclick li.sticky' 					          : 'edit' 
 		'click .delete'  						            : 'delete'
 		'click .dropdown-menu .color-choice'  	: 'update_color'
 		'click .task-completed'					        : 'mark_completed'
@@ -49,10 +48,6 @@ class App.Views.Notes.Index extends Backbone.View
 		id = $(e.currentTarget).attr('data-id')
 		push_url "/notes/#{id}"
 		return false
-
-	edit: (e) ->
-		id = $(e.currentTarget).attr('data-id')
-		push_url "/notes/#{id}/edit"
 
 	delete: (e) ->
 		self = @
