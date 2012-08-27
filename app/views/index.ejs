@@ -43,35 +43,11 @@
 				</ul>
       </div>
 
-      <div id="inbox">
-				<div class="inbox-controls">
-					<div class="btn-toolbar">
-						<div class="btn-group">
-							<a href="/notes" class="btn navigate"><i class="icon-home"></i></a>
-						</div>
-						<div class="btn-group">
-							<a class="btn" href="#"><span class="icon-pound">#</span> <span class="tag-label">Tag</span></a>
-          		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-          		<ul class="dropdown-menu">
-								<% for(var i=0; i<tags.length; i++) {  %>	
-									<li><a href="/notes?tags=<%= tags[i]._id  %>" class="navigate"><%= tags[i]._id  %></a></li>
-								<% } %>
-          		</ul>
-        		</div>
-						<div class="btn-group">
-							<a href="/notes?order=desc" class="order btn" data-direction="desc"><i class="icon-chevron-down"></i></a>
-							<a href="/notes?order=asc" class="order btn" data-direction="asc"><i class="icon-chevron-up"></i></a>
-						</div>
-					</div>
-				</div>
+
 			  <div id="stage">
 		      <!-- content gets loaded here -->
 	      </div>
       </div>
-
-
-      <div id="expanded-view">
-      </div>	
     </div>
   </div>
 

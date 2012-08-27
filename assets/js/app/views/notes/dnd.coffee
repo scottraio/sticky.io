@@ -14,7 +14,7 @@ class App.Views.Notes.DnD extends Backbone.View
 	reload: () ->
 		push_url window.location.pathname + "?" + window.location.search
 
-	is_inside_note: () ->
+	targeting_another_note: () ->
 		true if @current_note_id
 
 	is_subnote: () ->
@@ -31,13 +31,12 @@ class App.Views.Notes.DnD extends Backbone.View
 		body.on 'drop', (e) ->
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 		
-			note 		= $(self.srcElement)
-			note_id		= note.attr('data-id')
-			parent_id 	= $(self.draggable).attr('data-id')
+			note 				= $(self.srcElement)
+			note_id			= note.attr('data-id')
+			parent_id 	= $(self.srcElement).parent('li.sticky').attr('data-id')
 
 			if note.hasClass("subnote") and note_id isnt parent_id
-				
-				if self.is_inside_note()
+				if self.targeting_another_note()
 					$.getJSON "/notes/#{note_id}/restack/#{parent_id}/#{self.options.id}.json", (res) ->
 						self.reload()
 				else
@@ -81,7 +80,7 @@ class App.Views.Notes.DnD extends Backbone.View
 			else
 				note = $(self.draggable)
 
-			if self.is_inside_note()
+			if self.targeting_another_note()
 				note 		= $(self.draggable) 
 				old_id  = self.current_note_id
 
@@ -123,6 +122,7 @@ class App.Views.Notes.DnD extends Backbone.View
 		li.on 'dragstart', (e) ->
 			self.draggable = this
 			self.srcElement = $(e.srcElement)
+			console.log self.srcElement
 			e.originalEvent.dataTransfer.effectAllowed = 'all'
 			e.originalEvent.dataTransfer.setData('Text', $(e.currentTarget).attr('data-id')) 
 			this.style.opacity = '0.4'

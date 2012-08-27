@@ -28,17 +28,16 @@ class App.Views.Notes.Show extends Backbone.View
 					else
 						notes.push note
 			
-				$(self.el).html ich.expanded_note
+				$('#stage').html ich.expanded_note
 					parent_note : parent
 					notes 			: notes
+					has_subnotes				: () -> true if parent._notes && parent._notes.length > 0
 					stacked_at_in_words	: () -> this.stacked_at && $.timeago(this.stacked_at)
+					stacked_at_in_date 	: () -> self.format_date(this.stacked_at)
 
 				$('#editable-message', self.el).html(parent.message)
 				$('#editable-message').focus()
 
-				$("#inbox li[data-id=#{self.options.id}]").addClass('selected')	
-				$("#inbox li[data-id=#{self.options.id}]").css('opacity', 1)
-				$('#inbox li.sticky:not(.selected)').css('opacity', 0.4)
 
 	save: () ->	
 		@note = new App.Models.Note(id: @options.id)
@@ -78,4 +77,6 @@ class App.Views.Notes.Show extends Backbone.View
 		$('#delete-note').attr('data-id', $(e.currentTarget).attr('data-id')).modal()
 		return false
 
-
+	format_date: (date) ->
+		date = new Date(date)
+		return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear()

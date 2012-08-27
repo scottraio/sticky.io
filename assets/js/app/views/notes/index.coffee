@@ -34,6 +34,7 @@ class App.Views.Notes.Index extends Backbone.View
 			created_at_in_words	: () -> this.created_at && $.timeago(this.created_at)
 			created_at_in_date 	: () -> self.format_date(this.created_at)
 			has_subnotes				: () -> true if this._notes && this._notes.length > 0
+			draggable						: () -> true unless this._notes && this._notes.length > 0
 			subnote_count				: () -> this._notes.length if this._notes
 			is_taskable					: () -> true if this.message && this.message.indexOf('#todo') > 0
 			has_domains					: () -> true if this._domains && this._domains.length > 0
