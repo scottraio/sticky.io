@@ -64,7 +64,14 @@
 				<a href="/notes?order=desc" class="order btn" data-direction="desc"><i class="icon-chevron-down"></i></a>
 				<a href="/notes?order=asc" class="order btn" data-direction="asc"><i class="icon-chevron-up"></i></a>
 			</div>
+			
+			<div class="search pull-right">
+				<form action="/notes" method="get" class="navbar-search">
+					<input type="text" name="keyword" class="search-query" placeholder="Discover">
+				</form>
+			</div>
 		</div>
+		
 	</div>
 
 	<ul class="notes_board">
@@ -76,13 +83,16 @@
 					{{>sticky}}
 				</div>
 
-				{{#_notes}}
-					<div class="autolink subnote {{#completed}}completed{{/completed}}" data-id="{{_id}}}" draggable="true">
-						<i class="icon-move dnd hide"></i>
-						<div class="timeline-pole"></div>
-						{{>sticky}}
-					</div>
-				{{/_notes}}
+				{{#has_subnotes}}
+					<i class="icon-time"></i>
+					{{#_notes}}
+						<div class="autolink subnote {{#completed}}completed{{/completed}}" data-id="{{_id}}}" draggable="true">
+							<i class="icon-move dnd hide"></i>
+							<div class="timeline-pole"></div>
+							{{>sticky}}
+						</div>
+					{{/_notes}}
+				{{/has_subnotes}}
 					
 				<div class="meta">
 					{{created_at_in_date}}

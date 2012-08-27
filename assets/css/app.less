@@ -122,22 +122,6 @@ body.drop {
 			margin:15px 20px 0 20px;
 		}
 		
-		.search {
-			padding:15px 20px 10px 20px;
-			form {
-				margin:0;
-				padding:0;	
-				float:none;
-				input[name=keyword] {
-					width:100%;
-					line-height:1.6em;
-					background-color:#fff;
-					.border-radius(8px);
-					padding:13px 8px;
-					box-sizing:border-box;
-				}
-			}
-		}
 
 		ul.sidebar-nav {
       list-style-type:none;
@@ -188,6 +172,23 @@ body.drop {
 			#gradient > .vertical(#fff, #eee);
 			.btn-toolbar {
 				margin:2px 0 0 0;
+			}
+
+			.search {
+				width:200px;
+				form {
+					margin:0;
+					padding:0;	
+					float:none;
+					input[name=keyword] {
+						width:100%;
+						line-height:1.6em;
+						background-color:#fff;
+						.border-radius(8px);
+						padding:13px 8px;
+						box-sizing:border-box;
+					}
+				}
 			}
 			span.icon-pound {
 				font-family:Arial;
@@ -363,6 +364,12 @@ ul.notes_board {
 		.pole-position {
 			padding-bottom:10px;
 		}
+		i.icon-time {
+			position:absolute;
+			right:11px;
+			margin-top:-15px;
+			opacity:0.5;
+		}
 		.message {
 			padding:15px 15px 5px 15px;
 			white-space:pre-line;
@@ -383,10 +390,6 @@ ul.notes_board {
 		.subnote {
 			color:#777;
       position:relative;
-			font-size:0.85em;
-			padding-left:10px;
-			#gradient > .vertical(#fafafa, #fff);
-			//.box-shadow(0 -1px 2px -1px rgba(0, 0, 0, 0.2));
 			&:before {
 				content:"";
 				.border-radius(5px);
@@ -398,7 +401,7 @@ ul.notes_board {
 				position:absolute;
 				z-index:9;
 				right:15px;
-				top:15px;
+				top:10px;
 			}
 			.timeline-pole {
 				width:1px;
@@ -408,11 +411,11 @@ ul.notes_board {
 				height:100%;
 			}
 			.message {
-				padding:10px 15px;
+				padding:5px 15px;
 			}
 			.dnd {
 				position:absolute;
-				top:13px;
+				top:10px;
 				right:12px;
 				cursor:move;
 				z-index:10;
