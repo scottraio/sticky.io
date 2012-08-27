@@ -5,13 +5,9 @@
 
 <script id="expanded_note" type="text/html">	
 
-	<div id="expanded-view">
 	<div class="expanded-actions">
 		<span id="save-notice"></span>
 		<div class="btn-toolbar">
-			<div class="btn-group">
-				<a class="btn navigate" href="/notes"><i class="icon-home"></i></a>
-			</div>
 			<div class="btn-group">
 				<a class="btn make-bold" href="#"><strong>B</strong></a>
 				<a class="btn make-italic" href="#"><em>i</em></a>
@@ -36,7 +32,6 @@
 		{{/notes}}
 	</ul>	
 	{{/has_subnotes}}
-	</div>
 </script>
 
 <!--
@@ -45,10 +40,9 @@
 
 <script id="notes_board" type="text/html">
 
-	<div id="inbox">
-		<div class="inbox-controls">
-			<div class="btn-toolbar">
-				<div class="btn-group">
+	<div class="inbox-controls">
+		<div class="btn-toolbar">
+			<div class="btn-group">
 				<a href="/notes" class="btn navigate"><i class="icon-home"></i></a>
 			</div>
 			<div class="btn-group">
@@ -71,8 +65,7 @@
 				</form>
 			</div>
 		</div>
-		
-	</div>
+	</div>	
 
 	<ul class="notes_board">
 		{{#notes}}

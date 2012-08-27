@@ -28,7 +28,7 @@ class App.Views.Notes.Show extends Backbone.View
 					else
 						notes.push note
 			
-				$('#stage').html ich.expanded_note
+				$(self.el).html ich.expanded_note
 					parent_note : parent
 					notes 			: notes
 					has_subnotes				: () -> true if parent._notes && parent._notes.length > 0
