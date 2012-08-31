@@ -108,8 +108,6 @@ class App.Views.Notes.Index extends Backbone.View
 	ui_before_hook: ->
 		self = @
 	
-		$('#expanded-view').html('')
-
 		for note in @notes
 			note.message = note.message.replace(/\n/g, '<br />')
 			self.format_domain(note)

@@ -1,0 +1,20 @@
+<script id="edit_notebook_content" type="text/html">	
+	<div class="modal-header">
+		<a href="#" class="close">&times;</a>
+		<h3>Edit Notebook</h3>
+	</div>
+	<form action="/notebooks/{{_id}}" method="post">
+	<div class="modal-body">
+		<label>Notebook name</label>
+		<input type="text" placeholder="Enter notebook name" name="name" value="{{name}}" />
+		<div class="hide">
+			<label>Members</label>
+			<textarea placeholder="Enter email addresses of group members" name="members"></textarea>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn primary">Save</button>
+		<a href="javascript:$('#edit-notebook').modal('hide')" class="btn secondary">Cancel</a>
+	</div>
+	</form>
+</script>

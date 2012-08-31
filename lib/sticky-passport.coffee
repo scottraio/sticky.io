@@ -38,7 +38,7 @@ google_config = {
 }
 
 passport.use(new GoogleStrategy google_config, (accessToken, refreshToken, profile, done) ->
-    
+
     # first attepmt to find the user their profile.id
     app.models.User.findOne { googleId: profile.id }, (err, user) -> 
     	unless user
@@ -57,7 +57,7 @@ passport.use(new GoogleStrategy google_config, (accessToken, refreshToken, profi
 	    			user.save (err) ->
 	    				done(err, user)
     	else
-    		
+		
     			return done(err, user)
 )
 

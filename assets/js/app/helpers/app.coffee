@@ -42,4 +42,8 @@ window.reset_events = (view) ->
 	$("body").unbind("dragover")
 	view.delegateEvents()
 
-
+window.notebook_names = () ->
+	names = []
+	for notebook in notebooks
+		names.push '@' + notebook.name
+	return names

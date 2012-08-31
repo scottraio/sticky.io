@@ -9,7 +9,6 @@ mongoose.set('debug', true) if app.env is 'development'
 
 require('./user.coffee')
 require('./note.coffee')
-require('./group.coffee')
 require('./tag.coffee')
 require('./notebook.coffee')
 require('./domain.coffee')

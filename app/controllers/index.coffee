@@ -6,9 +6,9 @@
 fs 									= require 'fs'
 passport 						= require 'sticky-passport'
 Resource						= require 'express-resource'
-UsersController			= require './users'
-NotesController			= require './notes'
-GroupsController		= require './groups'
+UsersController			= require './users_controller'
+NotesController			= require './notes_controller'
+NotebooksController	= require './notebooks_controller'
 
 
 ensureAuthenticated = (req, res, next) ->
@@ -24,7 +24,7 @@ ensureAuthenticated = (req, res, next) ->
 # Authentication
 # 
 app.get('/login', UsersController.login)
-app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }))
+app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/', failureFlash: true }))
 app.get('/logout', UsersController.logout)
 app.get('/signup', UsersController.signup)
 app.post('/signup', UsersController.create)
@@ -40,7 +40,7 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.g
 # Google will redirect the user to this URL after authentication.  Finish
 # the process by verifying the assertion.  If valid, the user will be
 # logged in.  Otherwise, authentication has failed.
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req,res) -> res.redirect('/') )
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req,res) -> res.redirect('/') )
 
 #
 # Notes
@@ -62,6 +62,14 @@ app.get('/notes/:id/expanded.:format?', ensureAuthenticated, NotesController.exp
 app.get('/notes/:id/stack/:parent_id.:format?', ensureAuthenticated, NotesController.stack)
 app.get('/notes/:id/unstack/:parent_id.:format?', ensureAuthenticated, NotesController.unstack)
 app.get('/notes/:id/restack/:from_id/:to_id.:format?', ensureAuthenticated, NotesController.restack)
+
+#
+# Notebooks
+#
+app.get('/notebooks.:format?', ensureAuthenticated, NotebooksController.index)
+app.get('/notebooks/:id.:format?', ensureAuthenticated, NotebooksController.show)
+app.post('/notebooks.:format?', ensureAuthenticated, NotebooksController.create)
+app.put('/notebooks/:id.:format?', ensureAuthenticated, NotebooksController.update)
 
 #
 # Root

@@ -1,4 +1,5 @@
 <%- partial('header') %>
+	<div class="backdrop"></div>
 
   <div id="new-sticky-header">
 		<form action="/notes" method="post">	
@@ -7,6 +8,7 @@
     <div class="logo">STICKY</div>
   </div>
 
+	<div class="faux-hidden-top"></div>
 
   <div class="main-wrapper container-fluid">
     <div id="main">
@@ -19,7 +21,6 @@
       -->
 
       <div id="sidebar">
-
 				<div class="profile">
 					<i id="gravatar"><img src="http://profiles.google.com/s2/u/0/photos/profile/<%= req.user.googleId %>?sz=32" /></i>
 					<div class="details">
@@ -27,28 +28,61 @@
 						<a href="/logout">Logout</a>
 					</div>
 				</div>
-				
-				<div class="date-picker"></div>
 
 				<ul class="sidebar-nav">
-          <% for(var i=0; i<notebooks.length; i++) { %>	
-						<li><a href="/notes?notebooks=<%= notebooks[i]._id %>" class="navigate">@<%= notebooks[i]._id %></a></li>
-        	<% } %>
+					<% for(var i=0; i<notebooks.length; i++) { %>	
+						<li>
+							<a href="/notes?notebooks=<%= notebooks[i].name %>" class="navigate">@<%= notebooks[i].name %></a>
+							<a href="/notebooks/<%= notebooks[i]._id %>/edit" class="push"><i class="icon-user"></i></a>
+						</li>
+					<% } %>
+					<li class="add-notebook"><a href="/notebooks/new" class="push">Add a Notebook</a></li>
 				</ul>
+				
+				<div class="date-picker"></div>
       </div>
 
-				<div id="inbox">
-			  	<div id="stage">
-		      	<!-- content gets loaded here -->
+			<div id="inbox">
+				<div class="inbox-controls">
+					<div class="btn-toolbar">
+						<div class="btn-group">
+							<a href="/notes" class="btn navigate"><i class="icon-home"></i></a>
+						</div>
+						<div class="btn-group">
+							<a class="btn" href="#"><span class="icon-pound">#</span> <span class="tag-label">Tag</span></a>
+							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<% for(var i=0; i<tags.length; i++) {  %>	
+									<li><a href="/notes?tags=<%= tags[i]._id  %>" class="navigate"><%= tags[i]._id  %></a></li>
+								<% } %>
+							</ul>
+						</div>
+						<div class="btn-group">
+							<a href="/notes?order=desc" class="order btn" data-direction="desc"><i class="icon-chevron-down"></i></a>
+							<a href="/notes?order=asc" class="order btn" data-direction="asc"><i class="icon-chevron-up"></i></a>
+						</div>
+						
+						<div class="search pull-right">
+							<form action="/notes" method="get" class="navbar-search">
+								<input type="text" name="keyword" class="search-query" placeholder="Discover">
+							</form>
+						</div>
 					</div>
+				</div>	
+				<div id="stage">
+					<!-- content gets loaded here -->
 				</div>
+			</div>
 
-				<div id="expanded-view">
-					<!-- content gets loaded here  -->
-				</div>
-      </div>
+			<div id="expanded-view">
+				<!-- content gets loaded here  -->
+			</div>
+		
+			</div>
     </div>
   </div>
+	
+	<div class="faux-hidden-bottom"></div>
 
 	<div id="delete-note" class="modal hide fade">
 		<div class="modal-header">
@@ -65,5 +99,36 @@
 		</div>
 	</div>
 
+	<!-- Notebooks -->
+
+	<div id="add-notebook" class="modal hide fade">
+		<div class="modal-header">
+			<a href="#" class="close">&times;</a>
+			<h3>Add Notebook</h3>
+		</div>
+		
+		<form action="/notebooks" method="post">
+		<div class="modal-body">
+			<label>Notebook name</label>
+			<input type="text" placeholder="Enter notebook name e.g. @work" name="name" />
+			<div class="hide">
+				<label>Members</label>
+				<textarea placeholder="Enter email addresses of group members" name="members"></textarea>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn primary">Add</button>
+			<a href="javascript:$('#add-notebook').modal('hide')" class="btn secondary">Cancel</a>
+		</div>
+		</form>
+	</div>
+
+
+	<div id="edit-notebook" class="modal hide fade">
+		<!-- content gets loaded here -->
+	</div>
+
+
+<%- partial('notebooks') %>
 <%- partial('notes') %>
 <%- partial('footer') %>

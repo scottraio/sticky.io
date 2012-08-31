@@ -1,138 +1,112 @@
 //Website
 
-.web-header {
-	background-color:rgba(255, 255, 255, 0.8);
+.web-logo {
+	width:200px;
 	position:absolute;
-	width:100%;
+	right:25px;
+	top:25px;
+	font-size:5em;
+	background:url('/img/sticky-symbolx64.png') 0px 0px no-repeat;
+	padding-left:80px;
+	padding-bottom:20px;
+	line-height:1.15em;
+	margin:0 auto;
+}
+
+.web-header {
+	position:absolute;
+	right:80px;
+	top:150px;
 	height:200px;
-	text-align:center;
-	padding-top:20px;
-	padding-bottom:30px;
-	.logo {
-		width:200px;
-		position:relative;
-		right:0;
-		font-size:5em;
-		background:url('/img/sticky-symbolx64.png') 0px 0px no-repeat;
-		padding-left:50px;
-		padding-bottom:20px;
-		line-height:1.15em;
-		margin:0 auto;
-	}
+	text-align:right;
 	h1 {
 		font-weight:normal;
 		padding-top:20px;
+		font-size:4em;
+		max-width:400px;
+		padding-bottom:10px;
+		color:#000;
+	}
+	h2 {
+		font-weight:normal;
+		max-width:400px;
+		font-size:3em;
+		color:#333;
 		padding-bottom:20px;
 	}
 }
 
 .web-scope {
-	overflow:hidden;
+	height:100%;
 	img {
 		margin:auto;
 		width:100%;
-		min-width:800px;
-	}
-}
-
-.web-gmail {
-	position:absolute;
-	top:75px;
-	width:100%;
-	text-align:center;	
-	.scope {
-		h1 {
-			color:#fff;
-			font-size:3em;
-		}
-	}	
-}
-
-.web-ui {
-	border:1px solid #000;
-	width:100%;
-	height:400px;	
-}
-
-.white {
-	background: #fff;
-	height: 100%;
-	width: 100%;
-	border-radius: 50px;
-	position: relative;
-}
-
-.left_scope,
-.right_scope {
-	background: #4D4D4D;
-	height: 57px;
-	width: 127px;
-	top: 41px;
-	z-index:10;
-	position: absolute;
-	box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-.left_scope { left: 45px; }
-.right_scope { right: 45px; }
-
-.left_scope::after,
-.right_scope::after {
-	bottom: -130px;
-	content: '';
-	background: #4D4D4D;
-	width: 56px;
-	height: 130px;
-	position: absolute;
-	display: block;
-	right: 0;
-}
-
-.left_scope::after {
-	left: 0;
-}
-
-.right_scope::after {
-	right: 0;
-}
- 
-.left_scope::before,
-.right_scope::before {
-	bottom: -187px;
-	box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-	content: '';
-	background: #4D4D4D;
-	height: 57px;
-	width: 127px;
-	position: absolute;	
-	display: block;
-	left: 0;
-	z-index: -1;
-}
-
-.login-form {
-	.border-radius(5px);
-	background-color:@white;
-	padding:15px 15px 2px 15px;
-	margin:100px 0 0 0;
-
-	h3 {
-		margin-bottom:15px;
-		font-weight:400;
-	}
-}
-
-.btn-google {
-	img {
-		width:16px;
-		height:16px;
-		position:relative;
-		top:-2px;
-		left:-4px;
+		position:absolute;
+		top:0;
+		left:0;
+		z-index:-1;
 	}
 }
 
 .web-content {
-	margin-top:60px;
-	text-align:center;
+	width:900px;
+	margin:0 auto;
+	overflow:auto;
+	height:100%;
+}
+
+.web-ui {
+	width:100%;
+	background:url('/img/furley_bg.png');	
+	padding:150px 0;
+	overflow:auto;
+	h1 {
+		padding:0;
+		margin:0;
+	}
+	img.screenshot {
+		float:right;
+		border:1px solid rgba(0, 0, 0, 0.15);
+	}
+}
+
+.web-access {
+	width:100%;
+	height:400px;
+	background:url('/img/dark_wall.png');
+	ul {
+		margin:100px 0 0 0;
+		padding:0;
+		list-style-type:none;
+		width:100%;
+		li {
+			box-sizing:border-box;
+			text-align:center;
+			width:33%;
+			display:inline-block;
+			h1 {
+				color:#f0f0f0;
+				margin-top:25px;
+			}
+		}
+	}
+		
+}
+
+.web-footer {
+	width:100%;
+	height:350px;
+	background-color:#111;
+	.web-footer-logo {		
+		width:200px;
+		position:relative;
+		padding-left:80px;
+		padding-bottom:20px;
+		font-size:5em;
+		background:url('/img/sticky-symbolx64.png') 0px 0px no-repeat;
+		line-height:1.15em;
+		color:#fff;
+		margin-left:50px;
+		margin-top:100px;
+	}
 }

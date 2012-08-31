@@ -40,33 +40,6 @@
 
 <script id="notes_board" type="text/html">
 
-	<div class="inbox-controls">
-		<div class="btn-toolbar">
-			<div class="btn-group">
-				<a href="/notes" class="btn navigate"><i class="icon-home"></i></a>
-			</div>
-			<div class="btn-group">
-				<a class="btn" href="#"><span class="icon-pound">#</span> <span class="tag-label">Tag</span></a>
-				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<% for(var i=0; i<tags.length; i++) {  %>	
-						<li><a href="/notes?tags=<%= tags[i]._id  %>" class="navigate"><%= tags[i]._id  %></a></li>
-					<% } %>
-				</ul>
-			</div>
-			<div class="btn-group">
-				<a href="/notes?order=desc" class="order btn" data-direction="desc"><i class="icon-chevron-down"></i></a>
-				<a href="/notes?order=asc" class="order btn" data-direction="asc"><i class="icon-chevron-up"></i></a>
-			</div>
-			
-			<div class="search pull-right">
-				<form action="/notes" method="get" class="navbar-search">
-					<input type="text" name="keyword" class="search-query" placeholder="Discover">
-				</form>
-			</div>
-		</div>
-	</div>	
-
 	<ul class="notes_board">
 		{{#notes}}
 			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}}" data-id="{{_id}}" {{#draggable}}draggable="true"{{/draggable}}>
@@ -76,17 +49,6 @@
 					{{>sticky}}
 				</div>
 
-				{{#has_subnotes}}
-					<i class="icon-time"></i>
-					{{#_notes}}
-						<div class="autolink subnote {{#completed}}completed{{/completed}}" data-id="{{_id}}}" draggable="true">
-							<i class="icon-move dnd hide"></i>
-							<div class="timeline-pole"></div>
-							{{>sticky}}
-						</div>
-					{{/_notes}}
-				{{/has_subnotes}}
-					
 				<div class="meta">
 					{{created_at_in_date}}
 				</div>
@@ -100,7 +62,7 @@
 -->
 
 <script id="sticky" class="partial" type="text/html">
-	<div class="message {{#has_domains}}remove-stray-links{{/has_domains}}">{{#is_taskable}}<input type="checkbox" class="task-completed" {{#completed}}checked="true"{{/completed}} /> {{/is_taskable}}{{{message}}}</div>
+<div class="message {{#has_domains}}remove-stray-links{{/has_domains}}">{{#is_taskable}}<input type="checkbox" class="task-completed" {{#completed}}checked="true"{{/completed}} /> {{/is_taskable}}{{{message}}}</div>
 </script>
 
 <!--
@@ -108,10 +70,13 @@
 -->
 
 <script id="sticky_actions" class="partial" type="text/html">	
-	<div class="sticky-actions hide">
+	<div class="sticky-actions">
 		{{#draggable}}
-		<i class="icon-move dnd"></i>
+		<i class="sticky-action icon-move dnd hide"></i>
 		{{/draggable}}
-		<a href="/notes/{{_id}}" class="navigate expand"><i class="icon-pencil"></i></a>				
+		<a href="/notes/{{_id}}" class="push expand sticky-action hide"><i class="icon-pencil"></i></a>				
+		{{#has_subnotes}}<i class="icon-comment sticky-action"></i>{{/has_subnotes}}
 	</div>
 </script>
+
+:

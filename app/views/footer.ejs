@@ -13,9 +13,10 @@
 	<%- js('vendor') %>	
 	<%- js('app') %>	
 	
-	<% if (current_user !== undefined) { %>	
+	<% if (current_user) { %>	
 	<script>	
 		$(document).ready(function() {
+			notebooks = <%- JSON.stringify(notebooks) %>;
 			stickyio 	= new App.start(<%- current_user %>)
 			new App.Main({el: $("body")});
 		});

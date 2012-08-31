@@ -18,8 +18,8 @@ exports.json = (req,res,fn) ->
 
 exports.render_page = (page,req,res) ->
 	exports.update_index req, () ->
-		Tag.find {"value._user":req.user.id}, (err, tags) ->
-			Notebook.find {"value._user":req.user.id}, (err, notebooks) ->
+		Tag.where('value._user', req.user.id).run (err, tags) ->
+			Notebook.where('_owner', req.user.id).run (err, notebooks) ->
 
 					res.render(page, {
 						error         : 	req.flash('error')
@@ -34,7 +34,6 @@ exports.render_page = (page,req,res) ->
 
 exports.update_index = (req,cb) ->
 	Tag.update_index {_user:req.user.id}, () ->
-		Notebook.update_index {_user:req.user.id}, () ->
-			cb()
+		cb()
 
 

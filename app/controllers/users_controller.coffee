@@ -37,7 +37,7 @@ exports.login = (req, res) ->
 
 exports.logout = (req, res) ->
 	req.logout()
-	res.redirect('/login')
+	res.redirect('/')
 
 exports.signup = (req, res) ->
 	res.render('signup', {title: 'Sign-up to pine.io'})

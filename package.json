@@ -13,6 +13,7 @@
 		"ejs"											: "*",
 		"ejs-locals"							: "*",
 		"phantom"									: "*",
+		"trebuchet"								: "*",
     "mongoose"                : "2.6.5",
     "socket.io"               : "0.9.6",
     "connect-flash"           : "0.1.0",
