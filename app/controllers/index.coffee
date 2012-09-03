@@ -67,9 +67,12 @@ app.get('/notes/:id/restack/:from_id/:to_id.:format?', ensureAuthenticated, Note
 # Notebooks
 #
 app.get('/notebooks.:format?', ensureAuthenticated, NotebooksController.index)
+app.get('/notebooks/:id/accept.:format?', ensureAuthenticated, NotebooksController.accept_invite)
+app.get('/notebooks/:id/members/:user_id/remove.:format?', ensureAuthenticated, NotebooksController.remove_member)
 app.get('/notebooks/:id.:format?', ensureAuthenticated, NotebooksController.show)
 app.post('/notebooks.:format?', ensureAuthenticated, NotebooksController.create)
 app.put('/notebooks/:id.:format?', ensureAuthenticated, NotebooksController.update)
+
 
 #
 # Root

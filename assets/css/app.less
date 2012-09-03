@@ -119,7 +119,26 @@ body.drop {
   width:100%;
 }
 
-// Stage
+// Notebooks
+
+.members {
+	ul {
+		margin:10px 0 25px 0;
+		padding:0;
+		list-style-type:none;
+	}
+	li {
+		padding:5px;	
+		&:nth-child(odd) {
+			background-color:#f0f0f0;
+		}
+	}
+	li.pending {
+		font-style:italic;
+	}
+}
+
+// Main
 
 #main {
   padding:@body-gap 0 @outer-margin 0;
@@ -582,6 +601,8 @@ ul.notes_board {
 i.icon-tweet {
 	background:url('/img/glyphicons_392_twitter.png') no-repeat;
 }
+
+
 
 @import "./bootstrap/responsive.less";
 @import 'web';
