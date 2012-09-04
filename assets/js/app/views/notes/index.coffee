@@ -78,18 +78,17 @@ class App.Views.Notes.Index extends Backbone.View
 				console.log 'error'
 
 	mark_completed: (e) ->
-		$sticky		= $( $(e.currentTarget).parents('[data-id]')[0] )
-
-		note_id 	= $sticky.attr('data-id')
-		note 		= new App.Models.Note(id: note_id)
+		$sticky			= $( $(e.currentTarget).parents('[data-id]')[0] )
+		note_id 		= $sticky.attr('data-id')
+		note 				= new App.Models.Note(id: note_id)
 		is_complete = $(e.currentTarget).is(":checked")
 
 		save note, {completed: is_complete}
 			success: (data, res) ->
 				if is_complete
-					$(e.currentTarget).parent('.autolink').addClass('completed')
+					$(e.currentTarget).parents('.message').addClass('completed')
 				else
-					$(e.currentTarget).parent('.autolink').removeClass('completed')
+					$(e.currentTarget).parents('.message').removeClass('completed')
 				
 			error: (data, res) ->
 				console.log 'error'
