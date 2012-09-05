@@ -72,7 +72,7 @@ app.get('/notebooks/:id/members/:user_id/remove.:format?', ensureAuthenticated, 
 app.get('/notebooks/:id.:format?', ensureAuthenticated, NotebooksController.show)
 app.post('/notebooks.:format?', ensureAuthenticated, NotebooksController.create)
 app.put('/notebooks/:id.:format?', ensureAuthenticated, NotebooksController.update)
-
+app.delete('/notebooks/:id.:format?', ensureAuthenticated, NotebooksController.delete)
 
 #
 # Root

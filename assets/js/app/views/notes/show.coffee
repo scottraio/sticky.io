@@ -74,7 +74,7 @@ class App.Views.Notes.Show extends Backbone.View
 		return false
 
 	confirm_delete: (e) ->
-		$('#delete-note').attr('data-id', $(e.currentTarget).attr('data-id')).modal()
+		$('#delete').attr('data-id', $(e.currentTarget).attr('data-id')).modal()
 		return false
 
 	format_date: (date) ->

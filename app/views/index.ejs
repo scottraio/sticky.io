@@ -29,11 +29,11 @@
 					</div>
 				</div>
 
-				<ul class="sidebar-nav">
+				<ul class="notebooks sidebar-nav">
 					<% for(var i=0; i<notebooks.length; i++) { %>	
-						<li>
+						<li data-id="<%= notebooks[i]._id %>">
 							<a href="/notes?notebooks=<%= notebooks[i].name %>" class="navigate">@<%= notebooks[i].name %></a>
-							<a href="/notebooks/<%= notebooks[i]._id %>/edit" class="push"><i class="icon-pencil"></i></a>
+							<a href="/notebooks/<%= notebooks[i]._id %>/edit" data-id="<%= notebooks[i]._id %>" class="push"><i class="icon-pencil"></i></a>
 						</li>
 					<% } %>
 					<li class="add-notebook"><a href="/notebooks/new" class="push">Add a Notebook</a></li>
@@ -101,6 +101,21 @@
 
 	<!-- Notebooks -->
 
+	<div id="delete-notebook" class="modal hide fade">
+		<div class="modal-header">
+			<a href="#" class="close">&times;</a>
+			<h3>Trash Notebook</h3>
+		</div>
+		<div class="modal-body">
+			<p>You are about to delete this notebook.</p>
+			<p>Do you want to proceed?</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn danger">Yes</a>
+			<a href="javascript:$('#delete-note').modal('hide')" class="btn secondary">No</a>
+		</div>
+	</div>
+	
 	<div id="add-notebook" class="modal hide fade">
 		<div class="modal-header">
 			<a href="#" class="close">&times;</a>

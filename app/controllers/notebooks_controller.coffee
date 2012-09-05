@@ -65,3 +65,13 @@ exports.update = (req, res) ->
 						done(err)
 					else
 						done(null, note)
+
+#
+# deletes an note from an account
+#
+exports.delete = (req, res) ->
+	render.json req, res, (done) ->
+		Notebook.remove {_id: req.params.id, _owner:req.user}, (err) ->
+			done(err, {ok:true})
+
+
