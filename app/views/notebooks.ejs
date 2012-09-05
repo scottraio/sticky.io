@@ -7,23 +7,6 @@
 	<div class="modal-body">
 		<label>Notebook name</label>
 		<input type="text" placeholder="Enter notebook name" name="name" value="{{notebook.name}}" />
-
-		<label>Members</label>
-		<textarea placeholder="Enter email addresses of group members" name="members"></textarea>
-
-		<div class="members">
-			<ul>
-
-				{{#notebook._members}}
-					<li>
-						<i id="gravatar"><img src="http://profiles.google.com/s2/u/0/photos/profile/{{ 0.googleId }}?sz=24" /></i>
-						{{name}}
-						<div class="pull-right"><a href="/notebooks/{{notebook._id}}/members/{{0._id}}/remove" class="push">Remove</a></div>
-					</li>
-				{{/notebook._members}}
-			</ul>
-		</div>
-
 	</div>
 	<div class="modal-footer">
 		<button type="submit" class="btn primary">Save</button>

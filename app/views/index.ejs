@@ -33,7 +33,7 @@
 					<% for(var i=0; i<notebooks.length; i++) { %>	
 						<li>
 							<a href="/notes?notebooks=<%= notebooks[i].name %>" class="navigate">@<%= notebooks[i].name %></a>
-							<a href="/notebooks/<%= notebooks[i]._id %>/edit" class="push"><i class="icon-user"></i></a>
+							<a href="/notebooks/<%= notebooks[i]._id %>/edit" class="push"><i class="icon-pencil"></i></a>
 						</li>
 					<% } %>
 					<li class="add-notebook"><a href="/notebooks/new" class="push">Add a Notebook</a></li>
