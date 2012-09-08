@@ -36,10 +36,10 @@
 	h2 {
 		font-weight:600;
 		line-height:0.85em;
-		font-size:4.8em;
+		font-size:6em;
 		color:#111;
 		padding-bottom:20px;
-		text-shadow:0px 0 15px rgba(255, 255, 255, 0.4);
+		text-shadow:0px 0 25px rgba(255, 255, 255, 0.5);
 	}
 }
 
@@ -61,21 +61,65 @@
 	height:100%;
 }
 
+.web-content.container-fluid {
+	padding:0;
+}
+
 .web-ui {
 	width:100%;
 	background:#fff;	
-	padding:150px 0;
 	.box-shadow(inset 0 3px 1px rgba(0, 0, 0, 0.15);
 	border-top:1px solid rgba(0, 0, 0, 0.45);
+	padding-bottom:150px;
 	h1 {
 		padding:0;
-		margin:0;
+		font-size:4em;
 		font-weight:normal;
+		margin:100px 0 65px 0;
+		text-align:center;
+	}
+	.gmail-to-ui {
+		img {
+			display:block;
+			margin-top:25px;
+		}
+		width:327px;
+		font-size:1.4em;
+	}
+	.arrow-column {
+		width:150px;
+		height:569;
+		float:left;
+		position:relative;
+		margin-top:280px;
+		.arrow {
+			height:25px;
+			width:150px;
+			background-color:#ccc;
+			position:absolute;
+			left:30px;
+			&:after {
+				content:"";
+				position:absolute;
+				right:-60px;
+				top:-17px;
+				border-color: transparent transparent transparent #ccc;
+				border-style: solid;
+				border-width: 30px;
+				width: 0;
+				height: 0;
+			}
+		}
+		.top {
+			top:100px;
+		}
+		.bottom {
+			bottom:100px;
+		}
 	}
 	img.screenshot {
-		float:right;
 		border:1px solid rgba(0, 0, 0, 0.15);
-		.box-shadow(0 0 1px 2px rgba(0, 0, 0, 0.1);
+		.box-shadow(0 0 8px 2px rgba(0, 0, 0, 0.1);
 	}
 }
 

@@ -1,6 +1,7 @@
 wrench			= require 'wrench'
 util 				= require 'util'
 path				= require 'path'
+trebuchet 	= require('trebuchet')('d7fc51d8-e67a-49db-b232-80a5a2fcd84f')
 
 Schema 			= mongoose.Schema
 Base				= require 'sticky-model'
@@ -30,6 +31,20 @@ UserSchema.methods.validPassword = (pass) ->
 UserSchema.methods.registerXMPPBot = () ->
 	register = new xmpp.Element('presence', {type: 'subscribe', to: this.email})
 	xmpp.conn.send(register)
+
+UserSchema.methods.sendWelcomeEmail = () ->
+	self = @
+	trebuchet.fling
+		params:
+			from: 'notes@sticky.io'
+			to: self.email
+			subject: 'Welcome to Sticky!'
+		html: 'app/emails/welcome.html'
+		text: 'app/emails/welcome.txt'
+		data:
+			foo: 'Bar'
+	, (err, response) ->
+		# win
 
 
 mongoose.model('User', UserSchema)

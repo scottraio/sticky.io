@@ -4,7 +4,7 @@
 @outer-margin: 30px;
 @body-gap: 80px; // distance from the top of the page, needed because the header is position:fixed
 @sidebar-width: 200px;
-@inbox-min-width: 500px;
+@inbox-min-width: 437px;
 @expanded-view-width: 400px;
 
 html {
@@ -14,12 +14,31 @@ html {
 body {
   font-family:ratio;
 	height:100%;
+	overflow:hidden;
 }
 
 
 body.drop {
 	border: 2px solid rgba(82,168,236,.8);
 	box-sizing:border-box;
+}
+
+::-webkit-scrollbar {
+	width: 7px;
+}
+
+::-webkit-scrollbar-track {
+	-webkit-border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	background: rgba(204,204,204, 0.5);
+	border: 1px solid #fff;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(204,204,204, 0.5);
 }
 
 .logo {
@@ -54,7 +73,7 @@ body.drop {
   .box-shadow(0 1px 3px rgba(100, 100, 100, 0.2);
   input::-webkit-input-placeholder {
     color:#e0e0e0;
-    font-weight:300;
+    font-weight:400;
   }
   input[type=text] {
     border:0;
@@ -115,8 +134,8 @@ body.drop {
 
 .main-wrapper {
   height:100%;
-  padding:0;
   width:100%;
+	padding:0;
 }
 
 // Notebooks
@@ -131,14 +150,16 @@ body.drop {
 // Main
 
 #main {
-  padding:@body-gap 0 @outer-margin 0;
  	height:100%;
 	min-height:500px;
+	width:100%;
   //min-width:900px;
-  width:100%;
 	display:table;
+	box-sizing:border-box;
+	position:fixed;
+	padding:@body-gap @outer-margin @outer-margin @outer-margin;
 
-  #sidebar {
+	#sidebar {
     box-shadow: inset -3px -3px 5px 0px rgba(0, 0, 0, 0.3);
     .border-radius(5px 0 0 5px);
     border-top:1px solid rgba(0, 0, 0, 0.15);
@@ -146,14 +167,12 @@ body.drop {
     border-bottom:1px solid rgba(0, 0, 0, 0.15);
     box-sizing:border-box;
     #gradient > .vertical(#444, #555);
-		width:@sidebar-width;
+		min-width:@sidebar-width;
+		max-width:@sidebar-width;
 		display:table-cell;
-    margin-left:@outer-margin;
     color:#fff;
-		position:fixed;
-		bottom:@outer-margin;
 		z-index:10;
-		top:@body-gap;
+		position:relative;
 		vertical-align:top;
 			
 		.profile {
@@ -214,14 +233,7 @@ body.drop {
 
   }
 
-	#stage {
-		background-color:#fff;
-		height:100%;
-	}
-
   #inbox {
-    padding-left:@sidebar-width + @outer-margin;
-		padding-right:@expanded-view-width + @outer-margin - 2;
     box-sizing:border-box;
     //background:#fff url('/img/furley_bg.png');
     min-width:@inbox-min-width;
@@ -229,6 +241,14 @@ body.drop {
 		display:table-cell;
 		vertical-align:top;
 		position:relative;
+		overflow:hidden;
+		#stage {
+			background-color:#fff;
+			height:100%;
+			overflow:auto;
+			box-sizing:border-box;
+			padding-bottom:28px;
+		}
 		.inbox-controls {
 			padding:10px;
 			box-sizing:border-box;
@@ -278,12 +298,6 @@ body.drop {
 		border-bottom:1px solid rgba(0, 0, 0, 0.15);
 		border-right:1px solid rgba(0, 0, 0, 0.15);
 		border-left:1px solid rgba(0, 0, 0, 0.15);
-		position:fixed;
-		top:@body-gap;
-		right:@outer-margin;
-		bottom:@outer-margin;
-		float:right;
-		margin-left:-@expanded-view-width;
     .border-radius(0 5px 5px 0);
 		.expanded-actions {
 			box-sizing:border-box;

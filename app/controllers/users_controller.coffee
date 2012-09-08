@@ -29,6 +29,7 @@ exports.create = (req, res) ->
 				if err
 					res.redirect('/login')
 				else
+					req.user.sendWelcomeEmail()
 					req.user.registerXMPPBot()
 					res.redirect('/')
 
