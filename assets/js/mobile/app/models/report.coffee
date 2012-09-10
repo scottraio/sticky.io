@@ -1,1 +1,0 @@
-class Mob.Models.Report extends Backbone.Model

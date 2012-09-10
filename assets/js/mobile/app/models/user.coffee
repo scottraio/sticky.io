@@ -1,1 +1,0 @@
-class Mob.Models.User extends Backbone.Model

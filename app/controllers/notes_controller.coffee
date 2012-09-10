@@ -11,7 +11,7 @@ exports.expanded = (req,res) ->
 	render.json req, res, (done) ->
 		Note.where('_user', req.user._id)
 			.or([{'_id': req.params.id},{'_parent':req.params.id}])
-			.populate('_notes')
+			.populate('_domains')
 			.run(done)
 
 #

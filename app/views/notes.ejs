@@ -3,8 +3,7 @@
 	Expanded Note
 -->
 
-<script id="expanded_note" type="text/html">	
-
+<script id="expanded_note" type="text/html">
 	<div class="expanded-actions">
 		<span id="save-notice"></span>
 		<div class="btn-toolbar">
@@ -25,8 +24,8 @@
 	{{#has_subnotes}}
 	<ul class="timeline">
 		{{#notes}}
-			<li class="sticky card" data-id="{{_id}}">
-				{{message}}
+			<li class="sticky card subnote" data-id="{{_id}}" draggable="true">
+				{{{message}}}
 				<span class="timestamp">{{stacked_at_in_date}}</span>
 			</li>
 		{{/notes}}
@@ -44,7 +43,7 @@
 		{{#notes}}
 			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}}" data-id="{{_id}}" {{#draggable}}draggable="true"{{/draggable}}>
 				{{>sticky_actions}}
-
+				
 				<div class="{{#has_subnotes}}pole-position {{/has_subnotes}} autolink {{#completed}}completed{{/completed}}">						
 					{{>sticky}}
 				</div>

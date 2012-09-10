@@ -35,7 +35,7 @@ app.configure () ->
 	pub_dir = __dirname + '/public'
 
 	# connect-assets: rails 3.1 asset pipeline for nodejs
-	app.use assets(build: false, buildDir: 'public')
+	app.use assets(buildDir: 'public', src: 'app/assets')
 
 	# handlebar templates :-)
 	app.engine('ejs', engine)
@@ -44,7 +44,7 @@ app.configure () ->
 	app.set 'views', __dirname + '/app/views'
 	app.set 'view engine', 'ejs'
 	app.use express.static(pub_dir)
-	app.use express.favicon()
+	app.use express.favicon('public/img/favicon.png')
 	app.use express.logger('dev')
 	app.use express.bodyParser()
 	app.use express.methodOverride()
@@ -69,19 +69,7 @@ app.models = mongoose.models
 
 #
 #
-# Routes, Controllers, & Views
-#fs.readFile './app/views/header.html', (err, data) -> handlbars.registerPartial 'header', data.toString()
-#fs.readFile './app/views/footer.html', (err, data) -> handlbars.registerPartial 'footer', data.toString()
-#fs.readFile './app/views/nav.html', (err, data) -> handlbars.registerPartial 'nav', data.toString()
-#fs.readFile './app/views/notes.html', (err, data) -> handlbars.registerPartial 'notes', data.toString()
-#fs.readFile './app/views/bookmarks.html', (err, data) -> handlbars.registerPartial 'bookmarks', data.toString()
-#fs.readFile './app/views/groups.html', (err, data) -> handlbars.registerPartial 'groups', data.toString()
-
-#handlbars.registerPartial 'vendor_js', js('vendor')
-#handlbars.registerPartial 'app_js', js('app')
-#handlbars.registerPartial 'stylesheets', css('app')
-
-
+# Controllers
 require('./app/controllers')
 
 

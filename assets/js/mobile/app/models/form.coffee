@@ -1,1 +1,0 @@
-class Mob.Models.Form extends Backbone.Model
