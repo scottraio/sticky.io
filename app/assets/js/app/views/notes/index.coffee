@@ -130,7 +130,6 @@ class App.Views.Notes.Index extends Backbone.View
 		window.dnd = new App.Views.Notes.DnD(id: @options.id)
 		window.dnd.acts_as_draggable $('ul.notes_board li:not(.stacked)', @el)
 		window.dnd.acts_as_droppable $('ul.notes_board li', @el)
-		window.dnd.droppable_body $('body')
 		
 		# resolve any images
 		@auto_image_resolution(@notes)

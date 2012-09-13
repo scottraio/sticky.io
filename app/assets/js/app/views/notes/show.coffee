@@ -50,6 +50,7 @@ class App.Views.Notes.Show extends Backbone.View
 				window.dnd.current_note_id = parent._id
 				window.dnd.acts_as_droppable $(self.el)
 				window.dnd.acts_as_draggable $('ul.timeline li', self.el)
+				window.dnd.droppable_body $('body')
 
 
 	save: () ->	

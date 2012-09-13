@@ -23,29 +23,24 @@ class App.Views.Notes.DnD extends Backbone.View
 
 	droppable_body: (body) ->
 		self = @
-
 		body.on 'drop', (e) ->
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 		
-			note 				= $(self.srcElement)
+			note 				= $(self.draggable)
 			note_id			= note.attr('data-id')
-			parent_id 	= $(self.srcElement).parent('li.sticky').attr('data-id')
+			parent_id 	= self.current_note_id
 
-			if self.is_subnote() and note_id isnt parent_id
-				if self.is_note_open()
-					$.getJSON "/notes/#{note_id}/restack/#{parent_id}/#{self.options.id}.json", (res) ->
-						self.reload()
-				else
-					$.getJSON "/notes/#{note_id}/unstack/#{parent_id}.json", (res) ->
-						self.reload()
+			if self.is_note_open() and self.is_subnote() and note_id isnt parent_id
+				$.getJSON "/notes/#{note_id}/unstack/#{parent_id}.json", (res) ->
+					$(body).removeClass('drop')
+					self.reload()
 				
 			return false
 		
 
 		body.on 'dragenter', (e) ->
-			console.log 'test'
-			if self.is_subnote()
-				$('body').addClass('drop')
+			if self.is_note_open() and self.is_subnote()
+				$(body).addClass('drop')
 				$(self.srcElement).hide()
 			return false
 
@@ -53,7 +48,7 @@ class App.Views.Notes.DnD extends Backbone.View
 			# Necessary. Allows us to drop.
 			e.preventDefault() if e.preventDefault
 			# source 
-			if $(self.srcElement).hasClass("subnote")
+			if self.is_subnote()
 				$(body).addClass('drop')
 				e.originalEvent.dataTransfer.dropEffect = 'copy'
 			
@@ -69,6 +64,8 @@ class App.Views.Notes.DnD extends Backbone.View
 			# this / e.target is current target element.
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 
+			parent = $(this)
+
 			if self.is_subnote()
 				# if the note being dragged is a subnote, then use the srcElement,
 				# its the item being dragged
@@ -79,11 +76,10 @@ class App.Views.Notes.DnD extends Backbone.View
 				child 	= $(self.draggable)
 
 			if self.is_note_open()
-				child 	= $(self.draggable) 
 				old_id  = self.current_note_id
 
 			child_id 	= child.attr('data-id')
-			parent_id = $(this).attr('data-id')
+			parent_id = parent.attr('data-id')
 
 			# stack unless the note we're stacking is the same as the note we're dragging
 			unless this is self.draggable
@@ -91,9 +87,11 @@ class App.Views.Notes.DnD extends Backbone.View
 					$.getJSON "/notes/#{child_id}/restack/#{old_id}/#{parent_id}.json", (res) ->
 						self.reload()
 						$("ul.timeline li[data-id=#{child_id}]").remove()
+						parent.removeClass('stack')
 				else
 					$.getJSON "/notes/#{child_id}/stack/#{parent_id}.json", (res) ->
 						self.reload()
+						parent.removeClass('stack')
 			return false
 
 		li.on 'dragenter', (e) ->
@@ -124,9 +122,9 @@ class App.Views.Notes.DnD extends Backbone.View
 			
 			e.originalEvent.dataTransfer.effectAllowed = 'all'
 			e.originalEvent.dataTransfer.setData('Text', $(e.currentTarget).attr('data-id')) 
-			this.style.opacity = '0.4'
+			$(this).addClass('dragging')
+
 
 		li.on 'dragend', (e) ->
-			this.style.opacity = '1'
-
+			$(this).removeClass('dragging')
 		

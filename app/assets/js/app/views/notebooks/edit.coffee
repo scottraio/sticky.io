@@ -21,8 +21,8 @@ class App.Views.Notebooks.Edit extends Backbone.View
 	submit: (e) ->
 		self 	= @
 		attrs = {
-			name: $('input', @el).val()
-			members: $('textarea', @el).val().split(',')
+			name: $('input[name=name]', @el).val()
+			color: $('select[name=color]', @el).val()
 		}
 		
 		save @notebook, attrs, {
@@ -41,7 +41,7 @@ class App.Views.Notebooks.Edit extends Backbone.View
 
 	delete: (e) ->
 		notebook_id = $(e.currentTarget).attr('data-id')
-		notebook = new App.Models.Notebook(id: notebook_id)
+		notebook 		= new App.Models.Notebook(id: notebook_id)
 		notebook.destroy
 			success: (model, res) ->
 				# remove the sticky from the inbox

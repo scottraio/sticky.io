@@ -35,6 +35,6 @@
     "zombie"                  : "1.2.0",
 		"yaml-config"							: "0.1.0",
     "request"                 : "https://github.com/scottraio/request/tarball/master",
-    "simple-xmpp"             : "https://github.com/scottraio/node-simple-xmpp/tarball/master"
+    "simple-xmpp"             : "https://github.com/scottraio/node-simple-xmpp/tarball/master",
   }
 }

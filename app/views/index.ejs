@@ -27,14 +27,14 @@
 					<i id="gravatar"><img src="http://profiles.google.com/s2/u/0/photos/profile/<%= req.user.googleId %>?sz=32" /></i>
 					<div class="details">
 						<div><%= req.user.email %></div>
-						<a href="/logout">Logout</a>
+						<a href="/settings" class="navigate">Settings</a> <a href="/logout">Logout</a>
 					</div>
 				</div>
 
 				<ul class="notebooks sidebar-nav">
 					<% for(var i=0; i<notebooks.length; i++) { %>	
-						<li data-id="<%= notebooks[i]._id %>">
-							<a href="/notes?notebooks=<%= notebooks[i].name %>" class="navigate">@<%= notebooks[i].name %></a>
+						<li data-id="<%= notebooks[i]._id %>" class="<%= notebooks[i].color %>">
+						<a href="/notes?notebooks=<%= notebooks[i].name %>" class="navigate">@<%= notebooks[i].name %></a>
 							<a href="/notebooks/<%= notebooks[i]._id %>/edit" data-id="<%= notebooks[i]._id %>" class="push"><i class="icon-pencil"></i></a>
 						</li>
 					<% } %>
@@ -147,4 +147,5 @@
 
 <%- partial('notebooks') %>
 <%- partial('notes') %>
+<%- partial('users') %>
 <%- partial('footer') %>

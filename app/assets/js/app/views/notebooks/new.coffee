@@ -14,8 +14,8 @@ class App.Views.Notebooks.New extends Backbone.View
 	submit: (e) ->
 		self 	= @
 		attrs = {
-			name: $('input', @el).val()
-			members: $('textarea', @el).val()
+			name: $('input[name=name]', @el).val()
+			color: $('select[name=color]', @el).val()
 		}
 		
 		save @notebook, attrs, {

@@ -14,6 +14,10 @@ exports.show = (req, res) ->
 	render.json req, res, (done) ->
 		app.models.User.findOne {_id:req.user._id}, done
 
+exports.edit = (req, res) ->
+	render.json req, res, (done) ->
+		app.models.User.findOne {_id:req.user._id}, done
+
 exports.create = (req, res) ->
 	user = new app.models.User()
 	user.set('name', req.body.name)

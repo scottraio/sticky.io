@@ -74,8 +74,8 @@ require('./app/controllers')
 
 
 #
-# Boot server
 #
+# Boot server
 xmpp.start()
 server = app.listen(settings.port)
 

@@ -28,6 +28,7 @@ app.post('/login', passport.authenticate('local', { successRedirect: '/', failur
 app.get('/logout', UsersController.logout)
 app.get('/signup', UsersController.signup)
 app.post('/signup', UsersController.create)
+app.get('/settings', ensureAuthenticated, UsersController.edit)
 
 # Forces registration for XMPP Roster
 app.get('/register', ensureAuthenticated, UsersController.register)

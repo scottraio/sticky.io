@@ -159,7 +159,10 @@ body.drop {
 				color:#ccc;
 				font-size:0.9em;
 				margin-left:40px;
-				a { color: #eee; }
+				a {
+					color: #eee;
+					padding-right:5px;
+				}
 			}
 		}
 
@@ -177,7 +180,6 @@ body.drop {
 		ul.sidebar-nav {
       list-style-type:none;
       margin:0;
-      background-color:rgba(255, 255, 255, 0.1);
 			padding:5px 0;
 			li.add-notebook {
 				a {
@@ -187,7 +189,10 @@ body.drop {
 			}
       li {
 				position:relative;
-      	padding:5px 10px;
+      	padding:15px 10px;
+				background:url('/img/dark_wall.png');
+				margin:2px 0 2px -15px;
+				.border-radius(10px 0 0 10px);
         a {
 					color:#f0f0f0;
         }
@@ -333,7 +338,8 @@ body.drop {
 		}
 	}
 	#expanded-view.stack {
-		border: 2px solid rgba(82,168,236,.8) !important;
+		//border: 2px solid rgba(82,168,236,.8) !important;
+		background:#f7f4ea;
 	}
 }
 
@@ -346,10 +352,6 @@ ul.notes_board {
 	width:100%;
 	.completed {
 		text-decoration: line-through;
-	}
-	li.stack {
-		border: 2px solid rgba(82,168,236,.8) !important;
-		//.transition(border linear .2s);
 	}
 	li:last-child {
 		margin-bottom:55px;
@@ -367,6 +369,7 @@ ul.notes_board {
 		word-wrap: break-word;
 		position:relative;
 		width:100%;
+		background-color:#fff;
 		.avatar {
 			margin-right:15px;
 		}
@@ -471,46 +474,18 @@ ul.notes_board {
 					opacity:1;
 				}
 			}
-			.color-choice {
-				.border-radius(4px);
-				border:1px dashed #ccc;
-				background-color:#fff;
-				width:13px;
-				height:13px;
-				float:left;
-				cursor:pointer;
-				position:relative;
-				top:2px;
-			}
 
-			.dashed { border:1px dashed #ccc; }
-			.blue { border:0; background-color:@blue; }
-			.green { border:0; background-color:@green; }
-			.greenOlive { border:0; background-color:@greenOlive; }
-			.teal { border:0; background-color:@teal; }
-			.red { border:0; background-color:@red; }
-			.orange { border:0; background-color:@orange; }
-			.yellow { border:0; background-color:@yellow; }
-			.pink { border:0; background-color:@pink; }
-			.purple { border:0; background-color:@purple; }
-			.gray { border:0; background-color:@gray; }
-			.beige { border:0; background-color:@beige; }
-			.blueDark { border:0; background-color:@blueDark; }
-			.silver { border:0; background-color:@silver; }
-
-			.dropdown-menu {
-				.color-choice {
-					margin-left:4px;
-					top:0;
-				}
-			}
-			
 			.created_at {
 				margin-right:2px;
 				float:right;
 			}
 		}
 	}	
+	li.stack {
+		background:#f7f4ea;
+		//border: 2px solid rgba(82,168,236,.8) !important;
+		//.transition(border linear .2s);
+	}
 }
 
 
@@ -586,7 +561,20 @@ i.icon-tweet {
 	background:url('/img/glyphicons_392_twitter.png') no-repeat;
 }
 
+.dragging {
+	.rotate(-2deg);
+	border:1px solid rgba(0, 0, 0, 0.15);
+}
 
+ul.settings {
+	list-style-type:none;
+	margin:0 auto;
+	padding:0;	
+	width:95%;
+	li {
+		padding:10px 5px;
+	}
+}
 
 @import "./bootstrap/responsive.less";
 @import 'web';

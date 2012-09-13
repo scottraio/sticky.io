@@ -5,55 +5,74 @@
 	<div class="logo web-logo">STICKY</div>
 
 	<div class="web-header">
-		<h1>Leave no note behind</h1>
-		<h2 class="">Capturing thoughts that stick, right from Google Talk.</h2>
+		<h1>Organize your life</h1>
+		<h2 class="tk-proxima-nova-sc-osf-ext-cond">Capturing thoughts that stick, right from Google Talk.</h2>
 		<a href="/auth/google" class="signon btn btn-large btn-primary"><img src="/img/google_plus_icon.png" /> Sign in with Google</a>
 	</div>
 
 	<div class="web-scope">
-		<img src="//d3sy8nn9suvu9a.cloudfront.net/sticky.io/sticky-scope.jpg" />
+		<img src="/img/scope-gtalk.jpg" />
+	</div>
+
+	<div class="web-whatis">
+		<ul>
+			<li>
+				<img src="/img/capture_icon.png" class="screenshot" />
+				<h1>Capture your thoughts</h1>
+				<div class="content">
+					Sticky allows you to capture your thoughts when they happen, how they happen, why 
+					they happen.
+				</div>
+				<div class="equation">+</div>
+			</li>
+			<li>
+				<img src="/img/organize_icon.png" />
+				<h1>Organize your ideas</h1>
+				<div class="content">
+					Organize ideas on your own time, creates an ideal workspace
+					for seeing ideas through to completion.
+				</div>
+				<div class="equation">=</div>
+			</li>
+			<li>
+				<img src="/img/execute_icon.png" />
+				<h1>Execute ideas that matter</h1>
+				<div class="content">
+					With the use of Sticky's UI, developing clarity between ideas has never been easier.	
+				</div>
+			</li>
+		</ul>
 	</div>
 
 	<div class="web-ui">
 		<div class="web-content container-fluid">
-			<h1>How it works</h1>
-			<div class="gmail-to-ui pull-left">
-				Use sticky to capture thoughts, links, and tasks the moment they happen
-				<img src="/img/gmail-to-ui-left.png" class="screenshot" />
-			</div>
-			<div class="arrow-column">
-				<div class="arrow top"></div>
-				<div class="arrow bottom"></div>
-			</div>
-			<div class="gmail-to-ui pull-right">
-				Go to http://sticky.io to organize and execute later
-				<img src="/img/gmail-to-ui-right.png" class="screenshot" />
+			<div id="myCarousel" class="carousel slide">
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="active item">
+						<h1>Special tags</h1>
+						<img src="/img/web-ui-todo.jpg" class="screenshot" />
+					</div>
+					<div class="item">
+						<h1>Notebooks</h1>
+					</div>
+					<div class="item">
+						<h1>General purpose tagging</h1>
+					</div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 			</div>
 		</div>
 	</div>
 
-	<div class="web-access">
-		<div class="web-content container-fluid">
-			<ul>
-				<li>
-					<img src="/img/capture_icon.png" />
-					<h1>Capture your thoughts</h1>
-					Sticky allows you to capture your thoughts when they happen, how they happen, why 
-					they happen.
-				</li>
-				<li>
-					<img src="/img/organize_icon.png" />
-					<h1>Organize your ideas</h1>
-					Having the ability to organize ideas on your own time, creates an ideal workspace
-					for seeing ideas through to completion.
-				</li>
-				<li>
-					<img src="/img/execute_icon.png" />
-					<h1>Execute ideas that matter</h1>
-					With the use of Sticky's UI, developing clarity between ideas has never been easier.	
-					<br /><br />
-				</li>
-			</ul>
+	<div class="web-ui-dnd">
+	</div>
+
+	<div class="web-closing-statement">
+		<div class="web-content">
+			
 		</div>
 	</div>
 
@@ -63,5 +82,17 @@
 		</div>	
 	</div>
 
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="javascripts/vendor/jquery-1.7.1.min.js"><\/script>')</script>
+	
+	<%- js('public') %>
 
-<%- partial('footer') %>
+	<script>
+		$(document).ready(function() {
+			$('.carousel').carousel()
+		})
+	</script>
+
+	</body>
+</html>
