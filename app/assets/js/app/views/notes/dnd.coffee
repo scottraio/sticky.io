@@ -122,7 +122,8 @@ class App.Views.Notes.DnD extends Backbone.View
 			
 			e.originalEvent.dataTransfer.effectAllowed = 'all'
 			e.originalEvent.dataTransfer.setData('Text', $(e.currentTarget).attr('data-id')) 
-			$(this).addClass('dragging')
+			console.log e
+			$(e.dragProxy).addClass('dragging')
 
 
 		li.on 'dragend', (e) ->
