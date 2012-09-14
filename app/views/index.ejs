@@ -23,7 +23,7 @@
       -->
 
       <div id="sidebar">
-				<div class="profile">
+				<div class="profile hide">
 					<i id="gravatar"><img src="http://profiles.google.com/s2/u/0/photos/profile/<%= req.user.googleId %>?sz=32" /></i>
 					<div class="details">
 						<div><%= req.user.email %></div>
@@ -32,6 +32,7 @@
 				</div>
 
 				<ul class="notebooks sidebar-nav">
+					<li><a href="#" class="push">All Notes</a></li>
 					<% for(var i=0; i<notebooks.length; i++) { %>	
 						<li data-id="<%= notebooks[i]._id %>" class="<%= notebooks[i].color %>">
 						<a href="/notes?notebooks=<%= notebooks[i].name %>" class="navigate">@<%= notebooks[i].name %></a>
@@ -41,14 +42,14 @@
 					<li class="add-notebook"><a href="/notebooks/new" class="push">Add a Notebook</a></li>
 				</ul>
 				
-				<div class="date-picker"></div>
+				<div class="date-picker hide"></div>
       </div>
 
 			<div id="inbox">
 				<div class="inbox-controls">
 					<div class="btn-toolbar">
 						<div class="btn-group">
-							<a href="/notes" class="btn navigate"><i class="icon-home"></i></a>
+							<a href="/notes" class="btn navigate"><i class="icon-calendar"></i></a>
 						</div>
 						<div class="btn-group">
 							<a class="btn" href="#"><span class="icon-pound">#</span> <span class="tag-label">Tag</span></a>

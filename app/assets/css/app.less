@@ -3,7 +3,7 @@
 
 @outer-margin: 30px;
 @body-gap: 80px; // distance from the top of the page, needed because the header is position:fixed
-@sidebar-width: 200px;
+@sidebar-width: 150px;
 @inbox-min-width: 437px;
 @expanded-view-width: 400px;
 
@@ -133,13 +133,12 @@ body.drop {
 	padding:@body-gap @outer-margin @outer-margin @outer-margin;
 
 	#sidebar {
-    box-shadow: inset -3px -3px 5px 0px rgba(0, 0, 0, 0.3);
-    .border-radius(5px 0 0 5px);
-    border-top:1px solid rgba(0, 0, 0, 0.15);
-    border-left:1px solid rgba(0, 0, 0, 0.15);
-    border-bottom:1px solid rgba(0, 0, 0, 0.15);
+    //box-shadow: inset -3px -3px 5px 0px rgba(0, 0, 0, 0.3);
+    //border-top:1px solid rgba(0, 0, 0, 0.15);
+    //border-left:1px solid rgba(0, 0, 0, 0.15);
+    //border-bottom:1px solid rgba(0, 0, 0, 0.15);
     box-sizing:border-box;
-    #gradient > .vertical(#444, #555);
+    //#gradient > .vertical(#444, #555);
 		min-width:@sidebar-width;
 		max-width:@sidebar-width;
 		width:@sidebar-width;
@@ -180,7 +179,10 @@ body.drop {
 		ul.sidebar-nav {
       list-style-type:none;
       margin:0;
-			padding:5px 0;
+			//padding:5px 0;
+			position:fixed;
+			width:200px;
+			left:0;
 			li.add-notebook {
 				a {
 					font-size:0.9em;
@@ -189,18 +191,27 @@ body.drop {
 			}
       li {
 				position:relative;
-      	padding:15px 10px;
+      	padding:10px 5px;
 				background:url('/img/dark_wall.png');
-				margin:2px 0 2px -15px;
-				.border-radius(10px 0 0 10px);
+				margin:2px 0 2px 0;
+				float:left;
+				clear:both;
+				//.border-radius(0 5px 5px 0);
         a {
 					color:#f0f0f0;
         }
 				i {
-					position:absolute;
-					right:10px;
+					margin-left:5px;
+				}
+				&:first-child {
+					padding-right:8px;
 				}
       }
+			li.green { background:@green; }
+			li.blue { background:@blue; }
+			li.yellow { background:@yellow; }
+			li.orange { background:@orange; }
+			li.red { background:@red; }
     }
 
 		.add-group {
@@ -215,6 +226,9 @@ body.drop {
   #inbox {
     box-sizing:border-box;
     //background:#fff url('/img/furley_bg.png');
+    .border-radius(5px 0px 0px 5px);
+		border-left:1px solid rgba(0, 0, 0, 0.15);
+		border-bottom:1px solid rgba(0, 0, 0, 0.15);
     min-width:@inbox-min-width;
     height:100%;
 		display:table-cell;
@@ -226,17 +240,18 @@ body.drop {
 			height:100%;
 			overflow:auto;
 			box-sizing:border-box;
+    	.border-radius(5px 0px 0px 5px);
 		}
 		.inbox-controls {
 			padding:10px;
 			box-sizing:border-box;
 			border-top:1px solid rgba(0, 0, 0, 0.15);
+			border-bottom:1px solid rgba(0, 0, 0, 0.15);
 			height:55px;
 			position:relative;
-			right:1px;
 			z-index:9;
-			border-bottom:1px solid rgba(0, 0, 0, 0.15);
 			#gradient > .vertical(#fff, #eee);
+    	.border-radius(5px 0 0 5px);
 			.btn-toolbar {
 				margin:2px 0 0 0;
 			}
@@ -350,6 +365,7 @@ ul.notes_board {
 	margin:0;
 	list-style-type:none;
 	width:100%;
+  .border-radius(0px 0px 0px 5px);
 	.completed {
 		text-decoration: line-through;
 	}
