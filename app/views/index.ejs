@@ -32,10 +32,10 @@
 				</div>
 
 				<ul class="notebooks sidebar-nav">
-					<li><a href="#" class="push">All Notes</a></li>
+					<li><a href="/" class="query" data-param="notebooks" data-param-val="">All Notes</a></li>
 					<% for(var i=0; i<notebooks.length; i++) { %>	
 						<li data-id="<%= notebooks[i]._id %>" class="<%= notebooks[i].color %>">
-						<a href="/notes?notebooks=<%= notebooks[i].name %>" class="navigate">@<%= notebooks[i].name %></a>
+						<a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
 							<a href="/notebooks/<%= notebooks[i]._id %>/edit" data-id="<%= notebooks[i]._id %>" class="push"><i class="icon-pencil"></i></a>
 						</li>
 					<% } %>
@@ -52,17 +52,18 @@
 							<a href="/notes" class="btn navigate"><i class="icon-calendar"></i></a>
 						</div>
 						<div class="btn-group">
-							<a class="btn" href="#"><span class="icon-pound">#</span> <span class="tag-label">Tag</span></a>
+							<a class="btn" href="#"><span class="icon-pound">#</span> <span class="tag-label">None</span></a>
 							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 							<ul class="dropdown-menu">
+								<li><a href="#" class="query" data-param="tags" data-param-val="">None</a></li>
 								<% for(var i=0; i<tags.length; i++) {  %>	
-									<li><a href="/notes?tags=<%= tags[i]._id  %>" class="navigate"><%= tags[i]._id  %></a></li>
+									<li><a href="#" class="query" data-param="tags" data-param-val="<%= tags[i]._id %>"><%= tags[i]._id %></a></li>
 								<% } %>
 							</ul>
 						</div>
 						<div class="btn-group">
-							<a href="/notes?order=desc" class="order btn" data-direction="desc"><i class="icon-chevron-down"></i></a>
-							<a href="/notes?order=asc" class="order btn" data-direction="asc"><i class="icon-chevron-up"></i></a>
+							<a href="#" class="query btn" data-param="order" data-param-val="desc"><i class="icon-chevron-down"></i></a>
+							<a href="#" class="query btn" data-param="order" data-param-val="asc"><i class="icon-chevron-up"></i></a>
 						</div>
 						
 						<div class="search pull-right">

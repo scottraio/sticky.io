@@ -47,3 +47,19 @@ window.notebook_names = () ->
 	for notebook in notebooks
 		names.push '@' + notebook.name
 	return names
+
+window.add_or_replace_query_var = (uri, key, value) ->
+	re = new RegExp("([?|&])" + key + "=.*?(&|$)", "i")
+	separator = if uri.indexOf('?') isnt -1 then "&" else "?"
+	if uri.match(re)
+		return uri.replace(re, '$1' + key + "=" + value + '$2')
+	else
+		return uri + separator + key + "=" + value
+
+window.remove_query_var = (uri, key) ->
+	re 				= new RegExp("&?" + key + "=.*?(&|$)", "i")
+
+	if uri.match(re)
+		return uri.replace(re, '')
+	else
+		return uri

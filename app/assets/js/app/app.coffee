@@ -9,7 +9,7 @@ class App.Main extends Backbone.View
 	events:
 		"click #delete-note .danger" 	: "delete_note"
 		"click a.navigate" 						: "link_to_fragment"
-		"click a.order"								: "link_to_sort"
+		"click a.query"								: "link_to_query"
 		"click a.push" 								: "link_to_push"
 		
 	initialize: ->
@@ -49,11 +49,13 @@ class App.Main extends Backbone.View
 				$('#delete-note').modal('hide')
 		return false
 
-	link_to_sort: (e) ->
-		direction = $(e.currentTarget).attr('data-direction')
-		search = document.location.search.replace(/(&|order=)[^\&]+/, '')
-		search = search + "&order=#{direction}"
-		navigate document.location.pathname + search
+	link_to_query: (e) ->
+		param = $(e.currentTarget).attr('data-param')
+		value = $(e.currentTarget).attr('data-param-val')
+		if value
+			navigate '/notes' + add_or_replace_query_var(document.location.search, param, value)
+		else
+			navigate '/notes' + remove_query_var(document.location.search, param)
 		return false
 	
 	link_to_fragment: (e) ->

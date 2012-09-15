@@ -39,6 +39,7 @@ class App.Views.Notes.Index extends Backbone.View
 			is_taskable					: () -> true if this.message && this.message.indexOf('#todo') > 0
 			has_domains					: () -> true if this._domains && this._domains.length > 0
 			domain							: () -> this.url.toLocation().hostname if this.url
+			more_link						: () -> window.location.pathname
 
 		@ui_after_hook()
 
@@ -130,10 +131,51 @@ class App.Views.Notes.Index extends Backbone.View
 		window.dnd = new App.Views.Notes.DnD(id: @options.id)
 		window.dnd.acts_as_draggable $('ul.notes_board li:not(.stacked)', @el)
 		window.dnd.acts_as_droppable $('ul.notes_board li', @el)
-		
+	
+		# make the inbox scroll to infinity
+		@infinite_scroll()
+			
 		# resolve any images
 		@auto_image_resolution(@notes)
 
 	format_date: (date) ->
 		date = new Date(date)
 		return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear()
+
+
+	infinite_scroll: () ->
+		$('ul.notes_board').infinitescroll
+			loading:
+				finished: undefined,
+				finishedMsg: "<em>Congratulations, you've reached the end of the internet.</em>",
+				img: "http://www.infinite-scroll.com/loading.gif",
+				msg: null,
+				msgText: "<em>Loading the next set of posts...</em>",
+				selector: null,
+				speed: 'fast',
+				start: undefined
+			state:
+				isDuringAjax: false,
+				isInvalidPage: false,
+				isDestroyed: false,
+				isDone: false, # For when it goes all the way through the archive.
+				isPaused: false,
+				currPage: 1
+			callback: undefined,
+			debug: false,
+			behavior: undefined,
+			binder: $(window), # used to cache the selector
+			nextSelector: "div.navigation a:first",
+			navSelector: "div.navigation",
+			contentSelector: null, # rename to pageFragment
+			extraScrollPx: 150,
+			itemSelector: "div.post",
+			animate: false,
+			pathParse: undefined,
+			dataType: 'html',
+			appendCallback: true,
+			bufferPx: 40,
+			errorCallback: () ->,
+			infid: 0, # Instance ID
+			pixelsFromNavToBottom: undefined,
+			path: undefined

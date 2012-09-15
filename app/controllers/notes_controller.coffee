@@ -52,8 +52,6 @@ exports.index = (req, res) ->
 			end 	= new Date(req.query.end)
 
 			note.where('created_at').equals({$gte: start, $lt: end})
-		else
-			note.where('created_at').equals({$gte: threedaysago}) unless criteria
 
 		#
 		# Only show root level elements unless we are querying
