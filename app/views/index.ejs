@@ -35,7 +35,7 @@
 					<li><a href="/" class="query" data-param="notebooks" data-param-val="">All Notes</a></li>
 					<% for(var i=0; i<notebooks.length; i++) { %>	
 						<li data-id="<%= notebooks[i]._id %>" class="<%= notebooks[i].color %>">
-						<a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
+							<a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
 							<a href="/notebooks/<%= notebooks[i]._id %>/edit" data-id="<%= notebooks[i]._id %>" class="push"><i class="icon-pencil"></i></a>
 						</li>
 					<% } %>
@@ -56,7 +56,7 @@
 						<div class="btn-group">
 							<a class="btn" href="#"><span class="icon-pound">#</span> <span class="tag-label">None</span></a>
 							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-							<ul class="dropdown-menu">
+							<ul class="tags dropdown-menu">
 								<li><a href="#" class="query" data-param="tags" data-param-val="">None</a></li>
 								<% for(var i=0; i<tags.length; i++) {  %>	
 									<li><a href="#" class="query" data-param="tags" data-param-val="<%= tags[i]._id %>"><%= tags[i]._id %></a></li>

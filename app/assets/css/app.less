@@ -232,6 +232,7 @@ body.drop {
     min-width:@inbox-min-width;
     height:100%;
 		display:table-cell;
+		z-index:10;
 		vertical-align:top;
 		position:relative;
 		overflow:hidden;
@@ -248,7 +249,7 @@ body.drop {
 			border-bottom:1px solid rgba(0, 0, 0, 0.15);
 			height:55px;
 			position:relative;
-			z-index:9;
+			z-index:11;
 			#gradient > .vertical(#fff, #eee);
     	.border-radius(5px 0 0 0);
 			.btn-toolbar {
@@ -256,8 +257,11 @@ body.drop {
 				.single {
 					.border-radius(4px);
 				}
+				ul.tags {
+					position:absolute;
+					z-index:11;
+				}
 			}
-
 			.search {
 				width:200px;
 				form {
