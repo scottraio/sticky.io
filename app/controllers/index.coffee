@@ -33,6 +33,9 @@ app.get('/settings', ensureAuthenticated, UsersController.edit)
 # Forces registration for XMPP Roster
 app.get('/register', ensureAuthenticated, UsersController.register)
 
+# Dummy route for welcome dialog
+app.get('/welcome', ensureAuthenticated, NotesController.index)
+
 # Redirect the user to Google for authentication.  When complete, Google
 # will redirect the user back to the application at
 # /auth/google/callback
@@ -41,13 +44,11 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.g
 # Google will redirect the user to this URL after authentication.  Finish
 # the process by verifying the assertion.  If valid, the user will be
 # logged in.  Otherwise, authentication has failed.
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req,res) -> res.redirect('/') )
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req,res) -> res.redirect('/welcome') )
 
 #
 # Notes
 #
-app.post('/notes/filter.:format?', NotesController.filter)
-app.get('/notes/list.:format?', NotesController.index)
 app.get('/notes.:format?', ensureAuthenticated, NotesController.index)
 app.get('/notes/:id.:format?', ensureAuthenticated, NotesController.show)
 app.get('/notes/new.:format?', ensureAuthenticated, NotesController.new)

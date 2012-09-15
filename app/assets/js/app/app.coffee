@@ -9,11 +9,15 @@ class App.Main extends Backbone.View
 	events:
 		"click #delete-note .danger" 	: "delete_note"
 		"click a.navigate" 						: "link_to_fragment"
+		"click a.toggle-datepicker" 	: "link_to_calendar"
 		"click a.query"								: "link_to_query"
 		"click a.push" 								: "link_to_push"
 		
 	initialize: ->
 		$('.dropdown-toggle').dropdown()
+
+		$(document.body).click () ->
+			$('.date-picker').hide()
 
 		today					= new Date()
 		threedaysago 	= new Date(new Date().setDate(today.getDate() - 3))
@@ -49,6 +53,11 @@ class App.Main extends Backbone.View
 				$('#delete-note').modal('hide')
 		return false
 
+	link_to_calendar: (e) ->
+		e.stopPropagation()
+		$('.date-picker').toggle()
+		return false
+
 	link_to_query: (e) ->
 		param = $(e.currentTarget).attr('data-param')
 		value = $(e.currentTarget).attr('data-param-val')
@@ -65,4 +74,4 @@ class App.Main extends Backbone.View
 	link_to_push: (e) ->
 		push_url $(e.currentTarget).attr("href")
 		return false
-	
+

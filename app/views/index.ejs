@@ -42,14 +42,16 @@
 					<li class="add-notebook"><a href="/notebooks/new" class="push">Add a Notebook</a></li>
 				</ul>
 				
-				<div class="date-picker hide"></div>
       </div>
 
 			<div id="inbox">
 				<div class="inbox-controls">
 					<div class="btn-toolbar">
 						<div class="btn-group">
-							<a href="/notes" class="btn navigate"><i class="icon-calendar"></i></a>
+							<a href="#" class="btn single toggle-datepicker"><i class="icon-calendar"></i></a>
+							<div class="date-picker hide">
+								<!-- calendar loads here -->
+							</div>
 						</div>
 						<div class="btn-group">
 							<a class="btn" href="#"><span class="icon-pound">#</span> <span class="tag-label">None</span></a>
@@ -116,6 +118,17 @@
 		<div class="modal-footer">
 			<a href="#" class="btn danger">Yes</a>
 			<a href="javascript:$('#delete-note').modal('hide')" class="btn secondary">No</a>
+		</div>
+	</div>
+	
+	<div id="welcome" class="modal hide fade">
+		<div class="modal-header">
+			<a href="#" class="close">&times;</a>
+			<h3>Welcome</h3>
+		</div>
+		<div class="modal-body">
+		</div>
+		<div class="modal-footer">
 		</div>
 	</div>
 	

@@ -240,7 +240,6 @@ body.drop {
 			height:100%;
 			overflow:auto;
 			box-sizing:border-box;
-    	.border-radius(5px 0px 0px 5px);
 		}
 		.inbox-controls {
 			padding:10px;
@@ -251,9 +250,12 @@ body.drop {
 			position:relative;
 			z-index:9;
 			#gradient > .vertical(#fff, #eee);
-    	.border-radius(5px 0 0 5px);
+    	.border-radius(5px 0 0 0);
 			.btn-toolbar {
 				margin:2px 0 0 0;
+				.single {
+					.border-radius(4px);
+				}
 			}
 
 			.search {
@@ -365,7 +367,6 @@ ul.notes_board {
 	margin:0;
 	list-style-type:none;
 	width:100%;
-  .border-radius(0px 0px 0px 5px);
 	.completed {
 		text-decoration: line-through;
 	}
