@@ -16,10 +16,11 @@ encodePassword = (pass) ->
 	return SHA2.b64_hmac(pass, salt)
 
 UserSchema = new Schema
-	name  	 	: { type: String, required: true, trim: true }
-	email	 		: { type: String, required: true, trim: true, unique: true, lowercase: true }
-	password 	: { type: String, required: true, set: encodePassword }
-	googleId 	: { type: String }
+	name  	 				: { type: String, required: true, trim: true }
+	email	 					: { type: String, required: true, trim: true, unique: true, lowercase: true }
+	password 				: { type: String, required: true, set: encodePassword }
+	googleId 				: { type: String }
+	last_sign_in_at : { type: Date, default: null }
 
 UserSchema.path('email').validate 		Base.uniqueFieldInsensitive('User', 'email'), 'unique'
 UserSchema.path('email').validate 		Base.emailFormat, 'format'

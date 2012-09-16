@@ -23,6 +23,12 @@ class App.Main extends Backbone.View
 		window.current_page = window.get_query_val('page') || 1
 
 		#
+		#
+		# enable the carousel for first time users
+		$('.carousel').carousel('pause')
+		
+
+		#
 		# date picker stuff
 		$(document.body).click () ->
 			$('.date-picker').hide()

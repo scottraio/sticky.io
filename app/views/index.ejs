@@ -40,6 +40,7 @@
 						</li>
 					<% } %>
 					<li class="add-notebook"><a href="/notebooks/new" class="push">Add a Notebook</a></li>
+					<li class="add-notebook"><a href="/logout">Logout</a></li>
 				</ul>
 				
       </div>
@@ -122,11 +123,42 @@
 	</div>
 	
 	<div id="welcome" class="modal hide fade">
-		<div class="modal-header">
-			<a href="#" class="close">&times;</a>
-			<h3>Welcome</h3>
+		<div class="modal-body">	
+			<div id="myCarousel" class="carousel slide">
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="active item">
+						<p class="lead">
+							Welcome to Sticky! Return to GMail and accept the friend request. 
+						</p>
+						<img src="/img/welcome-gchat-accept.png" class="screenshot" />
+					</div>
+					<div class="item">
+						<p class="lead">
+							Attention Google Apps Users, additional steps are required. Your domain admin needs to 
+							setup special DNS entries (SRV records). This will enable your domain for XMPP.
+							<br /><br />
+							1. <a href="http://www.olark.com/gtalk/check_srv" target="_blank">How-to from Olark</a>
+							<br />
+							2. <a href="http://support.google.com/a/bin/answer.py?hl=en&answer=34143" target="_blank">Google's Intructions</a>
+						</p>
+					</div>
+					<div class="item">
+						<p class="lead">
+							Format your notes with @notebooks and #tags. Here are some examples:
+							<br />
+							<br />
+							<a>@home</a> pick up milk #todo
+							<br />
+							<a>@work</a> email john with proposal #followup
+						</p>
+					</div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
 		</div>
-		<div class="modal-body">
 		</div>
 		<div class="modal-footer">
 		</div>
