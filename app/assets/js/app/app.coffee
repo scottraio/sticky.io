@@ -67,12 +67,16 @@ class App.Main extends Backbone.View
 		return false
 
 	link_to_query: (e) ->
+		# reset pagination
+		querystring = remove_query_var(document.location.search, 'page')
+		window.current_page = 1
+
 		param = $(e.currentTarget).attr('data-param')
 		value = $(e.currentTarget).attr('data-param-val')
 		if value
-			navigate '/notes' + add_or_replace_query_var(document.location.search, param, value)
+			navigate '/notes' + add_or_replace_query_var(querystring, param, value)
 		else
-			navigate '/notes' + remove_query_var(document.location.search, param)
+			navigate '/notes' + remove_query_var(querystring, param)
 		return false
 	
 	link_to_fragment: (e) ->

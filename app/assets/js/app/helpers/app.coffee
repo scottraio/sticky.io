@@ -57,7 +57,7 @@ window.add_or_replace_query_var = (uri, key, value) ->
 		return uri + separator + key + "=" + value
 
 window.remove_query_var = (uri, key) ->
-	re 				= new RegExp("&?" + key + "=.*?(&|$)", "i")
+	re = new RegExp("&?" + key + "=.*?(&|$)", "i")
 
 	if uri.match(re)
 		return uri.replace(re, '')
