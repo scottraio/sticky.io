@@ -14,8 +14,16 @@ class App.Main extends Backbone.View
 		"click a.push" 								: "link_to_push"
 		
 	initialize: ->
+		#
+		# dropdown any dropdowns
 		$('.dropdown-toggle').dropdown()
 
+		#
+		# set the current page
+		window.current_page = window.get_query_val('page') || 1
+
+		#
+		# date picker stuff
 		$(document.body).click () ->
 			$('.date-picker').hide()
 

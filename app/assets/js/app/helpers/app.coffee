@@ -63,3 +63,7 @@ window.remove_query_var = (uri, key) ->
 		return uri.replace(re, '')
 	else
 		return uri
+
+window.get_query_val = (key) ->
+	match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search)
+	return match && decodeURIComponent(match[1].replace(/\+/g, ' '))

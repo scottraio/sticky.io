@@ -14,21 +14,20 @@ class App.Views.Notes.Index extends Backbone.View
 		if window.location.search
 			@notes.url 	= window.location.pathname + ".json" + window.location.search
 
-	render: (items) ->
+	render: () ->
 		self = @
 		@notes.fetch
 			success: (col, notes) ->
 				self.notes = notes
+				self.ui_before_hook()
 				self.load_view()
-				$(".crumb-bar").html("<a href=\"/notes\" class=\"navigate headline\">Home</a>")
+				self.ui_after_hook()
 
 	load_view: () ->
-		self = @ 
-
-		@ui_before_hook()
+		self = @
 
 		# setup the notes_board
-		$(@el).html ich.notes_board
+		notes_html =  ich.notes_board
 			notes								: @notes
 			note_message				: () -> escape(this.message)
 			created_at_in_words	: () -> this.created_at && $.timeago(this.created_at)
@@ -40,8 +39,11 @@ class App.Views.Notes.Index extends Backbone.View
 			has_domains					: () -> true if this._domains && this._domains.length > 0
 			domain							: () -> this.url.toLocation().hostname if this.url
 			more_link						: () -> window.location.pathname
-
-		@ui_after_hook()
+	
+		if @params && @params.page
+			$(@el).append notes_html
+		else
+			$(@el).html notes_html			
 
 	show: (e) ->
 		id = $(e.currentTarget).attr('data-id')
@@ -122,10 +124,11 @@ class App.Views.Notes.Index extends Backbone.View
 		$('.dropdown-toggle').dropdown()
 		
 		if @params && @params.tags
-			$('.date-picker').DatePickerClear()
+			$('.tag-button').addClass('btn-primary')
 			$('.tag-label').html(@params.tags)
 		else
-			$('.tag-label').html('Tag')
+			$('.tag-button').removeClass('btn-primary')
+			$('.tag-label').html('None')
 		
 		# Drag and Drop
 		window.dnd = new App.Views.Notes.DnD(id: @options.id)
@@ -142,40 +145,12 @@ class App.Views.Notes.Index extends Backbone.View
 		date = new Date(date)
 		return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear()
 
-
 	infinite_scroll: () ->
-		$('ul.notes_board').infinitescroll
-			loading:
-				finished: undefined,
-				finishedMsg: "<em>Congratulations, you've reached the end of the internet.</em>",
-				img: "http://www.infinite-scroll.com/loading.gif",
-				msg: null,
-				msgText: "<em>Loading the next set of posts...</em>",
-				selector: null,
-				speed: 'fast',
-				start: undefined
-			state:
-				isDuringAjax: false,
-				isInvalidPage: false,
-				isDestroyed: false,
-				isDone: false, # For when it goes all the way through the archive.
-				isPaused: false,
-				currPage: 1
-			callback: undefined,
-			debug: false,
-			behavior: undefined,
-			binder: $(window), # used to cache the selector
-			nextSelector: "div.navigation a:first",
-			navSelector: "div.navigation",
-			contentSelector: null, # rename to pageFragment
-			extraScrollPx: 150,
-			itemSelector: "div.post",
-			animate: false,
-			pathParse: undefined,
-			dataType: 'html',
-			appendCallback: true,
-			bufferPx: 40,
-			errorCallback: () ->,
-			infid: 0, # Instance ID
-			pixelsFromNavToBottom: undefined,
-			path: undefined
+		self = @
+		$('#stage').scroll () ->
+			# We check if we're at the bottom of the scrollcontainer
+			if self.notes.length > 0 && ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight())
+				# If we're at the bottom, show the overlay and retrieve the next page
+				window.current_page += 1
+				navigate '/notes' + add_or_replace_query_var(document.location.search, 'page', window.current_page)
+				

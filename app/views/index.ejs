@@ -32,7 +32,7 @@
 				</div>
 
 				<ul class="notebooks sidebar-nav">
-					<li><a href="/" class="query" data-param="notebooks" data-param-val="">All Notes</a></li>
+					<li><a href="/" class="navigate">All Notes</a></li>
 					<% for(var i=0; i<notebooks.length; i++) { %>	
 						<li data-id="<%= notebooks[i]._id %>" class="<%= notebooks[i].color %>">
 							<a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
@@ -54,8 +54,8 @@
 							</div>
 						</div>
 						<div class="btn-group">
-							<a class="btn" href="#"><span class="icon-pound">#</span> <span class="tag-label">None</span></a>
-							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+							<a class="btn tag-button" href="#"><span class="icon-pound">#</span> <span class="tag-label">None</span></a>
+							<a class="btn dropdown-toggle tag-button" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 							<ul class="tags dropdown-menu">
 								<li><a href="#" class="query" data-param="tags" data-param-val="">None</a></li>
 								<% for(var i=0; i<tags.length; i++) {  %>	
