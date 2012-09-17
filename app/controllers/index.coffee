@@ -44,7 +44,17 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.g
 # Google will redirect the user to this URL after authentication.  Finish
 # the process by verifying the assertion.  If valid, the user will be
 # logged in.  Otherwise, authentication has failed.
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req,res) -> if req.user.last_sign_in_at is null then res.redirect('/welcome') else res.redirect('/') )
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req,res) -> 
+	new_user = true if req.user.last_sign_in_at is null
+	app.models.User.findOne {'_id':req.user._id}, (err, user) ->
+		user.set 'last_sign_in_at', new Date()	
+		user.save (err,user) ->
+			console.log(err) if err
+			if new_user
+				res.redirect('/welcome') 
+			else 
+				res.redirect('/') 
+)
 
 #
 # Notes
