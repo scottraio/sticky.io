@@ -138,22 +138,21 @@ class App.Views.Notes.Index extends Backbone.View
 		@auto_image_resolution(@notes)
 
 	select_ui_controls: () ->
-		if @params
-			if @params.tags
-				$('.tag-button').addClass('btn-primary')
-				$('.tag-label').html(@params.tags)
-			else
-				$('.tag-button').removeClass('btn-primary')
-				$('.tag-label').html('None')
+		if @params && @params.tags
+			$('.tag-button').addClass('btn-primary')
+			$('.tag-label').html(@params.tags)
+		else
+			$('.tag-button').removeClass('btn-primary')
+			$('.tag-label').html('None')
 
-			if @params.notebooks
-				# reset the notebook nav
-				$("ul.sidebar-nav li").removeClass('selected')
-				$("a[data-param-val=#{@params.notebooks}]").parents('li').addClass('selected')
+		if @params && @params.notebooks
+			# reset the notebook nav
+			$("ul.sidebar-nav li").removeClass('selected')
+			$("a[data-param-val=#{@params.notebooks}]").parents('li').addClass('selected')
 
-			if @params.order
-				$('.inbox-controls a.query').removeClass('active')
-				$("a[data-param-val=#{@params.order}]").addClass('active')
+		if @params && @params.order
+			$('.inbox-controls a.query').removeClass('active')
+			$("a[data-param-val=#{@params.order}]").addClass('active')
 
 	format_date: (date) ->
 		date = new Date(date)
