@@ -18,19 +18,21 @@
 			</div>
 		</div>
 	</div>
-	<div class="expanded-note">
-		<div id="editable-message" contenteditable="true">{{!note message gets loaded here}}</div>
+	<div class="expanded-wrapper">
+		<div class="expanded-note">
+			<div id="editable-message" contenteditable="true">{{!note message gets loaded here}}</div>
+		</div>
+		{{#has_subnotes}}
+		<ul class="timeline">
+			{{#notes}}
+				<li class="sticky card subnote" data-id="{{_id}}" draggable="true">
+					{{{message}}}
+					<span class="timestamp">{{stacked_at_in_date}}</span>
+				</li>
+			{{/notes}}
+		</ul>	
+		{{/has_subnotes}}
 	</div>
-	{{#has_subnotes}}
-	<ul class="timeline">
-		{{#notes}}
-			<li class="sticky card subnote" data-id="{{_id}}" draggable="true">
-				{{{message}}}
-				<span class="timestamp">{{stacked_at_in_date}}</span>
-			</li>
-		{{/notes}}
-	</ul>	
-	{{/has_subnotes}}
 </script>
 
 <!--

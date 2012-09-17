@@ -45,7 +45,9 @@ class App.Views.Notes.Show extends Backbone.View
 				# set the editable message with the parent note's message
 				$('#editable-message', self.el).html(parent.message)
 				$('#editable-message').focus()
-				
+
+				$('.subnote').autolink()
+
 				# Drag and Drop
 				window.dnd.current_note_id = parent._id
 				window.dnd.acts_as_droppable $(self.el)

@@ -26,7 +26,10 @@ class App.Main extends Backbone.View
 		#
 		# enable the carousel for first time users
 		$('.carousel').carousel('pause')
-		
+	
+		#
+		# animate the sidebar nav a bit
+		$('ul.sidebar-nav').addClass('focus')
 
 		#
 		# date picker stuff
@@ -76,7 +79,7 @@ class App.Main extends Backbone.View
 		# reset pagination
 		querystring = remove_query_var(document.location.search, 'page')
 		window.current_page = 1
-
+		# setup the querystring and navigate it
 		param = $(e.currentTarget).attr('data-param')
 		value = $(e.currentTarget).attr('data-param-val')
 		if value
