@@ -15,6 +15,10 @@ class App.Main extends Backbone.View
 		
 	initialize: ->
 		#
+		# show welcome screen to people who haven't seen it yet
+		navigate '/welcome' if current_user.last_sign_in_at is null
+
+		#
 		# dropdown any dropdowns
 		$('.dropdown-toggle').dropdown()
 
@@ -35,6 +39,10 @@ class App.Main extends Backbone.View
 		# date picker stuff
 		$(document.body).click () ->
 			$('.date-picker').hide()
+
+		#
+		# track the request
+		mixpanel.people.identify current_user._id
 
 		today					= new Date()
 		threedaysago 	= new Date(new Date().setDate(today.getDate() - 3))
