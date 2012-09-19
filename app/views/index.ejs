@@ -158,32 +158,7 @@
 		</div>
 	</div>
 	
-	<div id="add-notebook" class="modal hide fade">
-		<div class="modal-header">
-			<a href="#" class="close">&times;</a>
-			<h3>Add Notebook</h3>
-		</div>
-		
-		<form action="/notebooks" method="post">
-		<div class="modal-body">
-			<label>Notebook name</label>
-			<input type="text" placeholder="Enter notebook name e.g. @work" name="name" />
-			<div class="hide">
-				<label>Members</label>
-				<textarea placeholder="Enter email addresses of group members" name="members"></textarea>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button type="submit" class="btn primary">Add</button>
-			<a href="javascript:$('#add-notebook').modal('hide')" class="btn secondary">Cancel</a>
-		</div>
-		</form>
-	</div>
 
-
-	<div id="edit-notebook" class="modal hide fade">
-		<!-- content gets loaded here -->
-	</div>
 
 
 <%- partial('notebooks') %>

@@ -6,9 +6,11 @@ class App.Views.Notebooks.New extends Backbone.View
 		"submit form" : "submit"
 
 	initialize: ->
+		reset_events @
 		@notebook = new App.Models.Notebook()
 	
 	render: ->
+		$(@el).html ich.edit_notebook_content()
 		$(@el).modal()
 
 	submit: (e) ->
