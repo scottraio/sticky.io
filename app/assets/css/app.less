@@ -4,7 +4,7 @@
 @outer-margin: 30px;
 @body-gap: 80px; // distance from the top of the page, needed because the header is position:fixed
 @sidebar-width: 150px;
-@inbox-min-width: 437px;
+@inbox-min-width: 502px;
 @expanded-view-width: 400px;
 
 html {
@@ -15,7 +15,7 @@ body {
   font-family:ratio;
 	height:100%;
 	overflow:hidden;
-	background:url('/img/texturetastic_gray.png');
+	background:url('/img/furley_bg.png');
 	box-sizing:border-box;
 }
 
@@ -49,6 +49,7 @@ body.drop {
 	font-size:1.8em;
 	color:#000;
 	line-height:1.15em;
+	z-index: 12;
   position:absolute;
   right:35px;
   top:15px;
@@ -67,33 +68,27 @@ body.drop {
 #new-sticky-header {
   border-top:2px solid rgb(171, 209, 75);
 	background:rgba(255, 255, 255, 0.96);
-  padding:10px;
+  padding:14px;
   width:100%;
-  position:fixed;
-  z-index:99;
+  position:absolute;
+  background-color:#fff;
+  z-index:11;
+  font-family: ratio;
   border-bottom:1px solid #ccc;
   .box-shadow(0 1px 3px rgba(100, 100, 100, 0.2);
-  input::-webkit-input-placeholder {
-    color:#e0e0e0;
-    font-weight:400;
-  }
-  input[type=text] {
-    border:0;
-    display:block;
-    width:100%;
-    font-size:1.6em;
-    margin:0;
-    line-height:1.2em;
-    background:transparent;
-    height:25px;
-    font-family:ratio;
-    .box-shadow(none);
-    -webkit-appearance:none;
-    &:focus {
-      .box-shadow(none);
-    }
+  font-size:1.6em;
+  margin:0;
+  line-height:1.2em;
+  box-sizing:border-box;
+  padding-right:100px;
+  &:focus {
+  	outline:none;
   }
 	form { margin:0; padding:0 }
+}
+
+#new-sticky-header.idle {
+	color:#ccc;
 }
 
 .unknown-group-link {
@@ -131,6 +126,7 @@ body.drop {
 	box-sizing:border-box;
 	position:fixed;
 	padding:@body-gap @outer-margin @outer-margin @outer-margin;
+
 
 	#sidebar {
     //box-shadow: inset -3px -3px 5px 0px rgba(0, 0, 0, 0.3);
@@ -242,8 +238,8 @@ body.drop {
     box-sizing:border-box;
     //background:#fff url('/img/furley_bg.png');
     .border-radius(5px 0px 0px 5px);
-		border-left:1px solid rgba(0, 0, 0, 0.15);
-		border-bottom:1px solid rgba(0, 0, 0, 0.15);
+		border-left:1px solid rgba(0, 0, 0, 0.2);
+		border-bottom:1px solid rgba(0, 0, 0, 0.2);
     min-width:@inbox-min-width;
     height:100%;
 		display:table-cell;
@@ -251,6 +247,7 @@ body.drop {
 		vertical-align:top;
 		position:relative;
 		overflow:hidden;
+		.box-shadow(-1px 1px 3px rgba(100, 100, 100, 0.2));
 		#stage {
 			background-color:#fff;
 			height:100%;
@@ -260,8 +257,8 @@ body.drop {
 		.inbox-controls {
 			padding:10px;
 			box-sizing:border-box;
-			border-top:1px solid rgba(0, 0, 0, 0.15);
-			border-bottom:1px solid rgba(0, 0, 0, 0.15);
+			border-top:1px solid rgba(0, 0, 0, 0.1);
+			border-bottom:1px solid rgba(0, 0, 0, 0.1);
 			height:55px;
 			position:relative;
 			z-index:11;
@@ -278,13 +275,12 @@ body.drop {
 				}
 			}
 			.search {
-				width:200px;
+				
 				form {
 					margin:0;
 					padding:0;	
 					float:none;
 					input[name=keyword] {
-						width:100%;
 						line-height:1.6em;
 						background-color:#fff;
 						.border-radius(8px);
@@ -306,24 +302,28 @@ body.drop {
 		width:@expanded-view-width;
     box-sizing:border-box;
 		display:table-cell;
-    background:#fff url('/img/furley_bg.png');
+    //background:#fff url('/img/furley_bg.png');
+    background:rgba(255, 255, 255, 0.4);
 		vertical-align:top;
-		border-top:1px solid rgba(0, 0, 0, 0.15);
-		border-bottom:1px solid rgba(0, 0, 0, 0.15);
-		border-right:1px solid rgba(0, 0, 0, 0.15);
-		border-left:1px solid rgba(0, 0, 0, 0.15);
+		border-top:1px solid rgba(0, 0, 0, 0.1);
+		border-bottom:1px solid rgba(0, 0, 0, 0.2);
+		border-right:1px solid rgba(0, 0, 0, 0.2);
+		border-left:1px solid rgba(0, 0, 0, 0.2);
+		.box-shadow(1px 1px 3px rgba(100, 100, 100, 0.2));
+
 		overflow:hidden;
     .border-radius(0 5px 5px 0);
 		.expanded-wrapper {
 			height:100%;
 			overflow:auto;
+			padding-bottom:55px;
 		}
 		.expanded-actions {
 			box-sizing:border-box;
 			height:54px;
 			padding:10px;
     	.border-radius(0 5px 0 0);
-			border-bottom:1px solid rgba(0, 0, 0, 0.15);
+			border-bottom:1px solid rgba(0, 0, 0, 0.1);
 			#gradient > .vertical(#fff, #eee);
 			.btn-toolbar {
 				margin:2px 0 0 0;
@@ -335,7 +335,7 @@ body.drop {
 			}
 		}
 		.expanded-note {
-			border-bottom:1px solid rgba(0, 0, 0, 0.15);
+			border-bottom:1px solid rgba(0, 0, 0, 0.1);
 			position:relative;
 			z-index:10;
 			background-color:#fff;
@@ -527,6 +527,11 @@ ul.notes_board {
 		//border: 2px solid rgba(82,168,236,.8) !important;
 		//.transition(border linear .2s);
 	}
+	li.green { border-left:2px solid @green; }
+	li.blue { border-left:2px solid @blue; }
+	li.yellow { border-left:2px solid @yellow; }
+	li.orange { border-left:2px solid @orange; }
+	li.red { border-left:2px solid @red; }
 }
 
 

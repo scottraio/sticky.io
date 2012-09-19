@@ -5,8 +5,8 @@
 	<div class="logo web-logo">STICKY</div>
 
 	<div class="web-header">
-		<h1>Organize your life</h1>
-		<h2 class="tk-proxima-nova-sc-osf-ext-cond">Capturing thoughts that stick, right from Google Talk.</h2>
+		<h1>Oraganize your life</h1>
+		<h2 class="tk-proxima-nova-sc-osf-ext-cond">Capturing thoughts that stick in realtime, right inside GTalk.</h2>
 		<a href="/auth/google" class="signon btn btn-large btn-primary"><img src="/img/google_plus_icon.png" /> Sign in with Google</a>
 	</div>
 
@@ -93,8 +93,8 @@
 	<div class="web-footer">
 		<div class="web-content container-fluid">
 			<div class="logo web-footer-logo">STICKY</div>
-			<a class="social-twitter"></a>
-			<a class="social-facebook"></a>
+			<a href="https://twitter.com/Stickyio" target="_blank" class="social-twitter"></a>
+			<a href="http://www.facebook.com/Stickyio" target="_blank" class="social-facebook"></a>
 		</div>	
 	</div>
 
@@ -107,7 +107,18 @@
 	<script>
 		$(document).ready(function() {
 			$('.carousel').carousel('pause')
-			mixpanel.track("Web Visit");
+			mixpanel.track('Web Visit');
+
+			$('body').scroll(function() {
+				console.log('test');
+				if ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight()) {
+					console.log('end')
+					mixpanel.track('Scrolled to end of page');
+				}
+			});
+			
+				
+				
 		})
 	</script>
 

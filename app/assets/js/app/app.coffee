@@ -15,10 +15,6 @@ class App.Main extends Backbone.View
 		
 	initialize: ->
 		#
-		# show welcome screen to people who haven't seen it yet
-		navigate '/welcome' if current_user.last_sign_in_at is null
-
-		#
 		# dropdown any dropdowns
 		$('.dropdown-toggle').dropdown()
 
@@ -27,13 +23,22 @@ class App.Main extends Backbone.View
 		window.current_page = window.get_query_val('page') || 1
 
 		#
+		# Mixpanel Integration
+		mixpanel.people.set
+			'$email': current_user.email,
+			'$name': current_user.name,
+			'$last_login': current_user.last_sign_in_at
+
 		#
 		# enable the carousel for first time users
 		$('.carousel').carousel('pause')
 	
 		#
 		# animate the sidebar nav a bit
-		$('ul.sidebar-nav').addClass('focus')
+		setTimeout((->						
+			$('ul.sidebar-nav').addClass('focus')
+		), 200)
+		
 
 		#
 		# date picker stuff

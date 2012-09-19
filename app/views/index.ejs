@@ -3,13 +3,10 @@
 <body>
 	<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 	<div class="backdrop"></div>
-
-  <div id="new-sticky-header">
-		<form action="/notes" method="post">	
-    	<input type="text" name="message" placeholder="What's on your mind?"/>
-		</form>
-    <div class="logo">STICKY</div>
-  </div>
+	<div class="logo">STICKY</div>
+	<form action="/"method="post">
+  	<div id="new-sticky-header" class="idle" contenteditable="true">What's on your mind?</div>
+	</div>
 
 
   <div class="main-wrapper container-fluid">
@@ -34,7 +31,7 @@
 				<ul class="notebooks sidebar-nav">
 					<li><a href="/" class="navigate">All Notes</a></li>
 					<% for(var i=0; i<notebooks.length; i++) { %>	
-						<li data-id="<%= notebooks[i]._id %>" class="<%= notebooks[i].color %>">
+						<li data-id="<%= notebooks[i]._id %>" data-name="<%= notebooks[i].name %>" data-color="<%= notebooks[i].color %>" class="<%= notebooks[i].color %>">
 							<a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
 							<a href="/notebooks/<%= notebooks[i]._id %>/edit" data-id="<%= notebooks[i]._id %>" class="push"><i class="icon-pencil"></i></a>
 						</li>
