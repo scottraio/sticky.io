@@ -5,7 +5,12 @@
 <script id="edit_notebook_content" type="text/html">	
 	<div class="modal-header">
 		<a href="#" class="close">&times;</a>
+		{{#is_new}}
+		<h3>Create a Notebook</h3>
+		{{/is_new}}
+		{{^is_new}}
 		<h3>Edit Notebook</h3>
+		{{/is_new}}
 	</div>
 	<form action="/notebooks/{{notebook._id}}" method="post">
 	<div class="modal-body">
