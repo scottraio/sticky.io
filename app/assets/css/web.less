@@ -69,17 +69,20 @@ img {
 
 .web-ui {
 	width:100%;
-	background-color:#194759;
+	background:url('/img/grey.png');
 	//background-color:#296B73;
-	#gradient > .vertical(#194759, #296B73);
-	padding:100px 0 150px 0;
+	padding:100px 0;
+	.item {
+		width:33%;
+		display:inline-block;
+		text-align:center;
+	}
 	h1 {
 		padding:0;
-		font-size:4em;
-		color:#fff;
+		font-size:2em;
+		color:#535353;
 		font-weight:normal;
-		text-align:center;
-		margin-bottom:50px;
+		margin-bottom:40px;
 	}
 	.arrow-column {
 		width:150px;
@@ -107,17 +110,13 @@ img {
 		}
 	}
 	img.screenshot {
-		border:1px solid rgba(0, 0, 0, 0.15);
-		.box-shadow(0 0 8px 2px rgba(0, 0, 0, 0.1);
-		.border-radius(5px);
 		margin:0 auto;
-		display:block;
 	}
 }
 
 .web-whatis {
 	width:100%;
-	background-color:#fff;
+	background:url('/img/grey.png');
 	//#gradient > .vertical(lighten(skyblue, 20%), #fff);
 	//background-color:skyblue;
 	.box-shadow(inset 0 3px 1px rgba(0, 0, 0, 0.15);
@@ -161,7 +160,7 @@ img {
 	margin:0;
 	min-height:500px;
 	padding:60px 0 0 0;
-	background-color:#eaeaea;
+	background:url('/img/rebel.png');
 	position:relative;
 	h1 {
 		font-size:2.6em;
