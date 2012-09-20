@@ -7,7 +7,7 @@ without_at_sign = (v) ->
 	return v.replace(/@/, '')
 
 NotebookSchema = new Schema
-	name  						: { type: String, required: true, trim: true, set: without_at_sign  }
+	name  						: { type: String, required: true, trim: true, set: without_at_sign, lowercase: true }
 	color							: { type: String, default: ''}
 	created_at				: { type: Date, required: true }
 	_owner 						: { type: Schema.ObjectId, ref: 'User' }

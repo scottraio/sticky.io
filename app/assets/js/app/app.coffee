@@ -9,11 +9,45 @@ class App.Main extends Backbone.View
 	events:
 		"click #delete-note .danger" 	: "delete_note"
 		"click a.navigate" 						: "link_to_fragment"
+		"click a.toggle-datepicker" 	: "link_to_calendar"
 		"click a.query"								: "link_to_query"
 		"click a.push" 								: "link_to_push"
 		
 	initialize: ->
+		#
+		# dropdown any dropdowns
 		$('.dropdown-toggle').dropdown()
+
+		#
+		# set the current page
+		window.current_page = window.get_query_val('page') || 1
+
+		#
+		# Mixpanel Integration
+		mixpanel.people.set
+			'$email': current_user.email,
+			'$name': current_user.name,
+			'$last_login': current_user.last_sign_in_at
+
+		#
+		# enable the carousel for first time users
+		$('.carousel').carousel('pause')
+	
+		#
+		# animate the sidebar nav a bit
+		setTimeout((->						
+			$('ul.sidebar-nav').addClass('focus')
+		), 200)
+		
+
+		#
+		# date picker stuff
+		$(document.body).click () ->
+			$('.date-picker').hide()
+
+		#
+		# track the request
+		mixpanel.people.identify current_user._id
 
 		today					= new Date()
 		threedaysago 	= new Date(new Date().setDate(today.getDate() - 3))
@@ -49,13 +83,22 @@ class App.Main extends Backbone.View
 				$('#delete-note').modal('hide')
 		return false
 
+	link_to_calendar: (e) ->
+		e.stopPropagation()
+		$('.date-picker').toggle()
+		return false
+
 	link_to_query: (e) ->
+		# reset pagination
+		querystring = remove_query_var(document.location.search, 'page')
+		window.current_page = 1
+		# setup the querystring and navigate it
 		param = $(e.currentTarget).attr('data-param')
 		value = $(e.currentTarget).attr('data-param-val')
 		if value
-			navigate '/notes' + add_or_replace_query_var(document.location.search, param, value)
+			navigate '/notes' + add_or_replace_query_var(querystring, param, value)
 		else
-			navigate '/notes' + remove_query_var(document.location.search, param)
+			navigate '/notes' + remove_query_var(querystring, param)
 		return false
 	
 	link_to_fragment: (e) ->
@@ -65,4 +108,4 @@ class App.Main extends Backbone.View
 	link_to_push: (e) ->
 		push_url $(e.currentTarget).attr("href")
 		return false
-	
+

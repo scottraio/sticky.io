@@ -1,3 +1,7 @@
+<div id="notebook" class="modal hide fade">
+	<!-- content gets loaded here -->
+</div>
+
 <script id="edit_notebook_content" type="text/html">	
 	<div class="modal-header">
 		<a href="#" class="close">&times;</a>
@@ -8,19 +12,22 @@
 		<label>Notebook name</label>
 		<input type="text" placeholder="Enter notebook name" name="name" value="{{notebook.name}}" />
 		<label>Color</label>
-		<select name="color" class="color">
-			<option value="">None</option>
-			<option value="green">Green</option>
-			<option value="orange">Orange</option>
-			<option value="blue">Blue</option>
-			<option value="yellow">yellow</option>
-			<option value="red">Red</option>
-		</select>
+		<ul class="colors">
+			<li data-value="" class="none"></li>
+			<li data-value="green" class="green"></li>
+			<li data-value="orange" class="orange"></li>
+			<li data-value="blue" class="blue"></li>
+			<li data-value="yellow" class="yellow"></li>
+			<li data-value="red" class="red"></li>
+		</ul>
+		<input type="hidden" name="color" value="" />
 	</div>
 	<div class="modal-footer">
 		<button type="submit" class="btn primary">Save</button>
-		<a href="javascript:$('#edit-notebook').modal('hide')" class="btn secondary">Cancel</a>
+		<a href="javascript:$('#notebook').modal('hide')" class="btn secondary">Cancel</a>
+		{{^is_new}}
 		<a href="/notebooks/{{notebook._id}}" data-id="{{notebook._id}}"class="pull-right delete">Delete this notebook</a>
+		{{/is_new}}
 	</div>
 	</form>
 </script>

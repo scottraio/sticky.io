@@ -21,7 +21,7 @@ exports.expanded = (req,res) ->
 exports.index = (req, res) ->
 	render.json req, res, (done) ->
 		note = Note.where('_user', req.user)
-		
+
 		#
 		# Filter by keyword
 		if req.query.keyword
@@ -70,6 +70,11 @@ exports.index = (req, res) ->
 			note.sort('created_at', order)
 		else
 			note.sort('created_at', -1)
+
+		#
+		# Pagination
+		note.skip(req.query.page*25) if req.query.page
+		note.limit(25)
 
 		note.run (err, items) ->
 			console.log err if err

@@ -19,6 +19,7 @@ exports.create = (req, res) ->
 		notebook.set '_owner', req.user
 		notebook.set 'created_at', new Date()
 		notebook.set 'name', req.body.name
+		notebook.set 'color', req.body.color
 		
 		notebook.save (err,note) ->
 			if err

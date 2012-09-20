@@ -3,13 +3,10 @@
 <body>
 	<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 	<div class="backdrop"></div>
-
-  <div id="new-sticky-header">
-		<form action="/notes" method="post">	
-    	<input type="text" name="message" placeholder="What's on your mind?"/>
-		</form>
-    <div class="logo">STICKY</div>
-  </div>
+	<div class="logo">STICKY</div>
+	<form action="/"method="post">
+  	<div id="new-sticky-header" class="idle" contenteditable="true">What's on your mind?</div>
+	</div>
 
 
   <div class="main-wrapper container-fluid">
@@ -32,29 +29,32 @@
 				</div>
 
 				<ul class="notebooks sidebar-nav">
-					<li><a href="/" class="query" data-param="notebooks" data-param-val="">All Notes</a></li>
+					<li><a href="/" class="navigate">All Notes</a></li>
 					<% for(var i=0; i<notebooks.length; i++) { %>	
-						<li data-id="<%= notebooks[i]._id %>" class="<%= notebooks[i].color %>">
-						<a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
+						<li data-id="<%= notebooks[i]._id %>" data-name="<%= notebooks[i].name %>" data-color="<%= notebooks[i].color %>" class="<%= notebooks[i].color %>">
+							<a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
 							<a href="/notebooks/<%= notebooks[i]._id %>/edit" data-id="<%= notebooks[i]._id %>" class="push"><i class="icon-pencil"></i></a>
 						</li>
 					<% } %>
 					<li class="add-notebook"><a href="/notebooks/new" class="push">Add a Notebook</a></li>
+					<li class="add-notebook"><a href="/logout">Logout</a></li>
 				</ul>
 				
-				<div class="date-picker hide"></div>
       </div>
 
 			<div id="inbox">
 				<div class="inbox-controls">
 					<div class="btn-toolbar">
 						<div class="btn-group">
-							<a href="/notes" class="btn navigate"><i class="icon-calendar"></i></a>
+							<a href="#" class="btn single toggle-datepicker"><i class="icon-calendar"></i></a>
+							<div class="date-picker hide">
+								<!-- calendar loads here -->
+							</div>
 						</div>
 						<div class="btn-group">
-							<a class="btn" href="#"><span class="icon-pound">#</span> <span class="tag-label">None</span></a>
-							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-							<ul class="dropdown-menu">
+							<a class="btn tag-button" href="#"><span class="icon-pound">#</span> <span class="tag-label">None</span></a>
+							<a class="btn dropdown-toggle tag-button" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+							<ul class="tags dropdown-menu">
 								<li><a href="#" class="query" data-param="tags" data-param-val="">None</a></li>
 								<% for(var i=0; i<tags.length; i++) {  %>	
 									<li><a href="#" class="query" data-param="tags" data-param-val="<%= tags[i]._id %>"><%= tags[i]._id %></a></li>
@@ -119,32 +119,46 @@
 		</div>
 	</div>
 	
-	<div id="add-notebook" class="modal hide fade">
-		<div class="modal-header">
-			<a href="#" class="close">&times;</a>
-			<h3>Add Notebook</h3>
-		</div>
-		
-		<form action="/notebooks" method="post">
-		<div class="modal-body">
-			<label>Notebook name</label>
-			<input type="text" placeholder="Enter notebook name e.g. @work" name="name" />
-			<div class="hide">
-				<label>Members</label>
-				<textarea placeholder="Enter email addresses of group members" name="members"></textarea>
+	<div id="welcome" class="modal hide fade">
+		<div class="modal-body">	
+			<div id="welcome_carousel" class="carousel slide">
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="active item">
+						<p class="lead">
+							Welcome to Sticky! Return to GMail and accept the friend request. <br /><br />
+						</p>
+						<img src="/img/welcome-gchat-accept.png" class="screenshot" />
+					</div>
+					<div class="item row-fluid">
+						<p class="lead span6">
+							Format your notes with @notebooks and #tags. You can use the #todo hashtag
+							for tasks and a <input type="checkbox" checked="true" /> will appear in the UI.
+						</p>
+						<img src="/img/welcome-gtalk-example.png" class="screenshot span6" />
+					</div>
+					<div class="item">
+						<p class="lead">
+							Attention Google Apps Users, additional steps are required. Your domain admin needs to 
+							setup special DNS entries (SRV records). This will enable your domain for XMPP.
+							<br /><br />
+							1. <a href="http://www.olark.com/gtalk/check_srv" target="_blank">How-to from Olark</a>
+							<br />
+							2. <a href="http://support.google.com/a/bin/answer.py?hl=en&answer=34143" target="_blank">Google's Instructions</a>
+						</p>
+					</div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#welcome_carousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#welcome_carousel" data-slide="next">&rsaquo;</a>
 			</div>
 		</div>
-		<div class="modal-footer">
-			<button type="submit" class="btn primary">Add</button>
-			<a href="javascript:$('#add-notebook').modal('hide')" class="btn secondary">Cancel</a>
 		</div>
-		</form>
+		<div class="modal-footer">
+		</div>
 	</div>
+	
 
-
-	<div id="edit-notebook" class="modal hide fade">
-		<!-- content gets loaded here -->
-	</div>
 
 
 <%- partial('notebooks') %>

@@ -18,19 +18,21 @@
 			</div>
 		</div>
 	</div>
-	<div class="expanded-note">
-		<div id="editable-message" contenteditable="true">{{!note message gets loaded here}}</div>
+	<div class="expanded-wrapper">
+		<div class="expanded-note">
+			<div id="editable-message" contenteditable="true">{{!note message gets loaded here}}</div>
+		</div>
+		{{#has_subnotes}}
+		<ul class="timeline">
+			{{#notes}}
+				<li class="sticky card subnote" data-id="{{_id}}" draggable="true">
+					{{{message}}}
+					<span class="timestamp">{{stacked_at_in_date}}</span>
+				</li>
+			{{/notes}}
+		</ul>	
+		{{/has_subnotes}}
 	</div>
-	{{#has_subnotes}}
-	<ul class="timeline">
-		{{#notes}}
-			<li class="sticky card subnote" data-id="{{_id}}" draggable="true">
-				{{{message}}}
-				<span class="timestamp">{{stacked_at_in_date}}</span>
-			</li>
-		{{/notes}}
-	</ul>	
-	{{/has_subnotes}}
 </script>
 
 <!--
@@ -41,7 +43,7 @@
 
 	<ul class="notes_board">
 		{{#notes}}
-			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}}" data-id="{{_id}}" {{#draggable}}draggable="true"{{/draggable}}>
+			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}} {{group_colors}}" data-id="{{_id}}" {{#draggable}}draggable="true"{{/draggable}}>
 				{{>sticky_actions}}
 				
 				<div class="{{#has_subnotes}}pole-position {{/has_subnotes}} autolink {{#completed}}completed{{/completed}}">						
@@ -54,10 +56,6 @@
 			</li>
 		{{/notes}}
 	</ul>
-
-	<div class="navigation hide">
-		<a href="{{more_link}}" class="more">Load More</a>
-	</div>
 </script>
 
 <!--
@@ -81,5 +79,3 @@
 		{{#has_subnotes}}<a href="/notes/{{_id}}" class="push expand sticky-action"><i class="icon-list-alt sticky-action"></i></a>{{/has_subnotes}}
 	</div>
 </script>
-
-:
