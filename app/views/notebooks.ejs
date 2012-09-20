@@ -1,26 +1,3 @@
-<div id="add-notebook" class="modal hide fade">
-	<div class="modal-header">
-		<a href="#" class="close">&times;</a>
-		<h3>Add Notebook</h3>
-	</div>
-	
-	<form action="/notebooks" method="post">
-	<div class="modal-body">
-		<label>Notebook name</label>
-		<input type="text" placeholder="Enter notebook name e.g. @work" name="name" />
-		<div class="hide">
-			<label>Members</label>
-			<textarea placeholder="Enter email addresses of group members" name="members"></textarea>
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button type="submit" class="btn primary">Add</button>
-		<a href="javascript:$('#add-notebook').modal('hide')" class="btn secondary">Cancel</a>
-	</div>
-	</form>
-</div>
-
-
 <div id="notebook" class="modal hide fade">
 	<!-- content gets loaded here -->
 </div>
@@ -35,19 +12,22 @@
 		<label>Notebook name</label>
 		<input type="text" placeholder="Enter notebook name" name="name" value="{{notebook.name}}" />
 		<label>Color</label>
-		<select name="color" class="color">
-			<option value="">None</option>
-			<option value="green">Green</option>
-			<option value="orange">Orange</option>
-			<option value="blue">Blue</option>
-			<option value="yellow">yellow</option>
-			<option value="red">Red</option>
-		</select>
+		<ul class="colors">
+			<li data-value="" class="none"></li>
+			<li data-value="green" class="green"></li>
+			<li data-value="orange" class="orange"></li>
+			<li data-value="blue" class="blue"></li>
+			<li data-value="yellow" class="yellow"></li>
+			<li data-value="red" class="red"></li>
+		</ul>
+		<input type="hidden" name="color" value="" />
 	</div>
 	<div class="modal-footer">
 		<button type="submit" class="btn primary">Save</button>
 		<a href="javascript:$('#notebook').modal('hide')" class="btn secondary">Cancel</a>
+		{{^is_new}}
 		<a href="/notebooks/{{notebook._id}}" data-id="{{notebook._id}}"class="pull-right delete">Delete this notebook</a>
+		{{/is_new}}
 	</div>
 	</form>
 </script>
