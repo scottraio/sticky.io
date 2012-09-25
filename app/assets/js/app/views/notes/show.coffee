@@ -3,12 +3,13 @@ App.Views.Notes or= {}
 class App.Views.Notes.Show extends Backbone.View
 
 	events:
-		'click .confirm' 					: 'confirm_delete'
-		'click .make-bold'				: 'make_bold'
-		'click .make-italic'			: 'make_italic'
-		'click .make-underline' 	: 'make_underline'
-		'keyup #editable-message' : 'autosave'
-		'click .save'							: 'save'
+		'click .confirm' 							: 'confirm_delete'
+		'click .make-bold'						: 'make_bold'
+		'click .make-italic'					: 'make_italic'
+		'click .make-underline' 			: 'make_underline'
+		'keyup #editable-message' 		: 'autosave'
+		'click .save'									: 'save'
+		'click #close-expanded-view' 	: 'close'
 
 	initialize: ->
 		# set the id to the DOM
@@ -59,13 +60,18 @@ class App.Views.Notes.Show extends Backbone.View
 		@note = new App.Models.Note(id: @options.id)
 		save @note, { message : $('#editable-message', self.el).html() }, {
 			success: (data, res) ->
+				$('#save-notice').removeClass('hide')
 				$('#save-notice').html('Saved')
 				@timer = setTimeout((->						
-					$('#save-notice').html('')
+					$('#save-notice').addClass('hide')
 				), 3000)
 			error: (data, res) ->
 				console.log 'error'
 		}
+		return false
+
+	close: (e) ->
+		$(@el).html ""
 		return false
 
 	autosave: (e) ->

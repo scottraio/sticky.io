@@ -5,7 +5,10 @@
 
 <script id="expanded_note" type="text/html">
 	<div class="expanded-actions">
-		<span id="save-notice"></span>
+		<a href="#" class="btn pull-right" id="close-expanded-view"><i class="icon icon-ok"></i></a>
+
+		<span id="save-notice" class="hide label label-success"></span>
+		
 		<div class="btn-toolbar">
 			<div class="btn-group">
 				<a class="btn make-bold" href="#"><strong>B</strong></a>
@@ -13,7 +16,7 @@
 				<a class="btn make-underline" href="#"><u>U</u></a>
 			</div>
 			<div class="btn-group">
-				<a class="btn save" href="#"><i class="icon-ok"></i></a>
+				<a class="btn save" href="#"><img src="/img/save.gif" /></a>
 				<a href="/notes/{{parent_note._id}}" class="btn confirm" data-id="{{parent_note._id}}"><i class="icon-trash"></i></a>
 			</div>
 		</div>
@@ -40,7 +43,6 @@
 -->
 
 <script id="notes_board" type="text/html">
-
 	<ul class="notes_board">
 		{{#notes}}
 			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}} {{group_colors}}" data-id="{{_id}}" {{#draggable}}draggable="true"{{/draggable}}>
@@ -63,7 +65,7 @@
 -->
 
 <script id="sticky" class="partial" type="text/html">
-<div class="message {{#has_domains}}remove-stray-links{{/has_domains}}">{{#is_taskable}}<input type="checkbox" class="task-completed" {{#completed}}checked="true"{{/completed}} /> {{/is_taskable}}{{{message}}}</div>
+	<div class="message {{#has_domains}}remove-stray-links{{/has_domains}}">{{#is_taskable}}<input type="checkbox" class="task-completed" {{#completed}}checked="true"{{/completed}} /> {{/is_taskable}}{{{message}}}</div>
 </script>
 
 <!--

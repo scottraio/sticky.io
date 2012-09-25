@@ -3,9 +3,9 @@ App.Views.Notes or= {}
 class App.Views.Notes.Edit extends Backbone.View
 	
 	events:
-		'submit form' 			: 'submit'
+		'submit form' 				: 'submit'
 		'click .btn-primary'	: 'submit'
-		'click .cancel' 		: 'cancel'
+		'click .cancel' 			: 'cancel'
 	
 	initialize: ->
 		@note 		= new App.Models.Note(id: @options.id)

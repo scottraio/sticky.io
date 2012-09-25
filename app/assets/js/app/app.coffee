@@ -12,6 +12,7 @@ class App.Main extends Backbone.View
 		"click a.toggle-datepicker" 	: "link_to_calendar"
 		"click a.query"								: "link_to_query"
 		"click a.push" 								: "link_to_push"
+		"submit .search form" 				: "search"
 		
 	initialize: ->
 		#
@@ -19,15 +20,15 @@ class App.Main extends Backbone.View
 		$('.dropdown-toggle').dropdown()
 
 		#
-		# set the current page
+		# set the current page for endless scrolling
 		window.current_page = window.get_query_val('page') || 1
 
 		#
 		# Mixpanel Integration
 		mixpanel.people.set
-			'$email': current_user.email,
-			'$name': current_user.name,
-			'$last_login': current_user.last_sign_in_at
+			'$email'			: current_user.email,
+			'$name'				: current_user.name,
+			'$last_login'	: current_user.last_sign_in_at
 
 		#
 		# enable the carousel for first time users
@@ -49,6 +50,8 @@ class App.Main extends Backbone.View
 		# track the request
 		mixpanel.people.identify current_user._id
 
+		#
+		# setup date controls
 		today					= new Date()
 		threedaysago 	= new Date(new Date().setDate(today.getDate() - 3))
 
@@ -83,6 +86,12 @@ class App.Main extends Backbone.View
 				$('#delete-note').modal('hide')
 		return false
 
+	search: (e) ->
+		e.preventDefault()
+		keyword = $('#keyword').val()
+		navigate '/notes' + add_or_replace_query_var(document.location.search, 'keyword', keyword)
+		return false
+
 	link_to_calendar: (e) ->
 		e.stopPropagation()
 		$('.date-picker').toggle()
@@ -108,4 +117,5 @@ class App.Main extends Backbone.View
 	link_to_push: (e) ->
 		push_url $(e.currentTarget).attr("href")
 		return false
+
 

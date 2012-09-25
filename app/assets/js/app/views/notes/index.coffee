@@ -13,6 +13,8 @@ class App.Views.Notes.Index extends Backbone.View
 		# set the url to the search query, if there is a search query
 		if window.location.search
 			@notes.url 	= window.location.pathname + ".json" + window.location.search
+		else
+			$("ul.sidebar-nav li").removeClass('selected')
 
 	render: () ->
 		self = @
@@ -38,7 +40,7 @@ class App.Views.Notes.Index extends Backbone.View
 			is_taskable					: () -> true if this.message && this.message.indexOf('#todo') > 0
 			has_domains					: () -> true if this._domains && this._domains.length > 0
 			domain							: () -> this.url.toLocation().hostname if this.url
-			group_colors					: () -> self.group_colors(this)
+			group_colors				: () -> self.group_colors(this)
 	
 		if @params && @params.page
 			$(@el).append notes_html
@@ -156,7 +158,7 @@ class App.Views.Notes.Index extends Backbone.View
 
 	format_date: (date) ->
 		date = new Date(date)
-		return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear()
+		return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
 
 	group_colors: (note) ->
 		colors = []

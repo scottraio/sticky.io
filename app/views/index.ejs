@@ -4,9 +4,9 @@
 	<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 	<div class="backdrop"></div>
 	<div class="logo">STICKY</div>
-	<form action="/"method="post">
-  	<div id="new-sticky-header" class="idle" contenteditable="true">What's on your mind?</div>
-	</div>
+	
+  <div id="new-sticky-header" class="idle" contenteditable="true">What's on your mind?</div>
+	
 
 
   <div class="main-wrapper container-fluid">
@@ -67,8 +67,8 @@
 						</div>
 						
 						<div class="search pull-right">
-							<form action="/notes" method="get" class="navbar-search">
-								<input type="text" name="keyword" class="search-query" placeholder="Discover">
+							<form action="/notes" method="get">
+								<input type="text" id="keyword" name="keyword" class="search-query" placeholder="Discover">
 							</form>
 						</div>
 					</div>
