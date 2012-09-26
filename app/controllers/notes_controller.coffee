@@ -103,7 +103,7 @@ exports.create = (req, res) ->
 exports.smtp = (req, res) ->
 	User.findOne {email: req.body.From}, (err, user) ->
 		if user
-			Note.create_note req.user, req.body.TextBody, (err,note) ->
+			Note.create_note user, req.body.TextBody, (err,note) ->
 				if err
 					res.writeHead 500, 'Content-Type': 'application/json'
 					res.write err

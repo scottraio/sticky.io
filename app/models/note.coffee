@@ -64,6 +64,7 @@ NotesSchema.statics.create_note = (user,message,cb) ->
 					cb(null, note)
 
 NotesSchema.statics.last_note = (user, cb) ->
+	console.log user
 	app.models.Note.where('_user',user._id)
 		.where('_parent', null)
 		.limit(1)
