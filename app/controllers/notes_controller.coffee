@@ -101,7 +101,7 @@ exports.create = (req, res) ->
 #
 # creates a new note for an user through our E-mail gateway (postmark)
 exports.smtp = (req, res) ->
-	User.findOne {_email: req.body.From}, (err, user) ->
+	User.findOne {email: req.body.From}, (err, user) ->
 		if user
 			Note.create_note req.user, req.body.TextBody, (err,note) ->
 				if err
