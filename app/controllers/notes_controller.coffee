@@ -101,18 +101,18 @@ exports.create = (req, res) ->
 #
 # creates a new note for an user through our E-mail gateway (postmark)
 exports.smtp = (req, res) ->
-	render.json req, res, (done) ->
-		User.findOne {_email: req.body.From}, (err, user) ->
-			if user
-				Note.create_note req.user, req.body.TextBody, (err,note) ->
-					if err
-						console.log(err)
-						req.flash('error', 'Note could not be saved.')
-						done(err)
-					else
-						done(null, note)
-			else
-				done(err, {error: 'not found'})
+	User.findOne {_email: req.body.From}, (err, user) ->
+		if user
+			Note.create_note req.user, req.body.TextBody, (err,note) ->
+				if err
+					res.writeHead 500, 'Content-Type': 'application/json'
+					res.write err
+				else
+					res.writeHead 200, 'Content-Type': 'application/json'
+					res.write "ok"
+		else
+			res.writeHead 401, 'Content-Type': 'application/json'
+			res.write "auth required"
 					
 #
 # updates an existing note for an user
