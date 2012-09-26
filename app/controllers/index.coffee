@@ -66,6 +66,7 @@ app.get('/notes/:id/edit.:format?', ensureAuthenticated, NotesController.edit)
 app.post('/notes.:format?', ensureAuthenticated, NotesController.create)
 app.delete('/notes/:id.:format?', ensureAuthenticated, NotesController.delete)
 app.put('/notes/:id.:format?', ensureAuthenticated, NotesController.update)
+app.post('/notes/smtp.:format?', NotesController.smtp)
 
 #
 # Notes Tree

@@ -37,5 +37,6 @@
     "request"                 : "https://github.com/scottraio/request/tarball/master",
     "simple-xmpp"             : "https://github.com/scottraio/node-simple-xmpp/tarball/master",
 		"node-stringprep"					: "0.1.4"
+    "twillio"                 : "*"
   }
 }

@@ -13,6 +13,7 @@ passport 		= require 'passport'
 assets 			= require 'connect-assets'
 flash				= require 'connect-flash'
 xmpp 				= require 'sticky-xmpp'
+sms 				= require 'sticky-sms'
 
 #
 #
