@@ -107,12 +107,15 @@ exports.smtp = (req, res) ->
 				if err
 					res.writeHead 500, 'Content-Type': 'application/json'
 					res.write err
+					res.end('\n')
 				else
 					res.writeHead 200, 'Content-Type': 'application/json'
 					res.write "ok"
+					res.end('\n')
 		else
 			res.writeHead 401, 'Content-Type': 'application/json'
 			res.write "auth required"
+			res.end('\n')
 					
 #
 # updates an existing note for an user
