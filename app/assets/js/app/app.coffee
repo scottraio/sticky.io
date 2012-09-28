@@ -25,7 +25,7 @@ class App.Main extends Backbone.View
 
 		#
 		# Mixpanel Integration
-		mixpanel.people.set
+		mixpanel.people.set current_user._id,
 			'$email'			: current_user.email,
 			'$name'				: current_user.name,
 			'$last_login'	: current_user.last_sign_in_at

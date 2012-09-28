@@ -43,6 +43,10 @@ body.drop {
 	background: rgba(204,204,204, 0.5);
 }
 
+.alert {
+	margin-bottom:0;
+}
+
 .logo {
 	font-family:"bebas-neue", "Helvetica Neue", Helvetica, sans-serif;
 	letter-spacing:.02em;
@@ -664,6 +668,8 @@ i.icon-tweet {
 
 }
 
+//
+// Settings
 ul.settings {
 	list-style-type:none;
 	margin:0 auto;
@@ -671,6 +677,46 @@ ul.settings {
 	width:95%;
 	li {
 		padding:10px 5px;
+	}
+}
+
+//
+// Welcome 
+#welcome {
+	.modal-body {
+		padding:0;
+		max-height:380px;
+	}
+	.item {
+		padding:0;
+		.example:first-child {
+				margin-top:25px;
+		}
+		.example {
+			font-size:1em;
+			color:#555;
+			border-bottom:1px dotted #444;
+			width:50%;
+			margin-top:15px;
+			padding-bottom:1px;
+			.notebook {
+				color:@linkColor;
+			}
+			.tag {
+				color:#999;
+			}
+		}
+	}
+	.gchat-example {
+		margin-top:25px;
+	}
+	h1 {
+		font-weight:normal;
+	}
+	img {
+		display:block;
+		.box-shadow(none);
+		border:1px solid #555;
 	}
 }
 

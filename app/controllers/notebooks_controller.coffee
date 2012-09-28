@@ -4,6 +4,9 @@ Note 			= app.models.Note
 User 			= app.models.User
 Notebook 	= app.models.Notebook
 
+exports.index = (req, res) ->
+	render.json req, res, (done) ->
+		Notebook.where('_owner', req.user).run(done)
 
 exports.show = (req, res) ->
 	render.json req, res, (done) ->

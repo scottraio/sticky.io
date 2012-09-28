@@ -1,11 +1,94 @@
-<script id="settings" type="text/html">
-	<ul class="settings">
-		<li>
-			<div class="pull-left">Bookmarklet</div>
-			<div class="pull-right">
-				<a href="{{bookmarklet_js}}">Stick it</a>
-			</div>
-		</li>
-	</ul>
-</script>
+<div id="settings" class="modal hide fade">
+	<form class="form-horizontal">
+		<div class="modal-header">
+			<a href="#" class="close">&times;</a>
+			<h3>Settings</h3>
+		</div>
 
+		<div class="modal-body">
+			
+		  <div class="control-group">
+		    <label class="control-label" for="input_phone_number">Phone Number</label>
+		    <div class="controls">
+		      <input type="tel"  name="phone_number" id="input_phone_number" placeholder="Enter your phone number">
+		    </div>
+		  </div>
+
+		  <div class="control-group">
+		    <label class="control-label" for="input_password">Change Password</label>
+		    <div class="controls">
+		      <input type="password" name="password" id="input_password" placeholder="Enter a new password">
+		    </div>
+			</div>
+			
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn danger">Save</button>
+			<a href="javascript:$('#delete-note').modal('hide')" class="btn secondary">Cancel</a>
+		</div>
+	</form>
+</div>
+
+
+<div id="welcome" class="modal hide fade">
+		<div class="modal-body">	
+			<div id="welcome_carousel" class="carousel slide">
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="active item">
+						<h1>Welcome to Sticky!</h1>
+						<p class="lead">
+							Sticky hooks right into your G-chat, please return to G-mail and accept the friend request. For example:<br />
+							<br />
+						</p>
+						<img src="/img/welcome-gchat-accept.png" class="screenshot" />
+					</div>
+					<div class="item">
+						<img src="/img/welcome-gtalk-example.png" class="screenshot gchat-example pull-right" />
+
+						<h1>Organize your notes</h1>
+						<p class="lead">
+							Format your notes with notebooks and tags.
+							Use the @ for adding notes into notebooks and the # for tagging. For example:
+							
+							<div class="example">
+								<a>http://www.nest.com</a> <span class="tag">#cool</span>
+							</div>
+
+							<div class="example">
+								<span class="notebook">@work</span> get logos over to marketing <span class="tag">#todo</span>
+							</div>
+
+							<div class="example">
+								buy flowers for 3 year anniversary <span class="tag">#gf #todo</span>
+							</div>
+
+							<div class="example">
+								<span class="notebook">@school</span> econ paper due next fri <span class="tag">#homework</span>
+							</div>
+
+							<div class="example">
+								npm install --save <span class="tag">#nodejs</span>
+							</div>
+						</p>
+					</div>
+					<div class="item">
+						<h1>Attention Google Apps Users</h1>
+						<p class="lead">
+							Additional steps are required. Your domain admin needs to 
+							setup special DNS entries (SRV records). This will enable your domain for XMPP.
+							<br /><br />
+							1. <a href="http://www.olark.com/gtalk/check_srv" target="_blank">How-to from Olark</a>
+							<br />
+							2. <a href="http://support.google.com/a/bin/answer.py?hl=en&answer=34143" target="_blank">Google's Instructions</a>
+						</p>
+					</div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="btn btn-success pull-right" href="#welcome_carousel" data-slide="next">Next</a>
+			</div>
+		</div>
+		</div>
+		<div class="modal-footer">
+		</div>
+	</div>

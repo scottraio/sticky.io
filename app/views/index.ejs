@@ -2,6 +2,11 @@
 
 <body>
 	<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+	<div class="alert alert-error hide">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		Welcome to Sticky! We are currently in Beta, and would love your feedback.
+  </div>
+  
 	<div class="backdrop"></div>
 	<div class="logo">STICKY</div>
 	
@@ -118,47 +123,6 @@
 			<a href="javascript:$('#delete-note').modal('hide')" class="btn secondary">No</a>
 		</div>
 	</div>
-	
-	<div id="welcome" class="modal hide fade">
-		<div class="modal-body">	
-			<div id="welcome_carousel" class="carousel slide">
-				<!-- Carousel items -->
-				<div class="carousel-inner">
-					<div class="active item">
-						<p class="lead">
-							Welcome to Sticky! Return to GMail and accept the friend request. <br /><br />
-						</p>
-						<img src="/img/welcome-gchat-accept.png" class="screenshot" />
-					</div>
-					<div class="item row-fluid">
-						<p class="lead span6">
-							Format your notes with @notebooks and #tags. You can use the #todo hashtag
-							for tasks and a <input type="checkbox" checked="true" /> will appear in the UI.
-						</p>
-						<img src="/img/welcome-gtalk-example.png" class="screenshot span6" />
-					</div>
-					<div class="item">
-						<p class="lead">
-							Attention Google Apps Users, additional steps are required. Your domain admin needs to 
-							setup special DNS entries (SRV records). This will enable your domain for XMPP.
-							<br /><br />
-							1. <a href="http://www.olark.com/gtalk/check_srv" target="_blank">How-to from Olark</a>
-							<br />
-							2. <a href="http://support.google.com/a/bin/answer.py?hl=en&answer=34143" target="_blank">Google's Instructions</a>
-						</p>
-					</div>
-				</div>
-				<!-- Carousel nav -->
-				<a class="carousel-control left" href="#welcome_carousel" data-slide="prev">&lsaquo;</a>
-				<a class="carousel-control right" href="#welcome_carousel" data-slide="next">&rsaquo;</a>
-			</div>
-		</div>
-		</div>
-		<div class="modal-footer">
-		</div>
-	</div>
-	
-
 
 
 <%- partial('notebooks') %>

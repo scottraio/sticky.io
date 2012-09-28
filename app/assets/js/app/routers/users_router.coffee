@@ -4,8 +4,8 @@ class App.Routers.UsersRouter extends Backbone.Router
 		"settings" 	: "edit"
 		"welcome" 	: "welcome"
 		
-	edit: (id) ->
-		edit = new App.Views.Users.Edit()
+	edit: () ->
+		edit = new App.Views.Users.Edit(el: $('#settings'), id: current_user._id)
 		edit.render()
 
 	welcome: () ->

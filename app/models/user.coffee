@@ -18,6 +18,7 @@ encodePassword = (pass) ->
 UserSchema = new Schema
 	name  	 				: { type: String, required: true, trim: true }
 	email	 					: { type: String, required: true, trim: true, unique: true, lowercase: true }
+	phone_number	 	: { type: String, trim: true, default: null }
 	password 				: { type: String, required: true, set: encodePassword }
 	googleId 				: { type: String }
 	last_sign_in_at : { type: Date, default: null }

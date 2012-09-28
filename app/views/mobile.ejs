@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>notes@sticky.io</title>
+
+    <meta charset='utf-8' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <%- css('mobile') %>
+  </head>
+  <body>
+    <div class="sidetap">
+      <div class="stp-nav">
+        <div>
+          <nav>
+            <% for(var i=0; i<notebooks.length; i++) { %>  
+              <a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
+            <% } %>
+
+            <% for(var i=0; i<tags.length; i++) {  %> 
+              <a href="#" class="query" data-param="tags" data-param-val="<%= tags[i]._id %>">#<%= tags[i]._id %></a>
+            <% } %>
+          </nav>
+        </div>
+      </div>
+
+      <div class="stp-content" id="content">
+        <header class="stp-fake-header">&nbsp;</header>
+        <div class="stp-overlay nav-toggle">&nbsp;</div>
+
+        <!-- Content Divs Look Like This -->
+        <div class="stp-content-panel" id="notes-list">
+          <header>
+            <a href="javascript:void(0)" class="header-button icon menu"><span>Menu</span></a>
+            <img src="/img/sticky-logo-mobile.png" />
+            <a href="javascript:void(0)" class="header-button icon compose right"><span>Info</span></a>
+          </header>
+          <div class="stp-content-frame">
+            <div class="stp-content-body">
+              <div id="stage">
+                <!-- content gets loaded here -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End content Div -->
+
+        <!-- Compose new note -->
+        <div class="stp-content-panel hidden" id="new-note">
+          <header>
+            <a href="javascript:void(0)" class="header-button cancel">Done</a>
+            <h1>What's on your mind?</h1>
+            <a href="javascript:void(0)" class="header-button save right">Save</a>
+          </header>
+
+          <div class="stp-content-frame">
+            <div class="stp-content-body">
+              <div class="container">
+                <textarea placeholder="Use @ for notebooks and # for tags"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End content Div -->
+
+      </div>
+    </div>
+
+    <%- partial('notes') %>
+    <%- js('mobile') %>
+  </body>
+</html>

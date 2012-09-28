@@ -56,6 +56,13 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 				res.redirect('/') 
 )
 
+
+#
+# Users
+#
+app.get('/users/:id.:format?', ensureAuthenticated, UsersController.show)
+app.put('/users/:id.:format?', ensureAuthenticated, UsersController.update)
+
 #
 # Notes
 #

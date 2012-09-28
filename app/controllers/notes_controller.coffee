@@ -20,7 +20,7 @@ exports.expanded = (req,res) ->
 #
 exports.index = (req, res) ->
 	render.json req, res, (done) ->
-		note = Note.where('_user', req.user)
+		note = Note.where('_user', req.user).where('deleted_at', null)
 
 		#
 		# Filter by keyword
@@ -173,8 +173,6 @@ exports.restack = (req, res) ->
 				from.save (err) ->
 					to.save(done)
 
-
-
 #
 # grabs an note and returns its JSON
 #
@@ -187,8 +185,17 @@ exports.show = (req, res) ->
 #
 exports.delete = (req, res) ->
 	render.json req, res, (done) ->
-		Note.remove {_id: req.params.id, _user:req.user}, (err) ->
-			done(err, {ok:true})
+		#Note.remove {_id: req.params.id, _user:req.user}, (err) ->
+		#	done(err, {ok:true})
+		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
+			note.set 'deleted_at', new Date()
+			note.save (err) -> 
+				if err
+					console.log(err)
+					req.flash('error', 'Note could not be saved.')
+					done(err)
+				else
+					done(null, note)
 
 
 #

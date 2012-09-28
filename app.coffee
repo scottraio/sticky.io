@@ -14,13 +14,12 @@ assets 			= require 'connect-assets'
 flash				= require 'connect-flash'
 xmpp 				= require 'sticky-xmpp'
 sms 				= require 'sticky-sms'
+mixpanel 		= require 'mixpanel'
 
-#
 #
 # Config
 GLOBAL.settings = config.readConfig('config/app.yaml')
 
-#
 #
 # The App
 GLOBAL.app 				= module.exports = express.createServer()
@@ -28,6 +27,9 @@ app.product_name 	= 'Sticky.io'
 app.env						= process.env.NODE_ENV
 
 #
+# Setup mixpanel analytics
+app.mixpanel = mixpanel.init('dc318d85f647b3cc6ff0992c0af24729')
+
 #
 # Middleware / Express
 app.root_dir = __dirname
@@ -73,11 +75,17 @@ app.models = mongoose.models
 # Controllers
 require('./app/controllers')
 
+#
+# Start XMPP Bot
+xmpp.start()
 
 #
+# Start SMS Polling
+#if app.env is 'development'
+#	sms.poll()
+
 #
 # Boot server
-xmpp.start()
 server = app.listen(settings.port)
 
 console.log "Server running at http://#{settings.domain}"

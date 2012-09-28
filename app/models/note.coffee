@@ -12,19 +12,20 @@ NotesSchema = new Schema
 	groups 			: { type: Array, default: [] }
 	created_at	: { type: Date, required: true }
 	stacked_at	: { type: Date, default: null }
+	deleted_at	: { type: Date, default: null }
 	_user 			: { type: Schema.ObjectId, required: true, ref: 'User' }
 	_parent			: { type: Schema.ObjectId, ref: 'Note' }
 	_notes 			: [ { type: Schema.ObjectId, ref: 'Note' } ]
 	_domains		: [ { type: Schema.ObjectId, ref: 'Domain' } ]
+	_sms_id			: [ { type: String, unique: true, default: null } ]
 
 #
 # Indexes
-#
 NotesSchema.index { created_at:-1, tags: 1,  _user: 1 }
 NotesSchema.index { created_at:-1 }
 NotesSchema.index { _user:1 }
 
-#
+
 #
 # Static Methods
 NotesSchema.statics.create_note = (user,message,cb) ->
@@ -55,6 +56,11 @@ NotesSchema.statics.create_note = (user,message,cb) ->
 			if err
 				cb(err)
 			else
+
+				#
+				# Mixpanel
+				#app.mixpanel.people.increment(user._id, "$note_count")
+
 				if false #last_note and seconds_since_last_post <= 300
 					if note.groups.length > 0
 						cb(null, note)
@@ -133,7 +139,7 @@ NotesSchema.methods.parse = () ->
 # Parse tags i.e. #todo, #urgent, #cool-links
 #
 NotesSchema.methods.parse_tags = () ->
-	self 		= @
+	self 			= @
 	new_tags 	= []
 	matches 	= @message.match regex.match.tag
 
@@ -174,8 +180,7 @@ NotesSchema.methods.parse_links = () ->
 # Parse Groups/Notebooks
 #
 NotesSchema.methods.parse_groups = () ->
-	self = @
-
+	self 		= @
 	matches = @message.match regex.match.group
 
 	if matches

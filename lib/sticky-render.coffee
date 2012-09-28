@@ -14,7 +14,16 @@ exports.json = (req,res,fn) ->
 					res.write JSON.stringify(items||[])
 					res.end('\n')
 			fn(cb)
-		else exports.render_page('index', req, res)
+		else
+			ua = req.headers['user-agent']
+
+			if /mobile/i.test(ua) or /like Mac OS X/.test(ua) or /iPhone/.test(ua) or /iPad/.test(ua) or /Android/.test(ua)
+				mobile = true
+
+			if mobile
+				exports.render_page('mobile', req, res)
+			else
+				exports.render_page('index', req, res)
 
 exports.render_page = (page,req,res) ->
 	exports.update_index req, () ->
