@@ -3,7 +3,7 @@
 #= require ./mobile/sidetap.js
 #= require ./app/helpers/app.coffee
 
-domain = "dev.sticky.io:8000"
+domain = "sticky.io"
 
 $(document).ready () ->
 
