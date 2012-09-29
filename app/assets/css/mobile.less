@@ -13,7 +13,7 @@ header {
 
 ul.notes_board {
 	margin:0;
-	padding:50px 0 0 0;
+	padding:0;
 	list-style-type:none;
 	width:100%;
 	.completed {
@@ -154,6 +154,10 @@ ul.notes_board {
 	//li.yellow { border-left:2px solid @yellow; }
 	//li.orange { border-left:2px solid @orange; }
 	//li.red { border-left:2px solid @red; }
+}
+
+ul.notes_board:first-child {
+	padding-top:50px;	
 }
 
 #new-note {

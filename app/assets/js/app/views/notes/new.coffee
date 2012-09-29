@@ -28,7 +28,7 @@ class App.Views.Notes.New extends Backbone.View
 				$(self.el).blur()
 				$('body').click()
 				# reload the current path
-				push_url window.location.pathname + window.location.search
+				#push_url window.location.pathname + window.location.search
 
 			error: (data, res) ->
 				console.log 'error'

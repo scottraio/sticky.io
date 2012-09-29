@@ -30,47 +30,36 @@ NotesSchema.index { _user:1 }
 # Static Methods
 NotesSchema.statics.create_note = (user,message,cb) ->
 	# Setup the Note namespace
-	Note = app.models.Note
-	# find the last note that was saved. If it has been more than 5 minutes since the last note.
-	# go ahead and save a new note. If this new note is being saved within that 5 min window, stack it
-	# to the last note found.
-	Note.last_note user, (last_note) ->
 
-		note = new Note()
-		note.set 'message', 		message
-		note.set '_user', 			user._id
-		note.set 'created_at', 	new Date()
+	note = new app.models.Note()
+	note.set 'message', 		message
+	note.set '_user', 			user._id
+	note.set 'created_at', 	new Date()
 
-		#
-		# parse tags/links/groups into arrays
-		note.parse()
+	#
+	# parse tags/links/groups into arrays
+	note.parse()
 
-		#
-		# last note
-		if last_note
-			seconds_since_last_post = (new Date() - last_note.created_at) / 1000
+	#
+	# save note
+	note.save (err) ->
+		unless err
+			#
+			# Mixpanel
+			#app.mixpanel.people.increment(user._id, "$note_count")
 
-		#
-		# save note
-		note.save (err) ->
-			if err
-				cb(err)
-			else
+			#
+			# SocketIO
+			socket_ids = socketbucket[user._id]
+			if socket_ids
+				for socket_id in socket_ids
+					io.sockets.socket(socket_id).emit 'notes:add', note
 
-				#
-				# Mixpanel
-				#app.mixpanel.people.increment(user._id, "$note_count")
-
-				if false #last_note and seconds_since_last_post <= 300
-					if note.groups.length > 0
-						cb(null, note)
-					else
-						Note.stack {user:user, child_id:note._id, parent_id:last_note._id}, cb	
-				else	
-					cb(null, note)
+			cb(null, note)
+		else
+			cb(err)
 
 NotesSchema.statics.last_note = (user, cb) ->
-	console.log user
 	app.models.Note.where('_user',user._id)
 		.where('_parent', null)
 		.limit(1)

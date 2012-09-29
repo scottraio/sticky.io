@@ -21,11 +21,21 @@ class App.Views.Notes.Index extends Backbone.View
 		@notes.fetch
 			success: (col, notes) ->
 				self.notes = notes
+
+				# Before hook
 				self.ui_before_hook()
-				self.load_view()
+
+				#
+				# Load the view accordingly
+				if self.params && self.params.page
+					$(self.el).append(self.ich_notes())
+				else
+					$(self.el).html(self.ich_notes())
+
+				# After hook
 				self.ui_after_hook()
 
-	load_view: () ->
+	ich_notes: () ->
 		self = @
 
 		# setup the notes_board
@@ -41,12 +51,7 @@ class App.Views.Notes.Index extends Backbone.View
 			has_domains					: () -> true if this._domains && this._domains.length > 0
 			domain							: () -> this.url.toLocation().hostname if this.url
 			group_colors				: () -> self.group_colors(this)
-	
-		if @params && @params.page
-			$(@el).append notes_html
-		else
-			$(@el).html notes_html			
-
+			
 	show: (e) ->
 		id = $(e.currentTarget).attr('data-id')
 		push_url "/notes/#{id}"

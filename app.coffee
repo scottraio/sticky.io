@@ -1,7 +1,5 @@
 #
 # Sticky.io - Collecting thoughts that stick in realtime.
-#
-
 fs					= require 'fs'
 http 				= require 'http'
 express			= require 'express'
@@ -14,24 +12,22 @@ assets 			= require 'connect-assets'
 flash				= require 'connect-flash'
 xmpp 				= require 'sticky-xmpp'
 sms 				= require 'sticky-sms'
+realtime 		= require 'sticky-realtime'
 mixpanel 		= require 'mixpanel'
-
-#
-# Config
-GLOBAL.settings = config.readConfig('config/app.yaml')
 
 #
 # The App
 GLOBAL.app 				= module.exports = express.createServer()
+GLOBAL.settings 	= config.readConfig('config/app.yaml')
 app.product_name 	= 'Sticky.io'
 app.env						= process.env.NODE_ENV
 
 #
-# Setup mixpanel analytics
-app.mixpanel = mixpanel.init('dc318d85f647b3cc6ff0992c0af24729')
-
-#
 # Middleware / Express
+RedisStore = require('connect-redis')(express)
+redisStore = new RedisStore( { host:'localhost', port: 6379})
+cookieParser = express.cookieParser('sc2ishard')
+
 app.root_dir = __dirname
 
 app.configure () ->
@@ -51,8 +47,8 @@ app.configure () ->
 	app.use express.logger('dev')
 	app.use express.bodyParser()
 	app.use express.methodOverride()
-	app.use express.cookieParser('sc2ishard')
-	app.use express.session({ store: require('mongoose-session') })
+	app.use cookieParser
+	app.use express.session({ store: redisStore })
 
 	# passport authentication
 	app.use passport.initialize()
@@ -64,7 +60,6 @@ app.configure () ->
 	# start the router
 	app.use app.router
 
-#
 #
 # Mongoose models
 mongoose = require('./app/models')
@@ -84,8 +79,18 @@ xmpp.start()
 #if app.env is 'development'
 #	sms.poll()
 
+
 #
 # Boot server
 server = app.listen(settings.port)
-
 console.log "Server running at http://#{settings.domain}"
+
+#
+# Socket IO
+realtime.start(server, cookieParser, redisStore)
+console.log "Realtime initiated"
+
+#
+# Setup mixpanel analytics
+app.mixpanel = mixpanel.init('dc318d85f647b3cc6ff0992c0af24729')
+console.log "Mixpanel initiated"

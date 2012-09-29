@@ -416,6 +416,8 @@ body.drop {
 
 // Notes
 
+
+
 ul.notes_board {
 	margin:0;
 	list-style-type:none;
@@ -423,9 +425,7 @@ ul.notes_board {
 	.completed {
 		text-decoration: line-through;
 	}
-	li:last-child {
-		margin-bottom:55px;
-	}
+	
   li.card {
 	  border-bottom:1px solid #e0e0e0;
 		word-wrap: break-word;
@@ -563,6 +563,9 @@ ul.notes_board {
 	li.red { border-left:2px solid @red; }
 }
 
+ul.notes_board:last-child {
+	padding-bottom:55px;	
+}
 
 // Modals
 

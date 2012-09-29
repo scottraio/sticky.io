@@ -38,6 +38,7 @@ exports.render_page = (page,req,res) ->
 						tags          :		tags
 						notebooks     : 	notebooks
 						req           :		req
+						config 				: 	settings
 					})
 		
 

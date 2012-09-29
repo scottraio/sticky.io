@@ -39,7 +39,7 @@ exports.create = (req, res) ->
 
 #
 # updates an user
-#
+# PUT /users/:id[.json]
 exports.update = (req, res) ->
 	render.json req, res, (done) ->
 		app.models.User.findOne {_id:req.user._id}, (err, note) ->
@@ -60,16 +60,35 @@ exports.update = (req, res) ->
 				else
 					done(null, note)
 
+#
+# Login user
+# GET /login
 exports.login = (req, res) ->
-	res.render('login', {message: req.flash('error'), title: 'Login to pine.io'})
+	res.render('login', {message: req.flash('error'), title: 'Login to Sticky'})
 
+#
+# Logout user
+# GET /logout
 exports.logout = (req, res) ->
+	# Logout any socket.io connections
+	socket_ids = socketbucket[req.user._id]
+	if socket_ids
+		for socket_id in socket_ids
+			io.sockets.socket(socket_id).disconnect()
+	
+	# Redirect to the homepage
 	req.logout()
 	res.redirect('/')
 
+#
+# Signup user
+# GET /signup
 exports.signup = (req, res) ->
-	res.render('signup', {title: 'Sign-up to pine.io'})
+	res.render('signup')
 
+#
+# Re-register the XMPP Bot
+# GET /register
 exports.register = (req, res) ->
 	req.user.registerXMPPBot()
 	res.redirect('/')

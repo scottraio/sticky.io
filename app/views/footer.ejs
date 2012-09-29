@@ -1,3 +1,6 @@
+	<!-- socket.IO -->
+	<script src="/socket.io/socket.io.js"></script>
+
 	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -9,8 +12,9 @@
 	<% if (current_user) { %>	
 	<script>	
 		$(document).ready(function() {
-			notebooks = <%- JSON.stringify(notebooks) %>;
-			stickyio 	= new App.start(<%- current_user %>)
+			window.socket 		= io.connect('<%= config.domain %>')
+			window.notebooks 	= <%- JSON.stringify(notebooks) %>
+			window.stickyio 	= new App.start(<%- current_user %>)
 			new App.Main({el: $("body")});
 		});
 

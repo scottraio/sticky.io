@@ -1,30 +1,39 @@
-#p arseCookie = require('connect').utils.parseCookie
+#cookieParser = express.cookieParser('sc2ishard')
 
+exports.start = (server, cookieParser, sessionStore) ->
 
-exports.start = (server) ->
-
-	io = require('socket.io').listen(server)
+	GLOBAL.io = require('socket.io').listen(server)
 	 
-	#io.set 'authorization', (data, accept) ->
-		# check if there's a cookie header
-	#	if data.headers.cookie
-			# if there is, parse the cookie
-	#		data.cookie = parseCookie(data.headers.cookie)
-			# note that you will need to use the same key to grad the
-			# session id, as you specified in the Express setup.
-	#		data.sessionID = data.cookie['express.sid']
-	#	else
-			# if there isn't, turn down the connection with a message
-			# and leave the function.
-	#		return accept('No cookie transmitted.', false)
-	    
-		# accept the incoming connection
-	#	accept(null, true)
+	# Socket.io
 
-	# Socket IO
+	GLOBAL.socketbucket = {}
+
+	_cookie 			= 'connect.sid'
+	_cookieParser = cookieParser
+	_sessionStore = sessionStore
+    
+	io.set 'authorization', (data, accept) ->		
+		if (data && data.headers && data.headers.cookie)
+			_cookieParser data, {}, (err) ->
+				return accept('COOKIE_PARSE_ERROR') if(err)
+				sessionId = data.signedCookies[_cookie]
+				_sessionStore.get sessionId, (err, session) ->
+					if(err || !session || !session.passport || !session.passport.user)
+						accept('NOT_LOGGED_IN', false)
+					else
+						data.session = session
+						accept(null, true)
+		else
+			return accept('MISSING_COOKIE', false);
+
+
 	io.sockets.on 'connection', (socket) ->
 
-		socket.emit('news', { hello: 'world' })
+		current_user_id = socket.handshake.session.passport.user
 
-		socket.on 'my other event', (data) ->
-	    	console.log(data)
+		if current_user_id
+			if socketbucket[current_user_id]
+				socketbucket[current_user_id].push socket.id
+			else
+				socketbucket[current_user_id] = [socket.id]
+

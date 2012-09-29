@@ -80,7 +80,27 @@
       </div>
     </div>
 
+    <!-- Notes -->
     <%- partial('notes') %>
+
+    <!-- socket.IO -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- Load JS -->
     <%- js('mobile') %>
+
+    <script>
+      //
+      // Config
+      config = {
+        domain : '<%= config.domain %>'
+      }
+
+      //
+      // Set Defaults
+      window.current_user = <%- current_user %>
+      window.socket       = io.connect(config.domain)
+    </script>
+
   </body>
 </html>
