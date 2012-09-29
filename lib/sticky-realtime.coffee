@@ -32,7 +32,7 @@ exports.start = (server, cookieParser, sessionStore) ->
 		current_user_id = socket.handshake.session.passport.user
 
 		if current_user_id
-			if socketbucket[current_user_id]
+			if socketbucket[current_user_id] && socketbucket[current_user_id].length > 0
 				socketbucket[current_user_id].push socket.id
 			else
 				socketbucket[current_user_id] = [socket.id]
