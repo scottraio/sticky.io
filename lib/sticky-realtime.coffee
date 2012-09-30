@@ -3,6 +3,8 @@
 exports.start = (server, cookieParser, sessionStore) ->
 
 	GLOBAL.io = require('socket.io').listen(server)
+
+	io.set 'transports', ['xhr-polling']
 	 
 	# Socket.io
 
