@@ -19,7 +19,7 @@ production:
   dbname: 'sticky-production'
   domain: 'sticky.io'
   db:
-    server: '72.44.65.120'
+    server: 'localhost'
     name: 'sticky-production'
   xmpp:
     jid: 'notes@sticky.io'
@@ -35,7 +35,7 @@ staging:
   dbname: 'sticky-production'
   domain: 'beta.sticky.io'
   db:
-    server: '72.44.65.120'
+    server: 'localhost'
     name: 'sticky-production'
   xmpp:
     jid: 'notes-beta@sticky.io'
