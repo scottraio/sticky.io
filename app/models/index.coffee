@@ -3,8 +3,7 @@
 
 GLOBAL.mongoose = require 'mongoose'
 
-
-mongoose.connect('mongodb://localhost/' + settings.db.name)
+mongoose.connect("mongodb://#{settings.db.server}/#{settings.db.name}")
 mongoose.set('debug', true) if app.env is 'development'
 
 require('./user.coffee')
