@@ -2,6 +2,9 @@ default:
   port: 8000
   dbname: 'sticky-development'
   domain: 'dev.sticky.io:8000'
+  db:
+    server: 'localhost'
+    name: 'sticky-development'
   xmpp:
     jid: 'notes-dev@sticky.io'
     host: 'sticky.io'
@@ -15,6 +18,9 @@ production:
   port: 8000
   dbname: 'sticky-production'
   domain: 'sticky.io'
+  db:
+    server: '72.44.65.123'
+    name: 'sticky-production'
   xmpp:
     jid: 'notes@sticky.io'
     host: 'sticky.io'
@@ -28,6 +34,9 @@ staging:
   port: 8001
   dbname: 'sticky-production'
   domain: 'beta.sticky.io'
+  db:
+    server: '72.44.65.123'
+    name: 'sticky-production'
   xmpp:
     jid: 'notes-beta@sticky.io'
     host: 'sticky.io'
@@ -39,8 +48,11 @@ staging:
 
 test:
   port: 8002
-  dbname: 'pine-io-test'
+  dbname: 'sticky-test'
   domain: 'dev.pine.io:8000'
+  db:
+    server: 'localhost'
+    name: 'sticky-test'
   xmpp:
     jid: 'notes-dev@sticky.io'
     host: 'sticky.io'

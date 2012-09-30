@@ -15,8 +15,6 @@ class App.Main extends Backbone.View
 		"submit .search form" 				: "search"
 		
 	initialize: ->
-		socket.emit 'register', current_user
-
 		#
 		# Connect to Socket.IO
 		socket.on 'notes:add', (data) ->
