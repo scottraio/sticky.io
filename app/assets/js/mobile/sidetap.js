@@ -40,7 +40,7 @@ this.SidetapStandard = (function() {
     var _this = this;
     this.set_window_size();
     $(window).resize(this.set_window_size);
-    return $(".nav-toggle").click(function(evt) {
+    return $(".nav-toggle").onpress(function(evt) {
       return _this.toggle_nav(evt);
     });
   };
@@ -140,16 +140,16 @@ this.SidetapIos = (function(_super) {
   SidetapIos.prototype.set_up_observers = function() {
     var _this = this;
     this.set_window_size();
-    $("header h1").click(function(evt) {
+    $("header h1").onpress(function(evt) {
       return _this.show_address_bar(evt);
     });
     $(window).on("orientationchange", function(evt) {
       return _this.set_window_size(evt);
     });
-    $(".nav-toggle").click(function(evt) {
+    $(".nav-toggle").onpress(function(evt) {
       return _this.toggle_nav(evt);
     });
-    return $("#stp-overlay").click(function(evt) {
+    return $("#stp-overlay").onpress(function(evt) {
       return _this.toggle_nav(evt);
     });
   };

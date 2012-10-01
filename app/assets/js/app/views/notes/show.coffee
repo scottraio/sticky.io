@@ -37,16 +37,17 @@ class App.Views.Notes.Show extends Backbone.View
 				collection.format_domains(notes)
 
 				$(self.el).html ich.expanded_note
-					parent_note : parent
-					notes 			: notes
+					parent_note 				: parent
+					notes 							: notes
+					note_message 				: () -> this.message && this.message.replace(/(<[^>]+) style=".*?"/g, '$1')
 					has_subnotes				: () -> true if parent._notes && parent._notes.length > 0
 					stacked_at_in_words	: () -> this.stacked_at && $.timeago(this.stacked_at)
 					stacked_at_in_date 	: () -> self.format_date(this.stacked_at)
 			
 				# set the editable message with the parent note's message
-				$('#editable-message', self.el).html(parent.message)
+				#$('#editable-message', self.el).html(parent.message)
 				$('#editable-message').focus()
-
+				$('#editable-message').autolink()
 				$('.subnote').autolink()
 
 				# Drag and Drop

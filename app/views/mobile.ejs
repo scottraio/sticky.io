@@ -27,13 +27,15 @@
       <div class="stp-nav">
         <div>
           <nav>
-            <% for(var i=0; i<notebooks.length; i++) { %>  
-              <a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
-            <% } %>
+              <b>Notebooks</b> 
+              <% for(var i=0; i<notebooks.length; i++) { %>  
+                <a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
+              <% } %>
 
-            <% for(var i=0; i<tags.length; i++) {  %> 
-              <a href="#" class="query" data-param="tags" data-param-val="<%= tags[i]._id %>">#<%= tags[i]._id %></a>
-            <% } %>
+              <b>Tags</b>
+              <% for(var i=0; i<tags.length; i++) {  %> 
+                <a href="#" class="query" data-param="tags" data-param-val="<%= tags[i]._id %>">#<%= tags[i]._id %></a>
+              <% } %>
           </nav>
         </div>
       </div>
@@ -98,6 +100,7 @@
 
       //
       // Set Defaults
+      window.notebooks    = <%- JSON.stringify(notebooks) %>
       window.current_user = <%- current_user %>
       window.socket       = io.connect(config.domain)
     </script>

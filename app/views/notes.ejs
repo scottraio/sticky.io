@@ -23,13 +23,13 @@
 	</div>
 	<div class="expanded-wrapper">
 		<div class="expanded-note">
-			<div id="editable-message" contenteditable="true">{{!note message gets loaded here}}</div>
+			<div id="editable-message" contenteditable="true">{{#parent_note}}{{{note_message}}}{{/parent_note}}</div>
 		</div>
 		{{#has_subnotes}}
 		<ul class="timeline">
 			{{#notes}}
 				<li class="sticky card subnote" data-id="{{_id}}" draggable="true">
-					{{{message}}}
+					{{{note_message}}}
 					<span class="timestamp">{{stacked_at_in_date}}</span>
 				</li>
 			{{/notes}}

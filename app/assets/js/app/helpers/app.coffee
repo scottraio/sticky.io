@@ -1,3 +1,8 @@
+window.match = 
+	tag 		: /(^|\s)#([^\s]+)/g
+	group 	: /(^|\s)@([^\s]+)/g
+	link 		: /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/g
+
 window.save = (model, attrs, options) ->
 	model.save {}, _.extend({data: JSON.stringify(attrs), contentType: 'application/json'}, options)
 

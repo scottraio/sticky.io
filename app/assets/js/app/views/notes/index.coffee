@@ -41,7 +41,7 @@ class App.Views.Notes.Index extends Backbone.View
 		# setup the notes_board
 		notes_html =  ich.notes_board
 			notes								: @notes
-			note_message				: () -> this.message.replace(/(<[^>]+) style=".*?"/i, '$1')
+			note_message				: () -> this.message.replace(/(<[^>]+) style=".*?"/g, '$1')
 			created_at_in_words	: () -> this.created_at && $.timeago(this.created_at)
 			created_at_in_date 	: () -> self.format_date(this.created_at)
 			has_subnotes				: () -> true if this._notes && this._notes.length > 0

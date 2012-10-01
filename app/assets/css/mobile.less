@@ -9,6 +9,33 @@ header {
 	}
 }
 
+.stp-nav {
+	height:100%;
+	div {
+		overflow: auto;
+		height:100%;	
+	}
+}
+
+nav {
+	b {
+		text-transform:uppercase;
+		font-size:0.7em;
+		color:rgba(255, 255, 255, 0.2);
+		padding:10px;
+		margin-top:5px;
+		display:block;
+	}
+}
+
+code {
+	color:#000;
+}
+
+pre {
+	border:0;
+}
+
 // Notes
 
 ul.notes_board {
@@ -163,8 +190,11 @@ ul.notes_board:first-child {
 #new-note {
 	textarea {
 		width:100%;
+		min-height:400px;
 		height:100%;
+		display:block;
 		box-sizing:border-box;
+		-webkit-appearance:none;
 		padding:0;
 		border:0;
 		outline:none;
