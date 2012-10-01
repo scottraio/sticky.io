@@ -101,6 +101,6 @@ $(document).ready () ->
 		#
 		# Load notes into stage
 		$('#stage').html render_notes(notes) 
-		#$('.message').autolink() # autolink everything
+		$('.message').autolink() # autolink everything
 	
 		
