@@ -41,7 +41,7 @@ class App.Views.Notes.Index extends Backbone.View
 		# setup the notes_board
 		notes_html =  ich.notes_board
 			notes								: @notes
-			note_message				: () -> escape(this.message)
+			note_message				: () -> this.message.replace(/(<[^>]+) style=".*?"/i, '$1')
 			created_at_in_words	: () -> this.created_at && $.timeago(this.created_at)
 			created_at_in_date 	: () -> self.format_date(this.created_at)
 			has_subnotes				: () -> true if this._notes && this._notes.length > 0
@@ -181,5 +181,5 @@ class App.Views.Notes.Index extends Backbone.View
 			if (self.notes.length > 0 and self.notes.length <= 25) && ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight())
 				# If we're at the bottom, show the overlay and retrieve the next page
 				window.current_page += 1
-				navigate '/notes' + add_or_replace_query_var(document.location.search, 'page', window.current_page)
+				push_url '/notes' + add_or_replace_query_var(document.location.search, 'page', window.current_page)
 				

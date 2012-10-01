@@ -1,0 +1,19 @@
+CACHE MANIFEST
+
+# Explicitly cached 'master entries'.
+CACHE:
+index.html
+mobile.css
+mobile.js
+compose@2x.png
+menu.png
+sticky-logo-mobile.png
+app.js
+socket.io.js
+
+
+# Resources that require the user to be online.
+NETWORK:
+notes.json
+/notes
+http://sticky.io
