@@ -13,7 +13,7 @@ socket.io.js
 
 
 # Resources that require the user to be online.
-NETWORK:
+#NETWORK:
 #/notes.json
 #/notes
-http://sticky.io
+#http://sticky.io
