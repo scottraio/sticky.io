@@ -96,7 +96,6 @@ $(document).ready () ->
 	#
 	# Load notes on page load
 	$.getJSON "/notes.json", (notes) ->
-		console.log 'test'
 		#
 		# Load notes into stage
 		$('#stage').html render_notes(notes) 

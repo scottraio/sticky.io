@@ -65,7 +65,7 @@
         $.fn.onpress = function() {
             // Passing empty selectors or a document node cause bugs on android
             // Just to be on the safe side allowing only element and document fragment nodes to be used
-            if (!this[0].nodeType || (this[0].nodeType !== 1 && this[0].nodeType !== 11)) {
+            if (!this[0] || !this[0].nodeType || (this[0].nodeType !== 1 && this[0].nodeType !== 11)) {
                 return;
             }
  
