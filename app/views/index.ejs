@@ -36,12 +36,12 @@
 				<ul class="notebooks sidebar-nav">
 					<li><a href="/" class="navigate">All Notes</a></li>
 					<% for(var i=0; i<notebooks.length; i++) { %>	
-						<li data-id="<%= notebooks[i]._id %>" data-name="<%= notebooks[i].name %>" data-color="<%= notebooks[i].color %>" class="<%= notebooks[i].color %>">
+						<li data-id="<%= notebooks[i]._id %>" data-name="<%= notebooks[i].name %>" data-color="<%= notebooks[i].color %>" class="notebook <%= notebooks[i].color %>">
 							<a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
 							<a href="/notebooks/<%= notebooks[i]._id %>/edit" data-id="<%= notebooks[i]._id %>" class="push"><i class="icon-pencil"></i></a>
 						</li>
 					<% } %>
-					<li class="add-notebook"><a href="/notebooks/new" class="push">Add a Notebook</a></li>
+					<li class="add-notebook"><a href="/notebooks/new" class="push">+ Add a Notebook</a></li>
 					<li class="add-notebook"><a href="/logout">Logout</a></li>
 				</ul>
 				
