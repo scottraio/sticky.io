@@ -21,7 +21,7 @@ production:
   dbname: 'sticky-production'
   domain: 'sticky.io'
   redis:
-    server: '72.44.65.120'
+    server: 'localhost'
   db:
     server: '72.44.65.120'
     name: 'sticky-production'
