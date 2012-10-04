@@ -1,6 +1,9 @@
 window.match = 
-	tag 		: /(^|\s)#([^\s]+)/g
-	group 	: /(^|\s)@([^\s]+)/g
+	tag 			: /(^|\s)#([^\s]+)/g
+	group 		: /(^|\s)@([^\s]+)/g
+	notebook 	: /(^|\s)@([^\s]+)/g
+	#tag 		: /(^|\s)#([_A-Za-z0-9]+)([\S\s]*?)/g
+	#group 	: /(^|\s)@([_A-Za-z0-9]+)([\S\s]*?)/g
 	link 		: /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/g
 
 window.save = (model, attrs, options) ->
@@ -34,9 +37,9 @@ $.fn.exists = () -> $(this).get(0) isnt undefined
 window.os_name = () ->
 	OSName="Unknown OS"
 	OSName="Windows"  	if navigator.appVersion.indexOf("Win") 		isnt -1
-	OSName="MacOS" 		if navigator.appVersion.indexOf("Mac") 		isnt -1
-	OSName="UNIX" 		if navigator.appVersion.indexOf("X11")	 	isnt -1 
-	OSName="Linux"		if navigator.appVersion.indexOf("Linux") 	isnt -1 
+	OSName="MacOS" 			if navigator.appVersion.indexOf("Mac") 		isnt -1
+	OSName="UNIX" 			if navigator.appVersion.indexOf("X11")	 	isnt -1 
+	OSName="Linux"			if navigator.appVersion.indexOf("Linux") 	isnt -1 
 
 	return OSName
 

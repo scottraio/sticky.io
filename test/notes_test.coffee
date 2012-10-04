@@ -1,10 +1,10 @@
 should  	= require 'should'
 Browser		= require 'zombie'
 request 	= require 'request'
-mock 		= require './helpers/mocks'
+mock 			= require './helpers/mocks'
 provided 	= require './helpers/provided'
-Note 		= app.models.Note
-User 		= app.models.User
+Note 			= app.models.Note
+User 			= app.models.User
 
 describe 'Note', () ->
 

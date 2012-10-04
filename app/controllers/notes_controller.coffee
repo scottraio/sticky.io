@@ -125,7 +125,7 @@ exports.update = (req, res) ->
 		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
 
 			if req.body.message
-				note.set 'message', req.body.message
+				note.set 'message', 		req.body.message
 				# parse tags/links/groups into arrays
 				note.parse()
 

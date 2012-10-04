@@ -1,0 +1,8 @@
+{
+  "remote": {
+    "default": {
+      "hub": "72.44.65.122:7000",
+      "secret": "sc2ishard"
+    }
+  }
+}

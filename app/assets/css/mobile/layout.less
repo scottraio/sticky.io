@@ -140,12 +140,12 @@ nav {
 
 
 header {
-  background: #4b3527;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #825c4d), color-stop(100%, #4b3527));
-  background: -webkit-linear-gradient(top, #825c4d, #4b3527);
-  background:    -moz-linear-gradient(top, #825c4d, #4b3527);
-  background:      -o-linear-gradient(top, #825c4d, #4b3527);
-  background:         linear-gradient(top, #825c4d, #4b3527);
+  background: @headerColorDark;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, @headerColorLight), color-stop(100%, @headerColorDark));
+  background: -webkit-linear-gradient(top, @headerColorLight, @headerColorDark);
+  background:    -moz-linear-gradient(top, @headerColorLight, @headerColorDark);
+  background:      -o-linear-gradient(top, @headerColorLight, @headerColorDark);
+  background:         linear-gradient(top, @headerColorLight, @headerColorDark);
   border-bottom: 1px solid #281730;
   color: white;
   display: block;

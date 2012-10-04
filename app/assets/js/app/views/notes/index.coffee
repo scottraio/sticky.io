@@ -125,8 +125,10 @@ class App.Views.Notes.Index extends Backbone.View
 
 		# Build the rest of the UI accordingly
 		#$('.remove-stray-links').remove_stray_links()
+		
 		# auto-link everything
 		$('.message').autolink()
+		
 		# enable dropdowns (color)
 		$('.dropdown-toggle').dropdown()
 		
