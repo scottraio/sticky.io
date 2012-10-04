@@ -21,7 +21,7 @@ production:
   dbname: 'sticky-production'
   domain: 'sticky.io'
   redis:
-    server: '72.44.65.122'
+    server: '72.44.65.120'
   db:
     server: '72.44.65.120'
     name: 'sticky-production'
@@ -39,7 +39,7 @@ staging:
   dbname: 'sticky-production'
   domain: 'beta.sticky.io'
   redis:
-    server: '72.44.65.122'
+    server: '72.44.65.120'
   db:
     server: '72.44.65.120'
     name: 'sticky-production'
