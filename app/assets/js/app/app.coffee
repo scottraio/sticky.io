@@ -19,6 +19,8 @@ class App.Main extends Backbone.View
 			#
 			# Render the view
 			$('ul.notes_board:first-child').before view.ich_notes()
+			# auto-link everything
+			$('.message').autolink()
 
 
 		#

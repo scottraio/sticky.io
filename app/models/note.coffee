@@ -1,10 +1,15 @@
+$						= require 'jquery'
+_						= require 'underscore'
+
+
 Schema 			= mongoose.Schema
 Base				= require 'sticky-model'
 regex 			= require 'sticky-regex'
-_						= require 'underscore'
+
 
 NotesSchema = new Schema
 	message  		: { type: String, required: true, trim: true }
+	plain_txt  	: { type: String, required: true, trim: true, default: '' }
 	color  			: { type: String, trim: true, default: null }
 	completed 	: { type: Boolean, default: false }
 	tags				: { type: Array, default: [] }
@@ -120,9 +125,16 @@ NotesSchema.statics.stack = (options, cb) ->
 #
 # Parses all tags, links, and groups from message 
 NotesSchema.methods.parse = () ->
+	@simplify()
 	@parse_tags()
 	@parse_links()
 	@parse_groups()
+
+NotesSchema.methods.simplify = () ->
+	if /<(?:.|\n)*?>/gm.test(@message)
+		@set 'plain_txt', $("<div>#{@message}</div>").text() # strip any html, and just store the plain text message
+	else
+		@set 'plain_txt', @message
 
 #
 # Parse tags i.e. #todo, #urgent, #cool-links
@@ -130,7 +142,7 @@ NotesSchema.methods.parse = () ->
 NotesSchema.methods.parse_tags = () ->
 	self 			= @
 	new_tags 	= []
-	matches 	= @message.match regex.match.tag
+	matches 	= @plain_txt.match regex.match.tag
 
 	if matches
 
@@ -143,10 +155,9 @@ NotesSchema.methods.parse_tags = () ->
 
 #
 # Parse all links
-#
 NotesSchema.methods.parse_links = () ->
 	self 				= @
-	matches 		= @message.match regex.match.link
+	matches 		= @plain_txt.match regex.match.link
 	Domain			= app.models.Domain
 
 	if matches	
@@ -170,7 +181,7 @@ NotesSchema.methods.parse_links = () ->
 #
 NotesSchema.methods.parse_groups = () ->
 	self 		= @
-	matches = @message.match regex.match.group
+	matches = @plain_txt.match regex.match.group
 
 	if matches
 

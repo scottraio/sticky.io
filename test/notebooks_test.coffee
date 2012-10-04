@@ -1,30 +1,30 @@
 should  	= require 'should'
 Browser		= require 'zombie'
 request 	= require 'request'
-mock 		= require './helpers/mocks'
+mock 			= require './helpers/mocks'
 provided 	= require './helpers/provided'
-regex 		= require '../lib/regex'
-Note 		= app.models.Note
-Group 		= app.models.Group
-User 		= app.models.User
+regex 		= require '../lib/sticky-regex'
+Note 			= app.models.Note
+Notebook 	= app.models.Notebook
+User 			= app.models.User
 
-describe 'Group', () ->
+describe 'Notebook', () ->
 
 	describe 'regex matching', () ->
 
-		it 'should be able to match a single group from string', (done) ->
-			matches = "@apt14 need to pick up milk".match regex.match.group
+		it 'should be able to match a single notebook from string', (done) ->
+			matches = "@apt14 need to pick up milk".match regex.match.notebook
 			matches.should.be.an.instanceof Array
 			matches.should.eql ['@apt14']
 
-			matches = "need to pick up milk @apt14".match regex.match.group
+			matches = "need to pick up milk @apt14".match regex.match.notebook
 			matches.should.be.an.instanceof Array
 			matches.should.eql [' @apt14']
 
 			done()
 
-		it 'should be able to match mulitple groups from string', (done) ->
-			matches = "pick up milk @apt14 @family".match regex.match.group
+		it 'should be able to match mulitple notebooks from string', (done) ->
+			matches = "pick up milk @apt14 @family".match regex.match.notebook
 			
 			matches.should.be.an.instanceof Array
 			matches.should.eql [' @apt14', ' @family']
@@ -32,18 +32,26 @@ describe 'Group', () ->
 			done()
 
 		it 'should be able to parse notes', (done) ->
-			groups = []
-			note = new app.models.Note(message: "@apt14 pick up milk")
+			notebooks = []
+			note = new app.models.Note(message: "@apt14 pick up milk", _user: @user)
+
+			#
+			# Simplify the message, somtimes HTML is sent over. Lets get rid of it and store the 
+			# plain text version.
+			note.simplify()	
+
+			#
+			# Parse it!
 			note.parse_groups()
 			
 			note.tags.should.be.an.instanceof Array
 
 			# for some reason mongoose is not returning 
 			# an array of strings, so we convert it
-			for group in note.groups
-				groups.push group
+			for notebook in note.groups
+				notebooks.push notebook
 
-			groups.should.eql ['apt14']
+			notebooks.should.eql ['apt14']
 			
 			done()
 
@@ -51,10 +59,10 @@ describe 'Group', () ->
 	describe 'restful JSON API', () ->
 
 		beforeEach (done) ->
-			provided.we_have_a_group @, done
+			provided.we_have_a_notebook @, done
 
 		it 'should return valid JSON for INDEX', (done) ->
-			request.get "http://test%40pine.io:pinerocks@localhost:8000/groups.json", (err, res, body) ->
+			request.get "http://test%40pine.io:pinerocks@localhost:8000/notebooks.json", (err, res, body) ->
 				should.not.exist err
 				res.should.be.json
 				res.statusCode.should.eql 200
@@ -65,7 +73,7 @@ describe 'Group', () ->
 				done()
 
 		it 'should return valid JSON for SHOW', (done) ->
-			request.get "http://test%40pine.io:pinerocks@localhost:8000/groups/#{@group._id}.json", (err, res, body) ->
+			request.get "http://test%40pine.io:pinerocks@localhost:8000/notebooks/#{@notebook._id}.json", (err, res, body) ->
 				should.not.exist err
 				res.should.be.json
 				res.statusCode.should.eql 200
@@ -75,10 +83,9 @@ describe 'Group', () ->
 
 		it 'should UPDATE with REST', (done) ->
 			options = {
-				url 	: "http://test%40pine.io:pinerocks@localhost:8000/groups/#{@group._id}.json"
+				url 	: "http://test%40pine.io:pinerocks@localhost:8000/notebooks/#{@notebook._id}.json"
 				form 	: {
 					name 	: 'workory'
-					members : ['test@pine.io']
 				}
 			}
 
@@ -94,10 +101,9 @@ describe 'Group', () ->
 
 		it 'should CREATE with REST', (done) ->
 			options = {
-				url 	: "http://test%40pine.io:pinerocks@localhost:8000/groups.json"
+				url 	: "http://test%40pine.io:pinerocks@localhost:8000/notebooks.json"
 				form 	: {
 					name 	: 'workory'
-					members : ['test@pine.io']
 				}
 			}
 
@@ -113,18 +119,18 @@ describe 'Group', () ->
 
 		it 'should DELETE with REST', (done) ->
 			self = @
-			request.del "http://test%40pine.io:pinerocks@localhost:8000/groups/#{@group._id}.json", (err, res, body) ->
+			request.del "http://test%40pine.io:pinerocks@localhost:8000/notebooks/#{@notebook._id}.json", (err, res, body) ->
 				should.not.exist err
 				res.should.be.json
 				res.statusCode.should.eql 200
 				body.should.exist
-				Group.findOne {_id:self._id}, (err, item) ->
+				Notebook.findOne {_id:self._id}, (err, item) ->
 					should.not.exist err
 					should.not.exist item
 					done()
 
 		afterEach (done) ->
 			app.models.User.remove {}, (err) -> 
-				app.models.Group.remove {}, done
+				app.models.Notebook.remove {}, done
 
 	

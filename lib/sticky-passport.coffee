@@ -54,6 +54,7 @@ passport.use(new GoogleStrategy google_config, (accessToken, refreshToken, profi
 						user.save (err) ->
 							user.registerXMPPBot()
 							user.sendWelcomeEmail()
+							user.setupDefaultNotebooks()
 							done(err, user)
 					else
 						user.set 'googleId', profile.id

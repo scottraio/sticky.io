@@ -25,7 +25,7 @@ app.env						= process.env.NODE_ENV
 #
 # Middleware / Express
 RedisStore = require('connect-redis')(express)
-redisStore = new RedisStore( { host:'localhost', port: 6379})
+redisStore = new RedisStore( { host:settings.redis.server, port: 6379})
 cookieParser = express.cookieParser('sc2ishard')
 
 app.root_dir = __dirname

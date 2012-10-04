@@ -36,9 +36,10 @@ UserSchema.methods.registerXMPPBot = () ->
 
 UserSchema.methods.sendWelcomeEmail = () ->
 	self = @
+	console.log self
 	trebuchet.fling
 		params:
-			from: 'notes@sticky.io'
+			from: 'notify@sticky.io'
 			to: self.email
 			subject: 'Welcome to Sticky!'
 		html: 'app/emails/welcome.html'
@@ -48,5 +49,30 @@ UserSchema.methods.sendWelcomeEmail = () ->
 	, (err, response) ->
 		# win
 
+UserSchema.methods.setupDefaultNotebooks = () ->
+		self = @
+		home = new app.models.Notebook()
+		home.set '_owner', self
+		home.set 'created_at', new Date()
+		home.set 'name', 'home'
+		home.set 'color', 'blue'
+		home.save (err,notebook) ->
+			console.log(err) if err
+			work = new app.models.Notebook()
+			work.set '_owner', self
+			work.set 'created_at', new Date()
+			work.set 'name', 'work'
+			work.set 'color', 'red'
+			work.save (err,notebook) ->
+				console.log(err) if err
+				school = new app.models.Notebook()
+				school.set '_owner', self
+				school.set 'created_at', new Date()
+				school.set 'name', 'school'
+				school.set 'color', 'green'
+				school.save (err,notebook) ->
+					console.log(err) if err
+
+			
 
 mongoose.model('User', UserSchema)

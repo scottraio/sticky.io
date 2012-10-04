@@ -1,12 +1,12 @@
 should  	= require 'should'
 Browser		= require 'zombie'
 request 	= require 'request'
-mock 		= require './helpers/mocks'
+mock 			= require './helpers/mocks'
 provided 	= require './helpers/provided'
 
-regex 		= require '../lib/regex'
-Note 		= app.models.Note
-User 		= app.models.User
+regex 		= require '../lib/sticky-regex'
+Note 			= app.models.Note
+User 			= app.models.User
 
 describe 'Tags', () ->
 
@@ -37,7 +37,15 @@ describe 'Tags', () ->
 
 		it 'should be able to parse notes', (done) ->
 			tags = []
-			note = new app.models.Note(message: "pick up milk #todo #food")
+			note = new app.models.Note(message: "pick up milk #todo #food", _user: mock.user._id)
+
+			#
+			# Simplify the message, somtimes HTML is sent over. Lets get rid of it and store the 
+			# plain text version.
+			note.simplify()
+
+			#
+			# Parse it!
 			note.parse_tags()
 			
 			note.tags.should.be.an.instanceof Array
@@ -52,25 +60,27 @@ describe 'Tags', () ->
 			done()
 
 
-	describe 'restful JSON API', () ->
-
-		beforeEach (done) ->
-			provided.we_have_a_note @, done
-
-		it 'should return valid JSON for INDEX', (done) ->
-			request.get "http://test%40pine.io:pinerocks@localhost:8000/tags.json", (err, res, body) ->
-				#should.not.exist err
-				#res.should.be.json
-				res.statusCode.should.eql 200
-				#body.should.exist
-
-				_body = JSON.parse(body)
-				_body.should.be.an.instanceof Array
-				done()
-
-
-		afterEach (done) ->
-			app.models.Note.remove {}, (err) -> 
-				app.models.User.remove {}, done
+	# TODO: /tags.json should return a list of tags
+	#
+	#describe 'restful JSON API', () ->
+	#
+	#	beforeEach (done) ->
+	#		provided.we_have_a_note @, done
+	#
+	#	it 'should return valid JSON for INDEX', (done) ->
+	#		request.get "http://test%40pine.io:pinerocks@localhost:8000/tags.json", (err, res, body) ->
+	#			#should.not.exist err
+	#			#res.should.be.json
+	#			res.statusCode.should.eql 200
+	#			#body.should.exist
+	#
+	#			_body = JSON.parse(body)
+	#			_body.should.be.an.instanceof Array
+	#			done()
+	#
+	#
+	#	afterEach (done) ->
+	#		app.models.Note.remove {}, (err) -> 
+	#			app.models.User.remove {}, done
 
 	

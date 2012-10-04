@@ -35,6 +35,7 @@
     "simple-xmpp": "https://github.com/scottraio/node-simple-xmpp/tarball/master",
     "node-stringprep": "0.1.4",
     "twilio": "~0.4.0",
-    "mixpanel": "~0.0.7"
+    "mixpanel": "~0.0.7",
+    "jquery": "~1.7.3"
   }
 }
