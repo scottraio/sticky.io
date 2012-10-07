@@ -9,7 +9,7 @@ regex 			= require 'sticky-regex'
 
 NotesSchema = new Schema
 	message  		: { type: String, required: true, trim: true }
-	plain_txt  	: { type: String, required: true, trim: true, default: '' }
+	plain_txt  	: { type: String, required: true, trim: true, default: ' ' }
 	color  			: { type: String, trim: true, default: null }
 	completed 	: { type: Boolean, default: false }
 	tags				: { type: Array, default: [] }

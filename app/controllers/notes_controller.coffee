@@ -189,7 +189,6 @@ exports.delete = (req, res) ->
 		#	done(err, {ok:true})
 		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
 			note.set 'deleted_at', new Date()
-			note.set 'plain_txt', '' unless note.plain_txt.length > 0
 			note.save (err) -> 
 				if err
 					console.log(err)
