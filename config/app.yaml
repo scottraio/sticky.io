@@ -4,6 +4,7 @@ default:
   domain: 'dev.sticky.io:8000'
   redis:
     server: 'localhost'
+    port: 6379
   db:
     server: 'localhost'
     name: 'sticky-development'
@@ -22,6 +23,7 @@ production:
   domain: 'sticky.io'
   redis:
     server: '72.44.65.120'
+    port: 6379
   db:
     server: '72.44.65.120'
     name: 'sticky-production'
@@ -40,6 +42,7 @@ staging:
   domain: 'beta.sticky.io'
   redis:
     server: '72.44.65.120'
+    port: 6379
   db:
     server: '72.44.65.120'
     name: 'sticky-production'
@@ -58,6 +61,7 @@ test:
   domain: 'dev.pine.io:8000'
   redis:
     server: 'localhost'
+    port: 6379
   db:
     server: 'localhost'
     name: 'sticky-test'

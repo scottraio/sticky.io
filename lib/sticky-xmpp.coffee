@@ -1,7 +1,15 @@
 kue 	= require 'kue'
-jobs 	= kue.createQueue()
+redis = require 'redis'
+
 
 exports.subscribe = () ->
+
+	kue.redis.createClient = () ->
+		client = redis.createClient(settings.redis.port, settings.redis.server)
+		return client
+
+	jobs = kue.createQueue()
+
 	#client.subscribe 'sticky:xmpp'
 	
 	#client.on 'message', (channel, message) ->
