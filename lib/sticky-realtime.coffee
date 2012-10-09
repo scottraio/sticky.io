@@ -5,6 +5,10 @@ exports.start = (server, cookieParser, sessionStore) ->
 	GLOBAL.io = require('socket.io').listen(server)
 
 	#io.set 'transports', ['xhr-polling']
+
+	RedisStore = require('socket.io').RedisStore
+	opts = { host: settings.redis.server, port: settings.redis.port }
+	io.set('store', new RedisStore( { redisPub: opts, redisSub: opts, redisClient: opts } ))
 	 
 	# Socket.io
 
