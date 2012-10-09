@@ -13,11 +13,20 @@ salt 				= 'sc2ishard'
 
 # Kue
 kue 	= require 'kue'
-jobs 	= kue.createQueue()
+redis = require 'redis'
+
+kue.redis.createClient = () ->
+		client = redis.createClient(settings.redis.port, settings.redis.server)
+		return client
+
+jobs = kue.createQueue()
 
 encodePassword = (pass) ->
 	return '' if typeof pass is 'string' and pass.length < 6 
 	return SHA2.b64_hmac(pass, salt)
+
+#
+# Mongoose Schema
 
 UserSchema = new Schema
 	name  	 				: { type: String, required: true, trim: true }
