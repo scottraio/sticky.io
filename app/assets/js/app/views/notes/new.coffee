@@ -26,8 +26,7 @@ class App.Views.Notes.New extends Backbone.View
 				# close modal window
 				$(self.el).html("")
 				$(self.el).blur()
-				$('body').click()
-
+				
 				# Removed in favor of SocketIO
 				# reload the current path
 				#	push_url window.location.pathname + window.location.search
@@ -54,5 +53,4 @@ class App.Views.Notes.New extends Backbone.View
 		if new_message.html() is ''	
 			new_message.html "What's on your mind?"
 			new_message.addClass 'idle'
-		return false
 

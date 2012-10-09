@@ -1,5 +1,19 @@
-#
 # Sticky.io - Collecting thoughts that stick in realtime.
+#
+# Web Stack:
+#  - NodeJS v0.8
+#  - Socket.IO v1.0
+#  - MongoDB v2.2
+#
+# Notes:
+#  - XMPP Server uses ejabberd (http://www.ejabberd.com)
+#  - Analytics ran through Mixpanel (http://www.mixpanel.com)
+#  - SMS Gateway uses Twilio API (http://www.twilio.com)
+#  - SMTP Gateway uses Postmark (http://www.postmarkapp.com)
+#  - Client HTML uses BackboneJS
+#  - Mobile HTML version runs Zepto / SideTap
+#  - Authentication uses Passport (devise for Node)
+
 fs					= require 'fs'
 http 				= require 'http'
 express			= require 'express'
@@ -11,7 +25,6 @@ passport 		= require 'passport'
 assets 			= require 'connect-assets'
 flash				= require 'connect-flash'
 xmpp 				= require 'sticky-xmpp'
-sms 				= require 'sticky-sms'
 realtime 		= require 'sticky-realtime'
 mixpanel 		= require 'mixpanel'
 
@@ -23,10 +36,10 @@ app.product_name 	= 'Sticky.io'
 app.env						= process.env.NODE_ENV
 
 #
-# Middleware / Express
-RedisStore = require('connect-redis')(express)
-redisStore = new RedisStore( { host:settings.redis.server, port: 6379})
-cookieParser = express.cookieParser('sc2ishard')
+# Middleware / Expresx
+RedisStore 		= require('connect-redis')(express)
+redisStore 		= new RedisStore( { host:settings.redis.server, port: 6379})
+cookieParser 	= express.cookieParser('sc2ishard')
 
 app.root_dir = __dirname
 
@@ -61,32 +74,26 @@ app.configure () ->
 	app.use app.router
 
 #
-# Mongoose models
+# Models - Mongoose
 mongoose = require('./app/models')
 app.models = mongoose.models
 
 #
-#
-# Controllers
+# Controllers / Routes
 require('./app/controllers')
 
 #
-# Start XMPP Bot
-xmpp.start()
+# Subscribe to Redis Pub/Sub for all XMPP bound notes
+xmpp.subscribe()
 
 #
-# Start SMS Polling
-#if app.env is 'development'
-#	sms.poll()
+# Boot http server
 
-
-#
-# Boot server
 server = app.listen(settings.port)
 console.log "Server running at http://#{settings.domain}"
 
 #
-# Socket IO
+# Boot Socket IO
 realtime.start(server, cookieParser, redisStore)
 console.log "Realtime initiated"
 

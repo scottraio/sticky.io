@@ -3,13 +3,17 @@ util 				= require 'util'
 path				= require 'path'
 trebuchet 	= require('trebuchet')('d7fc51d8-e67a-49db-b232-80a5a2fcd84f')
 
+# Mongoose
 Schema 			= mongoose.Schema
 Base				= require 'sticky-model'
 
+# Security
 SHA2				= new (require('jshashes').SHA512)()
 salt 				= 'sc2ishard'
-xmpp 				= require 'simple-xmpp'
 
+# Kue
+kue 	= require 'kue'
+jobs 	= kue.createQueue()
 
 encodePassword = (pass) ->
 	return '' if typeof pass is 'string' and pass.length < 6 
@@ -31,8 +35,8 @@ UserSchema.methods.validPassword = (pass) ->
 	return true if encodePassword(pass) is @password
 
 UserSchema.methods.registerXMPPBot = () ->
-	register = new xmpp.Element('presence', {type: 'subscribe', to: this.email})
-	xmpp.conn.send(register)
+	payload = {email: this.email}
+	jobs.create('users:register', payload).priority('high').save()
 
 UserSchema.methods.sendWelcomeEmail = () ->
 	self = @

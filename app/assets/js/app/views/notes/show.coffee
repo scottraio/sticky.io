@@ -51,10 +51,7 @@ class App.Views.Notes.Show extends Backbone.View
 				$('.subnote').autolink()
 
 				# Drag and Drop
-				window.dnd.current_note_id = parent._id
-				window.dnd.acts_as_droppable $(self.el)
-				window.dnd.acts_as_draggable $('ul.timeline li', self.el)
-				window.dnd.droppable_body $('body')
+				self.open_note_for_dnd(parent)
 
 
 	save: () ->	
@@ -73,6 +70,7 @@ class App.Views.Notes.Show extends Backbone.View
 
 	close: (e) ->
 		$(@el).html ""
+		$('body').attr('data-current-note-open', null)
 		return false
 
 	autosave: (e) ->
@@ -103,3 +101,10 @@ class App.Views.Notes.Show extends Backbone.View
 	format_date: (date) ->
 		date = new Date(date)
 		return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear()
+
+	open_note_for_dnd: (parent) ->
+		console.log parent
+		$('body').attr('data-current-note-open', parent._id)
+		window.dnd.acts_as_droppable $(@el)
+		window.dnd.acts_as_draggable $('ul.timeline li', @el)
+		window.dnd.droppable_body $('body') 

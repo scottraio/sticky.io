@@ -6,12 +6,12 @@ class App.Views.Notes.DnD extends Backbone.View
 
 	reload: () ->
 		push_url window.location.pathname + "?" + window.location.search
-		if @is_note_open()
-			push_url("/notes/#{@current_note_id}")
+		#if @is_note_open()
+			#push_url("/notes/#{@current_note_id}")
 
 	is_note_open: () ->
 		# return true if we've expanded a note into the expanded view
-		true if @current_note_id
+		true if $('body').attr('data-current-note-open').length > 0
 
 	is_subnote: () ->
 		$(@srcElement).hasClass("subnote")
@@ -70,28 +70,17 @@ class App.Views.Notes.DnD extends Backbone.View
 				# if the note being dragged is a subnote, then use the srcElement,
 				# its the item being dragged
 				child 	= $(self.srcElement)
-				old_id  = $(self.draggable).attr('data-id')
+				old_id  = self.current_note_id
 			else
 				# otherwise use the draggable
-				child 	= $(self.draggable)
-
-			if self.is_note_open()
-				old_id  = self.current_note_id
-
-			child_id 	= child.attr('data-id')
-			parent_id = parent.attr('data-id')
+				child 	= $(self.draggable)				
 
 			# stack unless the note we're stacking is the same as the note we're dragging
 			unless this is self.draggable
 				if old_id # restacking
-					$.getJSON "/notes/#{child_id}/restack/#{old_id}/#{parent_id}.json", (res) ->
-						self.reload()
-						$("ul.timeline li[data-id=#{child_id}]").remove()
-						parent.removeClass('stack')
+					self.restack(child, parent, old_id)
 				else
-					$.getJSON "/notes/#{child_id}/stack/#{parent_id}.json", (res) ->
-						self.reload()
-						parent.removeClass('stack')
+					self.stack(child, parent)
 			return false
 
 		li.on 'dragenter', (e) ->
@@ -119,13 +108,28 @@ class App.Views.Notes.DnD extends Backbone.View
 		li.on 'dragstart', (e) ->
 			self.draggable = this
 			self.srcElement = $(e.srcElement)
-			
 			e.originalEvent.dataTransfer.effectAllowed = 'all'
 			e.originalEvent.dataTransfer.setData('Text', $(e.currentTarget).attr('data-id')) 
-			console.log e
 			$(e.dragProxy).addClass('dragging')
 
 
 		li.on 'dragend', (e) ->
 			$(this).removeClass('dragging')
+
+	restack: (child, parent, old_id) ->
+		self 			= this
+		child_id 	= child.attr('data-id')
+		parent_id = parent.attr('data-id')
+
+		$.getJSON "/notes/#{child_id}/restack/#{old_id}/#{parent_id}.json", (res) ->
+			$("ul.timeline li[data-id=#{child_id}]").remove()
+			parent.removeClass('stack')
+
+	stack: (child, parent) ->
+		self 			= this
+		child_id 	= child.attr('data-id')
+		parent_id = parent.attr('data-id')
+
+		$.getJSON "/notes/#{child_id}/stack/#{parent_id}.json", (res) ->
+			parent.removeClass('stack')
 		
