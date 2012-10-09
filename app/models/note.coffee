@@ -1,6 +1,8 @@
 $						= require 'jquery'
 _						= require 'underscore'
 
+redis 	= require('redis')
+client 	= redis.createClient(settings.redis.port, settings.redis.server)
 
 Schema 			= mongoose.Schema
 Base				= require 'sticky-model'
@@ -55,9 +57,9 @@ NotesSchema.statics.create_note = (user,message,cb) ->
 
 			#
 			# SocketIO
-			socket_ids = socketbucket[user._id]
-			if socket_ids
-				for socket_id in socket_ids
+			client.get "sockets_for_#{user._id}", (err, reply) ->
+				bucket = JSON.parse(reply)
+				for socket_id in bucket
 					io.sockets.socket(socket_id).emit 'notes:add', note
 
 			cb(null, note)

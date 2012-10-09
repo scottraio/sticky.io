@@ -1,19 +1,19 @@
-sio 	= require('socket.io')
-redis = require('redis')
+sio 		= require('socket.io')
+redis 	= require('redis')
 
 exports.start = (server, cookieParser, sessionStore) ->
 
-	#RedisStore = sio.RedisStore
+	RedisStore = sio.RedisStore
 	GLOBAL.io = sio.listen(server)
 
 	#io.set 'transports', ['xhr-polling']
 
-	#io.configure () ->
-	#	pub    = redis.createClient(settings.redis.port, settings.redis.server)
-	#	sub    = redis.createClient(settings.redis.port, settings.redis.server)
-	#	client = redis.createClient(settings.redis.port, settings.redis.server)
+	io.configure () ->
+		pub    = redis.createClient(settings.redis.port, settings.redis.server)
+		sub    = redis.createClient(settings.redis.port, settings.redis.server)
+		client = redis.createClient(settings.redis.port, settings.redis.server)
 
-	#	io.set('store', new RedisStore( { redisPub: pub, redisSub: sub, redisClient: client } ))
+		io.set('store', new RedisStore( { redisPub: pub, redisSub: sub, redisClient: client } ))
 	 
 	# Socket.io
 
@@ -41,10 +41,21 @@ exports.start = (server, cookieParser, sessionStore) ->
 	io.sockets.on 'connection', (socket) ->
 
 		current_user_id = socket.handshake.session.passport.user
+		client 					= redis.createClient(settings.redis.port, settings.redis.server)
 
 		if current_user_id
-			if socketbucket[current_user_id] && socketbucket[current_user_id].length > 0
-				socketbucket[current_user_id].push socket.id
-			else
-				socketbucket[current_user_id] = [socket.id]
+			sockets_for_user = "sockets_for_#{current_user_id}"
+
+			client.get sockets_for_user, (err, reply) ->
+				console.log reply
+				if reply 
+					bucket = JSON.parse(reply)
+					bucket.push socket.id
+					client.set sockets_for_user, JSON.stringify(bucket), redis.print
+				else
+					client.set sockets_for_user, JSON.stringify([socket.id]), redis.print
+
+	io.sockets.on 'disconnect', (socket) ->
+		console.log 'good bye socket'
+
 
