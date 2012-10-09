@@ -1,15 +1,19 @@
-#cookieParser = express.cookieParser('sc2ishard')
+sio 	= require('socket.io')
+redis = require('redis')
 
 exports.start = (server, cookieParser, sessionStore) ->
 
-	GLOBAL.io = require('socket.io').listen(server)
+	RedisStore = sio.RedisStore
+	GLOBAL.io = sio.listen(server)
 
 	#io.set 'transports', ['xhr-polling']
-	
+
 	io.configure () ->
-		RedisStore = require('socket.io').RedisStore
-		opts = { host: settings.redis.server, port: settings.redis.port }
-		io.set('store', new RedisStore( { redisPub: opts, redisSub: opts, redisClient: opts } ))
+		pub    = redis.createClient(settings.redis.port, settings.redis.server)
+		sub    = redis.createClient(settings.redis.port, settings.redis.server)
+		client = redis.createClient(settings.redis.port, settings.redis.server)
+
+		io.set('store', new RedisStore( { redisPub: pub, redisSub: sub, redisClient: client } ))
 	 
 	# Socket.io
 
