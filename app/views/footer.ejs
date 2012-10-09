@@ -12,7 +12,7 @@
 	<% if (current_user) { %>	
 	<script>	
 		$(document).ready(function() {
-			window.socket 		= io.connect('<%= config.domain %>')
+			window.socket 		= io.connect('<%= config.domain %>', {'reconnect': true})
 			window.notebooks 	= <%- JSON.stringify(notebooks) %>
 			window.stickyio 	= new App.start(<%- current_user %>)
 			new App.Main({el: $("body")});

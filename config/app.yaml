@@ -1,5 +1,5 @@
 default:
-  port: 8001
+  port: 8000
   dbname: 'sticky-development'
   domain: 'dev.sticky.io:8000'
   redis:
