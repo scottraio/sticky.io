@@ -3,17 +3,17 @@ redis = require('redis')
 
 exports.start = (server, cookieParser, sessionStore) ->
 
-	RedisStore = sio.RedisStore
+	#RedisStore = sio.RedisStore
 	GLOBAL.io = sio.listen(server)
 
 	#io.set 'transports', ['xhr-polling']
 
-	io.configure () ->
-		pub    = redis.createClient(settings.redis.port, settings.redis.server)
-		sub    = redis.createClient(settings.redis.port, settings.redis.server)
-		client = redis.createClient(settings.redis.port, settings.redis.server)
+	#io.configure () ->
+	#	pub    = redis.createClient(settings.redis.port, settings.redis.server)
+	#	sub    = redis.createClient(settings.redis.port, settings.redis.server)
+	#	client = redis.createClient(settings.redis.port, settings.redis.server)
 
-		io.set('store', new RedisStore( { redisPub: pub, redisSub: sub, redisClient: client } ))
+	#	io.set('store', new RedisStore( { redisPub: pub, redisSub: sub, redisClient: client } ))
 	 
 	# Socket.io
 
