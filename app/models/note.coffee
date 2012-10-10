@@ -1,9 +1,6 @@
 $						= require 'jquery'
 _						= require 'underscore'
 
-redis 	= require('redis')
-client 	= redis.createClient(settings.redis.port, settings.redis.server)
-
 Schema 			= mongoose.Schema
 Base				= require 'sticky-model'
 regex 			= require 'sticky-regex'
@@ -29,6 +26,9 @@ NotesSchema = new Schema
 #
 # Indexes
 NotesSchema.index { created_at:-1, tags: 1,  _user: 1 }
+NotesSchema.index { _parent: 1, groups: 1, deleted_at: 1, _user: 1 }
+NotesSchema.index { tags: 1, deleted_at: 1, _user: 1 }
+NotesSchema.index { _parent: 1, deleted_at: 1, _user: 1 }
 NotesSchema.index { created_at:-1 }
 NotesSchema.index { _user:1 }
 
@@ -57,9 +57,8 @@ NotesSchema.statics.create_note = (user,message,cb) ->
 
 			#
 			# SocketIO
-			client.get "sockets_for_#{user._id}", (err, reply) ->
-				bucket = JSON.parse(reply)
-				for socket_id in bucket
+			app.models.User.findOne {_id: user._id}, (err, user) ->
+				for socket_id in user.sockets
 					io.sockets.socket(socket_id).emit 'notes:add', note
 
 			cb(null, note)

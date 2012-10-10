@@ -117,19 +117,41 @@ class App.Views.Notes.DnD extends Backbone.View
 			$(this).removeClass('dragging')
 
 	restack: (child, parent, old_id) ->
-		self 			= this
+		self 			= @
 		child_id 	= child.attr('data-id')
 		parent_id = parent.attr('data-id')
 
 		$.getJSON "/notes/#{child_id}/restack/#{old_id}/#{parent_id}.json", (res) ->
-			$("ul.timeline li[data-id=#{child_id}]").remove()
+			$("li[data-id=#{child_id}]").remove()
 			parent.removeClass('stack')
 
 	stack: (child, parent) ->
-		self 			= this
-		child_id 	= child.attr('data-id')
-		parent_id = parent.attr('data-id')
+		self = @
 
-		$.getJSON "/notes/#{child_id}/stack/#{parent_id}.json", (res) ->
-			parent.removeClass('stack')
+		$.getJSON "/notes/#{child.attr('data-id')}/stack/#{parent.attr('data-id')}.json", (res) ->
+			# Cleanup UI
+			self.cleanup_fresh_stack(child,parent)
+			self.make_fresh_stack(child,parent)
+	
+	make_fresh_stack: (child, parent) ->
+		parent_id = parent.attr('data-id')
+		child_id 	= child.attr('data-id')
+
+		# Make stacked
+		card = $("li[data-id=#{parent_id}]")
+		card.addClass('stacked')
+		# populate the view with the new stack actions
+		card.prepend ich.sticky_actions 
+			draggable 		: false
+			has_subnotes 	: true
+			_id						: parent_id
 		
+	cleanup_fresh_stack: (child, parent) ->
+		parent_id = parent.attr('data-id')
+		child_id 	= child.attr('data-id')
+
+		# remove the child
+		child.remove()
+		# clean up UI
+		$("[data-id=#{parent_id}]").removeClass('stack')
+		$(".sticky-actions","li[data-id=#{parent_id}]").remove()

@@ -35,6 +35,7 @@ UserSchema = new Schema
 	password 				: { type: String, required: true, set: encodePassword }
 	googleId 				: { type: String }
 	last_sign_in_at : { type: Date, default: null }
+	sockets 				: { type: Array, default: [] }
 
 UserSchema.path('email').validate 		Base.uniqueFieldInsensitive('User', 'email'), 'unique'
 UserSchema.path('email').validate 		Base.emailFormat, 'format'

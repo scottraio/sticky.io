@@ -27,6 +27,8 @@ flash				= require 'connect-flash'
 xmpp 				= require 'sticky-xmpp'
 realtime 		= require 'sticky-realtime'
 mixpanel 		= require 'mixpanel'
+redis  			= require 'redis'
+
 
 #
 # The App
@@ -36,9 +38,13 @@ app.product_name 	= 'Sticky.io'
 app.env						= process.env.NODE_ENV
 
 #
+# Set the redis client to the GLOBAL namespace
+GLOBAL.redisclient 	= redis.createClient(settings.redis.port, settings.redis.server)
+
+#
 # Middleware / Expresx
 RedisStore 		= require('connect-redis')(express)
-redisStore 		= new RedisStore( { host:settings.redis.server, port: 6379})
+redisStore 		= new RedisStore( { host:settings.redis.server, port: settings.redis.port})
 cookieParser 	= express.cookieParser('sc2ishard')
 
 app.root_dir = __dirname
@@ -94,7 +100,7 @@ console.log "Server running at http://#{settings.domain}"
 
 #
 # Boot Socket IO
-realtime.start(server, cookieParser, redisStore)
+realtime.start(server, cookieParser, redisStore, redisclient)
 console.log "Realtime initiated"
 
 #

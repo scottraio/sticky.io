@@ -1,34 +1,77 @@
 _ 			= require('underscore')
 
 sio 		= require('socket.io')
-redis 	= require('redis')
 
-exports.start = (server, cookieParser, sessionStore) ->
+exports.start = (server, cookieParser, sessionStore, redisclient) ->
+
+	_cookie 			= 'connect.sid'
+	_cookieParser = cookieParser
+	_sessionStore = sessionStore
 
 	RedisStore = sio.RedisStore
 	GLOBAL.io = sio.listen(server)
 
-	#io.set 'transports', ['xhr-polling']
 
 	io.configure () ->
 		#
 		# I guess socket.io needs a redis store, on top of the redis session, integrated
 		# with the redis socket bucket. What a mess. Either I don't understand socket programming
 		# well enough or theres a better implementation. 
-		pub    = redis.createClient(settings.redis.port, settings.redis.server)
-		sub    = redis.createClient(settings.redis.port, settings.redis.server)
-		client = redis.createClient(settings.redis.port, settings.redis.server)
+		#pub    = redis.createClient(settings.redis.port, settings.redis.server)
+		#sub    = redis.createClient(settings.redis.port, settings.redis.server)
+		#client = redis.createClient(settings.redis.port, settings.redis.server)
 
-		io.set('store', new RedisStore( { redisPub: pub, redisSub: sub, redisClient: client } ))
-	 
-	# Socket.io
+		io.set('store', new RedisStore( { redisPub: redisclient, redisSub: redisclient, redisClient: redisclient } ))
 
-	GLOBAL.socketbucket = {}
+		if app.env is 'production'
+			# send minified client
+			# io.enable('browser client minification')  
+			# apply etag caching logic based on version number
+			io.enable('browser client etag')
+			# gzip the file
+			io.enable('browser client gzip')
+			# reduce logging
+			io.set('log level', 1)
+			# enable all transports (optional if you want flashsocket)
+			io.set('transports', [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling' ])
 
-	_cookie 			= 'connect.sid'
-	_cookieParser = cookieParser
-	_sessionStore = sessionStore
-    
+	io.sockets.on 'connection', (socket) ->
+		#
+		# For security, hook right into the session. Once the passport
+		# object is safely secured, we can grab the user._id and begin adding the socket.id
+		# to the list of open sockets stored in the User object with Mongo. 
+		current_user_id = socket.handshake.session.passport.user
+		# Open a new client to redis 
+		#client = redis.createClient(settings.redis.port, settings.redis.server)
+
+		# proceed if cool
+		if current_user_id
+			
+			#
+			# Here's where the magic happens. We store each socket.id connected from an User session. 
+			# By doing this, it assures that only approved, connected sockets will get pushed new data.
+			app.models.User.findOne {_id: current_user_id}, (err, user) ->
+				# grab any existing socket and either update the user bucket or set a new one	
+				if user.sockets
+					bucket = user.sockets
+					# add it to the stack
+					bucket.push socket.id
+				else
+					# just set the bucket to an array with the value of the first socket
+					bucket = [socket.id]
+
+				user.set 'sockets', bucket
+				user.save (err) ->
+					console.log err if err
+
+		socket.on 'disconnect', (data) ->
+			# remove the socket.id once the user disconnects, simple right?
+			app.models.User.update { _id: current_user_id}, { '$pullAll': {sockets: [socket.id] }}, () ->
+				# done
+		
+
+	#
+	# Authorize every socket connection with the existing session.
 	io.set 'authorization', (data, accept) ->		
 		if (data && data.headers && data.headers.cookie)
 			_cookieParser data, {}, (err) ->
@@ -42,32 +85,3 @@ exports.start = (server, cookieParser, sessionStore) ->
 						accept(null, true)
 		else
 			return accept('MISSING_COOKIE', false);
-
-
-	io.sockets.on 'connection', (socket) ->
-
-		#
-		# The way this technique is secure is by hooking right into the session. Once the passport
-		# object is safely secured, we can grab the user._id and begin the redis mess. 
-		current_user_id = socket.handshake.session.passport.user
-		# Open a new client to redis 
-		client = redis.createClient(settings.redis.port, settings.redis.server)
-
-		# proceed if cool
-		if current_user_id
-			# set the name
-			sockets_for_user = "sockets_for_#{current_user_id}"
-			# grab any existing socket from redis and either update the user bucket or set a new one
-			client.get sockets_for_user, (err, reply) ->
-				if reply 
-					bucket = JSON.parse(reply)
-					bucket.push socket.id
-					# if the bucket size is greater than 3, then lets reset the sockets, otherwise
-					# add it to the stack
-					if bucket.size > 3 
-						client.set sockets_for_user, JSON.stringify([socket.id]), redis.print
-					else
-						client.set sockets_for_user, JSON.stringify(bucket), redis.print
-				else
-					# just set the bucket to an array with the value of the first socket
-					client.set sockets_for_user, JSON.stringify([socket.id]), redis.print

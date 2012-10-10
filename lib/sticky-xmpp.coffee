@@ -5,8 +5,7 @@ redis = require 'redis'
 exports.subscribe = () ->
 
 	kue.redis.createClient = () ->
-		client = redis.createClient(settings.redis.port, settings.redis.server)
-		return client
+		redisclient
 
 	jobs = kue.createQueue()
 
