@@ -71,14 +71,15 @@ exports.login = (req, res) ->
 # GET /logout
 exports.logout = (req, res) ->
 	# Logout any socket.io connections
-	socket_ids = socketbucket[req.user._id]
-	if socket_ids
-		for socket_id in socket_ids
+	app.models.User.findOne {_id: req.user._id}, (err, user) ->
+		for socket_id in user.sockets
 			io.sockets.socket(socket_id).disconnect()
-	
-	# Redirect to the homepage
-	req.logout()
-	res.redirect('/')
+
+		user.set 'sockets', []
+		user.save (err) ->
+			# Redirect to the homepage
+			req.logout()
+			res.redirect('/')
 
 #
 # Signup user

@@ -2,7 +2,17 @@ App.Views.Notes or= {}
 
 class App.Views.Notes.DnD extends Backbone.View
 
-	initialize: () ->
+
+	bind: (options) ->
+		#@reset()
+
+		if options && options.id
+			$('body').attr('data-current-note-open', options.id) 
+			@droppable $('#expanded-view')
+			@draggable $('#expanded-view ul.timeline li')
+		else
+			@draggable $('ul.notes_board li:not(.stacked)')
+			@droppable $('ul.notes_board li')
 
 	reload: () ->
 		push_url window.location.pathname + "?" + window.location.search
@@ -11,37 +21,31 @@ class App.Views.Notes.DnD extends Backbone.View
 
 	is_note_open: () ->
 		# return true if we've expanded a note into the expanded view
-		true if $('body').attr('data-current-note-open').length > 0
+		true if @current_open_note_id() && @current_open_note_id().length > 0
 
 	is_subnote: () ->
 		$(@srcElement).hasClass("subnote")
 
+	current_open_note_id: () ->
+		$('body').attr('data-current-note-open')
+
+
 
 	#
 	# Drag and Drop
-	#
 
-	droppable_body: (body) ->
+	droppable_body: () ->
 		self = @
+		body = $('body')
+		
 		body.on 'drop', (e) ->
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
-		
-			note 				= $(self.draggable)
-			note_id			= note.attr('data-id')
-			parent_id 	= self.current_note_id
-
-			if self.is_note_open() and self.is_subnote() and note_id isnt parent_id
-				$.getJSON "/notes/#{note_id}/unstack/#{parent_id}.json", (res) ->
-					$(body).removeClass('drop')
-					self.reload()
-				
+			self.unstack(this) if self.is_note_open() and self.is_subnote()
 			return false
 		
-
 		body.on 'dragenter', (e) ->
 			if self.is_note_open() and self.is_subnote()
 				$(body).addClass('drop')
-				$(self.srcElement).hide()
 			return false
 
 		body.on 'dragover', (e) ->
@@ -57,85 +61,105 @@ class App.Views.Notes.DnD extends Backbone.View
 		body.on 'dragleave', (e) ->
 			$(body).removeClass('drop') # this / e.target is previous target element.
 
-	acts_as_droppable: (li) ->
+	droppable: (li) ->
 		self = @
-
 		li.on 'drop', (e) ->
-			# this / e.target is current target element.
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
-
-			parent = $(this)
-
-			if self.is_subnote()
-				# if the note being dragged is a subnote, then use the srcElement,
-				# its the item being dragged
-				child 	= $(self.srcElement)
-				old_id  = self.current_note_id
-			else
-				# otherwise use the draggable
-				child 	= $(self.draggable)				
-
 			# stack unless the note we're stacking is the same as the note we're dragging
-			unless this is self.draggable
-				if old_id # restacking
-					self.restack(child, parent, old_id)
+			unless this is self.child
+				if self.is_note_open() and $(@child).hasClass("subnote") # restacking
+					self.restack(this)
 				else
-					self.stack(child, parent)
+					self.stack(this)
 			return false
 
 		li.on 'dragenter', (e) ->
-			# source 
 			unless this is self.draggable
 				$(this).addClass('stack')
 			return false
 
 		li.on 'dragover', (e) ->
-			# Necessary. Allows us to drop.
-			e.preventDefault() if e.preventDefault
+			e.preventDefault() if e.preventDefault # Necessary. Allows us to drop.
 			# source 
-			unless this is self.draggable
-				$(this).addClass('stack')
-				e.originalEvent.dataTransfer.dropEffect = 'copy'
+			unless this is self.child
+				self.make_desirable(e, this)
 			return false	
 
 		li.on 'dragleave', (e) ->
-			$(this).removeClass('stack') # this / e.target is previous target element.
+			self.make_undesirable(e, this)
 
 
-	acts_as_draggable: (li) ->
+	draggable: (li) ->
 		self = @
 
 		li.on 'dragstart', (e) ->
-			self.draggable = this
 			self.srcElement = $(e.srcElement)
+			self.child 			= this
+
 			e.originalEvent.dataTransfer.effectAllowed = 'all'
 			e.originalEvent.dataTransfer.setData('Text', $(e.currentTarget).attr('data-id')) 
 			$(e.dragProxy).addClass('dragging')
 
-
 		li.on 'dragend', (e) ->
 			$(this).removeClass('dragging')
 
-	restack: (child, parent, old_id) ->
-		self 			= @
-		child_id 	= child.attr('data-id')
-		parent_id = parent.attr('data-id')
+	unstack: (body) ->
+		self 				= @
+		child_id 		= $(@child).attr('data-id')
+		parent_id 	= @current_open_note_id()
+
+		$.getJSON "/notes/#{child_id}/unstack/#{parent_id}.json", (res) ->
+			$(body).removeClass('drop')
+			$("li[data-id=#{child_id}]").remove()
+
+			self.reload()
+
+	restack: (parent) ->
+		child_id 		= $(@child).attr('data-id')
+		parent_id 	= $(parent).attr('data-id')
+		old_id			= @current_open_note_id()
 
 		$.getJSON "/notes/#{child_id}/restack/#{old_id}/#{parent_id}.json", (res) ->
 			$("li[data-id=#{child_id}]").remove()
-			parent.removeClass('stack')
+			$(parent).removeClass('stack')
 
-	stack: (child, parent) ->
-		self = @
+	stack: (parent) ->
+		console.log @
+		self 				= @
+		child_id 		= $(@child).attr('data-id')
+		parent_id 	= $(parent).attr('data-id')
 
-		$.getJSON "/notes/#{child.attr('data-id')}/stack/#{parent.attr('data-id')}.json", (res) ->
+		$.getJSON "/notes/#{child_id}/stack/#{parent_id}.json", (res) ->
 			# Cleanup UI
-			self.cleanup_fresh_stack(child,parent)
-			self.make_fresh_stack(child,parent)
+			if self.current_open_note_id() is parent_id # if we dragging onto a note thats open
+				self.merge_onto_open_note(parent)
+			else
+				self.cleanup_fresh_stack(parent)
+				self.make_fresh_stack(parent)
 	
-	make_fresh_stack: (child, parent) ->
-		parent_id = parent.attr('data-id')
-		child_id 	= child.attr('data-id')
+
+	make_desirable: (e, parent) ->
+		$(parent).addClass('stack')
+		e.originalEvent.dataTransfer.dropEffect = 'copy'
+
+	make_undesirable: (e, parent) ->
+		$(parent).removeClass('stack')
+
+	merge_onto_open_note: (parent) ->
+		parent_id = $(parent).attr('data-id')
+
+		# remove the child
+		$(@child).remove()
+
+		# clean up UI
+		$("[data-id=#{parent_id}]").removeClass('stack')
+
+		# push to the new timeline - easy, simple.
+		push_url '/notes/' + parent_id
+
+	make_fresh_stack: (parent) ->
+		parent_id = $(parent).attr('data-id')
+		child_id 	= $(@child).attr('data-id')
 
 		# Make stacked
 		card = $("li[data-id=#{parent_id}]")
@@ -146,12 +170,26 @@ class App.Views.Notes.DnD extends Backbone.View
 			has_subnotes 	: true
 			_id						: parent_id
 		
-	cleanup_fresh_stack: (child, parent) ->
-		parent_id = parent.attr('data-id')
-		child_id 	= child.attr('data-id')
+	cleanup_fresh_stack: (parent) ->
+		parent_id = $(parent).attr('data-id')
+		child_id 	= $(@child).attr('data-id')
 
 		# remove the child
-		child.remove()
+		$(@child).remove()
 		# clean up UI
 		$("[data-id=#{parent_id}]").removeClass('stack')
 		$(".sticky-actions","li[data-id=#{parent_id}]").remove()
+
+
+	reset: () ->
+		$("body").unbind("drop")
+		$("body").unbind("dragenter")
+		$("body").unbind("dragover")
+		
+		$('#expanded-view').unbind("drop")
+		$('#expanded-view').unbind("dragenter")
+		$('#expanded-view').unbind("dragover")
+
+		$('li').unbind("drop")
+		$('li').unbind("dragenter")
+		$('li').unbind("dragover")

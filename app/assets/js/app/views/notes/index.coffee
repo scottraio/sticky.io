@@ -135,10 +135,10 @@ class App.Views.Notes.Index extends Backbone.View
 		# select the appropiate UI controls
 		@select_ui_controls()
 		
-		# Drag and Drop
-		window.dnd = new App.Views.Notes.DnD(id: @options.id)
-		window.dnd.acts_as_draggable $('ul.notes_board li:not(.stacked)', @el)
-		window.dnd.acts_as_droppable $('ul.notes_board li', @el)
+		# drag and drop
+		
+		window.dnd = new App.Views.Notes.DnD()
+		window.dnd.bind()
 	
 		# make the inbox scroll to infinity
 		@infinite_scroll()
@@ -162,6 +162,7 @@ class App.Views.Notes.Index extends Backbone.View
 		if @params && @params.order
 			$('.inbox-controls a.query').removeClass('active')
 			$("a[data-param-val=#{@params.order}]").addClass('active')
+		
 
 	format_date: (date) ->
 		date = new Date(date)

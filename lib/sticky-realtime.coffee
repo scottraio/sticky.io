@@ -52,6 +52,7 @@ exports.start = (server, cookieParser, sessionStore, redisclient) ->
 			# By doing this, it assures that only approved, connected sockets will get pushed new data.
 			app.models.User.findOne {_id: current_user_id}, (err, user) ->
 				# grab any existing socket and either update the user bucket or set a new one	
+				console.log user.sockets
 				if user.sockets
 					bucket = user.sockets
 					# add it to the stack
