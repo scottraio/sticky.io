@@ -36,6 +36,7 @@ GLOBAL.app 				= module.exports = express.createServer()
 GLOBAL.settings 	= config.readConfig('config/app.yaml')
 app.product_name 	= 'Sticky.io'
 app.env						= process.env.NODE_ENV
+app.version_num 	= '0.0.1'
 
 #
 # Set the redis client to the GLOBAL namespace
@@ -53,7 +54,9 @@ app.configure () ->
 	pub_dir = __dirname + '/public'
 
 	# connect-assets: rails 3.1 asset pipeline for nodejs
-	app.use assets(buildDir: 'public', src: 'app/assets', buildFilenamer: (filename, code) -> filename)
+	app.use assets buildDir: 'public', src: 'app/assets', build: true, buildFilenamer: (filename, code) -> 
+		parts = filename.split('.')
+		parts[0] + '.' + app.version_num + '.' + parts[1]
 
 	# handlebar templates :-)
 	app.engine('ejs', engine)
