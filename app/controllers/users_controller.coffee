@@ -73,11 +73,9 @@ exports.logout = (req, res) ->
 	# Logout any socket.io connections
 	app.models.User.findOne {_id: req.user._id}, (err, user) ->
 		for socket_id in user.sockets
-			io.sockets.socket(socket_id).disconnect()
+				io.sockets.socket(socket_id).disconnect()
 
-		user.set 'sockets', []
-		user.save (err) ->
-			# Redirect to the homepage
+		app.models.User.update { _id: user._id}, { '$pullAll': {sockets: user.sockets }}, () ->
 			req.logout()
 			res.redirect('/')
 

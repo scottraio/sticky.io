@@ -21,6 +21,10 @@ class App.Main extends Backbone.View
 			$('ul.notes_board:first-child').before view.ich_notes()
 			# auto-link everything
 			$('.message').autolink()
+			# DnD
+			window.dnd.draggable $('ul.notes_board:first-child li')
+
+
 
 
 		#
