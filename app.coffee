@@ -53,7 +53,7 @@ app.configure () ->
 	pub_dir = __dirname + '/public'
 
 	# connect-assets: rails 3.1 asset pipeline for nodejs
-	app.use assets(buildDir: 'public', src: 'app/assets', buildFilenamer: (filename, code) -> filename)
+	app.use assets(buildDir: 'public', src: 'app/assets')
 
 	# handlebar templates :-)
 	app.engine('ejs', engine)
