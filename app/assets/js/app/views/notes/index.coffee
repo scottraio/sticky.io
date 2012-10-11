@@ -6,6 +6,7 @@ class App.Views.Notes.Index extends Backbone.View
 		'click .delete'  						            : 'delete'
 		'click .dropdown-menu .color-choice'  	: 'update_color'
 		'click .task-completed'					        : 'mark_completed'
+		'click ul.notes_board li'								: 'link_to_note'
 	
 	initialize: ->
 		@params		= @options.params
@@ -64,6 +65,10 @@ class App.Views.Notes.Index extends Backbone.View
 		note.destroy
 			success: (model, res) ->
 				$(sticky).remove()
+		return false
+
+	link_to_note: (e) ->
+		push_url '/notes/' + $(e.currentTarget).attr('data-id')
 		return false
 
 	update_color: (e) ->
@@ -163,7 +168,6 @@ class App.Views.Notes.Index extends Backbone.View
 		if @params && @params.order
 			$('.inbox-controls a.query').removeClass('active')
 			$("a[data-param-val=#{@params.order}]").addClass('active')
-		
 
 	format_date: (date) ->
 		date = new Date(date)

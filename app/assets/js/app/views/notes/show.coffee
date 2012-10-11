@@ -23,6 +23,10 @@ class App.Views.Notes.Show extends Backbone.View
 
 	render: () ->
 		self = @
+
+		$("ul.notes_board li").removeClass('selected')
+		$("ul.notes_board li[data-id=#{@options.id}]").addClass('selected')
+
 		@note.fetch
 			success: (err, notesJSON) ->
 				notes = []

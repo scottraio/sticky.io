@@ -135,7 +135,8 @@ class App.Views.Notes.DnD extends Backbone.View
 				self.merge_onto_open_note(parent)
 			else
 				self.cleanup_fresh_stack(parent)
-				self.make_fresh_stack(parent)
+			
+			self.make_fresh_stack(parent)
 	
 
 	make_desirable: (e, parent) ->

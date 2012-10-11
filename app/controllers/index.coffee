@@ -1,6 +1,6 @@
 #
 #
-# Controllers Main - Hybrid application_controller/routes
+# Controllers Index - Hybrid application_controller/routes
 #
 #
 fs 									= require 'fs'
@@ -10,7 +10,8 @@ UsersController			= require './users_controller'
 NotesController			= require './notes_controller'
 NotebooksController	= require './notebooks_controller'
 
-
+#
+# Middleware
 ensureAuthenticated = (req, res, next) ->
 	if req.isAuthenticated()
 		return next() 
@@ -20,9 +21,9 @@ ensureAuthenticated = (req, res, next) ->
 		else
 			return next()
 
+
 #
-# Authentication
-# 
+# Routes
 app.get('/login', UsersController.login)
 app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/', failureFlash: true }))
 app.get('/logout', UsersController.logout)
@@ -53,19 +54,17 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 			if new_user
 				res.redirect('/welcome') 
 			else 
-				res.redirect('/') 
+				res.redirect('/notes') 
 )
 
 
 #
 # Users
-#
 app.get('/users/:id.:format?', ensureAuthenticated, UsersController.show)
 app.put('/users/:id.:format?', ensureAuthenticated, UsersController.update)
 
 #
 # Notes
-#
 app.get('/notes.:format?', ensureAuthenticated, NotesController.index)
 app.get('/notes/:id.:format?', ensureAuthenticated, NotesController.show)
 app.get('/notes/new.:format?', ensureAuthenticated, NotesController.new)
@@ -77,7 +76,6 @@ app.post('/notes/smtp.:format?', NotesController.smtp)
 
 #
 # Notes Tree
-#
 app.get('/notes/:id/expanded.:format?', ensureAuthenticated, NotesController.expanded)
 app.get('/notes/:id/stack/:parent_id.:format?', ensureAuthenticated, NotesController.stack)
 app.get('/notes/:id/unstack/:parent_id.:format?', ensureAuthenticated, NotesController.unstack)
@@ -85,7 +83,6 @@ app.get('/notes/:id/restack/:from_id/:to_id.:format?', ensureAuthenticated, Note
 
 #
 # Notebooks
-#
 app.get('/notebooks.:format?', ensureAuthenticated, NotebooksController.index)
 app.get('/notebooks/:id/accept.:format?', ensureAuthenticated, NotebooksController.accept_invite)
 app.get('/notebooks/:id/members/:user_id/remove.:format?', ensureAuthenticated, NotebooksController.remove_member)
@@ -96,11 +93,10 @@ app.delete('/notebooks/:id.:format?', ensureAuthenticated, NotebooksController.d
 
 #
 # Root
-#
-
 app.get '/', (req, res) ->
 	if req.isAuthenticated()
-		NotesController.index(req,res)
+		res.redirect('/notes')
 	else
-		res.render('public', {current_user:null})
+		res.setHeader "Cache-Control", "public, max-age=#{5 * 60}"
+		res.render 'public', {current_user:null}
 

@@ -24,7 +24,8 @@ class App.Main extends Backbone.View
 			# DnD
 			window.dnd.draggable $('ul.notes_board:first-child li')
 
-
+		socket.on 'disconnect', () ->
+			console.log 'disconnected'
 
 
 		#
