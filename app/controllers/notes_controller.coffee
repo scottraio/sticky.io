@@ -149,29 +149,16 @@ exports.update = (req, res) ->
 
 exports.stack = (req, res) ->
 	render.json req, res, (done) ->
-		Note.stack {user:req.user, child_id:req.params.id, parent_id:req.params.parent_id}, done
+		Note.stack req.user, {child_id:req.params.child_id, parent_id:req.params.parent_id}, done
 	
 exports.unstack = (req, res) ->
 	render.json req, res, (done) ->
-		Note.note_and_parent req, (note, parent) ->
-			# magic
-			parent._notes.remove(note._id)
-			note._parent = null
-			
-			note.save (err) -> 
-				parent.save(done) unless err
+		Note.unstack req.user, {child_id:req.params.child_id, parent_id:req.params.parent_id}, done
 
 exports.restack = (req, res) ->
 	render.json req, res, (done) ->
-		Note.from_note_to_note req, (note, from, to) ->
-			# magic
-			from._notes.remove(note._id)
-			to._notes.push(note._id)
-			note._parent = to._id
+		Note.restack req.user, {child_id:req.params.child_id, old_id:req.params.old_id, parent_id:req.params.parent_id}, done
 			
-			note.save (err) -> 
-				from.save (err) ->
-					to.save(done)
 
 #
 # grabs an note and returns its JSON

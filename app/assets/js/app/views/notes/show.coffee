@@ -53,11 +53,12 @@ class App.Views.Notes.Show extends Backbone.View
 				$('#editable-message').focus()
 				$('#editable-message').autolink()
 				$('.subnote').autolink()
+				$('body').attr('data-current-note-open', parent._id) 
 
 				# Drag and Drop
 				window.dnd.droppable_body()
-				window.dnd.bind { id : parent._id }
-
+				window.dnd.droppable $('#expanded-view')
+				window.dnd.draggable $('#expanded-view ul.timeline li')
 
 
 	save: () ->	

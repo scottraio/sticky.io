@@ -24,10 +24,18 @@ engine			= require 'ejs-locals'
 passport 		= require 'passport'
 assets 			= require 'connect-assets'
 flash				= require 'connect-flash'
+
+# XMPP bridge
 xmpp 				= require 'sticky-xmpp'
-realtime 		= require 'sticky-realtime'
-mixpanel 		= require 'mixpanel'
+
+# SocketIO stuff
 redis  			= require 'redis'
+realtime 		= require 'sticky-realtime'
+
+# Analytics
+mixpanel 		= require 'mixpanel'
+
+
 
 
 #
@@ -54,7 +62,7 @@ app.configure () ->
 	pub_dir = __dirname + '/public'
 
 	# connect-assets: rails 3.1 asset pipeline for nodejs
-	app.use assets buildDir: 'public', src: 'app/assets', build: true, buildFilenamer: (filename, code) -> 
+	app.use assets buildDir: 'public', src: 'app/assets', buildFilenamer: (filename, code) -> 
 		parts = filename.split('.')
 		parts[0] + '.' + app.version_num + '.' + parts[1]
 
@@ -88,7 +96,7 @@ mongoose = require('./app/models')
 app.models = mongoose.models
 
 #
-# Controllers / Routes
+# Controllers / HTTP Routes
 require('./app/controllers')
 
 #
@@ -97,14 +105,13 @@ xmpp.subscribe()
 
 #
 # Boot http server
-
 server = app.listen(settings.port)
 console.log "Server running at http://#{settings.domain}"
 
 #
 # Boot Socket IO
 realtime.start(server, cookieParser, redisStore, redisclient)
-console.log "Realtime initiated"
+console.log "info: socket.io listeners started"
 
 #
 # Setup mixpanel analytics

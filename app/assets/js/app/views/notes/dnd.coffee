@@ -2,22 +2,12 @@ App.Views.Notes or= {}
 
 class App.Views.Notes.DnD extends Backbone.View
 
+	initialize: () ->
+		self = @
 
-	bind: (options) ->
-		#@reset()
+		socket.on 'ui:cleanup:empty_stack', (parent) ->
+			self.cleanup_empty_stack(parent._id)
 
-		if options && options.id
-			$('body').attr('data-current-note-open', options.id) 
-			@droppable $('#expanded-view')
-			@draggable $('#expanded-view ul.timeline li')
-		else
-			@draggable $('ul.notes_board li:not(.stacked)')
-			@droppable $('ul.notes_board li')
-
-	reload: () ->
-		push_url window.location.pathname + "?" + window.location.search
-		#if @is_note_open()
-			#push_url("/notes/#{@current_note_id}")
 
 	is_note_open: () ->
 		# return true if we've expanded a note into the expanded view
@@ -33,7 +23,6 @@ class App.Views.Notes.DnD extends Backbone.View
 
 	#
 	# Drag and Drop
-
 	droppable_body: () ->
 		self = @
 		body = $('body')
@@ -41,6 +30,7 @@ class App.Views.Notes.DnD extends Backbone.View
 		body.on 'drop', (e) ->
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 			self.unstack(this) if self.is_note_open() and self.is_subnote()
+			console.log 'dropped'
 			return false
 		
 		body.on 'dragenter', (e) ->
@@ -64,6 +54,7 @@ class App.Views.Notes.DnD extends Backbone.View
 	droppable: (li) ->
 		self = @
 		li.on 'drop', (e) ->
+			console.log 'dropped'
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 			# stack unless the note we're stacking is the same as the note we're dragging
 			unless this is self.child
@@ -103,42 +94,58 @@ class App.Views.Notes.DnD extends Backbone.View
 		li.on 'dragend', (e) ->
 			$(this).removeClass('dragging')
 
+
+
+	#
+	# Unstack
 	unstack: (body) ->
 		self 				= @
 		child_id 		= $(@child).attr('data-id')
 		parent_id 	= @current_open_note_id()
 
-		$.getJSON "/notes/#{child_id}/unstack/#{parent_id}.json", (res) ->
-			$(body).removeClass('drop')
-			$("li[data-id=#{child_id}]").remove()
+		# Use Socket.IO to emit unstack event
+		socket.emit 'notes:unstack', {child_id: child_id, parent_id: parent_id}
+		
+		# cleanup
+		$(body).removeClass('drop')
+		$("li[data-id=#{child_id}]").remove()
 
-			self.reload()
-
+	#
+	# Restack
 	restack: (parent) ->
 		child_id 		= $(@child).attr('data-id')
 		parent_id 	= $(parent).attr('data-id')
 		old_id			= @current_open_note_id()
 
-		$.getJSON "/notes/#{child_id}/restack/#{old_id}/#{parent_id}.json", (res) ->
-			$("li[data-id=#{child_id}]").remove()
-			$(parent).removeClass('stack')
-
+		# Use Socket.IO to emit unstack event
+		socket.emit 'notes:restack', {child_id: child_id, old_id: old_id, parent_id: parent_id}
+		
+		# cleanup
+		$("li[data-id=#{child_id}]").remove()
+		$(parent).removeClass('stack')
+		
+	#
+	# Stack
 	stack: (parent) ->
-		console.log @
 		self 				= @
 		child_id 		= $(@child).attr('data-id')
 		parent_id 	= $(parent).attr('data-id')
 
-		$.getJSON "/notes/#{child_id}/stack/#{parent_id}.json", (res) ->
-			# Cleanup UI
-			if self.current_open_note_id() is parent_id # if we dragging onto a note thats open
-				self.merge_onto_open_note(parent)
-			else
-				self.cleanup_fresh_stack(parent)
-			
-			self.make_fresh_stack(parent)
+		# Use Socket.IO to emit unstack event
+		socket.emit 'notes:stack', {child_id: child_id, parent_id: parent_id}
+		
+		# cleanup
+		if self.current_open_note_id() is parent_id # if we dragging onto a note thats open
+			self.merge_onto_open_note(parent)
+		else
+			self.cleanup_fresh_stack(parent)
+		
+		self.make_fresh_stack(parent)
 	
 
+
+	#
+	# UI Cleanup duty
 	make_desirable: (e, parent) ->
 		$(parent).addClass('stack')
 		e.originalEvent.dataTransfer.dropEffect = 'copy'
@@ -154,9 +161,6 @@ class App.Views.Notes.DnD extends Backbone.View
 
 		# clean up UI
 		$("[data-id=#{parent_id}]").removeClass('stack')
-
-		# push to the new timeline - easy, simple.
-		push_url '/notes/' + parent_id
 
 	make_fresh_stack: (parent) ->
 		parent_id = $(parent).attr('data-id')
@@ -181,16 +185,10 @@ class App.Views.Notes.DnD extends Backbone.View
 		$("[data-id=#{parent_id}]").removeClass('stack')
 		$(".sticky-actions","li[data-id=#{parent_id}]").remove()
 
-
-	reset: () ->
-		$("body").unbind("drop")
-		$("body").unbind("dragenter")
-		$("body").unbind("dragover")
-		
-		$('#expanded-view').unbind("drop")
-		$('#expanded-view').unbind("dragenter")
-		$('#expanded-view').unbind("dragover")
-
-		$('li').unbind("drop")
-		$('li').unbind("dragenter")
-		$('li').unbind("dragover")
+	# when we've unstacked every note, we want to remove the 'stacked' status
+	# from the parent note in the list
+	cleanup_empty_stack: (parent_id) ->
+		# clean up UI
+		parent = $("ul.notes_board li[data-id=#{parent_id}]")
+		parent.removeClass('stack')
+		$(".sticky-actions", parent).remove()

@@ -26,7 +26,7 @@ exports.json = (req,res,fn) ->
 				exports.render_page('index', req, res)
 
 exports.render_page = (page,req,res) ->
-	res.setHeader "Cache-Control", "public, max-age=#{5 * 60}"
+	#res.setHeader "Cache-Control", "public, max-age=#{5 * 60}"
 	
 	exports.update_index req, () ->
 		Tag.where('value._user', req.user.id).run (err, tags) ->

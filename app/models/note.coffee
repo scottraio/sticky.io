@@ -58,75 +58,58 @@ NotesSchema.statics.create_note = (user,message,cb) ->
 			#
 			# SocketIO
 			app.models.User.findOne {_id: user._id}, (err, user) ->
-				for socket_id in user.sockets
-					io.sockets.socket(socket_id).emit 'notes:add', note
+				user.broadcast('notes:add', note)
 
 			cb(null, note)
 		else
 			cb(err)
 
-NotesSchema.statics.last_note = (user, cb) ->
-	app.models.Note.where('_user',user._id)
-		.where('_parent', null)
-		.limit(1)
-		.sort('created_at', -1)
-		.run (err, last_note) ->
-			cb(last_note[0])
-
-NotesSchema.statics.note_and_parent = (req, cb) ->
-	app.models.Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->			
-		app.models.Note.findOne {_id:req.params.parent_id, _user:req.user}, (err, parent) ->
-			cb(note,parent)
-
-NotesSchema.statics.from_note_to_note = (req, cb) ->
-	app.models.Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
-		app.models.Note.findOne {_id:req.params.from_id, _user:req.user}, (err, from) ->		
-			app.models.Note.findOne {_id:req.params.to_id, _user:req.user}, (err, to) ->
-				cb(note,from,to)
-
-#
 #
 # Stacking
 
-NotesSchema.statics.populate_stacks = (notes, cb) ->
-	Note = app.models.Note
-	# extract ids from each parent note
-	subnote_ids = []
-	for note in notes
-		subnote_ids.push note._notes
-	ids = _.flatten(subnote_ids)
-	
-	Note.where('_id').in(ids).populate('_domains').run (err, subnotes) ->
-		for note in notes
-			# convert to object so we can manipulate
-			note.toObject()
-			# populate the _notes accordingly
-			for subnote in subnotes	
-				index = note._notes.indexOf(subnote._id)
-				note._notes[index] = subnote if index isnt -1
-			# return the results for mapping
-		cb(err, notes)
+NotesSchema.statics.stack = (user, options, cb) ->
+	@note_and_parent user, {child_id: options.child_id, parent_id: options.parent_id}, (child, parent) ->
+		# assign child id to parent
+		parent._notes.push child._id
+		# assign parent to child
+		child._parent 		= parent._id
+		child.stacked_at 	= new Date()
+		child.save (err) -> 
+			unless err
+				parent.save (err) ->
+					cb(child, parent)
+			else
+				cb(err, null)
 
-
-NotesSchema.statics.stack = (options, cb) ->
-	app.models.Note.findOne {_id:options.child_id, _user:options.user}, (err, child) ->			
-		app.models.Note.findOne {_id:options.parent_id, _user:options.user}, (err, parent) ->
-			# assign child id to parent
-			parent._notes.push child._id
-			# assign parent to child
-			child._parent 		= parent._id
-			child.stacked_at 	= new Date()
+NotesSchema.statics.restack = (user, options, cb) ->
+	@from_note_to_note user, {child_id: options.child_id, old_id: options.old_id, parent_id: options.parent_id}, (child, old_parent, parent) ->
+			# magic
+			from._notes.remove(child._id)
+			old_parent._notes.push(child._id)
+			child._parent = old_parent._id
+			
 			child.save (err) -> 
-				unless err
-					parent.save(cb)
-				else
-					cb(err, null)
+				parent.save (err) ->
+					old_parent.save (err) ->
+						cb(child, old_parent, parent)
+ 
+NotesSchema.statics.unstack = (user, options, cb) ->
+	@note_and_parent user, {child_id: options.child_id, parent_id: options.parent_id}, (child, parent) ->
+		# magic
+		parent._notes.remove(child._id)
+		child._parent = null
+		
+		child.save (err) -> 
+			parent.save (err) ->
+				cb(child, parent)
+			
 
-#
 #
 # Parses all tags, links, and groups from message 
 NotesSchema.methods.parse = () ->
-	@simplify()
+	# sets up a the 'plain_txt' field in the DB
+	# we use this plain_txt for a variety of use cases e.g. parsing notes (parse straight text, dont muddle with html)
+	@simplify() 
 	@parse_tags()
 	@parse_links()
 	@parse_groups()
@@ -139,7 +122,6 @@ NotesSchema.methods.simplify = () ->
 
 #
 # Parse tags i.e. #todo, #urgent, #cool-links
-#
 NotesSchema.methods.parse_tags = () ->
 	self 			= @
 	new_tags 	= []
@@ -179,7 +161,6 @@ NotesSchema.methods.parse_links = () ->
 
 #
 # Parse Groups/Notebooks
-#
 NotesSchema.methods.parse_groups = () ->
 	self 		= @
 	matches = @plain_txt.match regex.match.group
@@ -195,7 +176,6 @@ NotesSchema.methods.parse_groups = () ->
 
 #
 # Map/Reduce
-#
 NotesSchema.statics.domain_list = (query,cb) ->
 	Note = this
 
@@ -224,5 +204,49 @@ NotesSchema.statics.domain_list = (query,cb) ->
 
 	mongoose.connection.db.executeDbCommand command, cb
 		
+#
+# Stacking helper methods
+NotesSchema.statics.last_note = (user, cb) ->
+	app.models.Note.where('_user',user._id)
+		.where('_parent', null)
+		.limit(1)
+		.sort('created_at', -1)
+		.run (err, last_note) ->
+			cb(last_note[0])
+
+NotesSchema.statics.note_and_parent = (user, options, cb) ->
+	app.models.Note.findOne {_id:options.child_id, _user:user}, (err, child) ->			
+		app.models.Note.findOne {_id:options.parent_id, _user:user}, (err, parent) ->
+			cb(child,parent)
+
+NotesSchema.statics.from_note_to_note = (user, options, cb) ->
+	app.models.Note.findOne {_id:options.child_id, _user:user}, (err, child) ->
+		app.models.Note.findOne {_id:options.old_id, _user:user}, (err, old_parent) ->		
+			app.models.Note.findOne {_id:options.parent_id, _user:user}, (err, parent) ->
+				cb(child,old_parent,parent)
+
+#
+# Mongoose version of a lazy join
+# populate stacks with subnote data
+NotesSchema.statics.populate_stacks = (notes, cb) ->
+	Note = app.models.Note
+	# extract ids from each parent note
+	subnote_ids = []
+	for note in notes
+		subnote_ids.push note._notes
+	ids = _.flatten(subnote_ids)
 	
+	Note.where('_id').in(ids).populate('_domains').run (err, subnotes) ->
+		for note in notes
+			# convert to object so we can manipulate
+			note.toObject()
+			# populate the _notes accordingly
+			for subnote in subnotes	
+				index = note._notes.indexOf(subnote._id)
+				note._notes[index] = subnote if index isnt -1
+			# return the results for mapping
+		cb(err, notes)
+
+#
+# Set the model!
 mongoose.model('Note', NotesSchema)

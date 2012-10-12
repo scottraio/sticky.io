@@ -28,6 +28,7 @@ encodePassword = (pass) ->
 #
 # Mongoose Schema
 
+
 UserSchema = new Schema
 	name  	 				: { type: String, required: true, trim: true }
 	email	 					: { type: String, required: true, trim: true, unique: true, lowercase: true }
@@ -35,11 +36,16 @@ UserSchema = new Schema
 	password 				: { type: String, required: true, set: encodePassword }
 	googleId 				: { type: String }
 	last_sign_in_at : { type: Date, default: null }
-	sockets 				: { type: Array, default: [] }
+
+
 
 UserSchema.path('email').validate 		Base.uniqueFieldInsensitive('User', 'email'), 'unique'
 UserSchema.path('email').validate 		Base.emailFormat, 'format'
 UserSchema.path('password').validate 	Base.cannotBeEmpty, 'password'
+
+
+UserSchema.methods.broadcast = (route, data) ->
+	io.sockets.in(@_id).emit route, data
 
 UserSchema.methods.validPassword = (pass) ->
 	return true if encodePassword(pass) is @password

@@ -1,6 +1,6 @@
 _ 			= require('underscore')
-
 sio 		= require('socket.io')
+routes 	= require('../app/sockets')
 
 exports.start = (server, cookieParser, sessionStore, redisclient) ->
 
@@ -10,7 +10,6 @@ exports.start = (server, cookieParser, sessionStore, redisclient) ->
 
 	RedisStore = sio.RedisStore
 	GLOBAL.io = sio.listen(server)
-
 
 	io.configure () ->
 		#
@@ -41,9 +40,11 @@ exports.start = (server, cookieParser, sessionStore, redisclient) ->
 		# object is safely secured, we can grab the user._id and begin adding the socket.id
 		# to the list of open sockets stored in the User object with Mongo. 
 		current_user_id = socket.handshake.session.passport.user
-		# Open a new client to redis 
-		#client = redis.createClient(settings.redis.port, settings.redis.server)
 
+		#
+		# grab the current session to only allow 1 socket connection per session
+		current_session_id = socket.handshake.session.id
+		#
 		# proceed if cool
 		if current_user_id
 			
@@ -51,25 +52,22 @@ exports.start = (server, cookieParser, sessionStore, redisclient) ->
 			# Here's where the magic happens. We store each socket.id connected from an User session. 
 			# By doing this, it assures that only approved, connected sockets will get pushed new data.
 			app.models.User.findOne {_id: current_user_id}, (err, user) ->
+				socket.join(user._id)
 				# grab any existing socket and either update the user bucket or set a new one	
-				console.log user.sockets
-				if user.sockets
-					bucket = user.sockets
-					# add it to the stack
-					bucket.push socket.id
-				else
-					# just set the bucket to an array with the value of the first socket
-					bucket = [socket.id]
+				#app.models.User.sync_socket_with_session user, current_session_id, socket, () ->
+				#	console.log 'info: sockets synced with session'					
 
-				user.set 'sockets', bucket
-				user.save (err) ->
-					console.log err if err
 
+		# Bind all socket application "routes"
+		# i.e. stacking, unstacking, restacking
+		routes.bind(current_user_id, socket)
+
+		# gracefully handle disconnects
 		socket.on 'disconnect', (data) ->
+			console.log 'disconnect'
 			# remove the socket.id once the user disconnects, simple right?
-			app.models.User.update { _id: current_user_id}, { '$pullAll': {sockets: [socket.id] }}, () ->
+			app.models.User.update { _id: current_user_id}, { '$pullAll': {'sockets.sockets': [socket.id] }}, () ->
 				# done
-		
 
 	#
 	# Authorize every socket connection with the existing session.
@@ -82,7 +80,8 @@ exports.start = (server, cookieParser, sessionStore, redisclient) ->
 					if(err || !session || !session.passport || !session.passport.user)
 						accept('NOT_LOGGED_IN', false)
 					else
-						data.session = session
+						data.session 		= session
+						data.session.id = sessionId
 						accept(null, true)
 		else
 			return accept('MISSING_COOKIE', false);

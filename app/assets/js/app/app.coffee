@@ -24,9 +24,9 @@ class App.Main extends Backbone.View
 			# DnD
 			window.dnd.draggable $('ul.notes_board:first-child li')
 
+
 		socket.on 'disconnect', () ->
 			console.log 'disconnected'
-
 
 		#
 		# dropdown any dropdowns
@@ -42,10 +42,6 @@ class App.Main extends Backbone.View
 			'$email'			: current_user.email,
 			'$name'				: current_user.name,
 			'$last_login'	: current_user.last_sign_in_at
-
-		#
-		# enable the carousel for first time users
-		$('.carousel').carousel('pause')
 	
 		#
 		# animate the sidebar nav a bit

@@ -77,9 +77,9 @@ app.post('/notes/smtp.:format?', NotesController.smtp)
 #
 # Notes Tree
 app.get('/notes/:id/expanded.:format?', ensureAuthenticated, NotesController.expanded)
-app.get('/notes/:id/stack/:parent_id.:format?', ensureAuthenticated, NotesController.stack)
-app.get('/notes/:id/unstack/:parent_id.:format?', ensureAuthenticated, NotesController.unstack)
-app.get('/notes/:id/restack/:from_id/:to_id.:format?', ensureAuthenticated, NotesController.restack)
+app.get('/notes/:child_id/stack/:parent_id.:format?', ensureAuthenticated, NotesController.stack)
+app.get('/notes/:child_id/unstack/:parent_id.:format?', ensureAuthenticated, NotesController.unstack)
+app.get('/notes/:child_id/restack/:old_id/:parent_id.:format?', ensureAuthenticated, NotesController.restack)
 
 #
 # Notebooks
@@ -97,6 +97,6 @@ app.get '/', (req, res) ->
 	if req.isAuthenticated()
 		res.redirect('/notes')
 	else
-		res.setHeader "Cache-Control", "public, max-age=#{5 * 60}"
+		#res.setHeader "Cache-Control", "public, max-age=#{5 * 60}"
 		res.render 'public', {current_user:null}
 

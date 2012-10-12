@@ -141,10 +141,8 @@ class App.Views.Notes.Index extends Backbone.View
 		@select_ui_controls()
 		
 		# drag and drop
-		
-		window.dnd.bind()
-		window.dnd.droppable_body()
-		window.dnd.bind { id : parent._id }
+		window.dnd.draggable $('ul.notes_board li:not(.stacked)')
+		window.dnd.droppable $('ul.notes_board li')
 	
 		# make the inbox scroll to infinity
 		@infinite_scroll()
