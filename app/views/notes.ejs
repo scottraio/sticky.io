@@ -42,7 +42,9 @@
 	<ul class="notes_board">
 		{{#notes}}
 			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}} {{group_colors}}" data-id="{{_id}}" {{#draggable}}draggable="true"{{/draggable}}>
-				{{>sticky_actions}}
+				<div class="sticky-actions-wrapper">
+					{{>sticky_actions}}
+				</div>
 				
 				<div class="message_wrapper {{#has_subnotes}}pole-position {{/has_subnotes}} autolink {{#completed}}completed{{/completed}}">						
 					{{>sticky}}
@@ -80,6 +82,6 @@
 		{{#draggable}}
 		<i class="sticky-action icon-move dnd hide"></i>
 		{{/draggable}}
-		{{#has_subnotes}}<a href="/notes/{{_id}}" class="push expand sticky-action number-porn">{{_notes.length}}</a>{{/has_subnotes}}
+		{{#has_subnotes}}<a href="/notes/{{_id}}" class="push expand sticky-action number-porn">{{subnote_count}}</a>{{/has_subnotes}}
 	</div>
 </script>

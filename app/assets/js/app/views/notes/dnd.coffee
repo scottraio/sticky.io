@@ -71,7 +71,7 @@ class App.Views.Notes.DnD extends Backbone.View
 			# stack unless the note we're stacking is the same as the note we're dragging
 		
 			unless this is self.child or self.dropping_subnote_on_its_parent(this) 
-				if self.is_note_open() and $(@child).hasClass("subnote") # restacking
+				if self.is_note_open() and self.is_subnote() # restacking
 					self.restack(this)
 				else
 					self.stack(this)
@@ -120,8 +120,7 @@ class App.Views.Notes.DnD extends Backbone.View
 		socket.emit 'notes:unstack', {child_id: child_id, parent_id: parent_id}
 		
 		# cleanup
-		$(body).removeClass('drop')
-		$("li[data-id=#{child_id}]").remove()
+		@cleanup_unstack(parent_id)
 
 	#
 	# Restack
@@ -134,8 +133,7 @@ class App.Views.Notes.DnD extends Backbone.View
 		socket.emit 'notes:restack', {child_id: child_id, old_id: old_id, parent_id: parent_id}
 		
 		# cleanup
-		$("li[data-id=#{child_id}]").remove()
-		$(parent).removeClass('stack')
+		@cleanup_restack(parent_id, old_id)
 		
 	#
 	# Stack
@@ -148,12 +146,12 @@ class App.Views.Notes.DnD extends Backbone.View
 		socket.emit 'notes:stack', {child_id: child_id, parent_id: parent_id}
 		
 		# cleanup
-		if self.current_open_note_id() is parent_id # if we dragging onto a note thats open
-			self.merge_onto_open_note(parent)
+		if @current_open_note_id() is parent_id # if we dragging onto a note thats open
+			@merge_onto_open_note(parent)
 		else
-			self.cleanup_fresh_stack(parent)
+			@cleanup_fresh_stack(parent)
 		
-		self.make_fresh_stack(parent)
+		@make_fresh_stack(parent)
 	
 
 
@@ -182,11 +180,10 @@ class App.Views.Notes.DnD extends Backbone.View
 		# Make stacked
 		card = $("li[data-id=#{parent_id}]")
 		card.addClass('stacked')
-		# populate the view with the new stack actions
-		card.prepend ich.sticky_actions 
-			draggable 		: false
-			has_subnotes 	: true
-			_id						: parent_id
+
+		current_count = parseInt($("a.number-porn", card).text()) || 0
+
+		@render_sticky_actions(parent_id, current_count + 1)
 		
 	cleanup_fresh_stack: (parent) ->
 		parent_id = $(parent).attr('data-id')
@@ -205,3 +202,48 @@ class App.Views.Notes.DnD extends Backbone.View
 		parent = $("ul.notes_board li[data-id=#{parent_id}]")
 		parent.removeClass('stack')
 		$(".sticky-actions", parent).remove()
+
+	# when we've unstacked a note, we want to decrement the count
+	# from the parent note in the list
+	cleanup_unstack: (parent_id) ->
+		# clean up UI
+		child_id 	= $(@child).attr('data-id')
+
+		$('body').removeClass('drop')
+		$("li[data-id=#{child_id}]").remove()
+
+		# Make stacked
+		card 					= $("li[data-id=#{parent_id}]")
+		current_count = parseInt($("a.number-porn", card).text()) || 0
+
+		@render_sticky_actions(parent_id, current_count - 1)
+
+
+	# when we've unstacked a note, we want to decrement the count
+	# from the parent note in the list
+	cleanup_restack: (parent_id, old_id) ->
+		# clean up UI
+		card			= $("li[data-id=#{parent_id}]")
+		old_card	= $("li[data-id=#{old_id}]")
+		child_id 	= $(@child).attr('data-id')
+
+		$("li[data-id=#{child_id}]").remove()
+		card.removeClass('stack')
+
+		# Make stacked		
+		current_count = parseInt($("a.number-porn", card).text()) || 0
+		old_count 		= parseInt($("a.number-porn", old_card).text()) || 0
+
+		@render_sticky_actions(old_id, old_count - 1)
+		@render_sticky_actions(parent_id, current_count + 1)
+
+
+	render_sticky_actions: (parent_id, count) ->
+		card 	= $("li[data-id=#{parent_id}]")
+
+		# populate the view with the new stack actions
+		$(".sticky-actions-wrapper", card).html ich.sticky_actions 
+			draggable 		: false
+			has_subnotes 	: true
+			subnote_count : () -> if count <= 0 then '' else count 
+			_id						: parent_id

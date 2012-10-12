@@ -23,6 +23,7 @@ class App.Views.Notes.New extends Backbone.View
 			$('.message').autolink()
 			# DnD
 			window.dnd.draggable $('ul.notes_board:first-child li')
+			window.dnd.droppable $('ul.notes_board:first-child li')
 	
 	detect_enter_key: (e) ->
 		if e.keyCode is 13 && !e.shiftKey
