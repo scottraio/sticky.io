@@ -71,6 +71,7 @@ passport.use(new GoogleStrategy google_config, (accessToken, refreshToken, profi
 #
 
 passport.serializeUser (user, done) ->
+	console.log user
 	done(null, user.id)
 
 passport.deserializeUser (id, done) ->

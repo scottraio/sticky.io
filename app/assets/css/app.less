@@ -278,8 +278,8 @@ pre {
     box-sizing:border-box;
     //background:#fff url('/img/furley_bg.png');
     .border-radius(5px 0px 0px 5px);
-		border-left:1px solid rgba(0, 0, 0, 0.2);
-		border-bottom:1px solid rgba(0, 0, 0, 0.2);
+		border-left:1px solid rgba(0, 0, 0, 0.1);
+		border-bottom:1px solid rgba(0, 0, 0, 0.1);
     min-width:@inbox-min-width;
     height:100%;
 		display:table-cell;
@@ -287,7 +287,7 @@ pre {
 		vertical-align:top;
 		position:relative;
 		overflow:hidden;
-		.box-shadow(-1px 1px 3px rgba(100, 100, 100, 0.2));
+		//.box-shadow(-1px 1px 3px rgba(100, 100, 100, 0.2));
 		#stage {
 			background-color:#fff;
 			height:100%;
@@ -302,7 +302,8 @@ pre {
 			height:55px;
 			position:relative;
 			z-index:11;
-			#gradient > .vertical(#fff, #eee);
+			//#gradient > .vertical(#fff, #eee);
+			background-color:#fdfdfd;
     	.border-radius(5px 0 0 0);
 			.btn-toolbar {
 				margin:2px 0 0 0;
@@ -343,13 +344,13 @@ pre {
     box-sizing:border-box;
 		display:table-cell;
     //background:#fff url('/img/furley_bg.png');
-    background:rgba(255, 255, 255, 0.4);
+    background:rgba(255, 255, 255, 0.7);
 		vertical-align:top;
 		border-top:1px solid rgba(0, 0, 0, 0.1);
-		border-bottom:1px solid rgba(0, 0, 0, 0.2);
-		border-right:1px solid rgba(0, 0, 0, 0.2);
-		border-left:1px solid rgba(0, 0, 0, 0.2);
-		.box-shadow(1px 1px 3px rgba(100, 100, 100, 0.2));
+		border-bottom:1px solid rgba(0, 0, 0, 0.1);
+		border-right:1px solid rgba(0, 0, 0, 0.1);
+		border-left:1px solid rgba(0, 0, 0, 0.1);
+		//.box-shadow(1px 1px 3px rgba(100, 100, 100, 0.2));
 
 		overflow:hidden;
     .border-radius(0 5px 5px 0);
@@ -576,6 +577,14 @@ ul.notes_board {
 	li.yellow { border-left:2px solid @yellow; }
 	li.orange { border-left:2px solid @orange; }
 	li.red { border-left:2px solid @red; }
+	.number-porn {
+		padding:10px 10px 5px 10px;
+		.border-radius(0 0 5px 5px);
+		background:#f8f8f8;
+		border:1px solid #ececec;
+		position:relative;
+		top:2px;
+	}
 }
 
 ul.notes_board:last-child {
