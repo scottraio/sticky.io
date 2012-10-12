@@ -9,6 +9,20 @@ class App.Views.Notes.New extends Backbone.View
 	
 	initialize: ->
 		@note = new App.Models.Note()
+
+		# 
+		# Socket.IO
+		socket.on 'notes:add', (data) ->
+			# Setup the view
+			view 				= new App.Views.Notes.Index()	
+			view.notes 	= [data]
+			#
+			# Render the view
+			$('ul.notes_board:first-child').before view.ich_notes()
+			# auto-link everything
+			$('.message').autolink()
+			# DnD
+			window.dnd.draggable $('ul.notes_board:first-child li')
 	
 	detect_enter_key: (e) ->
 		if e.keyCode is 13 && !e.shiftKey

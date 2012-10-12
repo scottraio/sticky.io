@@ -46,4 +46,4 @@ exports.bind = (current_user_id, socket) ->
 			app.models.Note.unstack user, options, (child, parent) ->
 				console.log 'unstacked' if app.env is 'development'
 				user.broadcast('ui:cleanup:empty_stack', parent) if parent._notes.length is 0
-				user.broadcast('note:add', child)
+				user.broadcast('notes:add', child)

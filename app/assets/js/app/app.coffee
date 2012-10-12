@@ -10,21 +10,9 @@ class App.Main extends Backbone.View
 		"submit .search form" 				: "search"
 		
 	initialize: ->
+
 		#
-		# Connect to Socket.IO
-		socket.on 'notes:add', (data) ->
-			# Setup the view
-			view 				= new App.Views.Notes.Index()	
-			view.notes 	= [data]
-			#
-			# Render the view
-			$('ul.notes_board:first-child').before view.ich_notes()
-			# auto-link everything
-			$('.message').autolink()
-			# DnD
-			window.dnd.draggable $('ul.notes_board:first-child li')
-
-
+		# Socket.IO
 		socket.on 'disconnect', () ->
 			console.log 'disconnected'
 

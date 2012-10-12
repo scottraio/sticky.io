@@ -5,6 +5,8 @@ class App.Views.Notes.DnD extends Backbone.View
 	initialize: () ->
 		self = @
 
+		# 
+		# Socket.IO
 		socket.on 'ui:cleanup:empty_stack', (parent) ->
 			self.cleanup_empty_stack(parent._id)
 

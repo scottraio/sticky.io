@@ -56,7 +56,6 @@ class App.Views.Notes.Show extends Backbone.View
 				$('body').attr('data-current-note-open', parent._id) 
 
 				# Drag and Drop
-				window.dnd.droppable_body()
 				window.dnd.droppable $('#expanded-view')
 				window.dnd.draggable $('#expanded-view ul.timeline li')
 

@@ -70,14 +70,8 @@ exports.login = (req, res) ->
 # Logout user
 # GET /logout
 exports.logout = (req, res) ->
-	# Logout any socket.io connections
-	app.models.User.findOne {_id: req.user._id}, (err, user) ->
-		for socket_id in user.sockets
-				io.sockets.socket(socket_id).disconnect()
-
-		app.models.User.update { _id: user._id}, { '$pullAll': {sockets: user.sockets }}, () ->
-			req.logout()
-			res.redirect('/')
+	req.logout()
+	res.redirect('/')
 
 #
 # Signup user

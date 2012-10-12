@@ -16,6 +16,7 @@
 			window.notebooks 	= <%- JSON.stringify(notebooks) %>
 			window.stickyio 	= new App.start(<%- current_user %>)
 			window.dnd 				= new App.Views.Notes.DnD()
+			window.dnd.droppable_body()
 			new App.Main({el: $("body")});
 		});
 
