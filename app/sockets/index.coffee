@@ -15,7 +15,9 @@ exports.bind = (current_user_id, socket) ->
 
 			app.models.Note.stack user, options, (child, parent) ->
 				console.log 'stacked' if app.env is 'development'
-				return child
+				# update the client that a subnote has been added, it 
+				# may or may not appear depending on if we have that note open
+				user.broadcast('notes:subnote:add', child)
 
 	#
 	# Restack

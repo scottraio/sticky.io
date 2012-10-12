@@ -10,6 +10,16 @@ class App.Views.Notes.DnD extends Backbone.View
 		socket.on 'ui:cleanup:empty_stack', (parent) ->
 			self.cleanup_empty_stack(parent._id)
 
+		# 
+		# Socket.IO
+		socket.on 'notes:subnote:add', (data) ->
+			
+			if self.current_open_note_id() is data._parent
+				$('ul.timeline').append ich.substicky
+						note_message 				: () -> data.message && data.message.replace(/(<[^>]+) style=".*?"/g, '$1')
+						stacked_at_in_words	: () -> data.stacked_at && $.timeago(data.stacked_at)
+						stacked_at_in_date 	: () -> format_date(data.stacked_at)
+
 
 	is_note_open: () ->
 		# return true if we've expanded a note into the expanded view
@@ -32,7 +42,6 @@ class App.Views.Notes.DnD extends Backbone.View
 		body.on 'drop', (e) ->
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 			self.unstack(this) if self.is_note_open() and self.is_subnote()
-			console.log 'dropped'
 			return false
 		
 		body.on 'dragenter', (e) ->
@@ -47,7 +56,6 @@ class App.Views.Notes.DnD extends Backbone.View
 			if self.is_subnote()
 				$(body).addClass('drop')
 				e.originalEvent.dataTransfer.dropEffect = 'copy'
-			
 			return false	
 
 		body.on 'dragleave', (e) ->

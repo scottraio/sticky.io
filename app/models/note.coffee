@@ -75,30 +75,30 @@ NotesSchema.statics.stack = (user, options, cb) ->
 		child._parent 		= parent._id
 		child.stacked_at 	= new Date()
 		child.save (err) -> 
-			unless err
-				parent.save (err) ->
-					cb(child, parent)
-			else
-				cb(err, null)
+			parent.save (err) ->
+				cb(child, parent)
+		
 
 NotesSchema.statics.restack = (user, options, cb) ->
 	@from_note_to_note user, {child_id: options.child_id, old_id: options.old_id, parent_id: options.parent_id}, (child, old_parent, parent) ->
-			# magic
-			from._notes.remove(child._id)
-			old_parent._notes.push(child._id)
-			child._parent = old_parent._id
-			
-			child.save (err) -> 
-				parent.save (err) ->
-					old_parent.save (err) ->
-						cb(child, old_parent, parent)
+		# magic
+		parent._notes.remove(child._id)
+		old_parent._notes.push(child._id)
+		child._parent = old_parent._id
+		
+		child.save (err) -> 
+			parent.save (err) ->
+				old_parent.save (err) ->
+					cb(child, old_parent, parent)
  
 NotesSchema.statics.unstack = (user, options, cb) ->
 	@note_and_parent user, {child_id: options.child_id, parent_id: options.parent_id}, (child, parent) ->
 		# magic
 		parent._notes.remove(child._id)
 		child._parent = null
-		
+			
+		console.log parent
+
 		child.save (err) -> 
 			parent.save (err) ->
 				cb(child, parent)

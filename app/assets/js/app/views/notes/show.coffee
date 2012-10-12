@@ -46,7 +46,7 @@ class App.Views.Notes.Show extends Backbone.View
 					note_message 				: () -> this.message && this.message.replace(/(<[^>]+) style=".*?"/g, '$1')
 					has_subnotes				: () -> true if parent._notes && parent._notes.length > 0
 					stacked_at_in_words	: () -> this.stacked_at && $.timeago(this.stacked_at)
-					stacked_at_in_date 	: () -> self.format_date(this.stacked_at)
+					stacked_at_in_date 	: () -> format_date(this.stacked_at)
 			
 				# set the editable message with the parent note's message
 				#$('#editable-message', self.el).html(parent.message)
@@ -104,9 +104,7 @@ class App.Views.Notes.Show extends Backbone.View
 		$('#delete-note').attr('data-id', $(e.currentTarget).attr('data-id')).modal()
 		return false
 
-	format_date: (date) ->
-		date = new Date(date)
-		return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear()
+	
 		
 		
 

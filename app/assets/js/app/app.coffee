@@ -11,8 +11,7 @@ class App.Main extends Backbone.View
 		
 	initialize: ->
 
-		#
-		# Socket.IO
+
 		socket.on 'disconnect', () ->
 			console.log 'disconnected'
 

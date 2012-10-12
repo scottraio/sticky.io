@@ -72,3 +72,8 @@ window.remove_query_var = (uri, key) ->
 window.get_query_val = (key) ->
 	match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search)
 	return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
+
+
+window.format_date = (date) ->
+	date = new Date(date)
+	return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear()

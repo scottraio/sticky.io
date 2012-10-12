@@ -5,8 +5,8 @@ class App.Views.Notes.Index extends Backbone.View
 	events:
 		'click .delete'  						            : 'delete'
 		'click .dropdown-menu .color-choice'  	: 'update_color'
-		'click .task-completed'					        : 'mark_completed'
 		'click ul.notes_board li'								: 'link_to_note'
+		'click .task-completed'					        : 'mark_completed'
 	
 	initialize: ->
 		@params		= @options.params
@@ -68,8 +68,9 @@ class App.Views.Notes.Index extends Backbone.View
 		return false
 
 	link_to_note: (e) ->
-		push_url '/notes/' + $(e.currentTarget).attr('data-id')
-		return false
+		if e.target.tagName is 'DIV'
+			push_url '/notes/' + $(e.currentTarget).attr('data-id')
+			return false
 
 	update_color: (e) ->
 		color 	= $(e.currentTarget).attr('data-color')
@@ -97,10 +98,10 @@ class App.Views.Notes.Index extends Backbone.View
 
 		save note, {completed: is_complete}
 			success: (data, res) ->
-				if is_complete
-					$(e.currentTarget).parents('.message').addClass('completed')
+				if data.attributes.completed
+					$(e.target).parents('.message_wrapper').addClass('completed')
 				else
-					$(e.currentTarget).parents('.message').removeClass('completed')
+					$(e.target).parents('.message_wrapper').removeClass('completed')
 				
 			error: (data, res) ->
 				console.log 'error'

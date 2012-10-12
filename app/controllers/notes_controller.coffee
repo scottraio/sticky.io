@@ -124,16 +124,13 @@ exports.update = (req, res) ->
 	render.json req, res, (done) ->
 		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
 
-			if req.body.message
+			if _.has(req.body, 'message')
 				note.set 'message', 		req.body.message
 				# parse tags/links/groups into arrays
 				note.parse()
 
-			if req.body.color
-				note.set 'color', req.body.color	
-
-			if req.body.completed
-				note.set 'completed', req.body.completed
+			note.set 'color', req.body.color					if _.has(req.body, 'color')
+			note.set 'completed', req.body.completed 	if _.has(req.body, 'completed')
 
 			note.save (err) -> 
 				if err
@@ -141,6 +138,7 @@ exports.update = (req, res) ->
 					req.flash('error', 'Note could not be saved.')
 					done(err)
 				else
+					console.log 'saved!'
 					done(null, note)
 
 #
