@@ -31,6 +31,8 @@ class App.Views.Notes.DnD extends Backbone.View
 	current_open_note_id: () ->
 		$('body').attr('data-current-note-open')
 
+	dropping_subnote_on_its_parent: (droppable) ->
+		true if $(droppable).attr('id') is 'expanded-view' and @is_subnote()
 
 
 	#
@@ -64,10 +66,11 @@ class App.Views.Notes.DnD extends Backbone.View
 	droppable: (li) ->
 		self = @
 		li.on 'drop', (e) ->
-			console.log 'dropped'
+			
 			e.stopPropagation() if e.stopPropagation # stops the browser from redirecting.
 			# stack unless the note we're stacking is the same as the note we're dragging
-			unless this is self.child
+		
+			unless this is self.child or self.dropping_subnote_on_its_parent(this) 
 				if self.is_note_open() and $(@child).hasClass("subnote") # restacking
 					self.restack(this)
 				else
@@ -75,14 +78,14 @@ class App.Views.Notes.DnD extends Backbone.View
 			return false
 
 		li.on 'dragenter', (e) ->
-			unless this is self.draggable
+			unless this is self.draggable or self.dropping_subnote_on_its_parent(this) 
 				$(this).addClass('stack')
 			return false
 
 		li.on 'dragover', (e) ->
 			e.preventDefault() if e.preventDefault # Necessary. Allows us to drop.
 			# source 
-			unless this is self.child
+			unless this is self.child or self.dropping_subnote_on_its_parent(this) 
 				self.make_desirable(e, this)
 			return false	
 
