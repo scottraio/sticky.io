@@ -18,6 +18,7 @@ exports.bind = (current_user_id, socket) ->
 				# update the client that a subnote has been added, it 
 				# may or may not appear depending on if we have that note open
 				user.broadcast('notes:subnote:add', child)
+				user.broadcast('ui:cleanup:adjust_number_porn', parent)
 
 	#
 	# Restack
@@ -32,6 +33,11 @@ exports.bind = (current_user_id, socket) ->
 
 			app.models.Note.restack user, options, (child, old_parent, parent) ->
 				console.log 'restacked' if app.env is 'development'
+
+				user.broadcast('ui:cleanup:adjust_number_porn', parent)
+				user.broadcast('ui:cleanup:empty_stack', old_parent) if old_parent._notes.length is 0
+				
+				user.broadcast('ui:cleanup:adjust_number_porn', parent)
 				return child
 
 	#
@@ -49,3 +55,4 @@ exports.bind = (current_user_id, socket) ->
 				console.log 'unstacked' if app.env is 'development'
 				user.broadcast('ui:cleanup:empty_stack', parent) if parent._notes.length is 0
 				user.broadcast('notes:add', child)
+				user.broadcast('ui:cleanup:adjust_number_porn', parent)

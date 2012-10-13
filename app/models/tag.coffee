@@ -7,6 +7,8 @@ TagsSchema = new Schema
 	value		: { count: Number, _user: Schema.ObjectId }
 
 
+#
+# Map/Reduce with mongoose https://gist.github.com/1123688
 TagsSchema.statics.update_index = (options, cb) ->
 	map = () ->
 		if !this.tags
@@ -27,9 +29,23 @@ TagsSchema.statics.update_index = (options, cb) ->
 		mapreduce	: "notes"
 		map 			: map.toString()
 		reduce 		: reduce.toString()
-		out 			: "tags"
-
+		#sort 			: {'_tags': 1}
+		query			: {'_user':new mongoose.Types.ObjectId(options._user)}
+		out				: {inline: 1}
+	
 	mongoose.connection.db.executeDbCommand command, (err, res) ->
-		cb()
+
+		# sort the map-reduced results on field_3
+		sortedResults = res.documents[0].results.sort (current, next) ->
+			return current.value._id - next.value._id
+
+		# the final array
+		finalGroupedResult = []
+ 
+		# clean up the results returned by mapreduce
+		sortedResults.forEach (obj, index) ->
+			finalGroupedResult.push(obj)
+	
+		cb(finalGroupedResult)
 	
 mongoose.model('Tag', TagsSchema)

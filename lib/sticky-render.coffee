@@ -28,24 +28,19 @@ exports.json = (req,res,fn) ->
 exports.render_page = (page,req,res) ->
 	#res.setHeader "Cache-Control", "public, max-age=#{5 * 60}"
 	
-	exports.update_index req, () ->
-		Tag.where('value._user', req.user.id).run (err, tags) ->
-			Notebook.where('_owner', req.user.id).run (err, notebooks) ->
+	Tag.update_index {_user:req.user.id}, (tags) ->
+		Notebook.where('_owner', req.user.id).run (err, notebooks) ->
 
-					res.render(page, {
-						error         : 	req.flash('error')
-						success       :   req.flash('success')
-						current_user  : 	JSON.stringify(req.user)
-						is_logged_in  : 	true if req.user
-						tags          :		tags
-						notebooks     : 	notebooks
-						req           :		req
-						config 				: 	settings
-					})
-		
-
-exports.update_index = (req,cb) ->
-	Tag.update_index {_user:req.user.id}, () ->
-		cb()
+				res.render(page, {
+					error         : 	req.flash('error')
+					success       :   req.flash('success')
+					current_user  : 	JSON.stringify(req.user)
+					is_logged_in  : 	true if req.user
+					tags          :		tags
+					notebooks     : 	notebooks
+					req           :		req
+					config 				: 	settings
+				})
+	
 
 

@@ -108,9 +108,14 @@ NotesSchema.methods.parse = () ->
 	# sets up a the 'plain_txt' field in the DB
 	# we use this plain_txt for a variety of use cases e.g. parsing notes (parse straight text, dont muddle with html)
 	@simplify() 
-	@parse_tags()
-	@parse_links()
-	@parse_groups()
+	tags 			= @parse_tags()
+	links 		= @parse_links()
+	notebooks = @parse_groups()
+
+	if tags.length > 0
+		# pass the user._id to the Tags Map/Reduce
+		app.models.Tag.update_index {_user:@_user}, () ->
+			# index updated
 
 NotesSchema.methods.simplify = () ->
 	if /<(?:.|\n)*?>/gm.test(@message)
