@@ -44,7 +44,7 @@ GLOBAL.app 				= module.exports = express.createServer()
 GLOBAL.settings 	= config.readConfig('config/app.yaml')
 app.product_name 	= 'Sticky.io'
 app.env						= process.env.NODE_ENV
-app.version_num 	= '0.0.2'
+app.version_num 	= '0.0.3'
 
 #
 # Set the redis client to the GLOBAL namespace
