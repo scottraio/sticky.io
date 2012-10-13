@@ -24,9 +24,9 @@ exports.start = (server, cookieParser, sessionStore, redisclient) ->
 
 		if app.env is 'production'
 			# send minified client
-			# io.enable('browser client minification')  
+			io.enable('browser client minification')  
 			# apply etag caching logic based on version number
-			io.enable('browser client etag')
+			# io.enable('browser client etag')
 			# gzip the file
 			io.enable('browser client gzip')
 			# reduce logging
