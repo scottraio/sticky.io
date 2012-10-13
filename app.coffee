@@ -52,7 +52,7 @@ GLOBAL.redisclient 	= redis.createClient(settings.redis.port, settings.redis.ser
 #
 # Middleware / Expresx
 RedisStore 		= require('connect-redis')(express)
-redisStore 		= new RedisStore( { host:settings.redis.server, port: settings.redis.port})
+redisStore 		= new RedisStore({host:settings.redis.server, port: settings.redis.port})
 cookieParser 	= express.cookieParser('sc2ishard')
 
 app.root_dir = __dirname
@@ -62,7 +62,7 @@ app.configure () ->
 
 	# connect-assets: rails 3.1 asset pipeline for nodejs
 	app.use assets buildDir: 'public', src: 'app/assets'
-	
+
 	# handlebar templates :-)
 	app.engine('ejs', engine)
 
