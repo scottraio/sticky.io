@@ -28,7 +28,7 @@ exports.start = (server, cookieParser, sessionStore, redisclient) ->
 			# apply etag caching logic based on version number
 			# io.enable('browser client etag')
 			# gzip the file
-			io.enable('browser client gzip')
+			#io.enable('browser client gzip')
 			# reduce logging
 			io.set('log level', 1)
 			# enable all transports (optional if you want flashsocket)
