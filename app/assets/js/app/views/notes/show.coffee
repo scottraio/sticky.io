@@ -12,6 +12,10 @@ class App.Views.Notes.Show extends Backbone.View
 		'click #close-expanded-view' 	: 'close'
 
 	initialize: ->
+		# clear the timer so we don't get weird race conditions
+		# with autosaving then clicking on a a new note too fast.
+		clearTimeout(@timer)
+
 		# set the id to the DOM
 		$(@el).attr('data-id', @options.id)
 
