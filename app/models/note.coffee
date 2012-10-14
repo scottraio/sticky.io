@@ -112,10 +112,6 @@ NotesSchema.methods.parse = () ->
 	links 		= @parse_links()
 	notebooks = @parse_groups()
 
-	if tags.length > 0
-		# pass the user._id to the Tags Map/Reduce
-		app.models.Tag.update_index {_user:@_user}, () ->
-			# index updated
 
 NotesSchema.methods.simplify = () ->
 	if /<(?:.|\n)*?>/gm.test(@message)
