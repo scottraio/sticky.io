@@ -30,7 +30,7 @@ TagsSchema.statics.update_index = (options, cb) ->
 		map 			: map.toString()
 		reduce 		: reduce.toString()
 		#sort 			: {'_tags': 1}
-		query			: {'_user':new mongoose.Types.ObjectId(options._user)}
+		query			: {'_user':new mongoose.Types.ObjectId(options._user), 'deleted_at':null}
 		out				: {inline: 1}
 	
 	mongoose.connection.db.executeDbCommand command, (err, res) ->
