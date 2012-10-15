@@ -1,7 +1,6 @@
 #= require ./vendor/modernizr.js
 #= require ./mobile/zepto.js
 #= require ./mobile/zepto.fasttap.js
-#= require ./mobile/zepto.scrolltop.js
 #= require ./mobile/mbp.js
 #= require ./vendor/icanhaz.js
 #= require ./mobile/sidetap.js
