@@ -119,7 +119,6 @@ exports.smtp = (req, res) ->
 					
 #
 # updates an existing note for an user
-#
 exports.update = (req, res) ->
 	render.json req, res, (done) ->
 		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
@@ -143,8 +142,6 @@ exports.update = (req, res) ->
 
 #
 # Notes Tree - aka "stacks"
-#
-
 exports.stack = (req, res) ->
 	render.json req, res, (done) ->
 		Note.stack req.user, {child_id:req.params.child_id, parent_id:req.params.parent_id}, done

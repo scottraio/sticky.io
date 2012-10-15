@@ -1,13 +1,13 @@
 @import 'bootstrap/bootstrap';
 @import 'calendar';
 
-@outer-margin: 30px;
-@body-gap: 80px; // distance from the top of the page, needed because the header is position:fixed
-@sidebar-width: 150px;
-@inbox-min-width: 452px;
-@expanded-view-width: 450px;
-@stack-dragover-color:#dceef7;
-@selected-note-color:#f7f4ea;
+@outer-margin:30px;
+@body-gap:80px; // distance from the top of the page, needed because the header is position:fixed
+@sidebar-width:150px;
+@inbox-min-width:452px;
+@expanded-view-width:450px;
+@stack-dragover-color:#f7f4ea;
+@selected-note-color:#dceef7;
 
 html {
 	height:100%;
@@ -56,9 +56,9 @@ body.drop {
 	color:#000;
 	line-height:1.15em;
 	z-index: 12;
-  position:absolute;
-  right:35px;
-  top:15px;
+	position:absolute;
+	right:35px;
+	top:15px;
 	height:50px;	
 	background:url('/img/sticky-symbolx24.png') 0px 0px no-repeat;
 	padding-left:30px;
@@ -415,7 +415,7 @@ pre {
 			position:relative;
 			font-size:0.95em;
 			line-height: 0.95em;
-			li {
+			li.card {
 				position:relative;
 				margin:20px 13px 0px 13px;
 				background-color:#fff;

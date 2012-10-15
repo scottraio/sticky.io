@@ -1,6 +1,3 @@
-Tag 			= app.models.Tag
-Notebook 	= app.models.Notebook
-
 exports.json = (req,res,fn) ->
 	switch req.params.format
 		when 'json'			
@@ -15,21 +12,16 @@ exports.json = (req,res,fn) ->
 					res.end('\n')
 			fn(cb)
 		else
-			ua = req.headers['user-agent']
-
-			if /mobile/i.test(ua) or /like Mac OS X/.test(ua) or /iPhone/.test(ua) or /iPad/.test(ua) or /Android/.test(ua)
-				mobile = true
-
-			if mobile
-				exports.render_page('mobile', req, res)
+			if @is_mobile(req)
+				exports.render_page('mobile/index', req, res)
 			else
 				exports.render_page('index', req, res)
 
 exports.render_page = (page,req,res) ->
 	#res.setHeader "Cache-Control", "public, max-age=#{5 * 60}"
 	
-	Tag.update_index {_user:req.user.id}, (tags) ->
-		Notebook.where('_owner', req.user.id).run (err, notebooks) ->
+	app.models.Tag.update_index {_user:req.user.id}, (tags) ->
+		app.models.Notebook.where('_owner', req.user.id).run (err, notebooks) ->
 
 				res.render(page, {
 					error         : 	req.flash('error')
@@ -41,6 +33,7 @@ exports.render_page = (page,req,res) ->
 					req           :		req
 					config 				: 	settings
 				})
-	
 
-
+exports.is_mobile = (req) ->
+	ua = req.headers['user-agent']
+	return true if /mobile/i.test(ua) or /like Mac OS X/.test(ua) or /iPhone/.test(ua) or /iPad/.test(ua) or /Android/.test(ua)

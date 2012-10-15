@@ -9,7 +9,6 @@ compose@2x.png
 menu.png
 sticky-logo-mobile.png
 app.js
-socket.io.js
 
 
 # Resources that require the user to be online.

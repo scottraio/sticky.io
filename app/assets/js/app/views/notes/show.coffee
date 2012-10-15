@@ -7,15 +7,10 @@ class App.Views.Notes.Show extends Backbone.View
 		'click .make-bold'						: 'make_bold'
 		'click .make-italic'					: 'make_italic'
 		'click .make-underline' 			: 'make_underline'
-		'keyup #editable-message' 		: 'autosave'
 		'click .save'									: 'save'
 		'click #close-expanded-view' 	: 'close'
 
 	initialize: ->
-		# clear the timer so we don't get weird race conditions
-		# with autosaving then clicking on a a new note too fast.
-		clearTimeout(@timer)
-
 		# set the id to the DOM
 		$(@el).attr('data-id', @options.id)
 
@@ -70,9 +65,6 @@ class App.Views.Notes.Show extends Backbone.View
 			success: (data, res) ->
 				$('#save-notice').removeClass('hide')
 				$('#save-notice').html('Saved')
-				@timer = setTimeout((->						
-					$('#save-notice').addClass('hide')
-				), 3000)
 			error: (data, res) ->
 				console.log 'error'
 		}
@@ -83,6 +75,8 @@ class App.Views.Notes.Show extends Backbone.View
 		$('body').attr('data-current-note-open', null)
 		return false
 
+	# autosave
+	# events 'keyup #editable-message' : 'autosave'
 	autosave: (e) ->
 		self 	= @	
 		idle 	= 0

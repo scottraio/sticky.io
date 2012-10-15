@@ -5,6 +5,7 @@
 #
 fs 									= require 'fs'
 passport 						= require 'sticky-passport'
+render							= require 'sticky-render'
 Resource						= require 'express-resource'
 UsersController			= require './users_controller'
 NotesController			= require './notes_controller'
@@ -19,7 +20,17 @@ ensureAuthenticated = (req, res, next) ->
 		if req.params.format is 'json'
 			passport.authenticate('basic',{session:false})(req, res, next)
 		else
-			return next()
+			renderPublic(req, res, next)
+
+renderPublic = (req, res, next) ->
+	unless req.isAuthenticated()
+		if render.is_mobile(req)
+			res.render 'mobile/public', {}
+		else
+			#res.setHeader "Cache-Control", "public, max-age=#{5 * 60}"
+			res.render 'public', {current_user:null}
+	else
+		next()
 
 
 #
@@ -93,10 +104,5 @@ app.delete('/notebooks/:id.:format?', ensureAuthenticated, NotebooksController.d
 
 #
 # Root
-app.get '/', (req, res) ->
-	if req.isAuthenticated()
-		res.redirect('/notes')
-	else
-		#res.setHeader "Cache-Control", "public, max-age=#{5 * 60}"
-		res.render 'public', {current_user:null}
-
+app.get '/', renderPublic, (req, res) ->
+	res.redirect('/notes')

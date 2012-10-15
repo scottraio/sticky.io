@@ -18,6 +18,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
+    <script type="text/javascript" src="https://use.typekit.com/yii1iog.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
     <meta http-equiv="cleartype" content="on">
 
     <%- css('mobile') %>
@@ -28,7 +31,7 @@
         <div>
           <nav>
               <input type="text" placeholder="Discover" />
-              <a href="/" class="navigate">All Notes</a>
+              <a href="#" onclick="window.location.href='/'">All Notes</a>
               <b>Notebooks</b> 
               <% for(var i=0; i<notebooks.length; i++) { %>  
                 <a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
@@ -50,7 +53,7 @@
         <div class="stp-content-panel" id="notes-list">
           <header>
             <a href="javascript:void(0)" class="header-button icon menu"><span>Menu</span></a>
-            <img src="/img/sticky-logo-mobile.png" />
+            <div class="logo">STICKY</div>
             <a href="javascript:void(0)" class="header-button icon compose right"><span>Info</span></a>
           </header>
           <div class="stp-content-frame">
@@ -67,7 +70,7 @@
         <div class="stp-content-panel hidden" id="new-note">
           <header>
             <a href="javascript:void(0)" class="header-button cancel">Done</a>
-            <h1>What's on your mind?</h1>
+            <h1 class="reduce">What's on your mind?</h1>
             <a href="javascript:void(0)" class="header-button save right">Save</a>
           </header>
 
@@ -81,11 +84,29 @@
         </div>
         <!-- End content Div -->
 
+        <!-- Compose new note -->
+        <div class="stp-content-panel hidden" id="show-note">
+          <header>
+            <a href="javascript:void(0)" class="header-button cancel">Done</a>
+            <div class="logo">STICKY</div>
+            <a href="javascript:void(0)" class="header-button save right">Save</a>
+          </header>
+
+          <div class="stp-content-frame">
+            <div class="stp-content-body">
+              <div id="expanded-view" class="container">
+                <!-- content gets loaded here -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End content Div -->
+
       </div>
     </div>
 
     <!-- Notes -->
-    <%- partial('notes') %>
+    <%- partial('../notes') %>
 
     <!-- socket.IO -->
     <script src="/socket.io/socket.io.js"></script>
@@ -94,6 +115,10 @@
     <%- js('mobile') %>
 
     <script>
+      if(Modernizr.touch) {
+          //MBP.standaloneLinks(document, window.navigator, 'standalone');
+          MBP.hideUrlBarOnLoad();
+      }
       //
       // Config
       config = {
