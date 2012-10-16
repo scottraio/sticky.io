@@ -189,6 +189,7 @@ class App.Views.Notes.DnD extends Backbone.View
 
 	merge_onto_open_note: (parent) ->
 		parent_id = $(parent).attr('data-id')
+		$('ul.timeline li.empty').remove()
 
 		# remove the child
 		$(@child).remove()

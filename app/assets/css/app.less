@@ -7,7 +7,7 @@
 @inbox-min-width:452px;
 @expanded-view-width:450px;
 @stack-dragover-color:#f7f4ea;
-@selected-note-color:#dceef7;
+@selected-note-color:#d8ffbf;
 
 html {
 	height:100%;
@@ -20,7 +20,6 @@ body {
 	background:url('/img/furley_bg.png');
 	box-sizing:border-box;
 }
-
 
 body.drop {
 	//border: 2px solid rgba(82,168,236,.8);
@@ -438,6 +437,11 @@ pre {
 					padding:2px;
 				}
 			}
+			li.empty {
+				text-align:center;
+				font-size:1.2em;
+				color:#999;
+			}
   	}
 		#save-notice {
 			float:right;
@@ -624,7 +628,7 @@ ul.notes_board {
 		line-height:1.75em;
 		font-size:1.20em;
 		right:-2px;
-		top:15px;
+		top:0px;
 		text-decoration: none;
 		.box-shadow(0 0px 3px rgba(125, 125, 125, 0.3);
 	}
@@ -789,6 +793,12 @@ ul.settings {
 		border:1px solid #555;
 	}
 }
+
+span.label.green { background-color:@green; }
+span.label.blue { background-color:@blue; }
+span.label.yellow { background-color:@yellow; }
+span.label.orange { background-color:@orange; }
+span.label.red { background-color:@red; }
 
 @import 'web';
 @import "./bootstrap/responsive.less";

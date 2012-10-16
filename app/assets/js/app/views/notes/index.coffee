@@ -51,7 +51,8 @@ class App.Views.Notes.Index extends Backbone.View
 			is_taskable					: () -> true if this.message && this.message.indexOf('#todo') > 0
 			has_domains					: () -> true if this._domains && this._domains.length > 0
 			domain							: () -> this.url.toLocation().hostname if this.url
-			group_colors				: () -> self.group_colors(this)
+			group_colors				: () -> $("li[data-name=#{this['.']}]").attr('data-color')
+			group_labels				: () -> _.uniq(this.groups)
 			
 	show: (e) ->
 		id = $(e.currentTarget).attr('data-id')
@@ -172,14 +173,6 @@ class App.Views.Notes.Index extends Backbone.View
 		date = new Date(date)
 		return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
 
-	group_colors: (note) ->
-		colors = []
-		if note.groups
-			for group in note.groups
-				colors.push $("li[data-name=#{group}]").attr('data-color')
-
-		if colors
-			return (colors + "").replace(',', ' ')
 
 	infinite_scroll: () ->
 		self = @
