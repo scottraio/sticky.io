@@ -51,7 +51,7 @@ class App.Views.Notes.Index extends Backbone.View
 			is_taskable					: () -> true if this.message && this.message.indexOf('#todo') > 0
 			has_domains					: () -> true if this._domains && this._domains.length > 0
 			domain							: () -> this.url.toLocation().hostname if this.url
-			group_colors				: () -> $("li[data-name=#{this['.']}]").attr('data-color')
+			group_colors				: () -> self.notebook_color(this)
 			group_labels				: () -> _.uniq(this.groups)
 			
 	show: (e) ->
@@ -172,6 +172,12 @@ class App.Views.Notes.Index extends Backbone.View
 	format_date: (date) ->
 		date = new Date(date)
 		return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
+
+	notebook_color: (notebook) ->
+		try 
+			$("li[data-name=#{notebook['.']}]").attr('data-color') 
+		catch error
+			''
 
 
 	infinite_scroll: () ->

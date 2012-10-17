@@ -161,17 +161,18 @@ NotesSchema.methods.parse_links = () ->
 #
 # Parse Groups/Notebooks
 NotesSchema.methods.parse_groups = () ->
-	self 		= @
-	matches = @plain_txt.match regex.match.group
+	self 			= @
+	matches 	= @plain_txt.match regex.match.group
+	notebooks = []
 
 	if matches
 
 		for group in matches
 			# strip tags down and add them to the array
 			# e.g. #todo turns into todo
-			self.groups.push group.replace(/@/, '').replace(/\s/, '').toLowerCase()
+			notebooks.push group.replace(/@/, '').replace(/\s/, '').toLowerCase()
 
-	return @groups
+	return @groups = notebooks
 
 #
 # Map/Reduce
