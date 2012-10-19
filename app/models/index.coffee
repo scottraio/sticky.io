@@ -15,7 +15,7 @@ require('./domain.coffee')
 app.models			= mongoose.models
 module.exports  = mongoose
 
-mongoose.connection.on 'open', () ->
+#mongoose.connection.on 'open', () ->
 	# Map/reduce tags into the tag collection
 	#app.models.Tag.create_index()
 

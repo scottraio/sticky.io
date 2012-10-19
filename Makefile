@@ -9,5 +9,6 @@ staging:
 
 production:
 	coffee -c app.coffee; NODE_ENV=production NODE_PATH=`pwd`/lib forever start ./app.js
+	
 
 .PHONY: test server forever

@@ -21,7 +21,8 @@ NotesSchema = new Schema
 	_parent			: { type: Schema.ObjectId, ref: 'Note' }
 	_notes 			: [ { type: Schema.ObjectId, ref: 'Note' } ]
 	_domains		: [ { type: Schema.ObjectId, ref: 'Domain' } ]
-	_sms_id			: [ { type: String, unique: true, default: null } ]
+	_sms_id			: { type: String, default: null }
+	_email_id		: { type: String, default: null }
 
 #
 # Indexes

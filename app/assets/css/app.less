@@ -7,7 +7,7 @@
 @inbox-min-width:452px;
 @expanded-view-width:450px;
 @stack-dragover-color:#f7f4ea;
-@selected-note-color:#d8ffbf;
+@selected-note-color:#edffe2;
 
 html {
 	height:100%;
@@ -119,6 +119,12 @@ pre {
   height:100%;
   width:100%;
 	padding:0;
+}
+
+.help-block {
+	font-size:0.9em;
+	color:#999;
+	margin-top:-5px;
 }
 
 // Notebooks
@@ -448,6 +454,9 @@ pre {
 			position:relative;
 			top:7px;
 			right:15px;
+		}
+		#close-expanded-view {
+			margin:8px 5px 0 0;
 		}
 	}
 	#expanded-view.stack .expanded-wrapper {

@@ -29,6 +29,7 @@
 	</form>
 </div>
 
+<% if (req.route.path === '/welcome') { %>
 
 <div id="welcome" class="modal hide fade">
 		<div class="modal-body">	
@@ -42,8 +43,6 @@
 							<br />
 						</p>
 						<img src="/img/welcome-gchat-accept.png" class="screenshot" />
-
-						<a href="#" data-kera-tutorial="264">Launch Tutorial</a>
 					</div>
 					<div class="item">
 						<img src="/img/welcome-gtalk-example.png" class="screenshot gchat-example pull-right" />
@@ -94,3 +93,4 @@
 		<div class="modal-footer">
 		</div>
 	</div>
+<% } %>
