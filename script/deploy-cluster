@@ -1,0 +1,12 @@
+#!/bin/sh
+
+$version = `date +%s`
+
+echo $version > VERSION
+
+git add .
+git commit -m "deploying version num: $version"
+git push origin master
+
+deploy sticky01
+deploy sticky02
