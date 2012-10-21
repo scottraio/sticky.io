@@ -42,9 +42,6 @@ exports.start = (server, cookieParser, sessionStore, redisclient) ->
 		current_user_id = socket.handshake.session.passport.user
 
 		#
-		# grab the current session to only allow 1 socket connection per session
-		current_session_id = socket.handshake.session.id
-		#
 		# proceed if cool
 		if current_user_id
 			
@@ -66,7 +63,7 @@ exports.start = (server, cookieParser, sessionStore, redisclient) ->
 		socket.on 'disconnect', (data) ->
 			console.log 'disconnect'
 			# remove the socket.id once the user disconnects, simple right?
-			app.models.User.update { _id: current_user_id}, { '$pullAll': {'sockets.sockets': [socket.id] }}, () ->
+			#app.models.User.update { _id: current_user_id}, { '$pullAll': {'sockets.sockets': [socket.id] }}, () ->
 				# done
 
 	#

@@ -80,8 +80,9 @@ exports.index = (req, res) ->
 			console.log err if err
 			# Hack! - This func should be supported in some version of mongoose 3.x
 			# https://github.com/LearnBoost/mongoose/issues/601
-			Note.populate_stacks items, (err, notes) ->
-				done(err, notes)
+			#Note.populate_stacks items, (err, notes) ->
+			#	done(err, notes)
+			done(err, items)
 	
 
 #
