@@ -25,6 +25,7 @@ engine			= require 'ejs-locals'
 passport 		= require 'passport' 
 assets 			= require 'connect-assets'
 flash				= require 'connect-flash'
+cluster 		= require 'cluster'
 
 # Kue bridge
 kue  				= require 'kue'
@@ -37,7 +38,16 @@ realtime 		= require 'sticky-realtime'
 # Analytics
 mixpanel 		= require 'mixpanel'
 
-exports.start = (cb) ->
+
+if cluster.isMaster and process.env.NODE_ENV is 'production'
+	# Fork workers.
+	for cpu in os.cpus()
+		cluster.fork()
+
+	cluster.on 'exit', (worker, code, signal) ->
+		console.log('worker ' + worker.process.pid + ' died')
+		cluster.fork()
+else
 	#
 	# The App
 	
@@ -127,5 +137,3 @@ exports.start = (cb) ->
 		# Setup mixpanel analytics
 		app.mixpanel = mixpanel.init('dc318d85f647b3cc6ff0992c0af24729')
 		console.log "Mixpanel initiated"
-
-		cb() if cb

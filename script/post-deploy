@@ -2,6 +2,6 @@
 
 npm install
 
-forever stop app.js
+forever stop server.js
 
 make production
