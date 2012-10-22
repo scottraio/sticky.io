@@ -1,6 +1,5 @@
 Schema 			= mongoose.Schema
 Base 				= require 'sticky-model'
-phantom			= require 'phantom'
 
 DomainSchema = new Schema
 	url  				: { type: String, required: true, trim: true, unique: true}
@@ -32,12 +31,12 @@ DomainSchema.methods.set_title = (cb) ->
 
 DomainSchema.methods.get_title = (cb) ->
 	self = @
-	phantom.create (ph) ->
-		ph.createPage (page) ->
-			page.open self.url, (status) ->
-				page.evaluate (-> document.title), (result) ->
-					ph.exit()
-					cb(result)
+
+	app.phantom.createPage (page) ->
+		page.open self.url, (status) ->
+			page.evaluate (-> document.title), (result) ->
+				#app.phantom.exit()
+				cb(result)
 						
 						
 

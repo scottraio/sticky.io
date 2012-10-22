@@ -10,7 +10,7 @@
     "handlebars": "1.0.5beta",
     "ejs": "*",
     "ejs-locals": "*",
-    "phantom": "*",
+    "phantom": "~0.3.5",
     "trebuchet": "*",
     "mongoose": "2.6.5",
     "socket.io": "0.9.6",

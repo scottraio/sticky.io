@@ -26,6 +26,7 @@ passport 		= require 'passport'
 assets 			= require 'connect-assets'
 flash				= require 'connect-flash'
 cluster 		= require 'cluster'
+phantom			= require 'phantom'
 
 # Kue bridge
 kue  				= require 'kue'
@@ -121,11 +122,15 @@ else
 
 		inbound.subscribe kue.createQueue() # xmpp/sms inbound note creation
 
+		#
+		# Boot phantom server
+		phantom.create (ph) ->
+			app.phantom	= ph
+			console.log "Phantom server started"
 
 		#
 		# Boot http server
 		server = app.listen(settings.port)
-
 		console.log "Server running at http://#{settings.domain}"
 
 		#
