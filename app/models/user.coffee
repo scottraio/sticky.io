@@ -16,8 +16,8 @@ kue 	= require 'kue'
 redis = require 'redis'
 
 kue.redis.createClient = () ->
-		client = redis.createClient(settings.redis.port, settings.redis.server)
-		return client
+	client = redis.createClient(settings.redis.port, settings.redis.server)
+	return client
 
 jobs = kue.createQueue()
 
@@ -56,7 +56,6 @@ UserSchema.methods.registerXMPPBot = () ->
 
 UserSchema.methods.sendWelcomeEmail = () ->
 	self = @
-	console.log self
 	trebuchet.fling
 		params:
 			from: 'notify@sticky.io'

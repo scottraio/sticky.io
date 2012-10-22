@@ -61,7 +61,7 @@ exports.start = (server, cookieParser, sessionStore, redisclient) ->
 
 		# gracefully handle disconnects
 		socket.on 'disconnect', (data) ->
-			console.log 'disconnect'
+			#console.log 'disconnect'
 			# remove the socket.id once the user disconnects, simple right?
 			#app.models.User.update { _id: current_user_id}, { '$pullAll': {'sockets.sockets': [socket.id] }}, () ->
 				# done

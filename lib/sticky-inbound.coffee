@@ -1,4 +1,14 @@
-exports.subscribe = (jobs) ->
+kue 	= require 'kue'
+redis = require 'redis'
+
+exports.listen = () ->
+
+	kue.redis.createClient = () ->
+		client = redis.createClient(settings.redis.port, settings.redis.server)
+		return client
+
+	jobs = kue.createQueue()
+
 	jobs.process 'notes:create', (job, done) ->
 		# find the user first
 		app.models.User.findOne {_id:job.data.user}, (err, user) ->
@@ -17,4 +27,3 @@ exports.subscribe = (jobs) ->
 						return false if err
 						done()
 
-		

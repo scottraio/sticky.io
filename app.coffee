@@ -27,10 +27,8 @@ assets 			= require 'connect-assets'
 flash				= require 'connect-flash'
 cluster 		= require 'cluster'
 phantom			= require 'phantom'
-
-# Kue bridge
 kue  				= require 'kue'
-inbound 		= require 'sticky-kue'
+inbound 		= require 'sticky-inbound'
 
 # SocketIO stuff
 redis  			= require 'redis'
@@ -107,6 +105,10 @@ else
 			app.use app.router
 
 		#
+		# spool up the kue and subscribe to redis Pub/Sub for all XMPP/SMS bound notes
+		inbound.listen()
+
+		#
 		# Models - Mongoose
 		mongoose 		= require('./app/models')
 		app.models 	= mongoose.models
@@ -115,12 +117,6 @@ else
 		# Controllers / HTTP Routes
 		require('./app/controllers')
 
-		#
-		# spool up the kue and subscribe to redis Pub/Sub for all XMPP/SMS bound notes
-		kue.redis.createClient = () ->
-			redisclient
-
-		inbound.subscribe kue.createQueue() # xmpp/sms inbound note creation
 
 		#
 		# Boot phantom server
