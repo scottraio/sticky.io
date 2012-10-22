@@ -1,17 +1,24 @@
 #!/bin/sh
  
+$version=`date +%s`
+$cdn='d29it9lox1mxd7.cloudfront.net'
 
 echo `date +%s` > VERSION
 
 git add .
-git commit -m "deploying version num: `date +%s`"
+git commit -m "deploying version num: $version"
 git push origin master
 
 deploy sticky01
 deploy sticky02
 
+# allow some time to sticky to boot up
+echo '\033[01;32;5;160mwaiting for sticky to boot up...'
 sleep 15
 
-echo '\033[01;32;5;160mwaiting for sticky to boot up...'
-
+# check if everything is ok
 script/check-http-status sticky.io
+# refresh the CDN
+script/check-http-status $cdh/css/mobile-$version.css
+script/check-http-status $cdh/css/app-$version.css
+script/check-http-status $cdh/css/vendor-$version.css
