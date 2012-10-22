@@ -40,7 +40,7 @@ realtime 		= require 'sticky-realtime'
 mixpanel 		= require 'mixpanel'
 
 
-if cluster.isMaster and process.env.NODE_ENV is 'production'
+if false #cluster.isMaster and process.env.NODE_ENV is 'production'
 	# Fork workers.
 	for cpu in os.cpus()
 		cluster.fork()
