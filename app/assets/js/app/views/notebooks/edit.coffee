@@ -8,7 +8,20 @@ class App.Views.Notebooks.Edit extends Backbone.View
 		'click .delete' 			: 'delete'
 
 	initialize: () ->
+		self = @
 		reset_events @
+
+		$('form', @el).isHappy
+			fields: {
+				# reference the field you're talking about, probably by `id`
+				# but you could certainly do $('[name=name]') as well.
+				'#input_notebook_name' : {
+					required: true
+					message: 'Might we inquire your name'
+				}
+			}	
+  
+
 		@notebook = new App.Models.Notebook(id: @options.id)
 	
 	render: () ->
@@ -39,16 +52,9 @@ class App.Views.Notebooks.Edit extends Backbone.View
 		}
 		
 		save @notebook, attrs, {
-			success: (data, res) ->
+			success: (notebook, res) ->
 				# close modal window
-				$(self.el).modal('hide')
-				$('input[name=name]', self.el).val("")
-				$('input[name=color]', self.el).val("")
-				# make the UI show the new notebook
-				$("li[data-id=#{data.id}]").removeClass()
-				$("li[data-id=#{data.id}]").addClass(data.attributes.color)
-				$("li[data-id=#{data.id}]").attr('data-color', data.attributes.color)
-				$("li[data-id=#{data.id}] a:first").html "@" + data.attributes.name
+				self.update_ui(notebook)
 				# reload the current path
 				push_url window.location.pathname + window.location.search
 
@@ -67,3 +73,15 @@ class App.Views.Notebooks.Edit extends Backbone.View
 				$("ul.notebooks li[data-id=#{notebook_id}]").remove()
 				$('#notebook').modal('hide')
 		return false
+
+	update_ui: (notebook) ->
+		$(@el).modal('hide')
+		$('input[name=name]', @el).val("")
+		$('input[name=color]', @el).val("")
+		# make the UI show the new notebook
+		$(".notebooks li[data-id=#{data.id}]").removeClass()
+		$(".notebooks li[data-id=#{data.id}]").addClass('notebook')
+		$(".notebooks li[data-id=#{data.id}]").addClass(notebook.attributes.color)
+		$(".notebooks li[data-id=#{data.id}]").attr('data-color', notebook.attributes.color)
+		$(".notebooks li[data-id=#{data.id}]").attr('data-name', notebook.attributes.name)
+		$(".notebooks li[data-id=#{data.id}] a:first").html "@" + notebook.attributes.name

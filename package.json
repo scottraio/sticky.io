@@ -10,7 +10,7 @@
     "handlebars": "1.0.5beta",
     "ejs": "*",
     "ejs-locals": "*",
-    "phantom": "*",
+    "phantom": "~0.3.5",
     "trebuchet": "*",
     "mongoose": "2.6.5",
     "socket.io": "0.9.6",
@@ -38,6 +38,7 @@
     "mixpanel": "~0.0.7",
     "jquery": "~1.7.3",
     "kue": "~0.4.0",
-    "redis": "~0.8.1"
+    "redis": "~0.8.1",
+    "cluster": "~0.7.7"
   }
 }

@@ -4,3 +4,4 @@
 #= require ./vendor/icanhaz.js
 #= require ./vendor/bootstrap.js
 #= require ./jquery/jquery.daterange.js
+#= require ./jquery/zepto.happy.js

@@ -5,7 +5,7 @@
 
 <script id="expanded_note" type="text/html">
 	<div class="expanded-actions">
-		<a href="#" class="btn pull-right" id="close-expanded-view"><i class="icon icon-ok"></i></a>
+		<a href="#" class="pull-right" id="close-expanded-view"><i class="icon icon-remove"></i></a>
 
 		<span id="save-notice" class="hide label label-success"></span>
 		
@@ -26,11 +26,18 @@
 			<div id="editable-message" contenteditable="true">{{#parent_note}}{{{note_message}}}{{/parent_note}}</div>
 		</div>
 		
+		
 		<ul class="timeline">
 			{{#notes}}
 				{{>substicky}}
 			{{/notes}}
+			{{^has_subnotes}}
+				<li class="sticky card subnote empty">
+					Drag notes from the left here. 
+				</li>
+			{{/has_subnotes}}
 		</ul>	
+
 	</div>
 </script>
 
@@ -41,7 +48,7 @@
 <script id="notes_board" type="text/html">
 	<ul class="notes_board">
 		{{#notes}}
-			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}} {{group_colors}}" data-id="{{_id}}" {{#draggable}}draggable="true"{{/draggable}}>
+			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}}" data-id="{{_id}}" {{#draggable}}draggable="true"{{/draggable}}>
 				<div class="sticky-actions-wrapper">
 					{{>sticky_actions}}
 				</div>
@@ -51,6 +58,9 @@
 				</div>
 
 				<div class="meta">
+					{{#group_labels}}
+						<span class="label {{group_colors}}">{{.}}</span>
+					{{/group_labels}}
 					{{created_at_in_date}}
 				</div>
 			</li>

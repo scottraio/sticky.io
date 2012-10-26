@@ -1,0 +1,10 @@
+#!/bin/sh
+
+res=`curl -s -I $1 | grep HTTP/1.1 | awk {'print $2'}`
+
+if [ $res -ne 200 ]
+then
+    echo "\033[01;38;5;160mError $res on $1"
+else
+		echo "\033[01;32;5;160m$1 sticky is online"
+fi

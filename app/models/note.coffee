@@ -21,7 +21,8 @@ NotesSchema = new Schema
 	_parent			: { type: Schema.ObjectId, ref: 'Note' }
 	_notes 			: [ { type: Schema.ObjectId, ref: 'Note' } ]
 	_domains		: [ { type: Schema.ObjectId, ref: 'Domain' } ]
-	_sms_id			: [ { type: String, unique: true, default: null } ]
+	_sms_id			: { type: String, default: null }
+	_email_id		: { type: String, default: null }
 
 #
 # Indexes
@@ -146,11 +147,13 @@ NotesSchema.methods.parse_links = () ->
 		for link in matches
 			domain = new Domain()
 			domain.crawl link, self, (err, domain) ->
-				console.log err if err
-				if domain && self._domains.indexOf(domain._id) is -1
-					self._domains.push domain._id
-				self.save (err) ->
-					console.log err if err
+				if err
+					console.log 'Could not crawl link'
+				else
+					if domain && self._domains.indexOf(domain._id) is -1
+						self._domains.push domain._id
+					self.save (err) ->
+						console.log err if err
 	else
 		self._domains = []
 		self.save (err) ->
@@ -161,17 +164,18 @@ NotesSchema.methods.parse_links = () ->
 #
 # Parse Groups/Notebooks
 NotesSchema.methods.parse_groups = () ->
-	self 		= @
-	matches = @plain_txt.match regex.match.group
+	self 			= @
+	matches 	= @plain_txt.match regex.match.group
+	notebooks = []
 
 	if matches
 
 		for group in matches
 			# strip tags down and add them to the array
 			# e.g. #todo turns into todo
-			self.groups.push group.replace(/@/, '').replace(/\s/, '').toLowerCase()
+			notebooks.push group.replace(/@/, '').replace(/\s/, '').toLowerCase()
 
-	return @groups
+	return @groups = notebooks
 
 #
 # Map/Reduce

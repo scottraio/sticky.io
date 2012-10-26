@@ -4,7 +4,7 @@
 
 <script id="edit_notebook_content" type="text/html">	
 	<div class="modal-header">
-		<a href="#" class="close">&times;</a>
+		<a href="javascript:$('#notebook').modal('hide')" class="close">&times;</a>
 		{{#is_new}}
 		<h3>Create a Notebook</h3>
 		{{/is_new}}
@@ -15,7 +15,8 @@
 	<form action="/notebooks/{{notebook._id}}" method="post">
 	<div class="modal-body">
 		<label>Notebook name</label>
-		<input type="text" placeholder="Enter notebook name" name="name" value="{{notebook.name}}" />
+		<input type="text" placeholder="Enter notebook name" pattern="[A-Za-z0-9_]*" id="input_notebook_name" name="name" required="true" value="{{notebook.name}}" />
+		<span class="help-block">letters and numbers only, no spaces</span>
 		<label>Color</label>
 		<ul class="colors">
 			<li data-value="" class="none"></li>

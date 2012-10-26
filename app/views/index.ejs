@@ -23,14 +23,6 @@
       -->
 
       <div id="sidebar">
-				<div class="profile hide">
-					<i id="gravatar"><img src="http://profiles.google.com/s2/u/0/photos/profile/<%= req.user.googleId %>?sz=32" /></i>
-					<div class="details">
-						<div><%= req.user.email %></div>
-						<a href="/settings" class="navigate">Settings</a> <a href="/logout">Logout</a>
-					</div>
-				</div>
-
 				<ul class="notebooks sidebar-nav">
 					<li><a href="/" class="navigate">All Notes</a></li>
 					<% for(var i=0; i<notebooks.length; i++) { %>	
@@ -92,7 +84,7 @@
 
 	<div id="delete-note" class="modal hide">
 		<div class="modal-header">
-			<a href="#" class="close">&times;</a>
+			<a href="javascript:$('#delete-note').modal('hide')" class="close">&times;</a>
 			<h3>Trash Note</h3>
 		</div>
 		<div class="modal-body">
@@ -109,7 +101,7 @@
 
 	<div id="delete-notebook" class="modal hide">
 		<div class="modal-header">
-			<a href="#" class="close">&times;</a>
+			<a href="javascript:$('#delete-notebook').modal('hide')" class="close">&times;</a>
 			<h3>Trash Notebook</h3>
 		</div>
 		<div class="modal-body">
@@ -118,7 +110,7 @@
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="btn danger">Yes</a>
-			<a href="javascript:$('#delete-note').modal('hide')" class="btn secondary">No</a>
+			<a href="javascript:$('#delete-notebook').modal('hide')" class="btn secondary">No</a>
 		</div>
 	</div>
 

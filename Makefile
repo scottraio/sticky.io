@@ -10,4 +10,7 @@ staging:
 production:
 	coffee -c app.coffee; NODE_ENV=production NODE_PATH=`pwd`/lib forever start ./app.js
 
+deploy:
+	./script/deploy-cluster	
+
 .PHONY: test server forever

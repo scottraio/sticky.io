@@ -131,19 +131,7 @@
 
 	<script>
 		$(document).ready(function() {
-			$('.carousel').carousel('pause')
-			mixpanel.track('Web Visit');
-
-			$('body').scroll(function() {
-				console.log('test');
-				if ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight()) {
-					console.log('end')
-					mixpanel.track('Scrolled to end of page');
-				}
-			});
-			
-				
-				
+			mixpanel.track('Web Visit');				
 		})
 	</script>
 

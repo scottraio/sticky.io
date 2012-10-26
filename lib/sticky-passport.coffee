@@ -9,9 +9,9 @@ GoogleStrategy 	= require('passport-google-oauth').OAuth2Strategy
 
 passport.use(new LocalStrategy (username, password, done) ->
 	app.models.User.findOne { email: username }, (err, user) ->
-		return done(err) 											if (err)
+		return done(err) 																					if (err)
 		return done(null, false, { message: 'Unknown user' }) 		if !user
-		return done(null, false, { message: 'Invalid password' }) 	if !user.validPassword(password)
+		return done(null, false, { message: 'Invalid password' }) if !user.validPassword(password)
 		return done(null, user)
 )
 
@@ -21,9 +21,9 @@ passport.use(new LocalStrategy (username, password, done) ->
 
 passport.use(new BasicStrategy (username, password, done) ->
 	app.models.User.findOne { email: username }, (err, user) ->
-		return done(err) 											if (err)
+		return done(err) 																					if (err)
 		return done(null, false, { message: 'Unknown user' }) 		if !user
-		return done(null, false, { message: 'Invalid password' }) 	if !user.validPassword(password)
+		return done(null, false, { message: 'Invalid password' }) if !user.validPassword(password)
 		return done(null, user)
 )
 
@@ -71,7 +71,6 @@ passport.use(new GoogleStrategy google_config, (accessToken, refreshToken, profi
 #
 
 passport.serializeUser (user, done) ->
-	console.log user
 	done(null, user.id)
 
 passport.deserializeUser (id, done) ->
