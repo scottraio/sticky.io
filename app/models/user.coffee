@@ -6,20 +6,12 @@ trebuchet 	= require('trebuchet')('d7fc51d8-e67a-49db-b232-80a5a2fcd84f')
 # Mongoose
 Schema 			= mongoose.Schema
 Base				= require 'sticky-model'
+# message queue
+stickymq 		= require 'sticky-kue'
 
 # Security
 SHA2				= new (require('jshashes').SHA512)()
 salt 				= 'sc2ishard'
-
-# Kue
-kue 	= require 'kue'
-redis = require 'redis'
-
-kue.redis.createClient = () ->
-	client = redis.createClient(settings.redis.port, settings.redis.server)
-	return client
-
-jobs = kue.createQueue()
 
 encodePassword = (pass) ->
 	return '' if typeof pass is 'string' and pass.length < 6 
@@ -27,8 +19,6 @@ encodePassword = (pass) ->
 
 #
 # Mongoose Schema
-
-
 UserSchema = new Schema
 	name  	 				: { type: String, required: true, trim: true }
 	email	 					: { type: String, required: true, trim: true, unique: true, lowercase: true }
@@ -36,8 +26,6 @@ UserSchema = new Schema
 	password 				: { type: String, required: true, set: encodePassword }
 	googleId 				: { type: String }
 	last_sign_in_at : { type: Date, default: null }
-
-
 
 UserSchema.path('email').validate 		Base.uniqueFieldInsensitive('User', 'email'), 'unique'
 UserSchema.path('email').validate 		Base.emailFormat, 'format'
@@ -51,8 +39,7 @@ UserSchema.methods.validPassword = (pass) ->
 	return true if encodePassword(pass) is @password
 
 UserSchema.methods.registerXMPPBot = () ->
-	payload = {email: this.email}
-	jobs.create('users:register', payload).priority('high').save()
+	stickymq.registerXMPPBot(@email)
 
 UserSchema.methods.sendWelcomeEmail = () ->
 	self = @

@@ -188,4 +188,3 @@ class App.Views.Notes.Index extends Backbone.View
 				# If we're at the bottom, show the overlay and retrieve the next page
 				window.current_page += 1
 				navigate '/notes' + add_or_replace_query_var(document.location.search, 'page', window.current_page)
-				
