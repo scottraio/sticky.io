@@ -354,6 +354,7 @@ pre {
 		display:table-cell;
     //background:#fff url('/img/furley_bg.png');
     background:rgba(255, 255, 255, 0.6);
+    background-image:url('/img/logo-origami-watermark.png') no-repeat;
 		vertical-align:top;
 		border-top:1px solid rgba(0, 0, 0, 0.1);
 		border-bottom:1px solid rgba(0, 0, 0, 0.1);
@@ -760,10 +761,44 @@ ul.settings {
 //
 // Welcome 
 #welcome {
+	background:url('/img/grey.png');
+	width:600px;
+	h1 {
+		
+	}
 	.modal-body {
 		padding:0;
-		max-height:380px;
 	}
+	.welcome-section {
+		.border-radius(7px);
+		background:rgba(56,135,181,.1);
+		margin-top:20px;
+		width:560px;
+		padding:20px;
+		overflow:auto;
+		.verbiage {
+			width:45%;
+			display:inline-block;
+			h2 {
+			color:#454545;
+			font-weight:normal;
+			}
+			h3 {
+				font-size:18px;
+				font-weight:normal;
+				line-height:16px;
+				margin-bottom:20px;
+				color:#767676;
+			}
+		}
+		.screenshot {
+			border-radius:7px;
+			padding:0;
+			margin:0;
+			float:right;
+		}
+	}
+	/*
 	.item {
 		padding:0;
 		.example:first-child {
@@ -795,6 +830,7 @@ ul.settings {
 		.box-shadow(none);
 		border:1px solid #555;
 	}
+	*/
 }
 
 span.label.green { background-color:@green; }
