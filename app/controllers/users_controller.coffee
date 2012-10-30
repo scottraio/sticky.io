@@ -61,6 +61,12 @@ exports.update = (req, res) ->
 					done(null, note)
 
 #
+# Re-register the XMPP Bot
+# GET /welcome
+exports.welcome = (req, res) ->
+	render.render_page 'welcome', req, res
+
+#
 # Login user
 # GET /login
 exports.login = (req, res) ->

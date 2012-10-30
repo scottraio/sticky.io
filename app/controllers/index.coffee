@@ -42,11 +42,12 @@ app.get('/signup', UsersController.signup)
 app.post('/signup', UsersController.create)
 app.get('/settings', ensureAuthenticated, UsersController.edit)
 
+
 # Forces registration for XMPP Roster
 app.get('/register', ensureAuthenticated, UsersController.register)
 
 # Dummy route for welcome dialog
-app.get('/welcome', ensureAuthenticated, NotesController.index)
+app.get('/welcome', ensureAuthenticated, UsersController.welcome)
 
 # Redirect the user to Google for authentication.  When complete, Google
 # will redirect the user back to the application at
@@ -106,3 +107,15 @@ app.delete('/notebooks/:id.:format?', ensureAuthenticated, NotebooksController.d
 # Root
 app.get '/', renderPublic, (req, res) ->
 	res.redirect('/notes')
+
+app.get '/faq', (req, res) -> 
+	res.render('/faq.html')
+
+app.get '/contact', (req, res) ->
+	res.render('/contact.html')
+
+app.get '/about', (req, res) ->
+	res.render('/about.html')	
+
+app.get '/privacy', (req, res) ->
+	res.render('/privacy.html')

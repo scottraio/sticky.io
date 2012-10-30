@@ -77,3 +77,7 @@ window.get_query_val = (key) ->
 window.format_date = (date) ->
 	date = new Date(date)
 	return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear()
+
+window.show_profile = () ->
+	$('#expanded-view').html ich.users_profile
+		current_user: window.current_user

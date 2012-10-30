@@ -468,9 +468,6 @@ pre {
 
 
 // Notes
-
-
-
 ul.notes_board {
 	margin:0;
 	list-style-type:none;
@@ -614,36 +611,35 @@ ul.notes_board {
 	li.yellow { border-left:2px solid @yellow; }
 	li.orange { border-left:2px solid @orange; }
 	li.red { border-left:2px solid @red; }
-
-	.number-porn {
-		font-family:"bebas-neue", "Helvetica Neue", Helvetica, sans-serif;
-		letter-spacing:.02em;
-		box-sizing:border-box;
-		color:#fff;
-		height:33px;
-		width:33px;
-		display:block;
-		.border-radius(33px);
-		background:@darkStickyGreen;
-		border:3px solid #eee;
-		position:absolute;
-		text-align: center;
-		vertical-align: middle;
-		line-height:1.75em;
-		font-size:1.20em;
-		right:-2px;
-		top:0px;
-		text-decoration: none;
-		.box-shadow(0 0px 3px rgba(125, 125, 125, 0.3);
-	}
 }
 
 ul.notes_board:last-child {
 	padding-bottom:55px;	
 }
 
-// Modals
+.number-porn {
+	font-family:"bebas-neue", "Helvetica Neue", Helvetica, sans-serif;
+	letter-spacing:.02em;
+	box-sizing:border-box;
+	color:#fff;
+	height:33px;
+	width:33px;
+	display:block;
+	.border-radius(33px);
+	background:@darkStickyGreen;
+	border:3px solid #eee;
+	position:absolute;
+	text-align: center;
+	vertical-align: middle;
+	line-height:1.75em;
+	font-size:1.20em;
+	right:-2px;
+	top:0px;
+	text-decoration: none;
+	.box-shadow(0 0px 3px rgba(125, 125, 125, 0.3);
+}
 
+// Modals
 .modal {
 	padding:20px;
 	form {
@@ -758,24 +754,57 @@ ul.settings {
 	}
 }
 
+.profile {
+	width:90%;
+	margin:25px auto;
+	background-color:rgba(56,135,181,0.05);
+
+
+	
+	padding:25px;
+	box-sizing:border-box;
+	.border-radius(5px);
+	ul {
+		margin-top:25px;
+	}
+	i {
+		float:left;
+		position:relative;
+		top:3px;
+		img {
+			.border-radius(25px);
+			display:block;	
+		}
+	}
+	.details {
+		margin-left:40px;
+	}
+}
+
 //
 // Welcome 
-#welcome {
-	background:url('/img/grey.png');
-	width:600px;
-	h1 {
-		
+.welcome {
+	margin:25px;
+	width:700px;
+	margin:50px auto;
+	.number-porn {
+		left:10px;
+		top:25px;
 	}
-	.modal-body {
-		padding:0;
+	.btn-primary {
+		font-size:1.8em;
+		padding:15px;
+		display:block;
+		margin:25px auto;
 	}
 	.welcome-section {
+		position:relative;
 		.border-radius(7px);
 		background:rgba(56,135,181,.1);
 		margin-top:20px;
-		width:560px;
-		padding:20px;
+		padding:20px 20px 20px 50px;
 		overflow:auto;
+
 		.verbiage {
 			width:45%;
 			display:inline-block;

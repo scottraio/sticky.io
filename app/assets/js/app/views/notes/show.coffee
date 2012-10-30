@@ -71,7 +71,7 @@ class App.Views.Notes.Show extends Backbone.View
 		return false
 
 	close: (e) ->
-		$(@el).html ""
+		show_profile()
 		$('body').attr('data-current-note-open', null)
 		return false
 
