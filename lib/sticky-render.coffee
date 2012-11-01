@@ -1,3 +1,5 @@
+_ = require 'underscore'
+
 exports.json = (req,res,fn) ->
 	switch req.params.format
 		when 'json'			
@@ -26,7 +28,7 @@ exports.render_page = (page,req,res) ->
 				res.render(page, {
 					error         : 	req.flash('error')
 					success       :   req.flash('success')
-					current_user  : 	JSON.stringify(req.user)
+					current_user  : 	_.pick(req.user, 'name', 'email', '_id', 'theme', 'phone_number')
 					is_logged_in  : 	true if req.user
 					tags          :		tags
 					notebooks     : 	notebooks

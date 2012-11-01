@@ -15,8 +15,8 @@ class App.Main extends Backbone.View
 	initialize: ->
 		show_profile()
 
-		socket.on 'disconnect', () ->
-			console.log 'disconnected'
+		#socket.on 'disconnect', () ->
+		#	console.log 'disconnected'
 
 		#
 		# dropdown any dropdowns
@@ -37,9 +37,14 @@ class App.Main extends Backbone.View
 		# animate the sidebar nav a bit
 		setTimeout((->						
 			$('ul.sidebar-nav').addClass('focus')
-		), 200)
-		
+		), 300)
 
+		# show help arrow for creating notes in-app
+		if document.referrer.match(/welcome/).length > 0
+			setTimeout(() ->
+				$('#new-sticky-header').after $('<div class="arrow_box">Enter notes here</div>')
+			, 1000)
+		
 		#
 		# date picker stuff
 		$(document.body).click () ->

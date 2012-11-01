@@ -1,3 +1,4 @@
+<!-- Settings Modal -->
 <div id="settings" class="modal hide fade">
 	<form class="form-horizontal">
 		<div class="modal-header">
@@ -10,7 +11,19 @@
 		  <div class="control-group">
 		    <label class="control-label" for="input_phone_number">Phone Number</label>
 		    <div class="controls">
-		      <input type="tel"  name="phone_number" id="input_phone_number" placeholder="Enter your phone number">
+		      <input type="tel"  name="phone_number" id="input_phone_number" placeholder="Enter your phone number" value="<%= current_user.phone_number %>">
+		    </div>	
+		  </div>
+
+		  <div class="control-group">
+		    <label class="control-label" for="input_phone_number">Theme</label>
+		    <div class="controls">
+		    	<input type="hidden" name="theme" value="<%= current_user.theme %>" />
+		      <ul class="themes">
+						<li data-value="bright" class="theme-bright-bg"></li>
+						<li data-value="desk" class="theme-desk-bg"></li>
+						<li data-value="den" class="theme-den-bg"></li>
+					</ul>
 		    </div>
 		  </div>
 
@@ -22,6 +35,8 @@
 	</form>
 </div>
 
+
+<!-- Users Profile -->
 <script id="users_profile" type="text/html">	
 	<div class="profile">
 

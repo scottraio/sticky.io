@@ -1,6 +1,6 @@
 <%- partial('header') %>
 
-<body>
+<body class="theme-<%= current_user.theme %>">
 	<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 	<div class="backdrop"></div>
 	<div class="logo">STICKY</div>
@@ -9,13 +9,6 @@
 
   <div class="main-wrapper container-fluid">
     <div id="main">
-      <!--
-		  {{#if error}}<div class="alert alert-error">{{error}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
-		  {{#if success}}<div class="alert alert-success">{{success}} <a class="close" data-dismiss="alert" href="#">×</a></div>{{/if}}
-
-		  <div class="crumb-bar">
-      </div>
-      -->
 
       <div id="sidebar">
 				<ul class="notebooks sidebar-nav">
@@ -57,7 +50,7 @@
 						
 						<div class="search pull-right">
 							<form action="/notes" method="get">
-								<input type="text" id="keyword" name="keyword" class="search-query" placeholder="Discover">
+								<input type="text" id="keyword" name="keyword" class="search-query" placeholder="Search">
 							</form>
 						</div>
 					</div>

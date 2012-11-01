@@ -53,6 +53,10 @@ class App.Views.Notes.New extends Backbone.View
 		return false
 
 	focus_new_sticky: (e) ->
+		# hide help arrow on focus
+		$('.arrow_box').hide()
+
+		# work some html 5 magic for contenteditable box
 		new_message = $(e.currentTarget)
 		new_message.removeClass('idle')
 		if (new_message[0].hasChildNodes() && document.createRange && window.getSelection)

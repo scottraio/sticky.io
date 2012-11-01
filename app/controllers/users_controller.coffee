@@ -44,13 +44,14 @@ exports.update = (req, res) ->
 	render.json req, res, (done) ->
 		app.models.User.findOne {_id:req.user._id}, (err, note) ->
 
-			console.log req.body
-
 			if req.body.phone_number
 				note.set 'phone_number', req.body.phone_number
 
 			if req.body.password
 				note.set 'password', req.body.password
+
+			if req.body.theme
+				note.set 'theme', req.body.theme
 
 			note.save (err) -> 
 				if err
