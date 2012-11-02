@@ -94,7 +94,7 @@ $(document).ready () ->
 			parent_note 				: parent
 			notes 							: notes
 			note_message 				: () -> this.message && this.message.replace(/(<[^>]+) style=".*?"/g, '$1')
-			has_subnotes				: () -> true if parent._notes && parent._notes.length > 0
+			has_subnotes				: () -> true
 			stacked_at_in_words	: () -> format_date(this.stacked_at)
 			stacked_at_in_date 	: () -> format_date(this.stacked_at)
 
@@ -157,6 +157,8 @@ $(document).ready () ->
 	#
 	# Load notes on page load
 	load_notes()
+
+	st.show_section(new_note, {animation: 'upfrombottom'})
 
 
 	

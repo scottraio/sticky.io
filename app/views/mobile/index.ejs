@@ -71,14 +71,14 @@
         <div class="stp-content-panel hidden" id="new-note">
           <header>
             <a href="javascript:void(0)" class="header-button cancel">Done</a>
-            <h1 class="reduce">What's on your mind?</h1>
+            <div class="logo">STICKY</div>
             <a href="javascript:void(0)" class="header-button save right">Save</a>
           </header>
 
           <div class="stp-content-frame">
             <div class="stp-content-body">
               <div class="container">
-                <textarea placeholder="Use @ for notebooks and # for tags"></textarea>
+                <textarea placeholder="What's on your mind? Use @ for notebooks and # for tags"></textarea>
               </div>
             </div>
           </div>
@@ -129,7 +129,7 @@
       //
       // Set Defaults
       window.notebooks    = <%- JSON.stringify(notebooks) %>
-      window.current_user = <%- current_user %>
+      window.current_user = <%- JSON.stringify(current_user) %>
       window.socket       = io.connect(config.domain)
     </script>
 
