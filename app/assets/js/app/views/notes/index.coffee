@@ -182,7 +182,7 @@ class App.Views.Notes.Index extends Backbone.View
 
 	infinite_scroll: () ->
 		self = @
-		$('#stage').scroll () ->
+		$('body').scroll () ->
 			# We check if we're at the bottom of the scrollcontainer
 			if (self.notes.length > 0 and self.notes.length <= 25) && ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight())
 				# If we're at the bottom, show the overlay and retrieve the next page

@@ -13,7 +13,14 @@ class App.Main extends Backbone.View
 		"submit .search form" 				: "search"
 		
 	initialize: ->
-		show_profile()
+		$(window).scroll (e) ->
+			# We check if we're at the bottom of the scrollcontainer
+			#if ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight())
+			if $(this).scrollTop() > 50
+				$('#new-sticky-header').css('top', '-45px')
+			else if $(this).scrollTop() < 50
+				$('#new-sticky-header').css('top', '0')
+				
 
 		#socket.on 'disconnect', () ->
 		#	console.log 'disconnected'
@@ -40,7 +47,7 @@ class App.Main extends Backbone.View
 		), 300)
 
 		# show help arrow for creating notes in-app
-		if document.referrer.match(/welcome/).length > 0
+		if document.referrer && document.referrer.match(/welcome/).length > 0
 			setTimeout(() ->
 				$('#new-sticky-header').after $('<div class="arrow_box">Enter notes here</div>')
 			, 1000)
