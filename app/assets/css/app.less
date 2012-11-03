@@ -73,9 +73,27 @@ pre {
   margin:0;
   box-sizing:border-box;
   padding-right:100px;
-  &:focus {
-  	outline:none;
+  ul.info-links {
+  	border:0;
+  	padding:0;
+  	margin:0;
+  	position:absolute;
+  	right:15px;
+  	top:13px;
+  	list-style-type:none;
+  	li {
+  		display:inline-block;
+  		margin-right:5px;
+  		a {
+  			font-family:"Helvetica Neue", Helvetica, sans-serif;
+	  		font-size:1.05em;
+  			color:#fff;
+  			text-shadow:0 1px 3px rgba(0, 0, 0, 0.6);
+  			letter-spacing:0.05em;
+  		}
+  	}
   }
+  
 	form { margin:0; padding:0 }
 	.transition(top ease-out .4s);
 
@@ -102,6 +120,9 @@ pre {
 			font-family:"Helvetica Neue", Helvetica, sans-serif;
 			.border-radius(0px);
 			border:1px solid #eee;
+			background-color:lighten(@red, 25%);
+			color:#fff;
+
 		}
 		.btn-toolbar {
 			margin:2px 0 0 170px;
@@ -127,6 +148,7 @@ pre {
 				padding:0;	
 				float:none;
 				input[name=keyword] {
+					width:300px;
 					line-height:1.6em;
 					background-color:#fff;
 					border:1px solid #eee;

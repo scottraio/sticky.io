@@ -3,8 +3,10 @@ class App.Routers.NotesRouter extends Backbone.Router
 	routes:
 		""								: "index"
 		"notes"						: "index"
+		"notes/new"				: "new"
 		"notes/:id"				: "show"
 		"notes/:id/edit" 	: "edit"
+		
 	
 	index: (params) ->
 		if current_user
@@ -20,3 +22,6 @@ class App.Routers.NotesRouter extends Backbone.Router
 	edit: (id) ->
 		note = new App.Views.Notes.Edit(id: id, el: $("li.sticky[data-id=#{id}]"))
 		note.render()
+
+	new: () ->
+		note = new App.Views.Notes.New()

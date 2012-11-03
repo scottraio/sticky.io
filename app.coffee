@@ -102,7 +102,7 @@ fs.readFile 'VERSION', 'utf8', (err, version) ->
 	# spool up the kue and subscribe to redis Pub/Sub for all XMPP/SMS bound notes
 	stickymq.listen()
 	# notify staff during critical errors
-	exceptions.notify_on_error() #if app.env is 'production'
+	exceptions.notify_on_error() if app.env is 'production'
 	# boot phantom server
 	phantom.create((ph) -> app.phantom = ph)
 	# load mixpanel

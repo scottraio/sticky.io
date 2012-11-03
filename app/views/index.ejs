@@ -5,15 +5,20 @@
 	<div class="backdrop"></div>
 	
   <div id="new-sticky-header">
+  	<ul class="info-links">
+  		<li><a href="/help">Help</a></li>
+  		<li><a href="/logout">Logout</a></li>
+  	</ul>
+
   	<div class="logo">STICKY</div>
   	
-	  <div class="inbox-controls">
+	  <div id="controls-bar" class="inbox-controls">
 	  	<div class="profile">
 				<i id="gravatar"><img src="http://profiles.google.com/s2/u/0/photos/profile/<%= req.user.googleId %>?sz=32" /></i>
 				<a href="/settings" class="navigate">Settings</a>
 			</div>
-	  	
-	  	<a href="/notes/new" class="push new-note btn"><i class="icon-plus"></i> Create a Note</a>
+
+	  	<a href="/notes/new" class="push new-note btn"><i class="icon-plus icon-white"></i> Create a Note</a>
 			<div class="btn-toolbar">
 				<div class="btn-group">
 					<a href="#" class="btn single toggle-datepicker"><i class="icon-calendar"></i></a>
@@ -38,7 +43,7 @@
 				
 				<div class="search">
 					<form action="/notes" method="get">
-						<input type="text" id="keyword" name="keyword" class="search-query" placeholder="Enter keyword and press enter">
+						<input type="text" id="keyword" name="keyword" class="search-query" placeholder="Discover">
 					</form>
 				</div>
 			</div>
