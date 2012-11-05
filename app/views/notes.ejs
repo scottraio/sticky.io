@@ -4,6 +4,7 @@
 -->
 
 <script id="expanded_note" type="text/html">
+	
 	<div class="expanded-actions">
 		<a href="#" class="pull-right" id="close-expanded-view"><i class="icon icon-remove"></i></a>
 
@@ -37,8 +38,8 @@
 				</li>
 			{{/has_subnotes}}
 		</ul>	
-
 	</div>
+	
 </script>
 
 <!--
@@ -81,8 +82,8 @@
 
 <script id="substicky" class="partial" type="text/html">
 	<li class="sticky card subnote" data-id="{{_id}}" draggable="true">
-		{{{note_message}}}
 		<span class="timestamp">{{stacked_at_in_date}}</span>
+		{{{note_message}}}
 	</li>
 </script>
 
@@ -93,7 +94,7 @@
 <script id="sticky_actions" class="partial" type="text/html">	
 	<div class="sticky-actions">
 		{{#draggable}}
-		<i class="sticky-action icon-move dnd hide"></i>
+		<img src="/img/drag_handle.png" />
 		{{/draggable}}
 		{{#has_subnotes}}<a href="/notes/{{_id}}" class="push expand sticky-action number-porn">{{subnote_count}}</a>{{/has_subnotes}}
 	</div>

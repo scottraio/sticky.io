@@ -39,7 +39,7 @@ class App.Views.Notes.Show extends Backbone.View
 				collection = new App.Collections.Notes()
 				collection.format_domains(notes)
 
-				$(self.el).html ich.expanded_note
+				$('.expanded-view-anchor', self.el).html ich.expanded_note
 					parent_note 				: parent
 					notes 							: notes
 					note_message 				: () -> this.message && this.message.replace(/(<[^>]+) style=".*?"/g, '$1')

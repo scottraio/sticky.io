@@ -20,13 +20,13 @@ class App.Main extends Backbone.View
 			#if ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight())
 			if $(this).scrollTop() > 50
 				$('#new-sticky-header').css('top', '-45px')
-
-				$('#inbox textarea.new-note').css('top', '55px')
-				$('#inbox textarea.new-note').css('position', 'fixed')
-				$('#inbox textarea.new-note').css('width', $('#inbox').width())
-			else if $(this).scrollTop() < 50
+			if $(this).scrollTop() > 30
+				$('#expanded-view .expanded-view-anchor').css('position', 'fixed')
+				$('#expanded-view .expanded-view-anchor').css('top', '55px')
+				$('#expanded-view .expanded-view-anchor').css('width', $('#expanded-view').width())
+			if $(this).scrollTop() < 50
 				$('#new-sticky-header').css('top', '0')
-				$('#inbox textarea.new-note').removeAttr('style')
+				$('#expanded-view .expanded-view-anchor').removeAttr('style')
 
 						
 

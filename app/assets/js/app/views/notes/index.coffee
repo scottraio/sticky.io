@@ -71,6 +71,7 @@ class App.Views.Notes.Index extends Backbone.View
 	link_to_note: (e) ->
 		if e.target.tagName is 'DIV'
 			push_url '/notes/' + $(e.currentTarget).attr('data-id')
+			#$('#expanded-view').css('padding-top', $(e.currentTarget).offset().top - 132)
 			return false
 
 	update_color: (e) ->
