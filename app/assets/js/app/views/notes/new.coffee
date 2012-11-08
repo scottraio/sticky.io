@@ -4,32 +4,29 @@ class App.Views.Notes.New extends Backbone.View
 	
 	events:
 		'keypress' 					: 'detect_enter_key'
-		'focus'							: 'focus_new_sticky'
-		'blur'							: 'blur_new_sticky'
 	
 	initialize: ->
 		@note = new App.Models.Note()
 
-		$('#controls-bar').html('')
-		$('#controls-bar').attr('contenteditable', true)
-		$('#controls-bar').focus()
+		$(@el).modal()
+		$(@el).on 'shown', () ->
+			$('textarea', @el).val('')
+			$('textarea', @el).focus()
 	
 	detect_enter_key: (e) ->
 		if e.keyCode is 13 && !e.shiftKey
 			@submit()
 			
-
 	submit: () ->
 		self = @
 		attrs = {
-			message: $(@el).html()
+			message: $('textarea', @el).val()
 		}
 
 		save @note, attrs, {
 			success: (data, res) ->
 				# close modal window
-				$(self.el).html("")
-				$(self.el).blur()
+				$(self.el).modal('hide')
 				
 				# Removed in favor of SocketIO
 				# reload the current path
@@ -40,25 +37,3 @@ class App.Views.Notes.New extends Backbone.View
 		}
 		
 		return false
-
-	focus_new_sticky: (e) ->
-		# hide help arrow on focus
-		$('.arrow_box').hide()
-
-		# work some html 5 magic for contenteditable box
-		new_message = $(e.currentTarget)
-		new_message.removeClass('idle')
-		if (new_message[0].hasChildNodes() && document.createRange && window.getSelection)
-			$(new_message).empty()
-			range = document.createRange()
-			range.selectNodeContents(new_message[0])
-			sel = window.getSelection()
-			sel.removeAllRanges()
-			sel.addRange(range)
-
-	blur_new_sticky: (e) ->
-		new_message = $(e.currentTarget)
-		if new_message.html() is ''	
-			new_message.html "What's on your mind?"
-			new_message.addClass 'idle'
-

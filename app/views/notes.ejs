@@ -24,20 +24,8 @@
 	</div>
 	<div class="expanded-wrapper">
 		<div class="expanded-note">
-			<div id="editable-message" contenteditable="true">{{#parent_note}}{{{note_message}}}{{/parent_note}}</div>
+			<div id="editable-message" contenteditable="true">{{#parent_note}}{{{note_message}}}{{/parent_note}}{{#notes}}<div>{{{note_message}}}</div>{{/notes}}</div>
 		</div>
-		
-		
-		<ul class="timeline">
-			{{#notes}}
-				{{>substicky}}
-			{{/notes}}
-			{{^has_subnotes}}
-				<li class="sticky card subnote empty">
-					Drag notes from the left here. 
-				</li>
-			{{/has_subnotes}}
-		</ul>	
 	</div>
 	
 </script>
@@ -99,3 +87,14 @@
 		{{#has_subnotes}}<a href="/notes/{{_id}}" class="push expand sticky-action number-porn">{{subnote_count}}</a>{{/has_subnotes}}
 	</div>
 </script>
+
+
+<!--
+	New Sticky
+-->
+
+<div id="new-note" class="modal hide">
+	<div class="modal-body">
+		<textarea name="message" placeholder="What's on your mind?"></textarea>
+	</div>
+</div>

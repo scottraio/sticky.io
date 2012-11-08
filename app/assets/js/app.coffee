@@ -23,6 +23,7 @@ class App.Main extends Backbone.View
 			if $(this).scrollTop() > 30
 				$('#expanded-view .expanded-view-anchor').css('position', 'fixed')
 				$('#expanded-view .expanded-view-anchor').css('top', '55px')
+				$('#expanded-view .expanded-view-anchor').css('height', $('body').height() - 65)
 				$('#expanded-view .expanded-view-anchor').css('width', $('#expanded-view').width())
 			if $(this).scrollTop() < 50
 				$('#new-sticky-header').css('top', '0')
