@@ -79,9 +79,9 @@ class App.Views.Notebooks.Edit extends Backbone.View
 		$('input[name=name]', @el).val("")
 		$('input[name=color]', @el).val("")
 		# make the UI show the new notebook
-		$(".notebooks li[data-id=#{data.id}]").removeClass()
-		$(".notebooks li[data-id=#{data.id}]").addClass('notebook')
-		$(".notebooks li[data-id=#{data.id}]").addClass(notebook.attributes.color)
-		$(".notebooks li[data-id=#{data.id}]").attr('data-color', notebook.attributes.color)
-		$(".notebooks li[data-id=#{data.id}]").attr('data-name', notebook.attributes.name)
-		$(".notebooks li[data-id=#{data.id}] a:first").html "@" + notebook.attributes.name
+		$(".notebooks li[data-id=#{notebook.id}]").removeClass()
+		$(".notebooks li[data-id=#{notebook.id}]").addClass('notebook')
+		$(".notebooks li[data-id=#{notebook.id}]").addClass(notebook.attributes.color)
+		$(".notebooks li[data-id=#{notebook.id}]").attr('data-color', notebook.attributes.color)
+		$(".notebooks li[data-id=#{notebook.id}]").attr('data-name', notebook.attributes.name)
+		$(".notebooks li[data-id=#{notebook.id}] a:first").html "@" + notebook.attributes.name
