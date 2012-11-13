@@ -139,7 +139,7 @@
     box-sizing:border-box;
 		display:table-cell;
     //background:#fff url('/img/furley_bg.png');
-    background:rgba(255, 255, 255, 0.9);
+    background:#eee;
     background-image:url('/img/logo-origami-watermark.png') no-repeat;
 		vertical-align:top;
 		border-top:1px solid rgba(0, 0, 0, 0.1);
@@ -147,13 +147,11 @@
 		border-right:1px solid rgba(0, 0, 0, 0.1);
 		border-left:1px solid rgba(0, 0, 0, 0.1);
 		.box-shadow(1px 1px 3px rgba(100, 100, 100, 0.1));
-
 		overflow:hidden;
     .border-radius(0 5px 5px 0);
 		.expanded-wrapper {
 			height:100%;
 			overflow:auto;
-			padding-bottom:80px;
 			//background-color:rgb(245, 245, 245);
 			//background: rgb(243,243,243); /* Old browsers */
 			//background: -moz-linear-gradient(left,  rgba(243,243,243,1) 0%, rgba(250,250,250,1) 50%, rgba(204,204,204,1) 51%, rgba(250,250,250,1) 51%, rgba(243,243,243,1) 100%); /* FF3.6+ */
@@ -175,7 +173,7 @@
 			//#gradient > .vertical(#fff, #eee);
 			border-bottom:1px solid #ddd;
   		//.box-shadow(0 1px 3px rgba(125, 125, 125, 0.2);
-			background-color:#f9f9f9;
+			background-color:#fff;
 			.btn-toolbar {
 				margin:2px 0 0 0;
 			}
@@ -186,7 +184,6 @@
 			}
 		}
 		.expanded-note {
-			border-bottom:1px solid rgba(0, 0, 0, 0.1);
 			position:relative;
 			z-index:10;
 			background-color:#fff;
@@ -194,9 +191,11 @@
 				padding:25px 15px;
 				-webkit-appearance:none;
 				white-space:pre-wrap;
+				.box-shadow(0 2px 5px rgba(0, 0, 0, 0.08));
+				border-bottom:1px solid rgba(0, 0, 0, 0.15);
+				margin-bottom:5px;
 				&:focus {
 					outline:none;
-					.box-shadow(none);
 				}
 		 	}
 		}
@@ -206,14 +205,16 @@
 			margin:0;
 			position:relative;
 			font-size:0.95em;
-			line-height: 0.95em;
+			line-height:0.95em;
 			li.card {
 				position:relative;
-				margin:20px 13px 0px 13px;
+				margin:0;
 				background-color:#fff;
-				border-bottom:1px solid #ccc;
-				border-top:1px solid #f0f0f0;
-				padding:20px 15px;
+				margin:10px 5px 15px 5px;
+				padding:15px;
+				.box-shadow(0 1px 3px rgba(0, 0, 0, 0.08));
+				border-bottom:1px solid rgba(0, 0, 0, 0.15);
+				outline:none;
 				.timestamp {
 					color:#999;
 					font-size:0.8em;

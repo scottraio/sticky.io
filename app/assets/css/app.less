@@ -62,7 +62,7 @@ pre {
 
 #new-sticky-header {
   border-top:2px solid rgb(171, 209, 75);
-	background:transparent;
+	background:rgba(255, 255, 255, 0.55);
   width:100%;
   height:45px;
   position:fixed;
@@ -254,7 +254,7 @@ pre {
 @import 'structure';
 @import 'notes-board';
 
-.number-porn {
+.number-porn-circle {
 	font-family:"bebas-neue", "Helvetica Neue", Helvetica, sans-serif;
 	letter-spacing:.02em;
 	box-sizing:border-box;
@@ -274,6 +274,39 @@ pre {
 	top:0px;
 	text-decoration: none;
 	.box-shadow(0 0px 3px rgba(125, 125, 125, 0.3);
+}
+
+.number-porn {
+	font-family:"bebas-neue", "Helvetica Neue", Helvetica, sans-serif;
+	letter-spacing:.02em;
+	box-sizing:border-box;
+	color:#fff;
+	display:block;
+	position:absolute;
+	text-align: center;
+	vertical-align: middle;
+	right:-3px;
+	top:-10px;
+	text-decoration: none;
+	width: 0; 
+	height:40px;
+	border-left: 11px solid @redLight; 
+	border-right: 11px solid @redLight; 
+	border-bottom: 5px solid transparent; 
+	-webkit-backface-visibility:hidden;
+	&:hover {
+		color:#fff;
+		text-decoration: none;
+	}
+	span {
+		display:block;
+		position:absolute;
+		left:-13px;
+		top:3px;
+		line-height:1.5em;
+		font-size:1.20em;	
+		width:25px;
+	}
 }
 
 // Modals
