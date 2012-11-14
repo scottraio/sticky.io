@@ -8,10 +8,13 @@ class App.Views.Notes.New extends Backbone.View
 	initialize: ->
 		@note = new App.Models.Note()
 
-		$(@el).modal()
+	render: () ->
 		$(@el).on 'shown', () ->
 			$('textarea', @el).val('')
 			$('textarea', @el).focus()
+
+		$(@el).modal('show')
+
 	
 	detect_enter_key: (e) ->
 		if e.keyCode is 13 && !e.shiftKey

@@ -3,12 +3,13 @@ App.Views.Notes or= {}
 class App.Views.Notes.Show extends Backbone.View
 
 	events:
-		'click .confirm' 							: 'confirm_delete'
-		'click .make-bold'						: 'make_bold'
-		'click .make-italic'					: 'make_italic'
-		'click .make-underline' 			: 'make_underline'
-		'click .save'									: 'save'
-		'click #close-expanded-view' 	: 'close'
+		'click .confirm' 								: 'confirm_delete'
+		'click .make-bold'							: 'make_bold'
+		'click .make-italic'						: 'make_italic'
+		'click .make-underline' 				: 'make_underline'
+		'click .save'										: 'save'
+		'click #close-expanded-view' 		: 'close'
+		'mousedown .timeline .drag-handle-small' : 'make_draggable'
 
 	initialize: ->
 		# set the id to the DOM
@@ -16,6 +17,7 @@ class App.Views.Notes.Show extends Backbone.View
 
 		# select the note inside the inbox
 		$('#inbox li.sticky').removeClass('selected')
+
 
 		@note 			= new App.Models.Note(id: @options.id)
 		@note.url 	= "/notes/#{@options.id}/expanded.json"
@@ -53,6 +55,8 @@ class App.Views.Notes.Show extends Backbone.View
 				$('#editable-message').autolink()
 				$('.subnote').autolink()
 				$('body').attr('data-current-note-open', parent._id) 
+				#set the timeline's height
+				$('#expanded-view .timeline-wrapper').css('height', $('body').height() - $('#expanded-wrapper').outerHeight() - $('#expanded-actions').outerHeight() - 210)
 
 				# Drag and Drop
 				window.dnd.droppable $('#expanded-view')
@@ -73,6 +77,10 @@ class App.Views.Notes.Show extends Backbone.View
 	close: (e) ->
 		show_profile()
 		$('body').attr('data-current-note-open', null)
+		return false
+
+	make_draggable: (e) ->
+		$(e.currentTarget).parents('.subnote').attr('draggable', true)
 		return false
 
 	# autosave

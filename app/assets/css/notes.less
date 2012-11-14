@@ -1,3 +1,45 @@
+#new-note {
+	textarea[name=message] {
+		font-family:ratio, "Helvetica Neue", Helvetica, sans-serif;
+		padding:0;
+		border:0;
+		resize:none;
+		font-size:1.6em;
+		.box-shadow(none);
+		outline:none;
+		-moz-appearance:none;
+		-webkit-appearance:none;
+		&:focus {
+			outline:none;
+			-moz-appearance:none;
+			-webkit-appearance:none;
+			.box-shadow(none);
+		}
+	}
+}
+
+#inbox {
+  box-sizing:border-box;
+  //background:#fff url('/img/furley_bg.png');
+  .border-radius(5px 0px 0px 5px);
+	border-left:1px solid rgba(0, 0, 0, 0.1);
+	border-bottom:1px solid rgba(0, 0, 0, 0.1);
+  min-width:@inbox-min-width;
+  height:100%;
+	display:table-cell;
+	z-index:10;
+	vertical-align:top;
+	position:relative;
+	overflow:hidden;
+	.box-shadow(-1px 1px 3px rgba(100, 100, 100, 0.1));
+	#stage {
+		background-color:#fff;
+		height:100%;
+		box-sizing:border-box;
+	}
+	
+}
+
 
 // Notes
 ul.notes_board {

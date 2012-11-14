@@ -1,0 +1,110 @@
+span.label.green { background-color:@green; }
+span.label.blue { background-color:@blue; }
+span.label.yellow { background-color:@yellow; }
+span.label.orange { background-color:@orange; }
+span.label.red { background-color:@red; }
+
+span.label.green-light { background-color:@greenLight; }
+span.label.orange-light { background-color:@orangeLight; }
+span.label.blue-light { background-color:@blueLight; }
+span.label.yellow-light { background-color:@yellowLight; }
+span.label.red-light { background-color:@redLight; }
+
+.unknown-group-link {
+	color:#999;
+	border-bottom:1px dashed #999;
+	&:hover {
+		text-decoration:none;
+		color:#777;
+	}
+}
+
+.help-block {
+	font-size:0.9em;
+	color:#999;
+	margin-top:-5px;
+}
+
+.hash-tag {
+	color:#999;
+	&:hover {
+		color:#777;
+		text-decoration:none;
+	}
+}
+
+i.icon-tweet {
+	background:url('/img/glyphicons_392_twitter.png') no-repeat;
+}
+
+
+.number-porn-circle {
+	font-family:"bebas-neue", "Helvetica Neue", Helvetica, sans-serif;
+	letter-spacing:.02em;
+	box-sizing:border-box;
+	color:#fff;
+	height:33px;
+	width:33px;
+	display:block;
+	.border-radius(33px);
+	background:@darkStickyGreen;
+	border:3px solid #eee;
+	position:absolute;
+	text-align: center;
+	vertical-align: middle;
+	line-height:1.75em;
+	font-size:1.20em;
+	right:-2px;
+	top:0px;
+	text-decoration: none;
+	.box-shadow(0 0px 3px rgba(125, 125, 125, 0.3);
+}
+
+.number-porn {
+	font-family:"bebas-neue", "Helvetica Neue", Helvetica, sans-serif;
+	letter-spacing:.02em;
+	box-sizing:border-box;
+	color:#fff;
+	display:block;
+	position:absolute;
+	text-align: center;
+	vertical-align: middle;
+	right:-3px;
+	top:-10px;
+	text-decoration: none;
+	width: 0; 
+	height:40px;
+	border-left: 11px solid @redLight; 
+	border-right: 11px solid @redLight; 
+	border-bottom: 5px solid transparent; 
+	-webkit-backface-visibility:hidden;
+	&:hover {
+		color:#fff;
+		text-decoration: none;
+	}
+	span {
+		display:block;
+		position:absolute;
+		left:-13px;
+		top:3px;
+		line-height:1.5em;
+		font-size:1.20em;	
+		width:25px;
+	}
+}
+
+.drag-handle-small {
+	background:url('/img/drag_handle.png') no-repeat;
+	width:14px;
+	height:14px;
+	cursor:grab;
+	cursor:-moz-grab;
+	cursor:-webkit-grab;
+}
+
+.dragging {
+	.rotate(-2deg);
+	border:1px solid rgba(0, 0, 0, 0.15);
+	position:absolute;
+	z-index:19999
+}

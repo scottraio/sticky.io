@@ -13,24 +13,6 @@ class App.Main extends Backbone.View
 		"submit .search form" 				: "search"
 		
 	initialize: ->
-		
-
-		$(window).scroll (e) ->
-			# We check if we're at the bottom of the scrollcontainer
-			#if ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight())
-			if $(this).scrollTop() > 50
-				$('#new-sticky-header').css('top', '-45px')
-			if $(this).scrollTop() > 30
-				$('#expanded-view .expanded-view-anchor').css('position', 'fixed')
-				$('#expanded-view .expanded-view-anchor').css('top', '55px')
-				#$('#expanded-view .expanded-view-anchor').css('height', $('body').height() - 65)
-				$('#expanded-view .expanded-view-anchor').css('width', $('#expanded-view').width())
-			if $(this).scrollTop() < 50
-				$('#new-sticky-header').css('top', '0')
-				$('#expanded-view .expanded-view-anchor').removeAttr('style')
-
-						
-
 		#socket.on 'disconnect', () ->
 		#	console.log 'disconnected'
 
@@ -54,12 +36,6 @@ class App.Main extends Backbone.View
 		setTimeout((->						
 			$('ul.sidebar-nav').addClass('focus')
 		), 300)
-
-		# show help arrow for creating notes in-app
-		if document.referrer && document.referrer.match(/welcome/).length > 0
-			setTimeout(() ->
-				$('#new-sticky-header').after $('<div class="arrow_box">Enter notes here</div>')
-			, 1000)
 		
 		#
 		# date picker stuff
@@ -68,7 +44,7 @@ class App.Main extends Backbone.View
 
 		#
 		# track the request
-		mixpanel.people.identify current_user._id
+		#mixpanel.people.identify current_user._id
 
 		#
 		# setup date controls
@@ -150,5 +126,4 @@ class App.Main extends Backbone.View
 	link_to_push: (e) ->
 		push_url $(e.currentTarget).attr("href")
 		return false
-
-
+			

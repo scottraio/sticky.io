@@ -28,16 +28,18 @@
 		</div>
 	</div>
 
-	<ul class="timeline">
-		{{#notes}}
-			{{>substicky}}
-		{{/notes}}
-		{{^has_subnotes}}
-			<li class="sticky card subnote empty">
-				Drag notes from the left here. 
-			</li>
-		{{/has_subnotes}}
-	</ul>
+	<div class="timeline-wrapper">
+		<ul class="timeline">
+			{{#notes}}
+				{{>substicky}}
+			{{/notes}}
+			{{^has_subnotes}}
+				<li class="sticky card subnote empty">
+					Drag notes from the left here. 
+				</li>
+			{{/has_subnotes}}
+		</ul>
+	</div>
 
 </script>
 
@@ -80,9 +82,11 @@
 </script>
 
 <script id="substicky" class="partial" type="text/html">
-	<li class="sticky card subnote" data-id="{{_id}}" draggable="true">
-		<span class="timestamp">{{stacked_at_in_date}}</span>
-		{{{note_message}}}
+	<li class="sticky card subnote" data-id="{{_id}}">
+		<span class="timestamp pull-right">{{stacked_at_in_date}}</span>
+		<div class="message" contenteditable="true">
+			{{{note_message}}}
+		</div>
 	</li>
 </script>
 

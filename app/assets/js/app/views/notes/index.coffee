@@ -9,17 +9,17 @@ class App.Views.Notes.Index extends Backbone.View
 		'click .task-completed'					        : 'mark_completed'
 	
 	initialize: ->
-		@params		= @options.params
-		@notes 		= new App.Collections.Notes()
+		@params						= @options.params
+		@notes_collection = new App.Collections.Notes()
 		# set the url to the search query, if there is a search query
 		if window.location.search
-			@notes.url 	= window.location.pathname + ".json" + window.location.search
+			@notes_collection.url 	= window.location.pathname + ".json" + window.location.search
 		else
 			$("ul.sidebar-nav li").removeClass('selected')
 
-	render: () ->
+	render: (append) ->
 		self = @
-		@notes.fetch
+		@notes_collection.fetch
 			success: (col, notes) ->
 				self.notes = notes
 
@@ -28,7 +28,7 @@ class App.Views.Notes.Index extends Backbone.View
 
 				#
 				# Load the view accordingly
-				if self.params && self.params.page
+				if append
 					$(self.el).append(self.ich_notes())
 				else
 					$(self.el).html(self.ich_notes())
@@ -148,7 +148,7 @@ class App.Views.Notes.Index extends Backbone.View
 		window.dnd.droppable $('ul.notes_board li')
 	
 		# make the inbox scroll to infinity
-		@infinite_scroll()
+		@bind_scroll()
 			
 		# resolve any images
 		@auto_image_resolution(@notes)
@@ -181,11 +181,43 @@ class App.Views.Notes.Index extends Backbone.View
 			''
 
 
-	infinite_scroll: () ->
+	bind_scroll: () ->
 		self = @
+
 		$(window).scroll () ->
 			# We check if we're at the bottom of the scrollcontainer
-			if (self.notes.length > 0 and self.notes.length <= 25) && (document.body.scrollHeight - $(this).scrollTop() == $(this).outerHeight())
+			if (self.notes.length > 0 and self.notes.length <= 25) && (document.body.scrollHeight - $(this).scrollTop() - 100 <= $(this).outerHeight())
 				# If we're at the bottom, show the overlay and retrieve the next page
+				window.end_of_page = true
+
+			# We check if we're at the bottom of the scrollcontainer
+			#if ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight())
+			if $(this).scrollTop() > 50
+				window.at_header = true
+
+			if $(this).scrollTop() < 50
+				window.reset = true
+
+		setInterval(() ->
+			if window.end_of_page
+				window.end_of_page = false
 				window.current_page += 1
-				navigate '/notes' + add_or_replace_query_var(document.location.search, 'page', window.current_page)
+
+				self.notes_collection.url = '/notes.json' + add_or_replace_query_var(document.location.search, 'page', window.current_page)
+				self.render(true)
+
+			if window.at_header
+				window.at_header = false
+				$('#new-sticky-header').css('top', '-45px')
+
+				$('#expanded-view .expanded-view-anchor').css('position', 'fixed')
+				$('#expanded-view .expanded-view-anchor').css('top', '55px')
+				$('#expanded-view .timeline-wrapper').css('height', $('body').height() - $('#expanded-wrapper').outerHeight() - $('#expanded-actions').outerHeight() - 210)
+				$('#expanded-view .expanded-view-anchor').css('width', $('#expanded-view').width())
+				
+			if window.reset
+				window.reset = false
+				$('#new-sticky-header').css('top', '0')
+				$('#expanded-view .expanded-view-anchor').removeAttr('style')
+		, 100)
+

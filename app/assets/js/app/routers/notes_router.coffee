@@ -26,3 +26,4 @@ class App.Routers.NotesRouter extends Backbone.Router
 	new: () ->
 		note = new App.Views.Notes.New(el: $('#new-note'))
 		reset_events(note)
+		note.render()
