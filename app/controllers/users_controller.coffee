@@ -62,6 +62,14 @@ exports.update = (req, res) ->
 					done(null, note)
 
 #
+# Confirm Phone Number
+# GET /users/:id/confirm_phone
+exports.confirm_phone_number = (req, res) ->
+	render.json req, res, (done) ->
+		req.user.confirmPhoneNumber(req.body.phone_number)
+		done(null, {ok: true})
+
+#
 # Re-register the XMPP Bot
 # GET /welcome
 exports.welcome = (req, res) ->

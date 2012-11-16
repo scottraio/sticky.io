@@ -7,6 +7,8 @@ class App.Views.Notes.Index extends Backbone.View
 		'click .dropdown-menu .color-choice'  	: 'update_color'
 		'click ul.notes_board li'								: 'link_to_note'
 		'click .task-completed'					        : 'mark_completed'
+		'mouseover .drag-handle'								: 'make_draggable'
+		'mouseout .drag-handle'									: 'make_undraggable'
 	
 	initialize: ->
 		@params						= @options.params
@@ -179,6 +181,14 @@ class App.Views.Notes.Index extends Backbone.View
 			$("li[data-name=#{notebook['.']}]").attr('data-color') 
 		catch error
 			''
+
+	make_draggable: (e) ->
+		$(e.currentTarget).parents('li').attr('draggable', true)
+		return false
+
+	make_undraggable: (e) ->
+		$(e.currentTarget).parents('li').attr('draggable', false)
+		return false
 
 
 	bind_scroll: () ->

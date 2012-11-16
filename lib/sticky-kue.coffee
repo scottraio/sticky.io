@@ -1,6 +1,8 @@
 kue 	= require 'kue'
 redis = require 'redis'
 
+#
+# Connection settings
 kue.redis.createClient = () -> redis.createClient(settings.redis.port, settings.redis.server)
 jobs = kue.createQueue()
 
@@ -23,6 +25,12 @@ exports.listen = () ->
 						return false if err
 						done()
 
+#
+# Methods
 exports.registerXMPPBot = (email) ->
 	payload = {email: email}
 	jobs.create('users:register', payload).priority('high').save()
+
+exports.confirmPhoneNumber = (number) ->
+	payload = {phone_number: number}
+	jobs.create('users:confirm:phone_number', payload).priority('high').save()

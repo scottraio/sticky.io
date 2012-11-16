@@ -42,6 +42,9 @@ UserSchema.methods.validPassword = (pass) ->
 UserSchema.methods.registerXMPPBot = () ->
 	stickymq.registerXMPPBot(@email)
 
+UserSchema.methods.confirmPhoneNumber = (number) ->
+	stickymq.confirmPhoneNumber(number)
+
 UserSchema.methods.sendWelcomeEmail = () ->
 	self = @
 	trebuchet.fling

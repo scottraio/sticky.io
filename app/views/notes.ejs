@@ -50,7 +50,7 @@
 <script id="notes_board" type="text/html">
 	<ul class="notes_board">
 		{{#notes}}
-			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}}" data-id="{{_id}}" {{#draggable}}draggable="true"{{/draggable}}>
+			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}}" data-id="{{_id}}">
 				<div class="sticky-actions-wrapper">
 					{{>sticky_actions}}
 				</div>
@@ -97,7 +97,7 @@
 <script id="sticky_actions" class="partial" type="text/html">	
 	<div class="sticky-actions">
 		{{#draggable}}
-		<img src="/img/drag_handle.png" />
+			<div class="drag-handle"></div>
 		{{/draggable}}
 		{{#has_subnotes}}
 			<a class="number-porn"><span>{{subnote_count}}</span></a>
