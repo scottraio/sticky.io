@@ -33,4 +33,4 @@ exports.registerXMPPBot = (email) ->
 
 exports.confirmPhoneNumber = (number) ->
 	payload = {phone_number: number}
-	jobs.create('users:confirm:phone_number', payload).priority('high').save()
+	jobs.create('users:confirm:phone_number', payload).save()

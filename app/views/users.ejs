@@ -11,7 +11,11 @@
 		  <div class="control-group">
 		    <label class="control-label" for="input_phone_number">Phone Number</label>
 		    <div class="controls">
-		      <input type="tel"  name="phone_number" id="input_phone_number" placeholder="Enter your phone number" value="<%= current_user.phone_number %>">
+		      <% if (current_user.phone_number) { %>
+		      	<a href="/confirm_phone_number" class="push btn">Change your phone number</a>
+		      <% } else { %>
+		      	<a href="/confirm_phone_number" class="push btn">Add your phone number</a>
+		      <% } %>
 		    </div>	
 		  </div>
 
@@ -36,6 +40,31 @@
 	</form>
 </div>
 
+<!-- Confirm Phone Number -->
+<div id="confirm_phone_number" class="modal hide fade">
+	<div class="modal-header">
+		<a href="javascript:$('#confirm_phone_number').modal('hide')" class="close">&times;</a>
+		<h3>Setup your phone number</h3>
+	</div>
+	<div class="modal-body">
+		<form method="post" class="form-horizontal">
+			<div class="control-group">
+	    	<label class="control-label" for="phone_number">Phone Number</label>
+				<div class="controls">
+					<input type="text" name="phone_number" required="true"  placeholder="e.g. (213) 212-7721" />
+					<button type="submit" class="btn">Confirm</button>
+				</div>
+			</div>
+			<div id="confirm-code" class="control-group hide">
+	    	<label class="control-label" for="phone_number">Confirmation Code</label>
+				<div class="controls">
+					<input type="text" name="phone_number_confirmation" class="input-mini" />
+					<button type="submit" class="btn">Authorize</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
 
 <!-- Users Profile -->
 <script id="users_profile" type="text/html">	
@@ -58,4 +87,6 @@
 				
 	</div>
 </script>
+
+
 
