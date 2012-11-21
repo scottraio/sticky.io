@@ -12,5 +12,5 @@ class App.Collections.Notes extends Backbone.Collection
 				for domain in note._domains
 					if domain.url
 						hostname 			= domain.url.toLocation().hostname
-						note.message 	= note.message.replace domain.url, "<a href='#{domain.url}' target='_blank'><img src='http://www.google.com/s2/u/0/favicons?domain=#{hostname}' /> #{domain.title}</a>"
+						note.message 	= note.message.replace domain.url, "<a href='#{domain.url}' target='_blank'><img src='//www.google.com/s2/u/0/favicons?domain=#{hostname}' /> #{domain.title}</a>"
 
