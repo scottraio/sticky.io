@@ -10,18 +10,7 @@ class App.Views.Notebooks.Edit extends Backbone.View
 	initialize: () ->
 		self = @
 		reset_events @
-
-		$('form', @el).isHappy
-			fields: {
-				# reference the field you're talking about, probably by `id`
-				# but you could certainly do $('[name=name]') as well.
-				'#input_notebook_name' : {
-					required: true
-					message: 'Might we inquire your name'
-				}
-			}	
-  
-
+ 
 		@notebook = new App.Models.Notebook(id: @options.id)
 	
 	render: () ->

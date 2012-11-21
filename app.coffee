@@ -60,7 +60,7 @@ fs.readFile 'VERSION', 'utf8', (err, version) ->
 
 		# connect-assets: rails 3.1 asset pipeline for nodejs
 		app.use assets 
-			servePath: 'http://d29it9lox1mxd7.cloudfront.net'
+			servePath: '//d29it9lox1mxd7.cloudfront.net'
 			buildDir: 'public'
 			src: 'app/assets'
 			buildFilenamer: (filename, code) -> parts = filename.split('.'); "#{parts[0]}-#{app.version}.#{parts[1]}"

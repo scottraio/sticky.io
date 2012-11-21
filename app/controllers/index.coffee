@@ -75,6 +75,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 app.get('/users/:id.:format?', ensureAuthenticated, UsersController.show)
 app.put('/users/:id.:format?', ensureAuthenticated, UsersController.update)
 app.post('/users/:id/confirm_phone_number.:format?', ensureAuthenticated, UsersController.confirm_phone_number)
+app.post('/users/:id/auth_phone_number.:format?', ensureAuthenticated, UsersController.auth_phone_number)
 
 #
 # Notes

@@ -15,5 +15,6 @@ class App.Routers.UsersRouter extends Backbone.Router
 
 	confirm_phone_number: () ->
 		number = new App.Views.Users.ConfirmPhoneNumber(el: $('#confirm_phone_number'))
+		reset_events(number)
 		number.render()
 

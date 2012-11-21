@@ -56,7 +56,7 @@ class App.Views.Notes.Show extends Backbone.View
 				$('.subnote').autolink()
 				$('body').attr('data-current-note-open', parent._id) 
 				#set the timeline's height
-				$('#expanded-view .timeline-wrapper').css('height', $('body').height() - $('#expanded-wrapper').outerHeight() - $('#expanded-actions').outerHeight() - 210)
+				$('#expanded-view .timeline-wrapper').css('height', $('body').outerHeight() - $('.expanded-wrapper').outerHeight() - $('.expanded-actions').outerHeight() - 60)
 
 				# Drag and Drop
 				window.dnd.droppable $('#expanded-view')
@@ -75,7 +75,7 @@ class App.Views.Notes.Show extends Backbone.View
 		return false
 
 	close: (e) ->
-		show_profile()
+		$('.expanded-view-anchor', @el).html('')
 		$('body').attr('data-current-note-open', null)
 		return false
 

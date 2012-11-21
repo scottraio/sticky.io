@@ -11,8 +11,8 @@
 		  <div class="control-group">
 		    <label class="control-label" for="input_phone_number">Phone Number</label>
 		    <div class="controls">
-		      <% if (current_user.phone_number) { %>
-		      	<a href="/confirm_phone_number" class="push btn">Change your phone number</a>
+		      <% if (current_user.phone_number && current_user.phone_number.length > 0) { %>
+		      	<%= current_user.phone_number %> <a href="/confirm_phone_number" class="push">change</a>
 		      <% } else { %>
 		      	<a href="/confirm_phone_number" class="push btn">Add your phone number</a>
 		      <% } %>
@@ -51,15 +51,16 @@
 			<div class="control-group">
 	    	<label class="control-label" for="phone_number">Phone Number</label>
 				<div class="controls">
-					<input type="text" name="phone_number" required="true"  placeholder="e.g. (213) 212-7721" />
+					<input type="text" name="phone_number" required="true" pattern=".{10,}"  placeholder="e.g. +14155557218" />
 					<button type="submit" class="btn">Confirm</button>
 				</div>
 			</div>
 			<div id="confirm-code" class="control-group hide">
 	    	<label class="control-label" for="phone_number">Confirmation Code</label>
 				<div class="controls">
-					<input type="text" name="phone_number_confirmation" class="input-mini" />
+					<input type="text" name="phone_number_confirm_token" class="input-mini" />
 					<button type="submit" class="btn">Authorize</button>
+					<span class="help-block">Check your phone for an auth code</span>
 				</div>
 			</div>
 		</form>

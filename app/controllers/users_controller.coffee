@@ -1,5 +1,11 @@
-render = require 'sticky-render'
+render 	= require 'sticky-render'
 
+makeid = () ->
+	text = "";
+	possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	for num in [1..5]
+		text += possible.charAt(Math.floor(Math.random() * possible.length))
+	return text
 
 exports.root = (req, res) ->
 	if req.isAuthenticated()
@@ -8,7 +14,7 @@ exports.root = (req, res) ->
 		res.render('public')
 
 exports.index = (req, res) ->
-	res.render('signup', {title: 'Sign-up to pine.io'})
+	res.render('signup', {title: 'Sign-up to Sticky'})
 
 exports.show = (req, res) ->
 	render.json req, res, (done) ->
@@ -42,32 +48,54 @@ exports.create = (req, res) ->
 # PUT /users/:id[.json]
 exports.update = (req, res) ->
 	render.json req, res, (done) ->
-		app.models.User.findOne {_id:req.user._id}, (err, note) ->
-
-			if req.body.phone_number
-				note.set 'phone_number', req.body.phone_number
+		app.models.User.findOne {_id:req.user._id}, (err, user) ->
 
 			if req.body.password
-				note.set 'password', req.body.password
+				user.set 'password', req.body.password
 
 			if req.body.theme
-				note.set 'theme', req.body.theme
+				user.set 'theme', req.body.theme
 
-			note.save (err) -> 
+			user.save (err) -> 
 				if err
 					console.log(err)
 					req.flash('error', 'Note could not be saved.')
 					done(err)
 				else
-					done(null, note)
+					done(null, user)
 
 #
 # Confirm Phone Number
 # GET /users/:id/confirm_phone
 exports.confirm_phone_number = (req, res) ->
 	render.json req, res, (done) ->
-		req.user.confirmPhoneNumber(req.body.phone_number)
-		done(null, {ok: true})
+		app.models.User.findOne {_id:req.user._id}, (err, user) ->
+			user.set 'phone_number_confirm_token', makeid()
+			user.save (err) -> 
+				if err
+					console.log(err)
+					done(err)
+				else
+					req.user.confirmPhoneNumber(req.body.phone_number, user.phone_number_confirm_token)
+					done(null, user)
+
+#
+# Confirm Phone Number
+# GET /users/:id/confirm_phone
+exports.auth_phone_number = (req, res) ->
+	render.json req, res, (done) ->
+		app.models.User.findOne {_id:req.user._id}, (err, user) ->
+			
+			if user.phone_number_confirm_token is req.body.phone_number_confirm_token and req.body.phone_number isnt null
+				user.set 'phone_number', user.valid_phone_number(req.body.phone_number)
+				user.set 'phone_number_confirm_at', new Date()
+
+			user.save (err) -> 
+				if err
+					console.log(err)
+					done(err)
+				else
+					done(null, user)
 
 #
 # Re-register the XMPP Bot

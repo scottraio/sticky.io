@@ -20,13 +20,15 @@ encodePassword = (pass) ->
 #
 # Mongoose Schema
 UserSchema = new Schema
-	name  	 				: { type: String, required: true, trim: true }
-	email	 					: { type: String, required: true, trim: true, unique: true, lowercase: true }
-	phone_number	 	: { type: String, trim: true, default: null }
-	password 				: { type: String, required: true, set: encodePassword }
-	googleId 				: { type: String }
-	last_sign_in_at : { type: Date, default: null }
-	theme 					: { type: String, default: 'bright' }
+	name  	 										: { type: String, required: true, trim: true }
+	email	 											: { type: String, required: true, trim: true, unique: true, lowercase: true }
+	phone_number	 							: { type: String, trim: true, default: null }
+	phone_number_confirm_token	: { type: String, trim: true, default: null }
+	phone_number_confirm_at			: { type: Date, default: null }
+	password 										: { type: String, required: true, set: encodePassword }
+	googleId 										: { type: String }
+	last_sign_in_at 						: { type: Date, default: null }
+	theme 											: { type: String, default: 'bright' }
 
 UserSchema.path('email').validate 		Base.uniqueFieldInsensitive('User', 'email'), 'unique'
 UserSchema.path('email').validate 		Base.emailFormat, 'format'
@@ -42,8 +44,8 @@ UserSchema.methods.validPassword = (pass) ->
 UserSchema.methods.registerXMPPBot = () ->
 	stickymq.registerXMPPBot(@email)
 
-UserSchema.methods.confirmPhoneNumber = (number) ->
-	stickymq.confirmPhoneNumber(number)
+UserSchema.methods.confirmPhoneNumber = (number, token) ->
+	stickymq.confirmPhoneNumber(number, token)
 
 UserSchema.methods.sendWelcomeEmail = () ->
 	self = @
@@ -58,6 +60,13 @@ UserSchema.methods.sendWelcomeEmail = () ->
 			foo: 'Bar'
 	, (err, response) ->
 		# win
+
+UserSchema.methods.valid_phone_number = (phone_number) ->
+	clean_number = phone_number.match(/\d+\.?\d*/g).join('')
+	if clean_number.substring(0, 1) is '1'
+		return "+" + clean_number
+	else
+		return "+1" + clean_number
 
 UserSchema.methods.setupDefaultNotebooks = () ->
 		self = @

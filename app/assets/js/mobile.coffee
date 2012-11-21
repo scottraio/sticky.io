@@ -159,8 +159,3 @@ $(document).ready () ->
 	load_notes()
 
 	st.show_section(new_note, {animation: 'upfrombottom'})
-
-
-	
-	
-		

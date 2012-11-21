@@ -67,10 +67,11 @@
 			margin:2px 0 0 170px;
 			.btn {
 				.border-radius(0px);
-				border:1px solid #eee;
 			}
-			.single {
-				.border-radius(4px);
+			.btn-primary {
+				&:hover {
+					border-color:transparent;
+				}
 			}
 			ul.tags {
 				max-height:400px;
@@ -90,7 +91,6 @@
 					width:300px;
 					line-height:1.6em;
 					background-color:#fff;
-					border:1px solid #eee;
 					.border-radius(0px);
 					padding:13px 8px;
 					box-sizing:border-box;

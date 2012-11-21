@@ -112,8 +112,6 @@ class App.Views.Notes.DnD extends Backbone.View
 		li.on 'dragend', (e) ->
 			$(this).removeClass('dragging')
 
-
-
 	#
 	# Unstack
 	unstack: (body) ->
@@ -147,18 +145,17 @@ class App.Views.Notes.DnD extends Backbone.View
 		child_id 		= $(@child).attr('data-id')
 		parent_id 	= $(parent).attr('data-id')
 
-		console.log parent
-
-		# Use Socket.IO to emit unstack event
-		socket.emit 'notes:stack', {child_id: child_id, parent_id: parent_id}
-		
-		# cleanup
-		if @current_open_note_id() is parent_id # if we dragging onto a note thats open
-			@merge_onto_open_note(parent)
-		else
-			@cleanup_fresh_stack(parent)
-		
-		@make_fresh_stack(parent)
+		unless child_id is parent_id # do not allow stacking on itself
+			# Use Socket.IO to emit unstack event
+			socket.emit 'notes:stack', {child_id: child_id, parent_id: parent_id}
+			
+			# cleanup
+			if @current_open_note_id() is parent_id # if we dragging onto a note thats open
+				@merge_onto_open_note(parent)
+			else
+				@cleanup_fresh_stack(parent)
+			
+			@make_fresh_stack(parent)
 
 	#
 	# Adjust the number of subnotes in a specific stack
@@ -174,13 +171,9 @@ class App.Views.Notes.DnD extends Backbone.View
 			subnote_count : () -> if count <= 0 then '' else count 
 			_id						: parent_id
 
-	
-
-
 	#
 	# UI Cleanup duty
 	make_desirable: (e, parent) ->
-		console.log parent
 		$(parent).addClass('stack')
 		e.originalEvent.dataTransfer.dropEffect = 'copy'
 

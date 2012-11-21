@@ -6,18 +6,25 @@ class App.Views.Users.ConfirmPhoneNumber extends Backbone.View
 		"submit form" : "submit"
 
 	render: () ->
-		$(@el).modal()		
-		$(@el).show()
+		$('#settings').modal('hide')		
 
 		$(@el).on 'shown', () ->
 			$('input', @el).focus()
 
+		$(@el).modal('show')
 
 	submit: (e) ->		
-		number = $('input[name=phone_number]', @el).val()
-		$.post "/users/#{current_user._id}/confirm_phone_number.json", {phone_number: number}, (data) ->
-			$('#confirm-code').show()
-			$('#confirm-code input').focus()
+		self 					= @
+		number 				= $('input[name=phone_number]', @el).val()
+		confirm_code 	= $('input[name=phone_number_confirm_token]', @el).val()
+
+		if confirm_code
+			$.post "/users/#{current_user._id}/auth_phone_number.json", {phone_number_confirm_token: confirm_code, phone_number: number}, (data) ->
+				$(self.el).modal('hide')
+		else
+			$.post "/users/#{current_user._id}/confirm_phone_number.json", {phone_number: number}, (data) ->
+				$('#confirm-code').show()
+				$('#confirm-code input').focus()
 
 
 		return false

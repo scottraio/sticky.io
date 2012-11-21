@@ -1,3 +1,6 @@
+@import 'bootstrap/variables';
+@import 'bootstrap/mixins';
+
 // #4b3527
 // #825c4d
 
@@ -6,8 +9,10 @@
 @stickyGreen: #9dcd57;
 @darkStickyGreen: #7ea546;
 
-@import 'mobile/sidetap.less';
-@import 'mobile/layout.less';
+@import 'mobile/sidetap';
+@import 'mobile/layout';
+@import 'ui';
+
 
 a {
 	color:#08C;
@@ -79,15 +84,7 @@ pre {
 		height:100%;
 		overflow:auto;
 		padding:40px 0 0 0;
-		//background-color:rgb(245, 245, 245);
-		background: rgb(243,243,243); /* Old browsers */
-		background: -moz-linear-gradient(left,  rgba(243,243,243,1) 0%, rgba(250,250,250,1) 50%, rgba(204,204,204,1) 51%, rgba(250,250,250,1) 51%, rgba(243,243,243,1) 100%); /* FF3.6+ */
-		background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(243,243,243,1)), color-stop(50%,rgba(250,250,250,1)), color-stop(51%,rgba(204,204,204,1)), color-stop(51%,rgba(250,250,250,1)), color-stop(100%,rgba(243,243,243,1))); /* Chrome,Safari4+ */
-		background: -webkit-linear-gradient(left,  rgba(243,243,243,1) 0%,rgba(250,250,250,1) 50%,rgba(204,204,204,1) 51%,rgba(250,250,250,1) 51%,rgba(243,243,243,1) 100%); /* Chrome10+,Safari5.1+ */
-		background: -o-linear-gradient(left,  rgba(243,243,243,1) 0%,rgba(250,250,250,1) 50%,rgba(204,204,204,1) 51%,rgba(250,250,250,1) 51%,rgba(243,243,243,1) 100%); /* Opera 11.10+ */
-		background: -ms-linear-gradient(left,  rgba(243,243,243,1) 0%,rgba(250,250,250,1) 50%,rgba(204,204,204,1) 51%,rgba(250,250,250,1) 51%,rgba(243,243,243,1) 100%); /* IE10+ */
-		background: linear-gradient(to right,  rgba(243,243,243,1) 0%,rgba(250,250,250,1) 50%,rgba(204,204,204,1) 51%,rgba(250,250,250,1) 51%,rgba(243,243,243,1) 100%); /* W3C */
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#f3f3f3',GradientType=1 ); /* IE6-9 */
+		background-color:#f0f0f0;
 	}
 	.expanded-actions {
 		display:none;
@@ -309,28 +306,10 @@ ul.notes_board {
 	//li.yellow { border-left:2px solid @yellow; }
 	//li.orange { border-left:2px solid @orange; }
 	//li.red { border-left:2px solid @red; }
+}
 
-	.number-porn {
-		font-family:"bebas-neue", "Helvetica Neue", Helvetica, sans-serif;
-		letter-spacing:.02em;
-		box-sizing:border-box;
-		color:#fff;
-		height:33px;
-		width:33px;
-		display:block;
-		border-radius:33px;
-		background:@darkStickyGreen;
-		border:3px solid #eee;
-		position:absolute;
-		text-align: center;
-		vertical-align: middle;
-		line-height:1.6em;
-		font-size:1.2em;
-		right:-2px;
-		top:8px;
-		text-decoration: none;
-		box-shadow:0 0px 3px rgba(125, 125, 125, 0.3);
-	}
+.drag-handle {
+	display:none;
 }
 
 ul.notes_board:first-child {

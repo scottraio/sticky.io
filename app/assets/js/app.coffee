@@ -13,9 +13,7 @@ class App.Main extends Backbone.View
 		"submit .search form" 				: "search"
 		
 	initialize: ->
-		#socket.on 'disconnect', () ->
-		#	console.log 'disconnected'
-
+		$('textarea', '#new-note').autosize()
 		#
 		# dropdown any dropdowns
 		$('.dropdown-toggle').dropdown()
@@ -77,6 +75,8 @@ class App.Main extends Backbone.View
 			#
 			# Render the view
 			$('ul.notes_board:first-child').before view.ich_notes()
+			# remove the empty notes
+			$('ul.notes_board li.empty').hide() if $('ul.notes_board li.empty').length > 0
 			# auto-link everything
 			$('.message').autolink()
 			# DnD

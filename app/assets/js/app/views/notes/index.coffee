@@ -13,16 +13,26 @@ class App.Views.Notes.Index extends Backbone.View
 	initialize: ->
 		@params						= @options.params
 		@notes_collection = new App.Collections.Notes()
+
 		# set the url to the search query, if there is a search query
 		if window.location.search
 			@notes_collection.url 	= window.location.pathname + ".json" + window.location.search
 		else
 			$("ul.sidebar-nav li").removeClass('selected')
 
+		# make the inbox scroll to infinity
+		@scroll = new App.Views.Notes.Scroll()
+		@scroll.bind(@)
+
 	render: (append) ->
-		self = @
+		self 					= @
+		@scroll.lock 	= true # lock the scroll event until we're finished loading results
+
 		@notes_collection.fetch
 			success: (col, notes) ->
+				return if notes.length <= 0 && self.current_page > 0 
+				# if we're paginating and there are no more notes, lets assume we're at the 
+				# end of the list
 				self.notes = notes
 
 				# Before hook
@@ -148,10 +158,9 @@ class App.Views.Notes.Index extends Backbone.View
 		# drag and drop
 		window.dnd.draggable $('ul.notes_board li:not(.stacked)')
 		window.dnd.droppable $('ul.notes_board li')
-	
-		# make the inbox scroll to infinity
-		@bind_scroll()
 			
+		@scroll.lock = false
+
 		# resolve any images
 		@auto_image_resolution(@notes)
 
@@ -190,44 +199,7 @@ class App.Views.Notes.Index extends Backbone.View
 		$(e.currentTarget).parents('li').attr('draggable', false)
 		return false
 
-
-	bind_scroll: () ->
-		self = @
-
-		$(window).scroll () ->
-			# We check if we're at the bottom of the scrollcontainer
-			if (self.notes.length > 0 and self.notes.length <= 25) && (document.body.scrollHeight - $(this).scrollTop() - 100 <= $(this).outerHeight())
-				# If we're at the bottom, show the overlay and retrieve the next page
-				window.end_of_page = true
-
-			# We check if we're at the bottom of the scrollcontainer
-			#if ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight())
-			if $(this).scrollTop() > 50
-				window.at_header = true
-
-			if $(this).scrollTop() < 50
-				window.reset = true
-
-		setInterval(() ->
-			if window.end_of_page
-				window.end_of_page = false
-				window.current_page += 1
-
-				self.notes_collection.url = '/notes.json' + add_or_replace_query_var(document.location.search, 'page', window.current_page)
-				self.render(true)
-
-			if window.at_header
-				window.at_header = false
-				$('#new-sticky-header').css('top', '-45px')
-
-				$('#expanded-view .expanded-view-anchor').css('position', 'fixed')
-				$('#expanded-view .expanded-view-anchor').css('top', '55px')
-				$('#expanded-view .timeline-wrapper').css('height', $('body').height() - $('#expanded-wrapper').outerHeight() - $('#expanded-actions').outerHeight() - 210)
-				$('#expanded-view .expanded-view-anchor').css('width', $('#expanded-view').width())
-				
-			if window.reset
-				window.reset = false
-				$('#new-sticky-header').css('top', '0')
-				$('#expanded-view .expanded-view-anchor').removeAttr('style')
-		, 100)
-
+	load_page: (page) ->
+		@current_page = page
+		@notes_collection.url = '/notes.json' + add_or_replace_query_var(document.location.search, 'page', page)
+		@render(true)
