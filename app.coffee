@@ -18,6 +18,7 @@ os					= require 'os'
 fs					= require 'fs'
 http 				= require 'http'
 express			= require 'express'
+validate 		= require 'express-validator' # xss protection
 cons 				= require 'consolidate'
 config			= require 'yaml-config'
 handlbars 	= require 'handlebars'
@@ -75,6 +76,7 @@ fs.readFile 'VERSION', 'utf8', (err, version) ->
 		app.use express.favicon('public/img/favicon.png')
 		app.use express.logger('dev')
 		app.use express.bodyParser()
+		app.use validate # xss protection
 		app.use express.methodOverride()
 		app.use cookieParser
 		app.use express.session({ store: redisStore })

@@ -9,7 +9,8 @@ class App.Views.Notes.Show extends Backbone.View
 		'click .make-underline' 				: 'make_underline'
 		'click .save'										: 'save'
 		'click #close-expanded-view' 		: 'close'
-		'mousedown .timeline .drag-handle-small' : 'make_draggable'
+		'mouseover .drag-handle'				: 'make_draggable'
+		'mouseout .drag-handle'					: 'make_undraggable'
 
 	initialize: ->
 		# set the id to the DOM
@@ -108,6 +109,14 @@ class App.Views.Notes.Show extends Backbone.View
 
 	confirm_delete: (e) ->
 		$('#delete-note').attr('data-id', $(e.currentTarget).attr('data-id')).modal()
+		return false
+
+	make_draggable: (e) ->
+		$(e.currentTarget).parents('li').attr('draggable', true)
+		return false
+
+	make_undraggable: (e) ->
+		$(e.currentTarget).parents('li').attr('draggable', false)
 		return false
 
 	

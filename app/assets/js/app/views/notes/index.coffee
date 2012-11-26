@@ -190,7 +190,6 @@ class App.Views.Notes.Index extends Backbone.View
 			$("li[data-name=#{notebook['.']}]").attr('data-color') 
 		catch error
 			''
-
 	make_draggable: (e) ->
 		$(e.currentTarget).parents('li').attr('draggable', true)
 		return false

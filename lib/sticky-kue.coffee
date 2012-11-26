@@ -1,5 +1,6 @@
-kue 	= require 'kue'
-redis = require 'redis'
+kue 			= require 'kue'
+redis 		= require 'redis'
+sanitize 	= require('validator').sanitize # xss protection
 
 #
 # Connection settings
@@ -11,7 +12,9 @@ exports.listen = () ->
 		# find the user first
 		app.models.User.findOne {_id:job.data.user}, (err, user) ->
 			unless user is undefined or user is null		
-				app.models.Note.create_note user, job.data.message, (err, note) ->
+				message = sanitize(job.data.message).xss()
+
+				app.models.Note.create_note user, message, (err, note) ->
 
 					# if we're saving a message from SMS then we'll associate
 					# the note with the sms_id from Twilio

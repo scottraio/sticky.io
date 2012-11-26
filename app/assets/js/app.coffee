@@ -89,7 +89,7 @@ class App.Main extends Backbone.View
 		note.destroy
 			success: (model, res) ->
 				# clear the html from the expanded view
-				$("#expanded-view").html('')
+				$("#expanded-view .expanded-view-anchor").html('')
 				# remove the sticky from the inbox
 				$("li.sticky[data-id=#{note_id}]").remove()
 				$('#delete-note').modal('hide')
