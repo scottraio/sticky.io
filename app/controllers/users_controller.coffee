@@ -1,3 +1,4 @@
+_ 			= require 'underscore'
 render 	= require 'sticky-render'
 
 makeid = () ->
@@ -96,6 +97,23 @@ exports.auth_phone_number = (req, res) ->
 					done(err)
 				else
 					done(null, user)
+
+
+#
+# Payload
+# GET /payload.json
+exports.payload = (req, res) ->
+	render.json req, res, (done) ->
+		app.models.Tag.update_index {_user:req.user.id}, (tags) ->
+			app.models.Notebook.where('_owner', req.user.id).run (err, notebooks) ->
+				payload = {
+					current_user  : 	_.pick(req.user, 'name', 'email', '_id', 'theme', 'phone_number')
+					tags          :		tags
+					notebooks     : 	notebooks
+				}
+
+				done(err, payload)
+
 
 #
 # Re-register the XMPP Bot

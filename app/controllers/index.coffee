@@ -71,6 +71,10 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 
 
 #
+# Payload - default aux data such as tags, notebooks, and basic user info
+app.get('/payload.:format?', ensureAuthenticated, UsersController.payload)
+
+#
 # Users
 app.get('/users/:id.:format?', ensureAuthenticated, UsersController.show)
 app.put('/users/:id.:format?', ensureAuthenticated, UsersController.update)

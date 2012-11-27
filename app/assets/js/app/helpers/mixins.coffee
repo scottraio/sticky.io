@@ -32,7 +32,7 @@ $.fn.serializeObject = () ->
 $.fn.autolink = () ->
 	return this.each( () ->
 		$(this).html( $(this).html().replace(match.tag, '$1<a data-tag-name="$2" class="hash-tag tag">&#35;$2</a>') )
-		$(this).html( $(this).html().replace(match.group, '$1<a data-tag-name="$2" class="hash-tag tag">@$2</a>') )
+		$(this).html( $(this).html().replace(match.group, '') )
 		
 		if (new RegExp(notebook_names().join('|'))).test($(this).html()) 
 			#$(this).html( $(this).html().replace(match.group, '$1<a href="/notes?notebooks=$2" class="group-link navigate">@$2</a>') )

@@ -22,24 +22,21 @@
 			</div>
 		</div>
 	</div>
-	<div class="expanded-wrapper">
+	<div class="expanded-wrapper {{#has_subnotes}}single-note{{/has_subnotes}}">
 		<div class="expanded-note">
 			<div id="editable-message" contenteditable="true">{{#parent_note}}{{{note_message}}}{{/parent_note}}</div>
 		</div>
 	</div>
 
+	{{#has_subnotes}}
 	<div class="timeline-wrapper">
 		<ul class="timeline">
 			{{#notes}}
 				{{>substicky}}
 			{{/notes}}
-			{{^has_subnotes}}
-				<li class="sticky card subnote empty">
-					Drag notes from the left here. 
-				</li>
-			{{/has_subnotes}}
 		</ul>
 	</div>
+	{{/has_subnotes}}
 
 </script>
 
@@ -50,7 +47,7 @@
 <script id="notes_board" type="text/html">
 	<ul class="notes_board">
 		{{#notes}}
-			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}}" data-id="{{_id}}">
+			<li class="sticky card {{#has_subnotes}}stacked{{/has_subnotes}}" data-id="{{_id}}" {{^has_subnotes}}draggable="true"{{/has_subnotes}}>
 				<div class="sticky-actions-wrapper">
 					{{>sticky_actions}}
 				</div>
@@ -60,10 +57,12 @@
 				</div>
 
 				<div class="meta">
+					<span class="created_at">{{created_at_in_date}}</span>
 					{{#group_labels}}
 						<span class="label {{group_colors}}">{{.}}</span>
 					{{/group_labels}}
-					{{created_at_in_date}}
+					{{#has_subnotes}} - <span class="subnote-count">{{subnote_count}} notes</span>{{/has_subnotes}}
+					&nbsp;
 				</div>
 			</li>
 		{{/notes}}
@@ -96,13 +95,10 @@
 -->
 
 <script id="sticky_actions" class="partial" type="text/html">	
+	<!--
 	<div class="sticky-actions">
-		{{#draggable}}
-			<div class="drag-handle"></div>
-		{{/draggable}}
-		{{#has_subnotes}}
-			<a class="number-porn"><span>{{subnote_count}}</span></a>
-		{{/has_subnotes}}
+		
 	</div>
+	-->
 </script>
 
