@@ -22,13 +22,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="expanded-wrapper {{#has_subnotes}}single-note{{/has_subnotes}}">
+	<div class="expanded-wrapper">
 		<div class="expanded-note">
 			<div id="editable-message" contenteditable="true">{{#parent_note}}{{{note_message}}}{{/parent_note}}</div>
 		</div>
 	</div>
 
-	{{#has_subnotes}}
 	<div class="timeline-wrapper">
 		<ul class="timeline">
 			{{#notes}}
@@ -36,7 +35,6 @@
 			{{/notes}}
 		</ul>
 	</div>
-	{{/has_subnotes}}
 
 </script>
 
@@ -58,11 +56,10 @@
 
 				<div class="meta">
 					<span class="created_at">{{created_at_in_date}}</span>
+					{{#has_subnotes}}<span class="subnote-count">{{subnote_count}} notes</span>{{/has_subnotes}}
 					{{#group_labels}}
 						<span class="label {{group_colors}}">{{.}}</span>
 					{{/group_labels}}
-					{{#has_subnotes}} - <span class="subnote-count">{{subnote_count}} notes</span>{{/has_subnotes}}
-					&nbsp;
 				</div>
 			</li>
 		{{/notes}}

@@ -102,7 +102,7 @@ ul.notes_board {
 			opacity:0.5;
 		}
 		.message {
-			padding:20px 12px;
+			padding:15px 12px 20px 12px;
 			white-space:pre-line;
 			input[type=checkbox] {
 				margin-right:4px;
@@ -120,18 +120,25 @@ ul.notes_board {
 		}
 		.meta {
 			width:100%;
-			padding:5px 8px;
+			padding:5px 12px;
 			font-size:0.8em;
-			color:#666;
+			color:#999;
 			font-family:Helvetica Neue;
 			box-sizing:border-box;
-			background-color:rgba(0, 0, 0, 0.02);
+			//background-color:rgba(0, 0, 0, 0.02);
 			.created_at {
 				//float:right;
+				padding-right:4px;
 			}
 			.subnote-count {
-				padding-right:5px;
+				padding-right:4px;
+				color:#444;
 				font-weight:bold;
+			}
+			.label {
+				background-color:transparent;
+				text-shadow:none;
+				padding-left:0;
 			}
 		}
 	}	
