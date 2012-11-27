@@ -32,6 +32,7 @@ $.fn.serializeObject = () ->
 $.fn.autolink = () ->
 	return this.each( () ->
 		$(this).html( $(this).html().replace(match.tag, '$1<a data-tag-name="$2" class="hash-tag tag">&#35;$2</a>') )
+		#$(this).html( $(this).html().replace(match.group, '$1<a data-tag-name="$2" class="hash-tag tag">@$2</a>') )
 		$(this).html( $(this).html().replace(match.group, '') )
 		
 		if (new RegExp(notebook_names().join('|'))).test($(this).html()) 

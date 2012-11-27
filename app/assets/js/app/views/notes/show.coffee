@@ -56,6 +56,7 @@ class App.Views.Notes.Show extends Backbone.View
 				$('#editable-message').autolink()
 				$('.subnote').autolink()
 				$('body').attr('data-current-note-open', parent._id) 
+
 				#set the timeline's height
 				$('#expanded-view .timeline-wrapper').css('height', $('body').outerHeight() - $('.expanded-wrapper').outerHeight() - $('.expanded-actions').outerHeight() - 60)
 
