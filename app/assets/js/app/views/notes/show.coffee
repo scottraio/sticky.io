@@ -19,7 +19,6 @@ class App.Views.Notes.Show extends Backbone.View
 		# select the note inside the inbox
 		$('#inbox li.sticky').removeClass('selected')
 
-
 		@note 			= new App.Models.Note(id: @options.id)
 		@note.url 	= "/notes/#{@options.id}/expanded.json"
 
@@ -103,6 +102,9 @@ class App.Views.Notes.Show extends Backbone.View
 		# Drag and Drop
 		window.dnd.droppable $('#expanded-view')
 		window.dnd.draggable $('#expanded-view ul.timeline li')
+
+		# setup note creation
+		new_note = new App.Views.Notes.Push(el: $('.add-subnote'), id: parent._id)
 
 	make_bold: (e) ->
 		document.execCommand('bold',false,null)

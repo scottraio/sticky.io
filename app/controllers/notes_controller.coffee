@@ -142,6 +142,31 @@ exports.update = (req, res) ->
 					done(null, note)
 
 #
+# updates an existing note for an user
+exports.push = (req, res) ->
+	render.json req, res, (done) ->
+		note = new app.models.Note()
+		note.set 'message', 		req.body.message
+		note.set '_user', 			req.user._id
+		note.set 'created_at', 	new Date()
+
+		#
+		# parse tags/links/groups into arrays
+		note.parse()
+
+		#
+		# save note
+		note.save (err) ->
+			if err
+				console.log(err)
+				req.flash('error', 'Note could not be saved.')
+				done(err)
+			else
+				Note.stack req.user, {child_id:note._id, parent_id:req.params.id}, (child, parent) ->
+					done(err, note)
+
+
+#
 # Notes Tree - aka "stacks"
 exports.stack = (req, res) ->
 	render.json req, res, (done) ->

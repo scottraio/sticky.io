@@ -102,6 +102,7 @@ app.post('/notes/smtp.:format?', NotesController.smtp)
 #
 # Notes Tree
 app.get('/notes/:id/expanded.:format?', ensureAuthenticated, NotesController.expanded)
+app.post('/notes/:id/push.:format?', ensureAuthenticated, NotesController.push)
 app.get('/notes/:child_id/stack/:parent_id.:format?', ensureAuthenticated, NotesController.stack)
 app.get('/notes/:child_id/unstack/:parent_id.:format?', ensureAuthenticated, NotesController.unstack)
 app.get('/notes/:child_id/restack/:old_id/:parent_id.:format?', ensureAuthenticated, NotesController.restack)

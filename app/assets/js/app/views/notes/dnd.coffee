@@ -14,7 +14,7 @@ class App.Views.Notes.DnD extends Backbone.View
 		socket.on 'notes:subnote:add', (data) ->
 			
 			if self.current_open_note_id() is data._parent
-				$('ul.timeline').append ich.substicky
+				$('.add-subnote').before ich.substicky
 						_id									: () -> data._id
 						note_message 				: () -> data.message && data.message.replace(/(<[^>]+) style=".*?"/g, '$1')
 						stacked_at_in_words	: () -> data.stacked_at && $.timeago(data.stacked_at)
