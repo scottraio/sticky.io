@@ -49,20 +49,9 @@ class App.Views.Notes.Show extends Backbone.View
 					has_subnotes				: () -> true if parent._notes && parent._notes.length > 0
 					stacked_at_in_words	: () -> this.stacked_at && $.timeago(this.stacked_at)
 					stacked_at_in_date 	: () -> format_date(this.stacked_at)
+					is_taskable					: () -> true if this.message && this.message.indexOf('#todo') > 0
 			
-				# set the editable message with the parent note's message
-				#$('#editable-message', self.el).html(parent.message)
-				$('#editable-message').focus()
-				$('#editable-message').autolink()
-				$('.subnote').autolink()
-				$('body').attr('data-current-note-open', parent._id) 
-
-				#set the timeline's height
-				$('#expanded-view .timeline-wrapper').css('height', $('body').outerHeight() - $('.expanded-wrapper').outerHeight() - $('.expanded-actions').outerHeight() - 60)
-
-				# Drag and Drop
-				window.dnd.droppable $('#expanded-view')
-				window.dnd.draggable $('#expanded-view ul.timeline li')
+				self.after_ui_hook(parent, notes)
 
 
 	save: () ->	
@@ -95,6 +84,25 @@ class App.Views.Notes.Show extends Backbone.View
 		@timer = setTimeout((->
 			self.save()
 		), 3000)
+
+	after_ui_hook: (parent, notes) ->
+		# set the editable message with the parent note's message
+		#$('#editable-message', self.el).html(parent.message)
+		$('#editable-message').focus()
+		$('.subnote').autolink()
+
+		# set the body open note to parent note
+		$('body').attr('data-current-note-open', parent._id) 
+
+		# set the timeline's height
+		$('#expanded-view .timeline-wrapper').css('height', $('body').outerHeight() - $('.expanded-wrapper').outerHeight() - $('.expanded-actions').outerHeight() - 60)
+
+		# Make the new subnote box autosizable
+		$('#expanded-view ul.timeline textarea').autosize()
+
+		# Drag and Drop
+		window.dnd.droppable $('#expanded-view')
+		window.dnd.draggable $('#expanded-view ul.timeline li')
 
 	make_bold: (e) ->
 		document.execCommand('bold',false,null)

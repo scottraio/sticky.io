@@ -10,6 +10,7 @@ Resource						= require 'express-resource'
 UsersController			= require './users_controller'
 NotesController			= require './notes_controller'
 NotebooksController	= require './notebooks_controller'
+AdminController			= require './admin_controller'
 
 #
 # Middleware
@@ -69,6 +70,12 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 				res.redirect('/notes') 
 )
 
+
+#
+# Admin
+app.get('/admin', ensureAuthenticated, AdminController.root)
+app.get('/admin/grant/:id', ensureAuthenticated, AdminController.grant)
+app.get('/admin/revoke/:id', ensureAuthenticated, AdminController.revoke)
 
 #
 # Payload - default aux data such as tags, notebooks, and basic user info

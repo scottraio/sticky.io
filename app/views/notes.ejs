@@ -26,13 +26,16 @@
 		<div class="expanded-note">
 			<div id="editable-message" contenteditable="true">{{#parent_note}}{{{note_message}}}{{/parent_note}}</div>
 		</div>
-	</div>
+	</div>	
 
-	<div class="timeline-wrapper">
+	<div class="timeline-wrapper">		
 		<ul class="timeline">
 			{{#notes}}
 				{{>substicky}}
 			{{/notes}}
+			<li class="sticky card subnote add-subnote" >
+				<textarea placeholder="Enter thoughts about this note here"></textarea>
+			</li>
 		</ul>
 	</div>
 
@@ -78,10 +81,10 @@
 </script>
 
 <script id="substicky" class="partial" type="text/html">
-	<li class="sticky card subnote" data-id="{{_id}}">
-		<div class="drag-handle pull-right"></div>
+	<li class="sticky card subnote {{#completed}}completed{{/completed}}" data-id="{{_id}}" draggable="true">
 		<span class="timestamp pull-right">{{stacked_at_in_date}}</span>
-		<div class="message" contenteditable="true">
+		<div class="message">
+			{{#is_taskable}}<input type="checkbox" class="task-completed" {{#completed}}checked="true"{{/completed}} /> {{/is_taskable}}
 			{{{note_message}}}
 		</div>
 	</li>

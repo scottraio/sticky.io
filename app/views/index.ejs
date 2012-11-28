@@ -7,6 +7,7 @@
   <div id="new-sticky-header">
   	<ul class="info-links">
   		<!-- <li><a href="https://sticky.desk.com/" target="_blank">Help</a></li> -->
+  		<% if (req.user.is_admin){ %><li><a href="/admin">Admin</a></li><% } %>
   		<li><a href="/logout">Logout</a></li>
   	</ul>
 

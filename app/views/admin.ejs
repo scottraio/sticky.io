@@ -1,0 +1,52 @@
+<%- partial('header') %>
+
+<body class="theme-<%= current_user.theme %>">
+
+	<div class="logo app-logo">STICKY</div>
+
+	<div class="admin">
+
+		<div class="stats">
+			<h3><%= users.length %></h3> total users
+		</div>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Phone number</th>
+					<th>Last sign in at</th>
+					<th>Confirmed phone number</th>
+					<th>Admin</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% for(var i=0; i<users.length; i++) {  %>	
+				<tr>
+					<td>
+						<% if (users[i].is_admin) { %>
+							<b><%= users[i].name %></b>
+						<% } else { %>
+							<%= users[i].name %>
+						<% } %>
+					</td>
+					<td><a href="mailto:<%= users[i].email %>"><%= users[i].email %></a></td>
+					<td><%= users[i].phone_number || "" %></td>
+					<td><%= users[i].last_sign_in_at %></td>
+					<td><%= users[i].phone_number_confirm_at || "" %></td>
+					<td>
+						<% if (users[i].is_admin) { %>
+							<a href="/admin/revoke/<%= users[i]._id %>">Revoke</a>
+						<% } else { %>
+							<a href="/admin/grant/<%= users[i]._id %>">Grant</a>
+						<% } %>
+					</td>
+				</tr>
+				<% } %>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>
