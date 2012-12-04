@@ -6,11 +6,16 @@
 body.theme-bright {
 	.theme-bright-bg();
 	#new-sticky-header {
-		background:transparent;
 		.inbox-controls {
 			.box-shadow(0 2px 4px rgba(100, 100, 100, 0.12));
 			border-top:1px solid #ddd;
 			border-bottom:1px solid rgba(0, 0, 0, 0.15);
+		}
+		ul.info-links {
+			a {
+				color:#333;
+				text-shadow:none;
+			}
 		}
 	}
 }
@@ -30,6 +35,9 @@ body.theme-den {
 
 body.theme-black {
 	.theme-black-bg();
+	#new-sticky-header {
+		
+	}
 	.logo {
 		color:#ffffff;
 		text-shadow:0 1px 3px rgba(0, 0, 0, 0.6);

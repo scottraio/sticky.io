@@ -1,14 +1,21 @@
 #expanded-view {
 	width:@expanded-view-width;
   box-sizing:border-box;
-	display:table-cell;
+  //display:none;
+	//display:table-cell;
   //background:#fff url('/img/furley_bg.png');
-  background:#f0f0f0;
-  background-image:url('/img/logo-origami-watermark.png') no-repeat;
+  
+  position:fixed;
+  right:200px;
+  margin-top:25px;
 	vertical-align:top;
-	border-left:1px solid rgba(0, 0, 0, 0.1);
-	.box-shadow(1px 1px 3px rgba(100, 100, 100, 0.1));
-	overflow:hidden;
+	height:100%;
+	//overflow:hidden;
+	.border-radius(5px);
+	border:1px solid rgba(0, 0, 0, 0.1);
+	.box-shadow(-1px 1px 5px rgba(100, 100, 100, 0.2));
+	background-color:#fff;
+	z-index:11;
   .expanded-view-anchor {
   	//.transition(top ease-in .2s);
   }
@@ -33,11 +40,18 @@
 		//#gradient > .vertical(#fff, #eee);
 		border-bottom:1px solid #ddd;
 		//.box-shadow(0 1px 3px rgba(125, 125, 125, 0.2);
-		background-color:#fff;
+		background-color:#73a9ff;
+		.border-radius(5px 5px 0 0);
 		.btn-toolbar {
 			margin:2px 0 0 0;
 			.btn {
-				.border-radius(none);
+				.border-radius(0);
+				background-color:#468bff;
+				color:#fff;
+				text-shadow:0 1px 1px rgba(0, 0, 0, 0.65);
+				&:hover {
+					border-color:rgba(0, 0, 0, 0.25);
+				}
 			}
 		}
 		font-family:"Helvetica Neue";
@@ -54,7 +68,7 @@
 			padding:25px 15px;
 			-webkit-appearance:none;
 			white-space:pre-wrap;
-			.box-shadow(0 2px 5px rgba(0, 0, 0, 0.08));
+			//.box-shadow(0 2px 5px rgba(0, 0, 0, 0.08));
 			border-bottom:1px solid rgba(0, 0, 0, 0.15);
 			margin-bottom:5px;
 			&:focus {
@@ -82,7 +96,7 @@
 			z-index:8;
 			margin:0;
 			background-color:#fff;
-			margin:10px;
+			//margin:10px;
 			padding:15px;
 			.box-shadow(0 1px 3px rgba(0, 0, 0, 0.08));
 			border-bottom:1px solid rgba(0, 0, 0, 0.15);
@@ -148,4 +162,9 @@
 #expanded-view.stack .expanded-wrapper {
 	//border: 2px solid rgba(82,168,236,.8) !important;
 	background:@stack-dragover-color;
+}
+
+#expanded-view.top {
+	top:35px;
+	//.transition(top ease .8s);
 }

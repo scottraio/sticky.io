@@ -66,15 +66,15 @@ class App.Views.Notes.Scroll
 		$('#new-sticky-header').css('top', '0')
 
 	do_at_default: () ->
-		if $('#expanded-view .expanded-view-anchor').attr('style')
-			$('#expanded-view .expanded-view-anchor').removeAttr('style')
+		if $('#expanded-view').hasClass('top')
+			$('#expanded-view').removeClass('top')
 
 	do_anchor_expanded_view: () ->
 		@anchor_expanded_view = false
-		height 	= $('body').height() - $('#expanded-wrapper').outerHeight() - $('#expanded-actions').outerHeight() - 210
-		width 	= $('#expanded-view').width()
+		#height 	= $('body').height() - $('#expanded-wrapper').outerHeight() - $('#expanded-actions').outerHeight() - 210
+		#width 	= $('#expanded-view').width()
 
-		$('#expanded-view .expanded-view-anchor').attr('style', "position:fixed;top:55px;height:#{height}px;width:#{width}px")
+		$('#expanded-view').addClass('top') unless $('#expanded-view').hasClass('top')
 
 
 

@@ -21,18 +21,22 @@
 
 #inbox {
   box-sizing:border-box;
-  //background:#fff url('/img/furley_bg.png');
-  .border-radius(5px 0px 0px 5px);
+  padding-top:2px;
+  background:#fff;
+  .border-radius(5px);
 	border-left:1px solid rgba(0, 0, 0, 0.1);
+	border-top:1px solid rgba(0, 0, 0, 0.1);
 	border-bottom:1px solid rgba(0, 0, 0, 0.1);
-  min-width:@inbox-min-width;
+  width:800px;
+  margin:0 auto;
+
   height:100%;
-	display:table-cell;
+	//display:table-cell;
 	z-index:10;
 	vertical-align:top;
 	position:relative;
 	overflow:hidden;
-	.box-shadow(-1px 1px 3px rgba(100, 100, 100, 0.1));
+	.box-shadow(-1px 1px 5px rgba(100, 100, 100, 0.1));
 }
 
 li.empty {

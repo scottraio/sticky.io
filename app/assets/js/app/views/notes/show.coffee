@@ -65,6 +65,7 @@ class App.Views.Notes.Show extends Backbone.View
 		return false
 
 	close: (e) ->
+		$(@el).hide()
 		$('.expanded-view-anchor', @el).html('')
 		$('body').attr('data-current-note-open', null)
 		return false
@@ -85,6 +86,7 @@ class App.Views.Notes.Show extends Backbone.View
 		), 3000)
 
 	after_ui_hook: (parent, notes) ->
+		$(@el).show()
 		# set the editable message with the parent note's message
 		#$('#editable-message', self.el).html(parent.message)
 		$('#editable-message').focus()
