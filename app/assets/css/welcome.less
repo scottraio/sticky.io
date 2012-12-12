@@ -1,61 +1,123 @@
-//
-// Welcome 
-.welcome {
-	width:700px;
-	margin:50px auto;
-	padding:25px 25px 100px 25px;
-	background:rgba(255,255,255,.8);
-	position:relative;
-	.box-shadow(0 3px 5px rgba(0, 0, 0, 0.1));
-
-	.logo {
-		right:25px;
-		top:25px;
+.welcome-chat {
+	width:100%;
+	padding:100px 0 0 0;
+	h1 {
+		padding:0;
+		font-size:28px;
+		color:#535353;
+		font-weight:normal;
+		text-align:center;
+		margin-bottom:20px;
+		color:#ffffff;
 	}
-	.number-porn-circle {
-		left:10px;
-		top:25px;
+	div.item {
+		float:left;
+		width:33%;
 	}
-	.btn-primary {
-		font-size:1.8em;
-		padding:15px;
+	div.item-number {
+		border:4px solid #9a9a9a;
+		text-align:center;
+		font-size:36px;
+		line-height:36px;
+		margin:0 auto 20px auto;
+		.border-radius(42px);
+		width:42px;
+		height:42px;
+		background-color:#ffffff;
+		color:#242424;
+	}
+	img.screenshot {
+		margin:0 auto;
 		display:block;
-		margin:25px auto;
-	}
-	.welcome-section {
-		position:relative;
-		height:125px;
-		overflow:hidden;
-		margin-top:25px;
-
-		.verbiage {
-			width:45%;
-			display:inline-block;
-			h2 {
-				color:#454545;
-				font-weight:normal;
-			}
-			h3 {
-				font-size:18px;
-				font-weight:normal;
-				line-height:16px;
-				margin-bottom:20px;
-				color:#767676;
-			}
-		}
-		.screenshot {
-			border-radius:7px;
-			padding:0;
-			margin:0;
-			float:right;
-		}
-	}
-	.confirm-sms {
-		.btn {
-			position: relative;
-			top:30px;
-			right:45px;
-			font-size:1.2em;
-		}
 	}
 }
+
+.welcome-ui {
+	width:100%;
+	background:url('/img/web-bg.png');
+	//background-color:#296B73;
+	padding:100px 0 0 0;
+	border-top:1px solid rgba(0, 0, 0, 0.45);
+	.box-shadow(inset 0 4px 8px rgba(0, 0, 0, 0.55));
+	h1 {
+		padding:0;
+		font-size:28px;
+		color:#535353;
+		font-weight:normal;
+		text-align:center;
+		margin-bottom:20px;
+		color:#ffffff;
+	}
+	div.item {
+		float:left;
+		width:33%;
+	}
+	div.item-number {
+		border:4px solid #9a9a9a;
+		text-align:center;
+		font-size:36px;
+		line-height:36px;
+		margin:0 auto 20px auto;
+		.border-radius(42px);
+		width:42px;
+		height:42px;
+		background-color:#ffffff;
+		color:#242424;
+	}
+	img.screenshot {
+		margin:0 auto;
+		display:block;
+	}
+}
+
+.welcome-mobile {
+	width:100%;
+	background:url('/img/grey.png');
+	padding:140px 0 0 0;
+	.box-shadow(0 -4px 8px rgba(0, 0, 0, .55));
+	border-top:1px solid #f0f0f0;
+	.web-content {
+		position:relative;
+		min-height:400px;
+	}
+	.mobile-content {
+		width:440px;
+		margin-top:75px;
+		h1 {
+			font-size:2.6em;
+			text-align:center;
+			color:#ffffff;
+		}
+		h2 {
+			color:#454545;
+			text-align:center;
+			font-weight:normal;
+		}
+		h3 {
+			font-weight:normal;
+			text-align:center;
+			color:#565656;
+		}
+	}
+	.iphone-contact {
+		background:url('/img/iphone-contact.png') no-repeat;
+		height:387px;
+		width:400px;
+		position:absolute;
+		right:0;
+		bottom:0;
+	}
+}
+
+
+.welcome-footer {
+	width:100%;
+	background:#222;
+	padding:50px 0;
+	text-align:center;
+	a {
+		font-size:2em;
+		padding:20px;
+	}
+}
+

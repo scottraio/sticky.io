@@ -3,11 +3,51 @@
 .theme-den-bg { background:url('/img/dark_wood.jpeg') fixed; }
 .theme-black-bg { background:url('/img/black_wood.jpeg') fixed; }
 
+.dark-controls {
+	#new-sticky-header {
+		background-color:transparent;
+		a {
+			color:#f0f0f0;	
+		}
+		i[class^="icon-"], i[class*=" icon-"] {
+			background-image:url("/img/glyphicons-halflings-white.png");
+		}
+		.inbox-controls {
+			background-color:#3d393a;
+			border-color:#111;
+			.new-note {
+				border-color:rgba(255, 255, 255, 0.05);
+			}
+			.dropdown-toggle {
+				.box-shadow(none);
+			}
+			.btn-toolbar {
+				.btn {
+					background-color:rgba(0,0,0,0.3);
+					border-color:rgba(255, 255, 255, 0.05);
+					.caret {
+						border-top:4px solid #f0f0f0;
+					}
+				}
+				a {
+					color:#fff;
+				}
+			}
+		}
+
+	}
+}
+
+.dark-logo {
+	.logo {
+		color:#ffffff;
+		text-shadow:0 1px 3px rgba(0, 0, 0, 0.6);
+	}
+}
+
 body.theme-bright {
 	.theme-bright-bg();
 	#new-sticky-header {
-		
-
 		.inbox-controls {
 			.box-shadow(0 2px 4px rgba(100, 100, 100, 0.12));
 			border-top:1px solid #ddd;
@@ -28,20 +68,22 @@ body.theme-desk {
 
 body.theme-den {
 	.theme-den-bg();
-	.logo {
-		color:#ffffff;
-		text-shadow:0 1px 3px rgba(0, 0, 0, 0.6);
+	.dark-controls();
+	.dark-logo();
+	#new-sticky-header {
+		.inbox-controls {
+			background-color:#513931;
+			.btn-toolbar {
+				.btn {
+					background-color:#260f07;
+				}
+			}
+		}
 	}
-
 }
 
 body.theme-black {
 	.theme-black-bg();
-	#new-sticky-header {
-		
-	}
-	.logo {
-		color:#ffffff;
-		text-shadow:0 1px 3px rgba(0, 0, 0, 0.6);
-	}
+	.dark-controls();
+	.dark-logo();
 }

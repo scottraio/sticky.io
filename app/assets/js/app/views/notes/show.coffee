@@ -96,7 +96,9 @@ class App.Views.Notes.Show extends Backbone.View
 		$('body').attr('data-current-note-open', parent._id) 
 
 		# set the timeline's height
-		$('#expanded-view .timeline-wrapper').css('height', $('body').outerHeight() - $('.expanded-wrapper').outerHeight() - $('.expanded-actions').outerHeight() - 60)
+		$('#expanded-view').css('height', $('.expanded-wrapper').outerHeight() + $('.expanded-actions').outerHeight() + $('.timeline-wrapper').outerHeight() + 50)
+
+		#$('#expanded-view .timeline-wrapper').css('height', $('body').outerHeight() - $('.expanded-wrapper').outerHeight() - $('.expanded-actions').outerHeight() - 60)
 
 		# Make the new subnote box autosizable
 		$('#expanded-view ul.timeline textarea').autosize()

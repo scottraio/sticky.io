@@ -149,6 +149,7 @@ NotesSchema.methods.parse_links = () ->
 			domain.crawl link, self, (err, domain) ->
 				if err
 					console.log 'Could not crawl link'
+					console.log err
 				else
 					if domain && self._domains.indexOf(domain._id) is -1
 						self._domains.push domain._id

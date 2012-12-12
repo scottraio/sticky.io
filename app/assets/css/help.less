@@ -1,3 +1,67 @@
+// help flyout bar
+
+#help {
+	position:fixed;
+	border-top:2px solid rgba(171, 209, 75, 0.75);
+	width:240px;
+	height:100%;
+	right:-240px;
+	top:0;
+	background-color:#222;
+	z-index:999;
+	color:#f0f0f0;
+	.transition(right ease 0.4s);
+	.box-shadow(inset 0 3px 5px #111);
+	h1 {
+		font-family:"bebas-neue", "Helvetica Neue", Helvetica, sans-serif;
+		padding:25px;
+	}
+	a.needs-help {
+		color:#f0f0f0;
+		float:right;
+		padding:25px;
+		margin-top:10px;
+
+	}
+	h3 {
+		padding:0 25px;	
+		font-weight:normal;
+	}
+	ul {
+		padding:25px;
+	}
+}
+
+.needs-help {
+	#help { 
+		right:0;
+	}	
+	#content {
+		position:relative;
+		right:100px;
+		.transition(right ease .4s);
+	}	
+	#new-sticky-header {
+		right:240px;
+		.transition(right ease .4s);
+	}
+	#expanded-view {
+		right:265px;
+		.transition(right ease .4s);
+	}
+}
+
+// olark 
+
+#habla_window_div {
+	visibility: hidden;
+	right:15px;
+}
+
+#habla_window_div.visible {
+	visibility: visible;	
+}
+
 .arrow_box {
 	position: absolute;
 	z-index:11;

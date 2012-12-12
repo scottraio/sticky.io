@@ -39,15 +39,10 @@ describe 'Bookmarks', () ->
 			note = new app.models.Note(message: "http://www.mongodb.org/display/DOCS/Quickstart+OS+X", _user: mock.user._id)
 			
 			#
-			# Simplify the message, somtimes HTML is sent over. Lets get rid of it and store the 
-			# plain text version.
-			note.simplify()
-
-			#
 			# Parse it!
-			note.parse_links()
+			note.parse()
 			
-			note.tags.should.be.an.instanceof Array
+			note.links.should.be.an.instanceof Array
 
 			# TODO: test for domain creation
 			# for some reason mongoose is not returning 

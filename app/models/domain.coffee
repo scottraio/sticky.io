@@ -1,5 +1,6 @@
 Schema 			= mongoose.Schema
 Base 				= require 'sticky-model'
+request 		= require('request');
 
 DomainSchema = new Schema
 	url  				: { type: String, required: true, trim: true, unique: true}
@@ -32,13 +33,12 @@ DomainSchema.methods.set_title = (cb) ->
 DomainSchema.methods.get_title = (cb) ->
 	self = @
 
-	app.phantom.createPage (page) ->
-		page.open self.url, (status) ->
-			page.evaluate (-> document.title), (result) ->
-				#app.phantom.exit()
-				cb(result)
-						
-						
+	request.post {
+		headers: {'content-type' : 'application/x-www-form-urlencoded'},
+		url: 'http://72.44.65.11:8989/',
+		body: "url=#{self.url}" },
+	(error, response, body) ->
+		cb JSON.parse(body).title
 
 
 mongoose.model('Domain', DomainSchema)

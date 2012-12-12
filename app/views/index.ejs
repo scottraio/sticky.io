@@ -1,135 +1,148 @@
 <%- partial('header') %>
 
 <body class="theme-<%= current_user.theme %>">
+	<div id="content">
+		<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+		
+	  <div id="new-sticky-header">
+	  	<div class="top-bar">
+				<ul class="info-links">
+					<!-- <li><a href="https://sticky.desk.com/" target="_blank">Help</a></li> -->
+					<% if (req.user.is_admin){ %><li><a href="/admin">Admin</a></li><% } %>
+					<li><a href="#" class="needs-help">Help</a></li>
+					<li><a href="/logout">Logout</a></li>
+				</ul>
 
-	<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-	
-  <div id="new-sticky-header">
-  	<div class="top-bar">
-			<ul class="info-links">
-				<!-- <li><a href="https://sticky.desk.com/" target="_blank">Help</a></li> -->
-				<% if (req.user.is_admin){ %><li><a href="/admin">Admin</a></li><% } %>
-				<li><a href="/logout">Logout</a></li>
-			</ul>
-
-			<div class="logo app-logo">STICKY</div>
-		</div>
-  	
-	  <div id="controls-bar" class="inbox-controls">
-	  	<div class="profile">
-				<i id="gravatar"><img src="//profiles.google.com/s2/u/0/photos/profile/<%= req.user.googleId %>?sz=32" /></i>
-				<a href="/settings" class="navigate">Settings</a>
+				<div class="logo app-logo">STICKY</div>
 			</div>
+	  	
+		  <div id="controls-bar" class="inbox-controls">
+		  	<div class="profile">
+					<i id="gravatar"><img src="//profiles.google.com/s2/u/0/photos/profile/<%= req.user.googleId %>?sz=32" /></i>
+					<a href="/settings" class="navigate">Settings</a>
+				</div>
 
-	  	<a href="/notes/new" class="push new-note btn"><i class="icon-plus icon-white"></i> Create a Note</a>
-			<div class="btn-toolbar">
-				<div class="btn-group">
-					<a href="#" class="btn single toggle-datepicker"><i class="icon-calendar"></i></a>
-					<div class="date-picker hide">
-						<!-- calendar loads here -->
+		  	<a href="/notes/new" class="push new-note btn"><i class="icon-plus icon-white"></i> Create a Note</a>
+				<div class="btn-toolbar">
+					<div class="btn-group">
+						<a href="#" class="btn single toggle-datepicker"><i class="icon-calendar"></i></a>
+						<div class="date-picker hide">
+							<!-- calendar loads here -->
+						</div>
+					</div>
+					<div class="btn-group">
+						<a class="btn tag-button" href="#"><span class="icon-pound">#</span> <span class="tag-label">None</span></a>
+						<a class="btn dropdown-toggle tag-button" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+						<ul class="tags dropdown-menu">
+							<li><a href="#" class="query" data-param="tags" data-param-val="">None</a></li>
+							<% for(var i=0; i<tags.length; i++) {  %>	
+								<li><a href="#" class="query" data-param="tags" data-param-val="<%= tags[i]._id %>"><%= tags[i]._id %></a></li>
+							<% } %>
+						</ul>
+					</div>
+					<div class="btn-group">
+						<a href="#" class="query btn" data-param="order" data-param-val="desc"><i class="icon-chevron-down"></i></a>
+						<a href="#" class="query btn" data-param="order" data-param-val="asc"><i class="icon-chevron-up"></i></a>
+					</div>
+					
+					<div class="search">
+						<form action="/notes" method="get">
+							<input type="text" id="keyword" name="keyword" class="search-query" placeholder="Search">
+						</form>
 					</div>
 				</div>
-				<div class="btn-group">
-					<a class="btn tag-button" href="#"><span class="icon-pound">#</span> <span class="tag-label">None</span></a>
-					<a class="btn dropdown-toggle tag-button" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="tags dropdown-menu">
-						<li><a href="#" class="query" data-param="tags" data-param-val="">None</a></li>
-						<% for(var i=0; i<tags.length; i++) {  %>	
-							<li><a href="#" class="query" data-param="tags" data-param-val="<%= tags[i]._id %>"><%= tags[i]._id %></a></li>
+
+			</div>	
+		</div>
+
+	  <div class="main-wrapper container-fluid">
+	    <div id="main">
+
+	      <div id="sidebar">
+					<ul class="notebooks sidebar-nav">
+						<li><a href="/" class="navigate">All Notes</a></li>
+						<% for(var i=0; i<notebooks.length; i++) { %>	
+							<li data-id="<%= notebooks[i]._id %>" data-name="<%= notebooks[i].name %>" data-color="<%= notebooks[i].color %>" class="notebook <%= notebooks[i].color %>">
+								<a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
+								<a href="/notebooks/<%= notebooks[i]._id %>/edit" data-id="<%= notebooks[i]._id %>" class="push"><i class="icon-pencil"></i></a>
+							</li>
 						<% } %>
+						<li class="add-notebook"><a href="/notebooks/new" class="push">+ Add a Notebook</a></li>
 					</ul>
+					
+	      </div>
+
+	      <div id="expanded-view" class="hide">
+					<div class="expanded-view-anchor">
+						<!-- content gets loaded here  -->
+					</div>
 				</div>
-				<div class="btn-group">
-					<a href="#" class="query btn" data-param="order" data-param-val="desc"><i class="icon-chevron-down"></i></a>
-					<a href="#" class="query btn" data-param="order" data-param-val="asc"><i class="icon-chevron-up"></i></a>
+
+				<div id="inbox">
+					<div id="stage">
+						<!-- content gets loaded here -->
+					</div>
 				</div>
 				
-				<div class="search">
-					<form action="/notes" method="get">
-						<input type="text" id="keyword" name="keyword" class="search-query" placeholder="Search">
-					</form>
 				</div>
-			</div>
+	    </div>
+	  </div>
 
-		</div>	
+
+		<div id="delete-note" class="modal hide">
+			<div class="modal-header">
+				<a href="javascript:$('#delete-note').modal('hide')" class="close">&times;</a>
+				<h3>Trash Note</h3>
+			</div>
+			<div class="modal-body">
+				<p>You are about to delete this note.</p>
+				<p>Do you want to proceed?</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn danger">Yes</a>
+				<a href="javascript:$('#delete-note').modal('hide')" class="btn secondary">No</a>
+			</div>
+		</div>
+
+		<!-- New Sticky -->
+		<div id="new-note" class="modal hide">
+			<div class="modal-body">
+				<textarea name="message" id="new-note-input" placeholder="What's on your mind?" autofocus></textarea>
+			</div>
+		</div>
+
+		<!-- Notebooks -->
+		<div id="delete-notebook" class="modal hide">
+			<div class="modal-header">
+				<a href="javascript:$('#delete-notebook').modal('hide')" class="close">&times;</a>
+				<h3>Trash Notebook</h3>
+			</div>
+			<div class="modal-body">
+				<p>You are about to delete this notebook.</p>
+				<p>Do you want to proceed?</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn danger">Yes</a>
+				<a href="javascript:$('#delete-notebook').modal('hide')" class="btn secondary">No</a>
+			</div>
+		</div>
+
+		<%- partial('notebooks') %>
+		<%- partial('notes') %>
+		<%- partial('users') %>
+		<%- partial('footer') %>
 	</div>
 
-  <div class="main-wrapper container-fluid">
-    <div id="main">
+	<div id="help" class="hide">
+		<a href="#" class="needs-help">&larr; close</a>
+		<h1>Help</h1> 
 
-      <div id="sidebar">
-				<ul class="notebooks sidebar-nav">
-					<li><a href="/" class="navigate">All Notes</a></li>
-					<% for(var i=0; i<notebooks.length; i++) { %>	
-						<li data-id="<%= notebooks[i]._id %>" data-name="<%= notebooks[i].name %>" data-color="<%= notebooks[i].color %>" class="notebook <%= notebooks[i].color %>">
-							<a href="#" class="query" data-param="notebooks" data-param-val="<%= notebooks[i].name %>">@<%= notebooks[i].name %></a>
-							<a href="/notebooks/<%= notebooks[i]._id %>/edit" data-id="<%= notebooks[i]._id %>" class="push"><i class="icon-pencil"></i></a>
-						</li>
-					<% } %>
-					<li class="add-notebook"><a href="/notebooks/new" class="push">+ Add a Notebook</a></li>
-				</ul>
-				
-      </div>
-
-      <div id="expanded-view" class="hide">
-				<div class="expanded-view-anchor">
-					<!-- content gets loaded here  -->
-				</div>
-			</div>
-
-			<div id="inbox">
-				<div id="stage">
-					<!-- content gets loaded here -->
-				</div>
-			</div>
-		
-			</div>
-    </div>
-  </div>
-
-
-	<div id="delete-note" class="modal hide">
-		<div class="modal-header">
-			<a href="javascript:$('#delete-note').modal('hide')" class="close">&times;</a>
-			<h3>Trash Note</h3>
-		</div>
-		<div class="modal-body">
-			<p>You are about to delete this note.</p>
-			<p>Do you want to proceed?</p>
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="btn danger">Yes</a>
-			<a href="javascript:$('#delete-note').modal('hide')" class="btn secondary">No</a>
-		</div>
+		<h3>Ways to get help</h3>
+		<ul>
+			<li>FAQ</li>
+			<li>E-mail</li>
+			<li>Twitter</li>
+		</ul>
 	</div>
-
-	<!-- New Sticky -->
-	<div id="new-note" class="modal hide">
-		<div class="modal-body">
-			<textarea name="message" id="new-note-input" placeholder="What's on your mind?" autofocus></textarea>
-		</div>
-	</div>
-
-	<!-- Notebooks -->
-	<div id="delete-notebook" class="modal hide">
-		<div class="modal-header">
-			<a href="javascript:$('#delete-notebook').modal('hide')" class="close">&times;</a>
-			<h3>Trash Notebook</h3>
-		</div>
-		<div class="modal-body">
-			<p>You are about to delete this notebook.</p>
-			<p>Do you want to proceed?</p>
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="btn danger">Yes</a>
-			<a href="javascript:$('#delete-notebook').modal('hide')" class="btn secondary">No</a>
-		</div>
-	</div>
-
-	<%- partial('notebooks') %>
-	<%- partial('notes') %>
-	<%- partial('users') %>
-	<%- partial('footer') %>
-
 </body>
 </html>

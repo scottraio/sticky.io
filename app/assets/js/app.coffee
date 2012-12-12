@@ -7,6 +7,7 @@ class App.Main extends Backbone.View
 	events:
 		"click #delete-note .danger" 	: "delete_note"
 		"click a.navigate" 						: "link_to_fragment"
+		"click a.needs-help" 					: "needs_help"
 		"click a.toggle-datepicker" 	: "link_to_calendar"
 		"click a.query"								: "link_to_query"
 		"click a.push" 								: "link_to_push"
@@ -105,6 +106,13 @@ class App.Main extends Backbone.View
 		e.stopPropagation()
 		$('.date-picker').toggle()
 		return false
+
+	needs_help: (e) ->
+		$('#help').toggleClass('hide');
+		$('body').toggleClass('needs-help');
+		$("#habla_window_div").toggleClass('visible');
+		return false
+
 
 	link_to_query: (e) ->
 		# reset pagination

@@ -205,16 +205,3 @@ exports.delete = (req, res) ->
 				else
 					done(null, note)
 
-
-#
-#
-# Postmark Hook (email-to-sticky)
-exports.inbound = (req, res) ->
-	mail = JSON.parse(req.body)
-	User.findOne {email:mail.From}, (err, user) ->	
-		Note.create_note req.user, mail.TextBody, (err,note) ->
-			if err
-				console.log(err)
-				return false
-			else
-				return true

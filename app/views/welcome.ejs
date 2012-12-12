@@ -1,52 +1,62 @@
 <%- partial('header') %>
 
-<body class="theme-bright">
+<body class="theme-bright web">
 
-	<div class="welcome">	
-		<div class="logo">STICKY</div>
-		<h1>Welcome to Sticky.IO!</h1>
-		
-		<!--
-			Chat aware
-		-->
-		<div class="welcome-section accept-friend">
+	<div class="logo">STICKY</div>
+
+	<div class="welcome-chat">
+		<div class="web-content container-fluid">
+			<h1>Welcome to Sticky!</h1>
 			<div class="verbiage">
 				<h2>Chat with Sticky</h2>
 				<h3>Head on over to your Gmail or favorite chat client and accept our chat request.</h3>
 			</div>
 			<img src="/img/welcome-gchat-accept.png" class="screenshot" />
 		</div>
-		
-		<!--
-			SMS Confirmation
-		-->
-		<div class="welcome-section confirm-sms">
-			<div class="pull-right">
-				<a href="/confirm_phone_number" class="push btn">Add your phone number</a>
-			</div>
-			<div class="verbiage">
-				<h2>SMS your notes</h2>
-				<h3>Enter your cell number to link your account to your phone.</h3>
-			</div>
-		</div>
-
-		<!--
-			Email aware
-		-->
-		<div class="welcome-section explain-email">
-			<div class="verbiage">
-				<h2>Send notes via Email</h2>
-				<h3>Simply email notes to <a mailto="notes@sticky.io">notes@sticky.io</a> with your gmail username.</h3>
-			</div>
-
-			<img src="/img/welcome-email.png" class="screenshot" />
-		</div>
-
-		<a href="/notes" class="btn btn-primary">Take me to my notes!</a>
 	</div>
+
+	<div class="welcome-ui">
+    <div class="web-content container-fluid">
+      <div class="item">
+        <div class="item-number">1</div>
+        <h1>Organize notes into notebooks</h1>
+      </div>
+      <div class="item">
+        <div class="item-number">2</div>
+        <h1>Add context with tags</h1>
+      </div>
+      <div class="item">
+        <div class="item-number">3</div>
+        <h1>Turn thoughts into concepts</h1>
+      </div>
+      <img src="/img/ui-themes.png" class="screenshot" />
+
+    </div>
+  </div>
+
+  <div class="welcome-mobile">
+    <div class="web-content container-fluid">
+      <div class="mobile-content">
+        <h1>SMS & E-mail</h1>
+        <h2>Send your notes over SMS and E-mail.</h2>
+        <a href="/confirm_phone_number" class="push btn">Add your phone number</a>
+      </div>
+      <div class="iphone-contact">
+      </div>
+    </div>
+  </div>
+
+  <div class="welcome-footer">
+    <div class="web-content container-fluid">
+      <a href="/notes" class="btn btn-primary">Take me to my notes!</a>
+    </div>
+  </div>
 
 <%- partial('users') %>
 <%- partial('footer') %>
 
 </body>
 </html>
+
+
+		
