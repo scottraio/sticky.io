@@ -122,7 +122,7 @@ exports.smtp = (req, res) ->
 # updates an existing note for an user
 exports.update = (req, res) ->
 	render.json req, res, (done) ->
-		Note.findOne {_id:req.params.id, _user:req.user}, (err, note) ->
+		Note.findOne({_id:req.params.id, _user:req.user}).populate('_domains').run (err, note) ->
 
 			if _.has(req.body, 'message')
 				note.set 'message', 		req.body.message
@@ -138,7 +138,7 @@ exports.update = (req, res) ->
 					req.flash('error', 'Note could not be saved.')
 					done(err)
 				else
-					console.log 'saved!'
+					req.user.broadcast('notes:update', note)
 					done(null, note)
 
 #

@@ -2,23 +2,41 @@ App.Views.Notes or= {}
 
 class App.Views.Notes.Show extends Backbone.View
 
+	keyboardEvents:
+		'command+alt+s'	: 'save'
+		'command+alt+w'	: 'close'
+
 	events:
 		'click .confirm' 								: 'confirm_delete'
 		'click .make-bold'							: 'make_bold'
 		'click .make-italic'						: 'make_italic'
 		'click .make-underline' 				: 'make_underline'
-		'click .save'										: 'save'
-		'click #close-expanded-view' 		: 'close'
+		'click #close-expanded-view' 		: 'close'		
 		'mouseover .drag-handle'				: 'make_draggable'
 		'mouseout .drag-handle'					: 'make_undraggable'
 
 	initialize: ->
+		self = @
+
+		# 
+		# Brief aside on super: JavaScript does not provide a simple way to call super — 
+		# the function of the same name defined higher on the prototype chain.
+		Backbone.View.prototype.initialize.apply(@, arguments);
+
+		#
 		# set the id to the DOM
 		$(@el).attr('data-id', @options.id)
 
+		# 
+		# clear autosave eventss
+		$('#editable-form').trigger('autosave.shutdown');
+
+		#
 		# select the note inside the inbox
 		$('#inbox li.sticky').removeClass('selected')
 
+		# 
+		# build the note object
 		@note 			= new App.Models.Note(id: @options.id)
 		@note.url 	= "/notes/#{@options.id}/expanded.json"
 
@@ -41,21 +59,17 @@ class App.Views.Notes.Show extends Backbone.View
 				collection = new App.Collections.Notes()
 				collection.format_domains(notes)
 
-				$('.expanded-view-anchor', self.el).html ich.expanded_note
-					parent_note 				: parent
-					notes 							: notes
-					note_message 				: () -> this.message && this.message.replace(/(<[^>]+) style=".*?"/g, '$1')
-					has_subnotes				: () -> true if parent._notes && parent._notes.length > 0
-					stacked_at_in_words	: () -> this.stacked_at && $.timeago(this.stacked_at)
-					stacked_at_in_date 	: () -> format_date(this.stacked_at)
-					is_taskable					: () -> true if this.message && this.message.indexOf('#todo') > 0
+				$('.expanded-view-anchor', self.el).html TEMPLATES['expanded']
+					parent_note : parent
+					notes 			: notes
+					new_note		: false
 			
 				self.after_ui_hook(parent, notes)
 
 
 	save: () ->	
 		@note = new App.Models.Note(id: @options.id)
-		save @note, { message : $('#editable-message', self.el).html() }, {
+		save @note, { message : $('#editable-message').html() }, {
 			success: (data, res) ->
 				$('#save-notice').removeClass('hide')
 				$('#save-notice').html('Saved')
@@ -68,22 +82,14 @@ class App.Views.Notes.Show extends Backbone.View
 		$(@el).hide()
 		$('.expanded-view-anchor', @el).html('')
 		$('body').attr('data-current-note-open', null)
+		#
+		# unbind keyboard events when we close the view
+		@unbindKeyboardEvents()
 		return false
 
 	make_draggable: (e) ->
 		$(e.currentTarget).parents('.subnote').attr('draggable', true)
 		return false
-
-	# autosave
-	# events 'keyup #editable-message' : 'autosave'
-	autosave: (e) ->
-		self 	= @	
-		idle 	= 0
-		clearTimeout(@timer)
-	
-		@timer = setTimeout((->
-			self.save()
-		), 3000)
 
 	after_ui_hook: (parent, notes) ->
 		$(@el).show()
@@ -95,20 +101,41 @@ class App.Views.Notes.Show extends Backbone.View
 		# set the body open note to parent note
 		$('body').attr('data-current-note-open', parent._id) 
 
-		# set the timeline's height
-		$('#expanded-view').css('height', $('.expanded-wrapper').outerHeight() + $('.expanded-actions').outerHeight() + $('.timeline-wrapper').outerHeight() + 50)
+		#
+		# set the timeline's height & scroll to the bottom
+		height = $('.expanded-wrapper').outerHeight() + $('.expanded-actions').outerHeight() + $('.timeline-wrapper').outerHeight() + 10
+		height = 500 if height > 500
+		$('#expanded-view').css('height', height)
 
-		#$('#expanded-view .timeline-wrapper').css('height', $('body').outerHeight() - $('.expanded-wrapper').outerHeight() - $('.expanded-actions').outerHeight() - 60)
+		wrapper_height = height - ($('.expanded-actions').outerHeight() + $('.expanded-wrapper').outerHeight())
+		$('#expanded-view .timeline-wrapper').css('height', wrapper_height)
 
-		# Make the new subnote box autosizable
-		$('#expanded-view ul.timeline textarea').autosize()
 
+		$('#expanded-view .timeline-wrapper').scrollTop $('#expanded-view').height()
+
+		#
 		# Drag and Drop
 		window.dnd.droppable $('#expanded-view')
 		window.dnd.draggable $('#expanded-view ul.timeline li')
 
-		# setup note creation
+		#
+		# setup subnote events - aka adding subnotes view
 		new_note = new App.Views.Notes.Push(el: $('.add-subnote'), id: parent._id)
+
+		#
+		# Make the new subnote box autosizable
+		$('#expanded-view ul.timeline textarea').autosize()
+
+		#
+		# Autosave!
+		$('#editable-form').autosave
+			interval:2000,
+			url:"/notes/#{parent._id}.json",
+			method:'PUT',
+			save: (e,o) ->
+				console.log 'saved'
+			before: (e,o) ->
+				$('#editable-form textarea').val $('#editable-message').html()
 
 	make_bold: (e) ->
 		document.execCommand('bold',false,null)

@@ -35,12 +35,11 @@ Array.prototype.min = () -> Math.min.apply(null, this)
 $.fn.exists = () -> $(this).get(0) isnt undefined
 
 window.os_name = () ->
-	OSName="Unknown OS"
-	OSName="Windows"  	if navigator.appVersion.indexOf("Win") 		isnt -1
-	OSName="MacOS" 			if navigator.appVersion.indexOf("Mac") 		isnt -1
-	OSName="UNIX" 			if navigator.appVersion.indexOf("X11")	 	isnt -1 
-	OSName="Linux"			if navigator.appVersion.indexOf("Linux") 	isnt -1 
-
+	OSName = "Unknown OS"
+	OSName = "Windows"  	if navigator.appVersion.indexOf("Win") 		isnt -1
+	OSName = "MacOS" 			if navigator.appVersion.indexOf("Mac") 		isnt -1
+	OSName = "UNIX" 			if navigator.appVersion.indexOf("X11")	 	isnt -1 
+	OSName = "Linux"			if navigator.appVersion.indexOf("Linux") 	isnt -1 
 	return OSName
 
 window.reset_events = (view) ->

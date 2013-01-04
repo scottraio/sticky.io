@@ -1,0 +1,7 @@
+<li class="{{card_css}} subnote" data-id="{{_id}}" draggable="true">
+	<span class="timestamp pull-right">{{format_date stacked_at}}</span>
+	<div class="message">
+		{{if_taskable_then_show_checkbox}}
+		{{{htmlsafe message}}}
+	</div>
+</li>

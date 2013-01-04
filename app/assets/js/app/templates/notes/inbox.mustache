@@ -1,0 +1,10 @@
+<ul class="notes_board">
+	{{#notes}}
+		<li class="{{card_css}}" {{draggable}} data-id="{{_id}}">
+			{{>sticky}}
+		</li>
+	{{/notes}}
+	{{^notes}}
+		<li class="empty">No notes found</li>
+	{{/notes}}
+</ul>

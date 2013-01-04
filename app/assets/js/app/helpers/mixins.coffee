@@ -31,22 +31,31 @@ $.fn.serializeObject = () ->
 
 $.fn.autolink = () ->
 	return this.each( () ->
+		#
+		# render images
+		#$(this).html( $(this).html().replace(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i, '<img src="$1" />') )
+
+		#
+		# render tags
 		$(this).html( $(this).html().replace(match.tag, '$1<a data-tag-name="$2" class="hash-tag tag">&#35;$2</a>') )
 		#$(this).html( $(this).html().replace(match.group, '$1<a data-tag-name="$2" class="hash-tag tag">@$2</a>') )
+
+		#
+		# render notebooks
 		$(this).html( $(this).html().replace(match.group, '') )
-		
-		if (new RegExp(notebook_names().join('|'))).test($(this).html()) 
+
+		#if (new RegExp(notebook_names().join('|'))).test($(this).html()) 
 			#$(this).html( $(this).html().replace(match.group, '$1<a href="/notes?notebooks=$2" class="group-link navigate">@$2</a>') )
-			$(this).html( $(this).html().replace(match.group, '') )
-		else
+		#	$(this).html( $(this).html().replace(match.group, '') )
+		#else
 			#$(this).html( $(this).html().replace(match.group, '$1<a href="/notes?notebooks=$2" class="unknown-group-link navigate">@$2</a> ') )
-			$(this).html( $(this).html().replace(match.group, '') )
+		#	$(this).html( $(this).html().replace(match.group, '') )
 	)
 
 $.fn.remove_img_links = () ->
-	return this.each( () ->
-		$(this).html( $(this).html().replace(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i, "") )
-	)	
+	#return this.each( () ->
+		#$(this).html( $(this).html().replace(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i, '<img src="$1" />') )
+	#)	
 
 $.fn.remove_stray_links = () ->
 	return this.each( () ->

@@ -111,6 +111,9 @@ ul.notes_board {
 			&:empty {
 				padding:0 15px 15px 15px;
 			}
+			img {
+				max-height:300px;
+			}
 		}
 		.link {
 			padding:5px 15px 5px 15px;
@@ -157,4 +160,28 @@ ul.notes_board {
 
 ul.notes_board:last-child {
 	padding-bottom:55px;	
+}
+
+#inbox.grid {
+	background: transparent;
+	width:@inbox-min-width + 150px;
+	#stage {
+		background: transparent;
+	}
+	ul.notes_board {
+		-moz-column-count: 4;
+    -moz-column-gap: 5px;
+    -moz-column-fill: auto;
+    -webkit-column-count: 4;
+    -webkit-column-gap: 5px;
+    -webkit-column-fill: auto;
+    column-count: 4;
+    column-gap: 5px;
+    column-fill: auto;
+    background:transparent;
+    li {
+    	margin-bottom:5px;
+    	.border-radius(3px);
+    }
+	}
 }

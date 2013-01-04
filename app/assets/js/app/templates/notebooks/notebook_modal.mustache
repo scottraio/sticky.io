@@ -1,0 +1,38 @@
+<div class="modal-header">
+	<a href="javascript:$('#notebook').modal('hide')" class="close">&times;</a>
+	{{#is_new}}
+	<h3>Create a Notebook</h3>
+	{{/is_new}}
+	{{^is_new}}
+	<h3>Edit Notebook</h3>
+	{{/is_new}}
+</div>
+<form action="/notebooks/{{notebook._id}}" method="post">
+<div class="modal-body">
+	<label>Notebook name</label>
+	<input type="text" placeholder="Enter notebook name" pattern="[A-Za-z0-9_]*" id="input_notebook_name" name="name" required="true" value="{{notebook.name}}" />
+	<span class="help-block">letters and numbers only, no spaces</span>
+	<label>Color</label>
+	<ul class="colors">
+		<li data-value="" class="none"></li>
+		<li data-value="green" class="green"></li>
+		<li data-value="orange" class="orange"></li>
+		<li data-value="blue" class="blue"></li>
+		<li data-value="yellow" class="yellow"></li>
+		<li data-value="red" class="red"></li>
+		<li data-value="green-light" class="green-light"></li>
+		<li data-value="orange-light" class="orange-light"></li>
+		<li data-value="blue-light" class="blue-light"></li>
+		<li data-value="yellow-light" class="yellow-light"></li>
+		<li data-value="red-light" class="red-light"></li>
+	</ul>
+	<input type="hidden" name="color" value="" />
+</div>
+<div class="modal-footer">
+	<button type="submit" class="btn primary">Save</button>
+	<a href="javascript:$('#notebook').modal('hide')" class="btn secondary">Cancel</a>
+	{{^is_new}}
+	<a href="/notebooks/{{notebook._id}}" data-id="{{notebook._id}}"class="pull-right delete">Delete this notebook</a>
+	{{/is_new}}
+</div>
+</form>

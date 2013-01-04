@@ -1,20 +1,30 @@
 #= require ./app/index
 #= require_tree ./app
 #= require_tree ./jquery
+#= require ./app/sockets
 
 class App.Main extends Backbone.View
 	
+	keyboardEvents:
+		'command+alt+o'	: 'new_note'
+
 	events:
 		"click #delete-note .danger" 	: "delete_note"
 		"click a.navigate" 						: "link_to_fragment"
 		"click a.needs-help" 					: "needs_help"
 		"click a.toggle-datepicker" 	: "link_to_calendar"
 		"click a.query"								: "link_to_query"
+		"click a.view-as-list"				: "view_as_list"
+		"click a.view-as-grid"				: "view_as_grid"
 		"click a.push" 								: "link_to_push"
 		"submit .search form" 				: "search"
 		
 	initialize: ->
-		$('textarea', '#new-note').autosize()
+		# 
+		# Brief aside on super: JavaScript does not provide a simple way to call super — 
+		# the function of the same name defined higher on the prototype chain.
+		Backbone.View.prototype.initialize.apply(@, arguments);
+
 		#
 		# dropdown any dropdowns
 		$('.dropdown-toggle').dropdown()
@@ -22,28 +32,23 @@ class App.Main extends Backbone.View
 		#
 		# set the current page for endless scrolling
 		window.current_page = window.get_query_val('page') || 1
-
-		#
-		# Mixpanel Integration
-		mixpanel.people.set
-			'$email'			: current_user.email,
-			'$name'				: current_user.name,
-			'$last_login'	: current_user.last_sign_in_at
 	
 		#
 		# animate the sidebar nav a bit
 		setTimeout((->						
 			$('ul.sidebar-nav').addClass('focus')
 		), 300)
-		
+
+		#
+		# listen for sockets
+		sockets = new App.Sockets()
+		sockets.listen()
+
+		#
 		#
 		# date picker stuff
 		$(document.body).click () ->
 			$('.date-picker').hide()
-
-		#
-		# track the request
-		#mixpanel.people.identify current_user._id
 
 		#
 		# setup date controls
@@ -67,23 +72,6 @@ class App.Main extends Backbone.View
 				end 	= d2.toJSON()
 				navigate "/notes?start=#{start}&end=#{end}"
 
-		# 
-		# Socket.IO
-		socket.on 'notes:add', (data) ->
-			# Setup the view
-			view 				= new App.Views.Notes.Index()	
-			view.notes 	= [data]
-			#
-			# Render the view
-			$('ul.notes_board:first-child').before view.ich_notes()
-			# remove the empty notes
-			$('ul.notes_board li.empty').hide() if $('ul.notes_board li.empty').length > 0
-			# auto-link everything
-			$('.message').autolink()
-			# DnD
-			window.dnd.draggable $('ul.notes_board:first-child li')
-			window.dnd.droppable $('ul.notes_board:first-child li')
-
 	delete_note: (e) ->
 		note_id = $('#delete-note').attr('data-id')
 		note = new App.Models.Note(id: note_id)
@@ -94,6 +82,12 @@ class App.Main extends Backbone.View
 				# remove the sticky from the inbox
 				$("li.sticky[data-id=#{note_id}]").remove()
 				$('#delete-note').modal('hide')
+				$('#expanded-view').hide()
+		return false
+
+	new_note: (e) ->
+		push_url '/notes/new'
+		console.log('test')
 		return false
 
 	search: (e) ->
@@ -112,7 +106,6 @@ class App.Main extends Backbone.View
 		$('body').toggleClass('needs-help');
 		$("#habla_window_div").toggleClass('visible');
 		return false
-
 
 	link_to_query: (e) ->
 		# reset pagination
@@ -134,4 +127,9 @@ class App.Main extends Backbone.View
 	link_to_push: (e) ->
 		push_url $(e.currentTarget).attr("href")
 		return false
+
+	view_as_grid: (e) ->
+		$("#inbox").addClass("grid")
 			
+	view_as_list: (e) ->
+		$("#inbox").removeClass("grid")

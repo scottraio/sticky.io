@@ -18,9 +18,14 @@ class App.Views.Notebooks.Edit extends Backbone.View
 
 		@notebook.fetch
 			success: (err, notebookJSON) ->
-				$(self.el).html ich.edit_notebook_content(notebook: notebookJSON[0], is_new: () -> false)
 				$(self.el).modal()
+
+				$(self.el).html TEMPLATES['notebook_modal']
+					notebook:notebookJSON[0], 
+					is_new:false
+
 				$("li[data-value=#{notebookJSON[0].color}]").addClass('selected')
+
 				$(self.el).on 'shown', () ->
 					$('input[name=name]', @el).focus()
 

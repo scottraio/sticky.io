@@ -18,12 +18,11 @@ os					= require 'os'
 fs					= require 'fs'
 http 				= require 'http'
 express			= require 'express'
-cons 				= require 'consolidate'
 config			= require 'yaml-config'
-handlbars 	= require 'handlebars'
-engine			= require 'ejs-locals'
 passport 		= require 'passport' 
-assets 			= require 'connect-assets'
+cons 				= require 'consolidate'
+engine			= require 'ejs-locals'
+assets 			= require 'sticky-assets'
 flash				= require 'connect-flash'
 redis  			= require 'redis'
 
@@ -56,17 +55,16 @@ exports.run = (cb) ->
 		app.configure () ->
 			pub_dir = __dirname + '/public'
 
-			# connect-assets: rails 3.1 asset pipeline for nodejs
-			app.use assets 
-				#servePath: '//d29it9lox1mxd7.cloudfront.net'
-				buildDir: 'public'
-				src: 'app/assets'
-				buildFilenamer: (filename, code) -> parts = filename.split('.'); "#{parts[0]}-#{app.version}.#{parts[1]}"
+			#
+			# sticky assets
+			app.use assets()
 
-			# handlebar templates :-)
+			#
+			# ejs templates for top level pages
 			app.engine('ejs', engine)
 
-			# Defaults
+			#
+			# defaults
 			app.set 'views', __dirname + '/app/views'
 			app.set 'view engine', 'ejs'
 			app.use express.static(pub_dir)
@@ -77,13 +75,16 @@ exports.run = (cb) ->
 			app.use cookieParser
 			app.use express.session({ store: redisStore })
 
+			#
 			# passport authentication
 			app.use passport.initialize()
 			app.use passport.session()
 
+			#
 			# Rails style flash messages
 			app.use flash()
 
+			#
 			# start the router
 			app.use app.router
 

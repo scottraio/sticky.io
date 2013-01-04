@@ -1,0 +1,41 @@
+<div class="expanded-actions">
+	<a href="#" class="pull-right" id="close-expanded-view"><i class="icon icon-white icon-remove"></i></a>
+
+	<span id="save-notice" class="hide label label-success"></span>
+	
+	<div class="btn-toolbar">
+		<div class="btn-group">
+			<a class="btn make-bold" href="#"><strong>B</strong></a>
+			<a class="btn make-italic" href="#"><em>i</em></a>
+			<a class="btn make-underline" href="#"><u>U</u></a>
+		</div>
+		
+		<div class="btn-group">
+			{{^new_note}}
+			<a href="/notes/{{parent_note._id}}" class="btn confirm" data-id="{{parent_note._id}}"><i class="icon-trash icon-white"></i></a>
+			{{/new_note}}
+		</div>
+		
+	</div>
+</div>
+
+<div class="expanded-wrapper">
+	<div class="expanded-note {{#new_note}}new{{/new_note}}">
+		<div id="editable-message" contenteditable="true">{{#parent_note}}{{{htmlsafe message}}}{{/parent_note}}</div>
+		<form id="editable-form" method="post"><textarea id="note-message" name="message" class="hide"></textarea></form>
+	</div>
+</div>	
+
+{{^new_note}}
+<div class="timeline-wrapper">		
+	<ul class="timeline">
+		{{#notes}}
+			{{>subnote}}
+		{{/notes}}
+		<li class="sticky card subnote add-subnote" >
+			<div class="number-porn"><i class="icon icon-white icon-plus"></i></div>
+			<textarea placeholder="Enter thoughts about this note and hit enter"></textarea>
+		</li>
+	</ul>
+</div>
+{{/new_note}}

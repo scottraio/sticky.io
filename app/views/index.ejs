@@ -40,11 +40,17 @@
 							<% } %>
 						</ul>
 					</div>
+					
 					<div class="btn-group">
 						<a href="#" class="query btn" data-param="order" data-param-val="desc"><i class="icon-chevron-down"></i></a>
 						<a href="#" class="query btn" data-param="order" data-param-val="asc"><i class="icon-chevron-up"></i></a>
 					</div>
-					
+					<!--				
+					<div class="btn-group">
+						<a href="#" class="btn view-as-list"><i class="icon-th-list"></i></a>
+						<a href="#" class="btn view-as-grid"><i class="icon-th"></i></a>
+					</div>
+					-->
 					<div class="search">
 						<form action="/notes" method="get">
 							<input type="text" id="keyword" name="keyword" class="search-query" placeholder="Search">
@@ -112,6 +118,10 @@
 		</div>
 
 		<!-- Notebooks -->
+		<div id="notebook" class="modal hide fade">
+			<!-- content gets loaded here -->
+		</div>
+
 		<div id="delete-notebook" class="modal hide">
 			<div class="modal-header">
 				<a href="javascript:$('#delete-notebook').modal('hide')" class="close">&times;</a>
@@ -127,21 +137,19 @@
 			</div>
 		</div>
 
-		<%- partial('notebooks') %>
-		<%- partial('notes') %>
 		<%- partial('users') %>
 		<%- partial('footer') %>
 	</div>
 
+	<!-- Help -->
 	<div id="help" class="hide">
 		<a href="#" class="needs-help">&larr; close</a>
 		<h1>Help</h1> 
 
 		<h3>Ways to get help</h3>
 		<ul>
-			<li>FAQ</li>
-			<li>E-mail</li>
-			<li>Twitter</li>
+			<li><a href="mailto:support@sticky.io" target="_blank">E-mail</a></li>
+			<li><a href="https://twitter.com/Stickyio" target="_blank">Twitter</a></li>
 		</ul>
 	</div>
 </body>

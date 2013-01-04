@@ -151,8 +151,18 @@ NotesSchema.methods.parse_links = () ->
 					console.log 'Could not crawl link'
 					console.log err
 				else
-					if domain && self._domains.indexOf(domain._id) is -1
+
+					#
+					# if we already have a domain associated with this note
+					# then lets check to see if the new link is already associated
+					if self._domains.length > 0
+						for dd in self._domains
+							self._domains.push domain._id unless dd.url is domain.url
+					else
 						self._domains.push domain._id
+
+					#
+					# save it regardless from above
 					self.save (err) ->
 						console.log err if err
 	else

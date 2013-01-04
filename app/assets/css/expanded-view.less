@@ -14,13 +14,17 @@
 	//max-height:600px;
 	//min-height:300px;
 	//overflow:hidden;
-	.border-radius(5px);
+	.border-radius(5px 5px 0 0);
 	//border:1px solid rgba(0, 0, 0, 0.1);
 	.box-shadow(0 0 10px rgba(0, 0, 0, 0.3));
 	background-color:#fff;
 	z-index:11;
   .expanded-view-anchor {
   	//.transition(top ease-in .2s);
+  }
+  form {
+  	margin:0;
+  	padding:0;
   }
 	.expanded-wrapper {
 		//background-color:rgb(245, 245, 245);
@@ -72,18 +76,21 @@
 			-webkit-appearance:none;
 			white-space:pre-wrap;
 			//.box-shadow(0 2px 5px rgba(0, 0, 0, 0.08));
-			border-bottom:1px solid rgba(0, 0, 0, 0.15);
 			margin-bottom:5px;
 			&:focus {
 				outline:none;
 			}
 	 	}
 	}
+	.expanded-note.new {
+ 		min-height:100px;
+ 	}
 	.timeline-wrapper {
 		height:100%;
 		overflow:auto;
 		box-sizing:border-box;
 		position:relative;
+		border-top:1px solid rgba(0, 0, 0, 0.15);
 	}
 	.timeline {
 		list-style-type:none;
@@ -92,8 +99,8 @@
 		position:relative;
 		font-size:0.95em;
 		line-height:0.95em;
-		overflow:auto;
-		height:100%;
+		//overflow:auto;
+		//height:100%;
 		li.card {
 			position:relative;
 			z-index:8;
@@ -127,6 +134,7 @@
 		}
 		li.add-subnote {
 			position:relative;
+			border-bottom:0;
 			.number-porn {
 				z-index:9;
 				right:10px;

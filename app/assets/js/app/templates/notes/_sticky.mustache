@@ -1,0 +1,13 @@
+<div class="sticky-actions-wrapper">
+	{{>actions}}
+</div>
+
+<div class="message_wrapper {{{is_pole_position}}} autolink {{#completed}}completed{{/completed}}">						
+	<div class="message {{remove_stray_links}}">{{{if_taskable_then_show_checkbox}}} {{{htmlsafe message}}}</div>
+</div>
+
+<div class="meta">
+	<span class="created_at">{{{format_date created_at}}}</span>
+	{{{subnote_count}}}
+	{{{notebook_labels}}}
+</div>

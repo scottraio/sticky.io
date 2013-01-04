@@ -49,22 +49,13 @@ class App.Views.Notes.Index extends Backbone.View
 				self.ui_after_hook()
 
 	ich_notes: () ->
-		self = @
-
 		# setup the notes_board
-		notes_html =  ich.notes_board
-			notes								: @notes
-			note_message				: () -> this.message.replace(/(<[^>]+) style=".*?"/g, '$1')
-			created_at_in_words	: () -> this.created_at && $.timeago(this.created_at)
-			created_at_in_date 	: () -> self.format_date(this.created_at)
-			has_subnotes				: () -> true if this._notes && this._notes.length > 0
-			draggable						: () -> true unless this._notes && this._notes.length > 0
-			subnote_count				: () -> this._notes.length if this._notes
-			is_taskable					: () -> true if this.message && this.message.indexOf('#todo') > 0
-			has_domains					: () -> true if this._domains && this._domains.length > 0
-			domain							: () -> this.url.toLocation().hostname if this.url
-			group_colors				: () -> self.notebook_color(this)
-			group_labels				: () -> _.uniq(this.groups)
+		TEMPLATES['inbox'] {notes:@notes}
+
+	load_page: (page) ->
+		@current_page = page
+		@notes_collection.url = '/notes.json' + add_or_replace_query_var(document.location.search, 'page', page)
+		@render(true)
 			
 	show: (e) ->
 		id = $(e.currentTarget).attr('data-id')
@@ -120,21 +111,11 @@ class App.Views.Notes.Index extends Backbone.View
 			error: (data, res) ->
 				console.log 'error'
 
-	auto_image_resolution: (notes) ->
-		for note in notes
-			for link in note.links
-				matched = link.match /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i
-				if matched
-					$("li[data-id='#{note._id}']").prepend "<img src=#{matched[0]} />"
-
-		$('.autolink').remove_img_links()
-
 	ui_before_hook: ->
 		self 				= @
 
 		# Do some post-processing work and format the notes i.e. displaying titles for domains
-		collection 	= new App.Collections.Notes()
-		collection.format_domains(@notes)
+		@notes_collection.parse_for_view(@notes)
 	
 	ui_after_hook: ->
 		unless @params
@@ -161,9 +142,6 @@ class App.Views.Notes.Index extends Backbone.View
 			
 		@scroll.lock = false
 
-		# resolve any images
-		@auto_image_resolution(@notes)
-
 	select_ui_controls: () ->
 		if @params && @params.tags
 			$('.tag-button').addClass('btn-primary')
@@ -181,10 +159,6 @@ class App.Views.Notes.Index extends Backbone.View
 			$('.inbox-controls a.query').removeClass('active')
 			$("a[data-param-val=#{@params.order}]").addClass('active')
 
-	format_date: (date) ->
-		date = new Date(date)
-		return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
-
 	notebook_color: (notebook) ->
 		try 
 			$("li[data-name=#{notebook['.']}]").attr('data-color') 
@@ -198,7 +172,4 @@ class App.Views.Notes.Index extends Backbone.View
 		$(e.currentTarget).parents('li').attr('draggable', false)
 		return false
 
-	load_page: (page) ->
-		@current_page = page
-		@notes_collection.url = '/notes.json' + add_or_replace_query_var(document.location.search, 'page', page)
-		@render(true)
+	

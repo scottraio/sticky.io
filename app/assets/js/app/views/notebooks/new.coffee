@@ -11,7 +11,7 @@ class App.Views.Notebooks.New extends Backbone.View
 		@notebook = new App.Models.Notebook()
 	
 	render: ->
-		$(@el).html ich.edit_notebook_content
+		$(@el).html TEMPLATES['notebook_modal']
 			is_new: () -> true
 		$(@el).modal()
 		$(@el).on 'shown', () ->
