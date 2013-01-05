@@ -8,7 +8,7 @@ staging:
 	coffee -c app.coffee; NODE_ENV=staging NODE_PATH=`pwd`/lib forever start ./app.js
 
 production:
-	coffee -c app.coffee; NODE_ENV=production NODE_PATH=`pwd`/lib forever start ./app.js
+	NODE_ENV=production NODE_PATH=`pwd`/lib forever start -c coffee app.coffee
 
 deploy:
 	./script/deploy-cluster	
